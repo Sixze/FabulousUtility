@@ -1,0 +1,6 @@
+[attr]lfs filter=lfs diff=lfs merge=lfs -text
+
+*.uasset lfs
+*.umap lfs
+
+*.png lfs

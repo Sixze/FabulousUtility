@@ -1,0 +1,68 @@
+#pragma once
+
+#include "Kismet/BlueprintFunctionLibrary.h"
+#include "FuMath.generated.h"
+
+UCLASS()
+class FABULOUSUTILITY_API UFuMath : public UBlueprintFunctionLibrary
+{
+	GENERATED_BODY()
+
+public:
+	static constexpr auto TwoPi{6.2831853071795864769252867665590057683943387987502116419498891846f};
+
+public:
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Math")
+	static float Clamp01(float Value);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Math")
+	static float Damp(float DeltaTime, float Smoothing);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Math")
+	static float ExponentialDecay(float DeltaTime, float Lambda);
+
+	template <class ValueType>
+	static ValueType Damp(const ValueType& Current, const ValueType& Target, const float DeltaTime, const float Smoothing);
+
+	template <class ValueType>
+	static ValueType ExponentialDecay(const ValueType& Current, const ValueType& Target, const float DeltaTime, const float Lambda);
+};
+
+inline float UFuMath::Clamp01(const float Value)
+{
+	return Value <= 0.0f
+		       ? 0.0f
+		       : Value >= 1.0f
+		       ? 1.0f
+		       : Value;
+}
+
+inline float UFuMath::Damp(const float DeltaTime, const float Smoothing)
+{
+	// https://www.rorydriscoll.com/2016/03/07/frame-rate-independent-damping-using-lerp/
+
+	return 1.0f - FMath::Pow(Smoothing, DeltaTime);
+}
+
+inline float UFuMath::ExponentialDecay(const float DeltaTime, const float Lambda)
+{
+	// https://www.rorydriscoll.com/2016/03/07/frame-rate-independent-damping-using-lerp/
+
+	return 1.0f - FMath::InvExpApprox(Lambda * DeltaTime);
+}
+
+template <class ValueType>
+ValueType UFuMath::Damp(const ValueType& Current, const ValueType& Target, const float DeltaTime, const float Smoothing)
+{
+	return Smoothing > 0.0f
+		       ? FMath::Lerp(Current, Target, Damp(DeltaTime, Smoothing))
+		       : Target;
+}
+
+template <class ValueType>
+ValueType UFuMath::ExponentialDecay(const ValueType& Current, const ValueType& Target, const float DeltaTime, const float Lambda)
+{
+	return Lambda > 0.0f
+		       ? FMath::Lerp(Current, Target, ExponentialDecay(DeltaTime, Lambda))
+		       : Target;
+}
