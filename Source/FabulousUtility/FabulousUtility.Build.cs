@@ -6,15 +6,11 @@ public class FabulousUtility : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new[]
-		{
-			"Core", "CoreUObject", "Engine", "InputCore", "SlateCore", "OnlineSubsystem", "OnlineSubsystemUtils",
-			"GameplayTags", "GameplayTasks", "GameplayAbilities", "NavigationSystem", "AIModule", "DeveloperSettings"
-		});
-
 		PrivateDependencyModuleNames.AddRange(new[]
 		{
-			"NetCore", "RHI", "Slate", "EngineSettings"
+			"Core", "CoreUObject", "Engine", "NetCore", "EngineSettings", "RHI", "InputCore",
+			"SlateCore", "Slate", "OnlineSubsystem", "OnlineSubsystemUtils", "GameplayTags",
+			"GameplayTasks", "GameplayAbilities", "NavigationSystem", "AIModule", "DeveloperSettings"
 		});
 	}
 }
