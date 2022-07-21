@@ -15,7 +15,7 @@
 		return AttributeName.GetCurrentValue(); \
 	} \
 	\
-	void Set##AttributeName(const float New##AttributeName) \
+	void Set##AttributeName##Base(const float New##AttributeName) \
 	{ \
 		auto* AbilitySystem{GetOwningAbilitySystemComponent()}; \
 		if (FU_ENSURE(IsValid(AbilitySystem))) \
@@ -29,6 +29,9 @@
 		AttributeName.SetBaseValue(Initial##AttributeName); \
 		AttributeName.SetCurrentValue(Initial##AttributeName); \
 	}
+
+#define FU_ATTRIBUTE_ON_REPLICATED(AttributeName, PreviousValue) \
+	GetOwningAbilitySystemComponentChecked()->SetBaseAttributeValueFromReplication(AttributeName##Attribute(), AttributeName, PreviousValue);
 
 #define FU_ATTRIBUTE_CAPTURE_DEFINITION(AttributeSet, AttributeName, AttributeCaptureSource, bSnapshot) \
 	static const FGameplayEffectAttributeCaptureDefinition& AttributeName##Definition() \

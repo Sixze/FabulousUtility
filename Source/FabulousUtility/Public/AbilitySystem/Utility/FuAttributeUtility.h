@@ -21,7 +21,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Attribute Utility",
 		Meta = (AutoCreateRefTerm = "Attribute, AttributeData, MaxAttributeData"))
-	static void AdjustAttributeForMaxChange(UAbilitySystemComponent* AbilitySystem,
-	                                        const FGameplayAttribute& Attribute, const FGameplayAttributeData& AttributeData,
-	                                        const FGameplayAttributeData& MaxAttributeData, float NewMaxValue);
+	static void AdjustAttributeForMaxChange(UAbilitySystemComponent* AbilitySystem, const FGameplayAttribute& Attribute,
+	                                        float PreviousMaxValue, float NewMaxValue);
 };

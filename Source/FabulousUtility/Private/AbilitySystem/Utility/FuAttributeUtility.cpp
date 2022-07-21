@@ -36,27 +36,18 @@ bool UFuAttributeUtility::TryGetAttributePercent(const UAbilitySystemComponent* 
 }
 
 void UFuAttributeUtility::AdjustAttributeForMaxChange(UAbilitySystemComponent* AbilitySystem, const FGameplayAttribute& Attribute,
-                                                      const FGameplayAttributeData& AttributeData,
-                                                      const FGameplayAttributeData& MaxAttributeData, const float NewMaxValue)
+                                                      const float PreviousMaxValue, const float NewMaxValue)
 {
-	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(AbilitySystem->HasAttributeSetForAttribute(Attribute)))
+	if (!FU_ENSURE(IsValid(AbilitySystem)) || FMath::IsNearlyEqual(PreviousMaxValue, NewMaxValue))
 	{
 		return;
 	}
 
-	const auto PreviousMaxValue{MaxAttributeData.GetCurrentValue()};
-	if (FMath::IsNearlyEqual(PreviousMaxValue, NewMaxValue))
-	{
-		return;
-	}
-
-	const auto Value{AttributeData.GetCurrentValue()};
-
-	const auto NewDelta{
+	const auto NewValue{
 		PreviousMaxValue > SMALL_NUMBER
-			? Value * NewMaxValue / PreviousMaxValue - Value
+			? AbilitySystem->GetNumericAttributeBase(Attribute) * NewMaxValue / PreviousMaxValue
 			: NewMaxValue
 	};
 
-	AbilitySystem->ApplyModToAttributeUnsafe(Attribute, EGameplayModOp::Additive, NewDelta);
+	AbilitySystem->SetNumericAttributeBase(Attribute, NewValue);
 }
