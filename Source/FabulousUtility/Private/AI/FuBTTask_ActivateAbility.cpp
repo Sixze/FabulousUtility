@@ -3,24 +3,26 @@
 #include "AbilitySystemGlobals.h"
 #include "AIController.h"
 #include "FuMacros.h"
+#include "AbilitySystem/FuAbilitySystemComponent.h"
 
 UFuBTTask_ActivateAbility::UFuBTTask_ActivateAbility()
 {
 	NodeName = "Activate Ability";
 	bCreateNodeInstance = true;
+	bIgnoreRestartSelf = true;
 
 	INIT_TASK_NODE_NOTIFY_FLAGS();
 }
 
 FString UFuBTTask_ActivateAbility::GetStaticDescription() const
 {
-	return FString::Printf(TEXT("%s: %s"), *Super::GetStaticDescription(), *AbilityTag.ToString());
+	return FString::Printf(TEXT("Activate Ability: %s"), *AbilityTag.ToString());
 }
 
 #if WITH_EDITOR
 FName UFuBTTask_ActivateAbility::GetNodeIconName() const
 {
-	return FName("BTEditor.Graph.BTNode.Task.RunEQSQuery.Icon");
+	return TEXT("BTEditor.Graph.BTNode.Task.RunEQSQuery.Icon");
 }
 #endif
 
@@ -91,11 +93,8 @@ EBTNodeResult::Type UFuBTTask_ActivateAbility::AbortTask(UBehaviorTreeComponent&
 	return EBTNodeResult::Aborted;
 }
 
-void UFuBTTask_ActivateAbility::OnTaskFinished(UBehaviorTreeComponent& BehaviourTree, uint8* NodeMemory,
-                                               const EBTNodeResult::Type Result)
+void UFuBTTask_ActivateAbility::OnTaskFinished(UBehaviorTreeComponent& BehaviourTree, uint8* NodeMemory, const EBTNodeResult::Type Result)
 {
-	Super::OnTaskFinished(BehaviourTree, NodeMemory, Result);
-
 	if (AbilitySystem.IsValid())
 	{
 		AbilitySystem->OnAbilityEnded.RemoveAll(this);
@@ -104,6 +103,8 @@ void UFuBTTask_ActivateAbility::OnTaskFinished(UBehaviorTreeComponent& Behaviour
 
 	ActiveAbilityHandles.Reset();
 	bAnyAbilitySuccessfullyEnded = false;
+
+	Super::OnTaskFinished(BehaviourTree, NodeMemory, Result);
 }
 
 void UFuBTTask_ActivateAbility::OnAbilityActivated(const FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability)

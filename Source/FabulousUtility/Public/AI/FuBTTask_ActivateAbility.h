@@ -1,8 +1,11 @@
 #pragma once
 
-#include "AbilitySystem/FuAbilitySystemComponent.h"
+#include "GameplayAbilitySpec.h"
 #include "BehaviorTree/BTTaskNode.h"
 #include "FuBTTask_ActivateAbility.generated.h"
+
+class UFuAbilitySystemComponent;
+struct FAbilityEndedData;
 
 UCLASS(Meta = (ShowWorldContextPin))
 class FABULOUSUTILITY_API UFuBTTask_ActivateAbility : public UBTTaskNode
