@@ -17,12 +17,8 @@ UFuBTTask_TagListener::UFuBTTask_TagListener()
 #if WITH_EDITOR
 bool UFuBTTask_TagListener::CanEditChange(const FProperty* Property) const
 {
-	if (Property->GetFName() == GET_MEMBER_NAME_CHECKED(ThisClass, bIgnoreRestartSelf))
-	{
-		return false;
-	}
-
-	return Super::CanEditChange(Property);
+	return Super::CanEditChange(Property) &&
+	       Property->GetFName() != GET_MEMBER_NAME_CHECKED(ThisClass, bIgnoreRestartSelf);
 }
 #endif
 

@@ -125,7 +125,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(
 
 		if (bAddedOrRemoved && TagsCount == 1)
 		{
-			// New cooldown tag has been added.
+			// A cooldown tag has been added.
 
 			AbilitySystem->RegisterGameplayTagEvent(CooldownTag, EGameplayTagEventType::NewOrRemoved)
 			             .AddUObject(this, &ThisClass::OnEffectTagChanged);
@@ -134,7 +134,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(
 		}
 		else if (!bAddedOrRemoved && TagsCount <= 0)
 		{
-			// Cooldown tag has been removed.
+			// A cooldown tag has been removed.
 
 			AbilitySystem->RegisterGameplayTagEvent(CooldownTag, EGameplayTagEventType::NewOrRemoved)
 			             .AddUObject(this, &ThisClass::OnEffectTagChanged);
