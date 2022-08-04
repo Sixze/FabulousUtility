@@ -33,7 +33,7 @@ public:
 	virtual void SetShouldBlockOtherAbilities(bool bShouldBlockAbilities) override;
 
 	virtual bool CheckCost(FGameplayAbilitySpecHandle AbilityHandle, const FGameplayAbilityActorInfo* ActorInfo,
-	                       FGameplayTagContainer* OptionalRelevantTags) const override;
+	                       FGameplayTagContainer* FailureTags = nullptr) const override;
 
 	virtual void ApplyCost(FGameplayAbilitySpecHandle AbilityHandle, const FGameplayAbilityActorInfo* ActorInfo,
 	                       FGameplayAbilityActivationInfo ActivationInfo) const override;

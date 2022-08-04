@@ -1,4 +1,4 @@
-﻿#include "AI/FuBTTask_TagListener.h"
+#include "AI/FuBTTask_TagListener.h"
 
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemGlobals.h"

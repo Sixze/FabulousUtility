@@ -1,5 +1,6 @@
 #include "AbilitySystem/FuGameplayAbility.h"
 
+#include "AbilitySystemGlobals.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 #include "AbilitySystem/Utility/FuAbilityUtility.h"
 
@@ -38,9 +39,20 @@ void UFuGameplayAbility::SetShouldBlockOtherAbilities(const bool bShouldBlockAbi
 }
 
 bool UFuGameplayAbility::CheckCost(const FGameplayAbilitySpecHandle AbilityHandle, const FGameplayAbilityActorInfo* ActorInfo,
-                                   FGameplayTagContainer* OptionalRelevantTags) const
+                                   FGameplayTagContainer* FailureTags) const
 {
-	return Super::CheckCost(AbilityHandle, ActorInfo, OptionalRelevantTags) && CheckCostBlueprint(*ActorInfo, AbilityHandle);
+	if (!CheckCostBlueprint(*ActorInfo, AbilityHandle))
+	{
+		const auto& CostFailureTag{UAbilitySystemGlobals::Get().ActivateFailCostTag};
+		if (FailureTags && CostFailureTag.IsValid())
+		{
+			FailureTags->AddTag(CostFailureTag);
+		}
+
+		return false;
+	}
+
+	return Super::CheckCost(AbilityHandle, ActorInfo, FailureTags);
 }
 
 void UFuGameplayAbility::ApplyCost(const FGameplayAbilitySpecHandle AbilityHandle, const FGameplayAbilityActorInfo* ActorInfo,

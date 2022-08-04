@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "BehaviorTree/BTTaskNode.h"
 #include "FuBTTask_TagListener.generated.h"

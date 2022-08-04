@@ -27,7 +27,7 @@ UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::
 
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
-	if (FU_ENSURE(AbilityTag.IsValid()))
+	if (AbilityTag.IsValid())
 	{
 		Task->AbilityTags1.AddTag(AbilityTag);
 	}
@@ -75,7 +75,7 @@ void UFuAbilityAsync_AbilityFailureListener::Activate()
 
 	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(GetAbilitySystemComponent())};
 
-	if (!IsValid(GetAbilitySystemComponent()) || !FU_ENSURE(IsValid(AbilitySystem)) || AbilityTags1.IsEmpty())
+	if (!IsValid(GetAbilitySystemComponent()) || !FU_ENSURE(IsValid(AbilitySystem)))
 	{
 		SetReadyToDestroy();
 		return;
@@ -101,7 +101,8 @@ void UFuAbilityAsync_AbilityFailureListener::AbilitySystem_OnAbilityFailed(const
                                                                            UGameplayAbility* Ability,
                                                                            const FGameplayTagContainer& FailureTags)
 {
-	if (Ability->AbilityTags.HasAny(AbilityTags1) && (FailureTags1.IsEmpty() || FailureTags.HasAny(FailureTags1)))
+	if ((AbilityTags1.IsEmpty() || Ability->AbilityTags.HasAny(AbilityTags1)) &&
+	    (FailureTags1.IsEmpty() || FailureTags.HasAny(FailureTags1)))
 	{
 		OnAbilityFailed.Broadcast(AbilityHandle, FailureTags);
 	}

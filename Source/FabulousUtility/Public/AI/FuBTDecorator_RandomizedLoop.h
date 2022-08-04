@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "BehaviorTree/BTDecorator.h"
 #include "FuBTDecorator_RandomizedLoop.generated.h"

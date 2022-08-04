@@ -1,4 +1,4 @@
-﻿#include "FuOSUtility.h"
+#include "FuOSUtility.h"
 
 #if PLATFORM_WINDOWS
 #include "FuMacros.h"
