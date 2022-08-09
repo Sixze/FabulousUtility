@@ -51,7 +51,7 @@ EBTNodeResult::Type UFuBTTask_TagListener::ExecuteTask(UBehaviorTreeComponent& B
 	const auto* Controller{BehaviourTree.GetAIOwner()};
 	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn() : nullptr};
 
-	AbilitySystem = Cast<UAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn));
+	AbilitySystem = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn);
 
 	if (!FU_ENSURE(Tag.IsValid()) || !FU_ENSURE(FuTagListenerWaitMode::IsValid(WaitMode)) || !FU_ENSURE(AbilitySystem.IsValid()))
 	{
