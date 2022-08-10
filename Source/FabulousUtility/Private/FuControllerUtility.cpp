@@ -2,12 +2,6 @@
 
 #include "FuMacros.h"
 #include "GameFramework/Pawn.h"
-#include "GameFramework/PlayerController.h"
-
-bool UFuControllerUtility::HasController(AActor* Actor)
-{
-	return IsValid(GetController(Actor));
-}
 
 AController* UFuControllerUtility::GetController(AActor* Actor)
 {
@@ -31,12 +25,19 @@ AController* UFuControllerUtility::GetController(AActor* Actor)
 	return nullptr;
 }
 
-bool UFuControllerUtility::HasPlayerController(AActor* Actor)
+bool UFuControllerUtility::TryGetController(AActor* Actor, AController*& Controller)
 {
-	return IsValid(GetPlayerController(Actor));
+	Controller = GetController(Actor);
+	return IsValid(Controller);
 }
 
 APlayerController* UFuControllerUtility::GetPlayerController(AActor* Actor)
 {
 	return Cast<APlayerController>(GetController(Actor));
+}
+
+bool UFuControllerUtility::TryGetPlayerController(AActor* Actor, APlayerController*& Controller)
+{
+	Controller = GetPlayerController(Actor);
+	return IsValid(Controller);
 }

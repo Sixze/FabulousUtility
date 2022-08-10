@@ -1,5 +1,6 @@
 #pragma once
 
+#include "GameFramework/PlayerController.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuControllerUtility.generated.h"
 
@@ -21,6 +22,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Controller Utility", Meta = (DefaultToSelf = "Actor"))
 	static AController* GetController(AActor* Actor);
 
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Controller Utility",
+		Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
+	static bool TryGetController(AActor* Actor, AController*& Controller);
+
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Controller Utility", Meta = (DefaultToSelf = "Actor"))
 	static bool HasPlayerController(AActor* Actor);
 
@@ -30,11 +35,25 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Controller Utility", Meta = (DefaultToSelf = "Actor"))
 	static APlayerController* GetPlayerController(AActor* Actor);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Controller Utility",
+		Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
+	static bool TryGetPlayerController(AActor* Actor, APlayerController*& Controller);
 };
+
+inline bool UFuControllerUtility::HasController(AActor* Actor)
+{
+	return IsValid(GetController(Actor));
+}
 
 inline bool UFuControllerUtility::SwitchHasController(AActor* Actor)
 {
 	return HasController(Actor);
+}
+
+inline bool UFuControllerUtility::HasPlayerController(AActor* Actor)
+{
+	return IsValid(GetPlayerController(Actor));
 }
 
 inline bool UFuControllerUtility::SwitchHasPlayerController(AActor* Actor)
