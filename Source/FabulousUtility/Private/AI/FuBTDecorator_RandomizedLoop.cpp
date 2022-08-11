@@ -52,7 +52,7 @@ uint16 UFuBTDecorator_RandomizedLoop::GetInstanceMemorySize() const
 
 FString UFuBTDecorator_RandomizedLoop::GetStaticDescription() const
 {
-	return FString::Format(TEXT("{0}: {1}-{2} loops"), {*Super::GetStaticDescription(), MinLoopsCount, MaxLoopsCount});
+	return FString::Format(TEXT("Randomized Loop: {1}-{2} loops"), {*Super::GetStaticDescription(), MinLoopsCount, MaxLoopsCount});
 }
 
 void UFuBTDecorator_RandomizedLoop::OnNodeActivation(FBehaviorTreeSearchData& SearchData)

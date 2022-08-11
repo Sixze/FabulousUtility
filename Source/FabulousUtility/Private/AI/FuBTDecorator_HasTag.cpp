@@ -15,7 +15,41 @@ UFuBTDecorator_HasTag::UFuBTDecorator_HasTag()
 
 FString UFuBTDecorator_HasTag::GetStaticDescription() const
 {
-	return FString::Printf(TEXT("%s: %s"), *Super::GetStaticDescription(), *Tag.ToString());
+	FString Description;
+
+	const auto bAborts{FlowAbortMode != EBTFlowAbortMode::None};
+	const auto bInversed{bShowInverseConditionDesc && IsInversed()};
+
+	if (bAborts)
+	{
+		Description = FString::Printf(TEXT("( aborts %s%s )"),
+		                              *UBehaviorTreeTypes::DescribeFlowAbortMode(FlowAbortMode).ToLower(),
+		                              bInversed ? TEXT(", inversed") : TEXT(""));
+	}
+	else if (bInversed)
+	{
+		Description = TEXT("( inversed )");
+	}
+
+	if (Tags.Num() <= 0)
+	{
+		Description += LINE_TERMINATOR TEXT("Has Tag: ");
+	}
+	else if (Tags.Num() == 1)
+	{
+		Description += LINE_TERMINATOR TEXT("Has Tag: ") + Tags.First().ToString();
+	}
+	else
+	{
+		Description += TagsMatchMode == EGameplayContainerMatchType::All ? TEXT(" Has All Tags: ") : TEXT(" Has Any Tag: ");
+
+		for (const auto& Tag : Tags)
+		{
+			Description += LINE_TERMINATOR + Tag.ToString();
+		}
+	}
+
+	return Description;
 }
 
 void UFuBTDecorator_HasTag::OnBecomeRelevant(UBehaviorTreeComponent& BehaviourTree, uint8* NodeMemory)
@@ -29,9 +63,17 @@ void UFuBTDecorator_HasTag::OnBecomeRelevant(UBehaviorTreeComponent& BehaviourTr
 
 	AbilitySystem = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn);
 
-	if (FU_ENSURE(Tag.IsValid()) && FU_ENSURE(AbilitySystem.IsValid()))
+	if (!FU_ENSURE(AbilitySystem.IsValid()))
 	{
-		AbilitySystem->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &ThisClass::OnTagChanged);
+		return;
+	}
+
+	for (const auto& Tag : Tags)
+	{
+		if (FU_ENSURE(Tag.IsValid()))
+		{
+			AbilitySystem->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &ThisClass::OnTagChanged);
+		}
 	}
 }
 
@@ -39,7 +81,14 @@ void UFuBTDecorator_HasTag::OnCeaseRelevant(UBehaviorTreeComponent& BehaviourTre
 {
 	if (AbilitySystem.IsValid())
 	{
-		AbilitySystem->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved).RemoveAll(this);
+		for (const auto& Tag : Tags)
+		{
+			if (Tag.IsValid())
+			{
+				AbilitySystem->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved).RemoveAll(this);
+			}
+		}
+
 		AbilitySystem = nullptr;
 	}
 
@@ -52,7 +101,22 @@ bool UFuBTDecorator_HasTag::CalculateRawConditionValue(UBehaviorTreeComponent& B
 	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn() : nullptr};
 	const auto* ThisAbilitySystem{UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn)};
 
-	return IsValid(ThisAbilitySystem) && ThisAbilitySystem->GetTagCount(Tag) > 0;
+	if (!IsValid(ThisAbilitySystem))
+	{
+		return false;
+	}
+
+	switch (TagsMatchMode)
+	{
+		case EGameplayContainerMatchType::All:
+			return ThisAbilitySystem->HasAllMatchingGameplayTags(Tags);
+
+		case EGameplayContainerMatchType::Any:
+			return ThisAbilitySystem->HasAnyMatchingGameplayTags(Tags);
+
+		default:
+			return false;
+	}
 }
 
 void UFuBTDecorator_HasTag::OnTagChanged(FGameplayTag ThisTag, int32 NewCount) const

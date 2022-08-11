@@ -31,7 +31,7 @@ void UFuPlayerInput::TriggerInputEventForPressedActionsAndKeys(const TArray<UInp
 		}
 	}
 
-	if (PressedKeys.Num() < 0)
+	if (PressedKeys.IsEmpty())
 	{
 		return;
 	}

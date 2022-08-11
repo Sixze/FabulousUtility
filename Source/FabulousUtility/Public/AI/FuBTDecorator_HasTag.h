@@ -12,7 +12,10 @@ class FABULOUSUTILITY_API UFuBTDecorator_HasTag : public UBTDecorator
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Settings")
-	FGameplayTag Tag;
+	EGameplayContainerMatchType TagsMatchMode{EGameplayContainerMatchType::All};
+
+	UPROPERTY(EditAnywhere, Category = "Settings")
+	FGameplayTagContainer Tags;
 
 	UPROPERTY(Transient)
 	TWeakObjectPtr<UAbilitySystemComponent> AbilitySystem;
