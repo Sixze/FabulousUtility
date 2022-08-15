@@ -87,7 +87,7 @@ void FFuDelayLatentAction::UpdateOperation(FLatentResponse& Response)
 #if WITH_EDITOR
 FString FFuDelayLatentAction::GetDescription() const
 {
-	return FString::Printf(TEXT("Time Remaining: %.2f, Loop Index: %d"), TimeRemaining, LoopIndex);
+	return FString::Printf(TEXT("Time Remaining: %.2f, Loop Index: %d."), TimeRemaining, LoopIndex);
 }
 #endif
 

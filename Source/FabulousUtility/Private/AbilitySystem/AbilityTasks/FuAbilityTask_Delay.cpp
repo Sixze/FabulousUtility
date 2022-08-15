@@ -50,7 +50,7 @@ void UFuAbilityTask_Delay::Activate()
 
 FString UFuAbilityTask_Delay::GetDebugString() const
 {
-	return FString::Printf(TEXT("%s (%s). Time Remaining: %.2f, Loop Index: %d"), *GetName(), *InstanceName.ToString(),
+	return FString::Printf(TEXT("%s (%s): Time Remaining: %.2f, Loop Index: %d."), *GetName(), *InstanceName.ToString(),
 	                       Duration1 - GetWorld()->GetTimerManager().GetTimerRemaining(TimerHandle), LoopIndex);
 }
 
