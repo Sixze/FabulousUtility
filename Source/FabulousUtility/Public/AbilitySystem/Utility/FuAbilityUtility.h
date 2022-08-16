@@ -22,6 +22,10 @@ public:
 	static bool IsAbilityInputPressed(const UGameplayAbility* Ability);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility")
+	static const UGameplayAbility* GetPrimaryAbilityInstance(UAbilitySystemComponent* AbilitySystem,
+	                                                         FGameplayAbilitySpecHandle AbilityHandle);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility")
 	static bool IsPrimaryAbilityInstanceActive(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
@@ -37,6 +41,9 @@ public:
 	static bool TryBatchRpcActivateAbility(UAbilitySystemComponent* AbilitySystem,
 	                                       FGameplayAbilitySpecHandle AbilityHandle,
 	                                       bool bEndAbilityImmediately);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility")
+	static void CancelAbilityByHandle(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility", Meta = (AutoCreateRefTerm = "Tags"))
 	static void CancelAbilitiesWithAnyTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer& Tags,
@@ -73,19 +80,40 @@ inline bool UFuAbilityUtility::IsAbilityInputPressed(const UGameplayAbility* Abi
 	return FU_ENSURE(AbilitySpecification != nullptr) && AbilitySpecification->InputPressed;
 }
 
+inline const UGameplayAbility* UFuAbilityUtility::GetPrimaryAbilityInstance(UAbilitySystemComponent* AbilitySystem,
+                                                                            const FGameplayAbilitySpecHandle AbilityHandle)
+{
+	if (!FU_ENSURE(IsValid(AbilitySystem)))
+	{
+		return nullptr;
+	}
+
+	const auto* AbilitySpecification{AbilitySystem->FindAbilitySpecFromHandle(AbilityHandle)};
+
+	return AbilitySpecification != nullptr ? AbilitySpecification->GetPrimaryInstance() : nullptr;
+}
+
 inline bool UFuAbilityUtility::IsPrimaryAbilityInstanceActive(UAbilitySystemComponent* AbilitySystem,
                                                               const FGameplayAbilitySpecHandle AbilityHandle)
 {
-	auto bInstance{false};
-	const auto* AbilityInstance{UAbilitySystemBlueprintLibrary::GetGameplayAbilityFromSpecHandle(AbilitySystem, AbilityHandle, bInstance)};
+	const auto* AbilityInstance{GetPrimaryAbilityInstance(AbilitySystem, AbilityHandle)};
 
-	return AbilityInstance->IsActive();
+	return IsValid(AbilityInstance) && AbilityInstance->IsActive();
 }
 
 inline bool UFuAbilityUtility::SwitchIsPrimaryAbilityInstanceActive(UAbilitySystemComponent* AbilitySystem,
                                                                     const FGameplayAbilitySpecHandle AbilityHandle)
 {
 	return IsPrimaryAbilityInstanceActive(AbilitySystem, AbilityHandle);
+}
+
+inline void UFuAbilityUtility::CancelAbilityByHandle(UAbilitySystemComponent* AbilitySystem,
+                                                     const FGameplayAbilitySpecHandle AbilityHandle)
+{
+	if (FU_ENSURE(IsValid(AbilitySystem)))
+	{
+		AbilitySystem->CancelAbilityHandle(AbilityHandle);
+	}
 }
 
 inline void UFuAbilityUtility::CancelAbilitiesWithAnyTag(UAbilitySystemComponent* AbilitySystem,
