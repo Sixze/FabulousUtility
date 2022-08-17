@@ -146,3 +146,185 @@ bool UFuPhysicsUtility::LineTraceBone(UPrimitiveComponent* Primitive, const FNam
 
 	return BodyInstance != nullptr && BodyInstance->LineTrace(Hit, TraceStart, TraceEnd, false, true);
 }
+
+bool UFuPhysicsUtility::BoxOverlapActors(const UObject* WorldContext, const FVector& Location, const FRotator& Rotation,
+                                         const FVector& Extent, const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes,
+                                         const TArray<AActor*>& IgnoreActors, TArray<AActor*>& Actors)
+{
+	const auto* World{WorldContext->GetWorld()};
+	if (!FU_ENSURE(IsValid(World)))
+	{
+		return false;
+	}
+
+	const auto* CollisionProfile{UCollisionProfile::Get()};
+
+	FCollisionObjectQueryParams ObjectQueryParameters;
+	for (const auto ObjectType : ObjectTypes)
+	{
+		ObjectQueryParameters.AddObjectTypesToQuery(CollisionProfile->ConvertToCollisionChannel(false, ObjectType));
+	}
+
+	FCollisionQueryParams QueryParameters{ANSI_TO_TCHAR(__FUNCTION__), false};
+	QueryParameters.AddIgnoredActors(IgnoreActors);
+
+	static TArray<FOverlapResult> Overlaps;
+	check(Overlaps.IsEmpty())
+
+	World->OverlapMultiByObjectType(Overlaps, Location, Rotation.Quaternion(), ObjectQueryParameters,
+	                                FCollisionShape::MakeBox(Extent), QueryParameters);
+
+	Actors.Reset();
+
+	for (const auto& Overlap : Overlaps)
+	{
+		auto* Actor{Overlap.GetActor()};
+
+		if (IsValid(Actor) && !Actors.Contains(Actor))
+		{
+			Actors.Add(Actor);
+		}
+	}
+
+	Overlaps.Reset();
+
+	return Actors.Num() > 0;
+}
+
+bool UFuPhysicsUtility::BoxOverlapComponents(const UObject* WorldContext, const FVector& Location, const FRotator& Rotation,
+                                             const FVector& Extent, const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes,
+                                             const TArray<AActor*>& IgnoreActors, TArray<UPrimitiveComponent*>& Components)
+{
+	const auto* World{WorldContext->GetWorld()};
+	if (!FU_ENSURE(IsValid(World)))
+	{
+		return false;
+	}
+
+	const auto* CollisionProfile{UCollisionProfile::Get()};
+
+	FCollisionObjectQueryParams ObjectQueryParameters;
+	for (const auto ObjectType : ObjectTypes)
+	{
+		ObjectQueryParameters.AddObjectTypesToQuery(CollisionProfile->ConvertToCollisionChannel(false, ObjectType));
+	}
+
+	FCollisionQueryParams QueryParameters{ANSI_TO_TCHAR(__FUNCTION__), false};
+	QueryParameters.AddIgnoredActors(IgnoreActors);
+
+	static TArray<FOverlapResult> Overlaps;
+	check(Overlaps.IsEmpty())
+
+	World->OverlapMultiByObjectType(Overlaps, Location, Rotation.Quaternion(), ObjectQueryParameters,
+	                                FCollisionShape::MakeBox(Extent), QueryParameters);
+
+	Components.Reset();
+
+	for (const auto& Overlap : Overlaps)
+	{
+		if (Overlap.Component.IsValid())
+		{
+			Components.Add(Overlap.Component.Get());
+		}
+	}
+
+	Overlaps.Reset();
+
+	return Components.Num() > 0;
+}
+
+bool UFuPhysicsUtility::ConeOverlapActorsSimple(const UObject* WorldContext, const FVector& Location,
+                                                const FRotator& Rotation, const float Radius, const float Angle,
+                                                const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes,
+                                                const TArray<AActor*>& IgnoreActors, TArray<AActor*>& Actors)
+{
+	const auto* World{WorldContext->GetWorld()};
+	if (!FU_ENSURE(IsValid(World)))
+	{
+		return false;
+	}
+
+	const auto* CollisionProfile{UCollisionProfile::Get()};
+
+	FCollisionObjectQueryParams ObjectQueryParameters;
+	for (const auto ObjectType : ObjectTypes)
+	{
+		ObjectQueryParameters.AddObjectTypesToQuery(CollisionProfile->ConvertToCollisionChannel(false, ObjectType));
+	}
+
+	FCollisionQueryParams QueryParameters{ANSI_TO_TCHAR(__FUNCTION__), false};
+	QueryParameters.AddIgnoredActors(IgnoreActors);
+
+	static TArray<FOverlapResult> Overlaps;
+	check(Overlaps.IsEmpty())
+
+	World->OverlapMultiByObjectType(Overlaps, Location, Rotation.Quaternion(), ObjectQueryParameters,
+	                                FCollisionShape::MakeSphere(Radius), QueryParameters);
+
+	const auto Direction{Rotation.Vector()};
+	const auto AngleCos{FMath::Cos(FMath::DegreesToRadians(FMath::Clamp(Angle, 0.0f, 180.0f)))};
+
+	Actors.Reset();
+
+	for (const auto& Overlap : Overlaps)
+	{
+		auto* Actor{Overlap.GetActor()};
+
+		if (IsValid(Actor) && !Actors.Contains(Actor) &&
+		    (Direction | (Overlap.Component->GetComponentLocation() - Location).GetSafeNormal()) >= AngleCos)
+		{
+			Actors.Add(Actor);
+		}
+	}
+
+	Overlaps.Reset();
+
+	return Actors.Num() > 0;
+}
+
+bool UFuPhysicsUtility::ConeOverlapComponentsSimple(const UObject* WorldContext, const FVector& Location,
+                                                    const FRotator& Rotation, const float Radius, const float Angle,
+                                                    const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes,
+                                                    const TArray<AActor*>& IgnoreActors, TArray<UPrimitiveComponent*>& Components)
+{
+	const auto* World{WorldContext->GetWorld()};
+	if (!FU_ENSURE(IsValid(World)))
+	{
+		return false;
+	}
+
+	const auto* CollisionProfile{UCollisionProfile::Get()};
+
+	FCollisionObjectQueryParams ObjectQueryParameters;
+	for (const auto ObjectType : ObjectTypes)
+	{
+		ObjectQueryParameters.AddObjectTypesToQuery(CollisionProfile->ConvertToCollisionChannel(false, ObjectType));
+	}
+
+	FCollisionQueryParams QueryParameters{ANSI_TO_TCHAR(__FUNCTION__), false};
+	QueryParameters.AddIgnoredActors(IgnoreActors);
+
+	static TArray<FOverlapResult> Overlaps;
+	check(Overlaps.IsEmpty())
+
+	World->OverlapMultiByObjectType(Overlaps, Location, Rotation.Quaternion(), ObjectQueryParameters,
+	                                FCollisionShape::MakeSphere(Radius), QueryParameters);
+
+	const auto Direction{Rotation.Vector()};
+	const auto AngleCos{FMath::Cos(FMath::DegreesToRadians(FMath::Clamp(Angle, 0.0f, 180.0f)))};
+
+	Components.Reset();
+
+	for (const auto& Overlap : Overlaps)
+	{
+		if (Overlap.Component.IsValid() &&
+		    (Direction | (Overlap.Component->GetComponentLocation() - Location).GetSafeNormal()) >= AngleCos)
+		{
+			Components.Add(Overlap.Component.Get());
+		}
+	}
+
+	Overlaps.Reset();
+
+	return Components.Num() > 0;
+}
