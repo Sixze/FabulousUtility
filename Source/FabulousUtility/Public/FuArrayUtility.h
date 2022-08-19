@@ -15,23 +15,12 @@ public:
 	template <class ValueType>
 	static void ShuffleFirstElements(TArray<ValueType>& Array, int32 FirstElementsCount);
 
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Array Utility", Meta = (AutoCreateRefTerm = "Array"))
+	static int32 GetWeightedRandomIndex(const TArray<float>& Array);
+
 	// Internal blueprint only functions.
 
 private:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", CustomThunk, Meta = (ArrayParm = "Array"))
-	static void Shuffle(TArray<int32>& Array);
-
-	DECLARE_FUNCTION(execShuffle);
-
-	static void Shuffle(void* Array, const FArrayProperty* Property);
-
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", CustomThunk, Meta = (ArrayParm = "Array"))
-	static void ShuffleFirstElements(TArray<int32>& Array, int32 FirstElementsCount);
-
-	DECLARE_FUNCTION(execShuffleFirstElements);
-
-	static void ShuffleFirstElements(void* Array, const FArrayProperty* Property, int32 FirstElementsCount);
-
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Array Utility", CustomThunk, Meta = (ArrayParm = "Array"))
 	static bool IsEmpty(const TArray<UObject*>& Array);
 
@@ -55,6 +44,20 @@ private:
 	DECLARE_FUNCTION(execSwitchIsNotEmpty);
 
 	static bool IsEmpty(void* Array, const FArrayProperty* Property);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", CustomThunk, Meta = (ArrayParm = "Array"))
+	static void Shuffle(TArray<int32>& Array);
+
+	DECLARE_FUNCTION(execShuffle);
+
+	static void Shuffle(void* Array, const FArrayProperty* Property);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", CustomThunk, Meta = (ArrayParm = "Array"))
+	static void ShuffleFirstElements(TArray<int32>& Array, int32 FirstElementsCount);
+
+	DECLARE_FUNCTION(execShuffleFirstElements);
+
+	static void ShuffleFirstElements(void* Array, const FArrayProperty* Property, int32 FirstElementsCount);
 };
 
 template <class ValueType>
@@ -88,16 +91,6 @@ void UFuArrayUtility::ShuffleFirstElements(TArray<ValueType>& Array, const int32
 	}
 }
 
-inline void UFuArrayUtility::Shuffle(TArray<int32>& Array)
-{
-	checkNoEntry()
-}
-
-inline void UFuArrayUtility::ShuffleFirstElements(TArray<int32>& Array, const int32 FirstElementsCount)
-{
-	checkNoEntry()
-}
-
 inline bool UFuArrayUtility::IsEmpty(const TArray<UObject*>& Array)
 {
 	checkNoEntry()
@@ -120,4 +113,14 @@ inline bool UFuArrayUtility::SwitchIsNotEmpty(const TArray<UObject*>& Array)
 {
 	checkNoEntry()
 	return true;
+}
+
+inline void UFuArrayUtility::Shuffle(TArray<int32>& Array)
+{
+	checkNoEntry()
+}
+
+inline void UFuArrayUtility::ShuffleFirstElements(TArray<int32>& Array, const int32 FirstElementsCount)
+{
+	checkNoEntry()
 }

@@ -121,9 +121,9 @@ void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(
 
 	for (const auto& CooldownTag : *CooldownTags)
 	{
-		const auto TagsCount{EffectTags.GetTagCount(CooldownTag)};
+		const auto TagCount{EffectTags.GetTagCount(CooldownTag)};
 
-		if (bAddedOrRemoved && TagsCount == 1)
+		if (bAddedOrRemoved && TagCount == 1)
 		{
 			// A cooldown tag has been added.
 
@@ -132,7 +132,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(
 
 			RefreshEffectTimeRemainingAndDurationForTag(CooldownTag);
 		}
-		else if (!bAddedOrRemoved && TagsCount <= 0)
+		else if (!bAddedOrRemoved && TagCount <= 0)
 		{
 			// A cooldown tag has been removed.
 

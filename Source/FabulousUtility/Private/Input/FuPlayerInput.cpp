@@ -21,13 +21,13 @@ void UFuPlayerInput::TriggerInputEventForPressedActionsAndKeys(const TArray<UInp
 	static TArray<FKey> PressedKeys;
 	check(PressedKeys.IsEmpty())
 
-	for (const auto& KeyAndStatePair : const_cast<ThisClass*>(this)->GetKeyStateMap())
+	for (const auto& [Key, KeyState] : const_cast<ThisClass*>(this)->GetKeyStateMap())
 	{
-		if (KeyAndStatePair.Value.bDown ||
-		    KeyAndStatePair.Value.EventCounts[IE_Pressed].Num() > 0 ||
-		    KeyAndStatePair.Value.EventCounts[IE_Repeat].Num() > 0)
+		if (KeyState.bDown ||
+		    KeyState.EventCounts[IE_Pressed].Num() > 0 ||
+		    KeyState.EventCounts[IE_Repeat].Num() > 0)
 		{
-			PressedKeys.Add(KeyAndStatePair.Key);
+			PressedKeys.Add(Key);
 		}
 	}
 
