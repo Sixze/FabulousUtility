@@ -1,6 +1,6 @@
 #include "UI/SlateNavigation/FuSlateNavigationSettings.h"
 
-#define LOCTEXT_NAMESPACE "SlateNavigationSettings"
+#define LOCTEXT_NAMESPACE "FuSlateNavigationSettings"
 
 UFuSlateNavigationSettings::UFuSlateNavigationSettings()
 {

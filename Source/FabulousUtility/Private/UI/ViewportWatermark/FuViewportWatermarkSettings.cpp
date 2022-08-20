@@ -7,7 +7,7 @@
 #include "Launch/Resources/Version.h"
 #include "UObject/ConstructorHelpers.h"
 
-#define LOCTEXT_NAMESPACE "ViewportWatermarkSettings"
+#define LOCTEXT_NAMESPACE "FuViewportWatermarkSettings"
 
 UFuViewportWatermarkSettings::UFuViewportWatermarkSettings()
 {
