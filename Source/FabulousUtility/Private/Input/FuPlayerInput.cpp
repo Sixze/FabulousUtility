@@ -52,7 +52,8 @@ void UFuPlayerInput::TriggerInputEventForPressedActionsAndKeys(const TArray<UInp
 	{
 		const auto* Input{InputStack[i]};
 
-		if (!IsValid(Input) || bBlockedInputComponentsOnly && !bInputIsBlockedForTheRestOfTheInputStack)
+		// ReSharper disable once CppRedundantParentheses
+		if (!IsValid(Input) || (bBlockedInputComponentsOnly && !bInputIsBlockedForTheRestOfTheInputStack))
 		{
 			bInputIsBlockedForTheRestOfTheInputStack |= Input->bBlockInput;
 			continue;

@@ -65,8 +65,9 @@ void UFuAbilitySystemComponent::OnRemoveAbility(FGameplayAbilitySpec& AbilitySpe
 bool UFuAbilitySystemComponent::AreAbilityTagsBlocked(const FGameplayTagContainer& Tags) const
 {
 	return Super::AreAbilityTagsBlocked(Tags) ||
-	       BlockedAbilityWithoutTags.GetExplicitGameplayTags().IsValid() &&
-	       !Tags.HasAny(BlockedAbilityWithoutTags.GetExplicitGameplayTags());
+	       // ReSharper disable once CppRedundantParentheses
+	       (BlockedAbilityWithoutTags.GetExplicitGameplayTags().IsValid() &&
+	        !Tags.HasAny(BlockedAbilityWithoutTags.GetExplicitGameplayTags()));
 }
 
 void UFuAbilitySystemComponent::AbilityLocalInputPressed(const int32 InputId)

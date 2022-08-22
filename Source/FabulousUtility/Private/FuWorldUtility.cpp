@@ -5,27 +5,24 @@
 
 constexpr const TCHAR* UFuWorldUtility::WorldTypeToString(const EWorldType::Type WorldType)
 {
-	switch (WorldType)
+	if (WorldType < EWorldType::None || WorldType > EWorldType::Inactive)
 	{
-		case EWorldType::None:
-			return FU_GET_ENUM_VALUE_STRING(EWorldType, None);
-		case EWorldType::Game:
-			return FU_GET_ENUM_VALUE_STRING(EWorldType, Game);
-		case EWorldType::Editor:
-			return FU_GET_ENUM_VALUE_STRING(EWorldType, Editor);
-		case EWorldType::PIE:
-			return FU_GET_ENUM_VALUE_STRING(EWorldType, PIE);
-		case EWorldType::EditorPreview:
-			return FU_GET_ENUM_VALUE_STRING(EWorldType, EditorPreview);
-		case EWorldType::GamePreview:
-			return FU_GET_ENUM_VALUE_STRING(EWorldType, GamePreview);
-		case EWorldType::GameRPC:
-			return FU_GET_ENUM_VALUE_STRING(EWorldType, GameRPC);
-		case EWorldType::Inactive:
-			return FU_GET_ENUM_VALUE_STRING(EWorldType, Inactive);
-		default:
-			return TEXT("Unknown");
+		return TEXT("Unknown World Type");
 	}
+
+	static const TCHAR* Strings[]
+	{
+		FU_GET_ENUM_VALUE_STRING(EWorldType, None),
+		FU_GET_ENUM_VALUE_STRING(EWorldType, Game),
+		FU_GET_ENUM_VALUE_STRING(EWorldType, Editor),
+		FU_GET_ENUM_VALUE_STRING(EWorldType, PIE),
+		FU_GET_ENUM_VALUE_STRING(EWorldType, EditorPreview),
+		FU_GET_ENUM_VALUE_STRING(EWorldType, GamePreview),
+		FU_GET_ENUM_VALUE_STRING(EWorldType, GameRPC),
+		FU_GET_ENUM_VALUE_STRING(EWorldType, Inactive)
+	};
+
+	return Strings[WorldType];
 }
 
 float UFuWorldUtility::GetWorldGravityZ(const UObject* WorldContext)

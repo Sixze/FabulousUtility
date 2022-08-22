@@ -45,7 +45,8 @@ void UFuPhysicsUtility::GetReachableActorsInRadius(const UObject* WorldContext, 
 
 		auto* ActorHits{ReachableActors.Find(Actor)};
 
-		if (ActorHits == nullptr && !Predicate(Overlap) || !Overlap.Component.IsValid() ||
+		// ReSharper disable once CppRedundantParentheses
+		if ((ActorHits == nullptr && !Predicate(Overlap)) || !Overlap.Component.IsValid() ||
 		    !IsComponentReachableFromLocation(Overlap.Component.Get(), Center, CollisionChannel, CollisionResponse, Hit, IgnoredActor))
 		{
 			continue;

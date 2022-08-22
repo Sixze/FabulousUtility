@@ -29,7 +29,7 @@ float UFuSlateUtility::GetDpiScale(const FVector2D& WidgetSize)
 	if (IsValid(GEngine))
 	{
 		const auto* World{GEngine->GetWorld()};
-		const auto* Viewport{IsValid(World) ? World->GetGameViewport() : GEngine->GameViewport};
+		const auto* Viewport{IsValid(World) ? World->GetGameViewport() : GEngine->GameViewport.Get()};
 
 		if (IsValid(Viewport))
 		{

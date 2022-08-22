@@ -24,7 +24,7 @@
 			bExecuted = true; \
 			\
 			UE_LOG(LogOutputDevice, Warning, TEXT("Ensure failed: ") TEXT(#Expression) TEXT(", File: ") __FILE__ TEXT(", Line: ") FU_STRINGIFY(__LINE__) TEXT(".")); \
-			UE_LOG(LogOutputDevice, Warning, Format, __VA_ARGS__); \
+			UE_LOG(LogOutputDevice, Warning, Format, ##__VA_ARGS__); \
 			\
 			PrintScriptCallstack(); \
 			\
@@ -40,9 +40,9 @@
 	}(), false))
 
 #define FU_ENSURE(Expression) FU_ENSURE_IMPLEMENTATION(Expression, false, TEXT(""), )
-#define FU_ENSURE_MESSAGE(Expression, Format, ...) FU_ENSURE_IMPLEMENTATION(Expression, false, Format, &, __VA_ARGS__)
+#define FU_ENSURE_MESSAGE(Expression, Format, ...) FU_ENSURE_IMPLEMENTATION(Expression, false, Format, &, ##__VA_ARGS__)
 #define FU_ENSURE_ALWAYS(Expression) FU_ENSURE_IMPLEMENTATION(Expression true, TEXT(""), )
-#define FU_ENSURE_ALWAYS_MESSAGE(Expression, Format, ...) FU_ENSURE_IMPLEMENTATION(Expression true, Format, &, __VA_ARGS__)
+#define FU_ENSURE_ALWAYS_MESSAGE(Expression, Format, ...) FU_ENSURE_IMPLEMENTATION(Expression true, Format, &, ##__VA_ARGS__)
 
 #else
 
