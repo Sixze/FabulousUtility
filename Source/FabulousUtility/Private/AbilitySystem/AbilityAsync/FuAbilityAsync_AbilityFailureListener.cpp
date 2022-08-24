@@ -81,7 +81,7 @@ void UFuAbilityAsync_AbilityFailureListener::Activate()
 		return;
 	}
 
-	AbilitySystem->OnAbilityFailed.AddDynamic(this, &ThisClass::AbilitySystem_OnAbilityFailed);
+	AbilitySystem->OnAbilityFailed.AddUObject(this, &ThisClass::AbilitySystem_OnAbilityFailed);
 }
 
 void UFuAbilityAsync_AbilityFailureListener::EndAction()
@@ -95,11 +95,10 @@ void UFuAbilityAsync_AbilityFailureListener::EndAction()
 	Super::EndAction();
 }
 
-// ReSharper disable once CppMemberFunctionMayBeConst
 void UFuAbilityAsync_AbilityFailureListener::AbilitySystem_OnAbilityFailed(const FGameplayAbilitySpecHandle AbilityHandle,
                                                                            // ReSharper disable once CppParameterMayBeConstPtrOrRef
                                                                            UGameplayAbility* Ability,
-                                                                           const FGameplayTagContainer& FailureTags)
+                                                                           const FGameplayTagContainer& FailureTags) const
 {
 	if ((AbilityTags1.IsEmpty() || Ability->AbilityTags.HasAny(AbilityTags1)) &&
 	    (FailureTags1.IsEmpty() || FailureTags.HasAny(FailureTags1)))

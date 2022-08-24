@@ -49,7 +49,6 @@ public:
 	virtual void EndAction() override;
 
 private:
-	UFUNCTION()
 	void AbilitySystem_OnAbilityFailed(FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability,
-	                                   const FGameplayTagContainer& FailureTags);
+	                                   const FGameplayTagContainer& FailureTags) const;
 };

@@ -5,14 +5,14 @@
 
 class UFuAbilitySystemComponent;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuAbilityAddedOrRemovedDelegate, UFuAbilitySystemComponent*, AbilitySystem,
-                                             const FGameplayAbilitySpec&, AbilitySpecification);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FFuAbilityAddedOrRemovedDelegate, UFuAbilitySystemComponent* AbilitySystem,
+                                     const FGameplayAbilitySpec& AbilitySpecification);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuAbilityActivatedDelegate, FGameplayAbilitySpecHandle, AbilityHandle,
-                                             UGameplayAbility*, Ability);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FFuAbilityActivatedDelegate, FGameplayAbilitySpecHandle AbilityHandle,
+                                     UGameplayAbility* Ability);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FFuAbilityFailedDelegate, FGameplayAbilitySpecHandle, AbilityHandle,
-                                               UGameplayAbility*, Ability, const FGameplayTagContainer&, FailureTags);
+DECLARE_MULTICAST_DELEGATE_ThreeParams(FFuAbilityFailedDelegate, FGameplayAbilitySpecHandle AbilityHandle,
+                                       UGameplayAbility* Ability, const FGameplayTagContainer& FailureTags);
 
 UCLASS()
 class FABULOUSUTILITY_API UFuAbilitySystemComponent : public UAbilitySystemComponent
@@ -23,16 +23,12 @@ private:
 	FGameplayTagCountContainer BlockedAbilityWithoutTags;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Ability System")
 	FFuAbilityAddedOrRemovedDelegate OnAbilityGiven;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Ability System")
 	FFuAbilityAddedOrRemovedDelegate OnAbilityRemoved;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Ability System")
 	FFuAbilityActivatedDelegate OnAbilityActivated;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Ability System")
 	FFuAbilityFailedDelegate OnAbilityFailed;
 
 public:

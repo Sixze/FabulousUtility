@@ -48,10 +48,8 @@ private:
 
 	void RefreshEffectTimeRemainingAndDurationForTag(const FGameplayTag& EffectTag) const;
 
-	UFUNCTION()
 	void OnAbilityGiven(UFuAbilitySystemComponent* AbilitySystem, const FGameplayAbilitySpec& AbilitySpecification);
 
-	UFUNCTION()
 	void OnAbilityRemoved(UFuAbilitySystemComponent* AbilitySystem, const FGameplayAbilitySpec& AbilitySpecification);
 
 	void OnActiveGameplayEffectAdded(UAbilitySystemComponent* AbilitySystem,

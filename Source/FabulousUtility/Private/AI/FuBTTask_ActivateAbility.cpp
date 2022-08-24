@@ -5,13 +5,26 @@
 #include "FuMacros.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 
+struct FFuActivateAbilityMemory
+{
+	TWeakObjectPtr<UFuAbilitySystemComponent> AbilitySystem;
+
+	TSet<FGameplayAbilitySpecHandle> ActiveAbilityHandles;
+
+	bool bAnyAbilitySuccessfullyEnded{false};
+};
+
 UFuBTTask_ActivateAbility::UFuBTTask_ActivateAbility()
 {
-	NodeName = "Activate Ability";
-	bCreateNodeInstance = true;
+	NodeName = "Fu Activate Ability";
 	bIgnoreRestartSelf = true;
 
 	INIT_TASK_NODE_NOTIFY_FLAGS();
+}
+
+uint16 UFuBTTask_ActivateAbility::GetInstanceMemorySize() const
+{
+	return sizeof(FFuActivateAbilityMemory);
 }
 
 FString UFuBTTask_ActivateAbility::GetStaticDescription() const
@@ -26,105 +39,137 @@ FName UFuBTTask_ActivateAbility::GetNodeIconName() const
 }
 #endif
 
-EBTNodeResult::Type UFuBTTask_ActivateAbility::ExecuteTask(UBehaviorTreeComponent& BehaviourTree, uint8* NodeMemory)
+EBTNodeResult::Type UFuBTTask_ActivateAbility::ExecuteTask(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory)
 {
-	check(!AbilitySystem.IsValid())
-	check(ActiveAbilityHandles.IsEmpty())
-	check(!bAnyAbilitySuccessfullyEnded)
-
-	const auto* Controller{BehaviourTree.GetAIOwner()};
-	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn() : nullptr};
-
-	AbilitySystem = Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn));
-
-	if (!FU_ENSURE(AbilityTag.IsValid()) || !FU_ENSURE(AbilitySystem.IsValid()))
+	if (!FU_ENSURE(AbilityTag.IsValid()))
 	{
 		return EBTNodeResult::Failed;
 	}
 
-	AbilitySystem->OnAbilityActivated.AddDynamic(this, &ThisClass::OnAbilityActivated);
+	auto& Memory{*CastInstanceNodeMemory<FFuActivateAbilityMemory>(NodeMemory)};
+
+	check(!Memory.AbilitySystem.IsValid())
+	check(Memory.ActiveAbilityHandles.IsEmpty())
+	check(!Memory.bAnyAbilitySuccessfullyEnded)
+
+	const auto* Controller{BehaviorTree.GetAIOwner()};
+	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn() : nullptr};
+	Memory.AbilitySystem = Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn));
+
+	if (!FU_ENSURE(Memory.AbilitySystem.IsValid()))
+	{
+		return EBTNodeResult::Failed;
+	}
+
+	Memory.AbilitySystem->OnAbilityActivated.AddUObject(this, &ThisClass::OnAbilityActivated,
+	                                                    TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
 
 	const auto AbilityEndedHandle{
-		AbilitySystem->OnAbilityEnded.AddWeakLambda(this, [this](const FAbilityEndedData& EndedData)
+		Memory.AbilitySystem->OnAbilityEnded.AddWeakLambda(this, [&Memory](const FAbilityEndedData& EndedData)
 		{
-			if (ActiveAbilityHandles.Remove(EndedData.AbilitySpecHandle) > 0)
+			if (Memory.ActiveAbilityHandles.Remove(EndedData.AbilitySpecHandle) > 0)
 			{
-				bAnyAbilitySuccessfullyEnded |= !EndedData.bWasCancelled;
+				Memory.bAnyAbilitySuccessfullyEnded |= !EndedData.bWasCancelled;
 			}
 		})
 	};
 
-	for (const auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
+	for (const auto& AbilitySpecification : Memory.AbilitySystem->GetActivatableAbilities())
 	{
 		if (AbilitySpecification.Ability->AbilityTags.HasTag(AbilityTag))
 		{
-			AbilitySystem->TryActivateAbility(AbilitySpecification.Handle);
+			Memory.AbilitySystem->TryActivateAbility(AbilitySpecification.Handle);
 		}
 	}
 
-	AbilitySystem->OnAbilityEnded.Remove(AbilityEndedHandle);
-	AbilitySystem->OnAbilityActivated.RemoveAll(this);
+	Memory.AbilitySystem->OnAbilityEnded.Remove(AbilityEndedHandle);
+	Memory.AbilitySystem->OnAbilityActivated.RemoveAll(this);
 
 	if (!bWaitForAbilityEnd)
 	{
-		return bAnyAbilitySuccessfullyEnded || ActiveAbilityHandles.Num() > 0 ? EBTNodeResult::Succeeded : EBTNodeResult::Failed;
+		return Memory.bAnyAbilitySuccessfullyEnded || Memory.ActiveAbilityHandles.Num() > 0
+			       ? EBTNodeResult::Succeeded
+			       : EBTNodeResult::Failed;
 	}
 
-	if (ActiveAbilityHandles.IsEmpty())
+	if (Memory.ActiveAbilityHandles.IsEmpty())
 	{
-		return bAnyAbilitySuccessfullyEnded ? EBTNodeResult::Succeeded : EBTNodeResult::Failed;
+		return Memory.bAnyAbilitySuccessfullyEnded ? EBTNodeResult::Succeeded : EBTNodeResult::Failed;
 	}
 
-	AbilitySystem->OnAbilityEnded.AddUObject(this, &ThisClass::OnAbilityEnded);
+	Memory.AbilitySystem->OnAbilityEnded.AddUObject(this, &ThisClass::OnAbilityEnded,
+	                                                TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
 
 	return EBTNodeResult::InProgress;
 }
 
-EBTNodeResult::Type UFuBTTask_ActivateAbility::AbortTask(UBehaviorTreeComponent& BehaviourTree, uint8* NodeMemory)
+EBTNodeResult::Type UFuBTTask_ActivateAbility::AbortTask(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory)
 {
-	if (bCancelAbilityOnAbort && AbilitySystem.IsValid())
+	auto& Memory{*CastInstanceNodeMemory<FFuActivateAbilityMemory>(NodeMemory)};
+
+	if (bCancelAbilityOnAbort && Memory.AbilitySystem.IsValid())
 	{
-		for (const auto AbilityHandle : ActiveAbilityHandles)
+		Memory.AbilitySystem->OnAbilityEnded.RemoveAll(this);
+
+		for (const auto AbilityHandle : Memory.ActiveAbilityHandles)
 		{
-			AbilitySystem->CancelAbilityHandle(AbilityHandle);
+			Memory.AbilitySystem->CancelAbilityHandle(AbilityHandle);
 		}
 	}
 
 	return EBTNodeResult::Aborted;
 }
 
-void UFuBTTask_ActivateAbility::OnTaskFinished(UBehaviorTreeComponent& BehaviourTree, uint8* NodeMemory, const EBTNodeResult::Type Result)
+void UFuBTTask_ActivateAbility::OnTaskFinished(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory, const EBTNodeResult::Type Result)
 {
-	if (AbilitySystem.IsValid())
+	auto& Memory{*CastInstanceNodeMemory<FFuActivateAbilityMemory>(NodeMemory)};
+
+	if (Memory.AbilitySystem.IsValid())
 	{
-		AbilitySystem->OnAbilityEnded.RemoveAll(this);
-		AbilitySystem = nullptr;
+		Memory.AbilitySystem->OnAbilityEnded.RemoveAll(this);
+		Memory.AbilitySystem = nullptr;
 	}
 
-	ActiveAbilityHandles.Reset();
-	bAnyAbilitySuccessfullyEnded = false;
+	Memory.ActiveAbilityHandles.Reset();
+	Memory.bAnyAbilitySuccessfullyEnded = false;
 
-	Super::OnTaskFinished(BehaviourTree, NodeMemory, Result);
+	Super::OnTaskFinished(BehaviorTree, NodeMemory, Result);
 }
 
-void UFuBTTask_ActivateAbility::OnAbilityActivated(const FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability)
+void UFuBTTask_ActivateAbility::OnAbilityActivated(const FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability,
+                                                   const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
 {
-	ActiveAbilityHandles.Add(AbilityHandle);
-}
-
-void UFuBTTask_ActivateAbility::OnAbilityEnded(const FAbilityEndedData& EndedData)
-{
-	if (ActiveAbilityHandles.Remove(EndedData.AbilitySpecHandle) <= 0)
+	if (FU_ENSURE(BehaviorTree.IsValid()))
 	{
-		return;
+		auto& Memory{
+			*CastInstanceNodeMemory<FFuActivateAbilityMemory>(
+				BehaviorTree->GetNodeMemory(this, BehaviorTree->FindInstanceContainingNode(this)))
+		};
+
+		Memory.ActiveAbilityHandles.Add(AbilityHandle);
 	}
+}
 
-	bAnyAbilitySuccessfullyEnded |= !EndedData.bWasCancelled;
-
-	auto* BehaviorTree{Cast<UBehaviorTreeComponent>(GetOuter())};
-
-	if (ActiveAbilityHandles.IsEmpty() && IsValid(BehaviorTree))
+void UFuBTTask_ActivateAbility::OnAbilityEnded(const FAbilityEndedData& EndedData,
+                                               const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
+{
+	if (FU_ENSURE(BehaviorTree.IsValid()))
 	{
-		FinishLatentTask(*BehaviorTree, bAnyAbilitySuccessfullyEnded ? EBTNodeResult::Succeeded : EBTNodeResult::Failed);
+		auto& Memory{
+			*CastInstanceNodeMemory<FFuActivateAbilityMemory>(
+				BehaviorTree->GetNodeMemory(this, BehaviorTree->FindInstanceContainingNode(this)))
+		};
+
+		if (Memory.ActiveAbilityHandles.Remove(EndedData.AbilitySpecHandle) <= 0)
+		{
+			return;
+		}
+
+		Memory.bAnyAbilitySuccessfullyEnded |= !EndedData.bWasCancelled;
+
+		if (Memory.ActiveAbilityHandles.IsEmpty())
+		{
+			FinishLatentTask(*BehaviorTree, Memory.bAnyAbilitySuccessfullyEnded ? EBTNodeResult::Succeeded : EBTNodeResult::Failed);
+		}
 	}
 }

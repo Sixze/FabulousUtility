@@ -39,8 +39,8 @@ void UFuAbilityAsync_AbilityCooldownListener::Activate()
 	AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(this, &ThisClass::OnActiveGameplayEffectAdded);
 	AbilitySystem->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &ThisClass::OnActiveGameplayEffectRemoved);
 
-	AbilitySystem->OnAbilityGiven.AddUniqueDynamic(this, &ThisClass::OnAbilityGiven);
-	AbilitySystem->OnAbilityRemoved.AddUniqueDynamic(this, &ThisClass::OnAbilityRemoved);
+	AbilitySystem->OnAbilityGiven.AddUObject(this, &ThisClass::OnAbilityGiven);
+	AbilitySystem->OnAbilityRemoved.AddUObject(this, &ThisClass::OnAbilityRemoved);
 
 	for (const auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
 	{

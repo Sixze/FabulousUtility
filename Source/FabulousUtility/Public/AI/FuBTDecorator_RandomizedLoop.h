@@ -5,7 +5,7 @@
 
 // Randomized loop decorator node.
 // A decorator node that bases its condition on whether its loop counter has been exceeded.
-UCLASS(HideCategories = ("Condition"), Meta = (ShowWorldContextPin))
+UCLASS(DisplayName = "Fu Randomized Loop", HideCategories = ("Condition"), Meta = (ShowWorldContextPin))
 class FABULOUSUTILITY_API UFuBTDecorator_RandomizedLoop : public UBTDecorator
 {
 	GENERATED_BODY()
@@ -24,8 +24,7 @@ public:
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 #endif
 
-private:
-	virtual void DescribeRuntimeValues(const UBehaviorTreeComponent& BehaviourTree, uint8* NodeMemory,
+	virtual void DescribeRuntimeValues(const UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory,
 	                                   EBTDescriptionVerbosity::Type Verbosity, TArray<FString>& Values) const override;
 
 	virtual uint16 GetInstanceMemorySize() const override;

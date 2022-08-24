@@ -7,7 +7,7 @@
 class UFuAbilitySystemComponent;
 struct FAbilityEndedData;
 
-UCLASS(Meta = (ShowWorldContextPin))
+UCLASS(DisplayName = "Fu Activate Ability", Meta = (ShowWorldContextPin))
 class FABULOUSUTILITY_API UFuBTTask_ActivateAbility : public UBTTaskNode
 {
 	GENERATED_BODY()
@@ -22,17 +22,10 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Settings")
 	bool bCancelAbilityOnAbort;
 
-	UPROPERTY(Transient)
-	TWeakObjectPtr<UFuAbilitySystemComponent> AbilitySystem;
-
-	UPROPERTY(Transient)
-	TSet<FGameplayAbilitySpecHandle> ActiveAbilityHandles;
-
-	UPROPERTY(Transient)
-	bool bAnyAbilitySuccessfullyEnded;
-
 public:
 	UFuBTTask_ActivateAbility();
+
+	virtual uint16 GetInstanceMemorySize() const override;
 
 	virtual FString GetStaticDescription() const override;
 
@@ -40,16 +33,16 @@ public:
 	virtual FName GetNodeIconName() const override;
 #endif
 
-	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& BehaviourTree, uint8* NodeMemory) override;
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory) override;
 
 protected:
-	virtual EBTNodeResult::Type AbortTask(UBehaviorTreeComponent& BehaviourTree, uint8* NodeMemory) override;
+	virtual EBTNodeResult::Type AbortTask(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory) override;
 
-	virtual void OnTaskFinished(UBehaviorTreeComponent& BehaviourTree, uint8* NodeMemory, EBTNodeResult::Type Result) override;
+	virtual void OnTaskFinished(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory, EBTNodeResult::Type Result) override;
 
 private:
-	UFUNCTION()
-	void OnAbilityActivated(FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability);
+	void OnAbilityActivated(FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability,
+	                        TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree);
 
-	void OnAbilityEnded(const FAbilityEndedData& EndedData);
+	void OnAbilityEnded(const FAbilityEndedData& EndedData, TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree);
 };

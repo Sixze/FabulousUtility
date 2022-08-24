@@ -5,10 +5,14 @@
 #include "AIController.h"
 #include "FuMacros.h"
 
+struct FFuTagListenerMemory
+{
+	TWeakObjectPtr<UAbilitySystemComponent> AbilitySystem;
+};
+
 UFuBTTask_TagListener::UFuBTTask_TagListener()
 {
-	NodeName = "Wait for Tag Change";
-	bCreateNodeInstance = true;
+	NodeName = "Fu Wait for Tag Change";
 	bIgnoreRestartSelf = false;
 
 	INIT_TASK_NODE_NOTIFY_FLAGS();
@@ -22,6 +26,11 @@ bool UFuBTTask_TagListener::CanEditChange(const FProperty* Property) const
 }
 #endif
 
+uint16 UFuBTTask_TagListener::GetInstanceMemorySize() const
+{
+	return sizeof(FFuTagListenerMemory);
+}
+
 FString UFuBTTask_TagListener::GetStaticDescription() const
 {
 	switch (WaitMode)
@@ -33,6 +42,7 @@ FString UFuBTTask_TagListener::GetStaticDescription() const
 			return FString::Printf(TEXT("Wait for Tag Remove: %s"), *Tag.ToString());
 
 		default:
+			FU_ENSURE(false);
 			return Super::GetStaticDescription();
 	}
 }
@@ -44,21 +54,27 @@ FName UFuBTTask_TagListener::GetNodeIconName() const
 }
 #endif
 
-EBTNodeResult::Type UFuBTTask_TagListener::ExecuteTask(UBehaviorTreeComponent& BehaviourTree, uint8* NodeMemory)
+EBTNodeResult::Type UFuBTTask_TagListener::ExecuteTask(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory)
 {
-	check(!AbilitySystem.IsValid())
-
-	const auto* Controller{BehaviourTree.GetAIOwner()};
-	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn() : nullptr};
-
-	AbilitySystem = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn);
-
-	if (!FU_ENSURE(Tag.IsValid()) || !FU_ENSURE(FuTagListenerWaitMode::IsValid(WaitMode)) || !FU_ENSURE(AbilitySystem.IsValid()))
+	if (!FU_ENSURE(Tag.IsValid()) || !FU_ENSURE(FuTagListenerWaitMode::IsValid(WaitMode)))
 	{
 		return EBTNodeResult::Failed;
 	}
 
-	const auto TagCount{AbilitySystem->GetTagCount(Tag)};
+	auto& Memory{*CastInstanceNodeMemory<FFuTagListenerMemory>(NodeMemory)};
+
+	check(!Memory.AbilitySystem.IsValid())
+
+	const auto* Controller{BehaviorTree.GetAIOwner()};
+	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn() : nullptr};
+	Memory.AbilitySystem = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn);
+
+	if (!FU_ENSURE(Memory.AbilitySystem.IsValid()))
+	{
+		return EBTNodeResult::Failed;
+	}
+
+	const auto TagCount{Memory.AbilitySystem->GetTagCount(Tag)};
 
 	// ReSharper disable CppRedundantParentheses
 	if ((WaitMode == EFuTagListenerWaitMode::WaitForTagAdd && TagCount > 0) ||
@@ -68,33 +84,34 @@ EBTNodeResult::Type UFuBTTask_TagListener::ExecuteTask(UBehaviorTreeComponent& B
 		return EBTNodeResult::Succeeded;
 	}
 
-	AbilitySystem->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &ThisClass::OnTagChanged);
+	Memory.AbilitySystem->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved)
+	      .AddUObject(this, &ThisClass::OnTagChanged, TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
 
 	return EBTNodeResult::InProgress;
 }
 
-void UFuBTTask_TagListener::OnTaskFinished(UBehaviorTreeComponent& BehaviourTree, uint8* NodeMemory, const EBTNodeResult::Type Result)
+void UFuBTTask_TagListener::OnTaskFinished(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory, const EBTNodeResult::Type Result)
 {
-	if (AbilitySystem.IsValid())
+	auto& Memory{*CastInstanceNodeMemory<FFuTagListenerMemory>(NodeMemory)};
+
+	if (Memory.AbilitySystem.IsValid())
 	{
-		AbilitySystem->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved).RemoveAll(this);
-		AbilitySystem = nullptr;
+		Memory.AbilitySystem->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved).RemoveAll(this);
+		Memory.AbilitySystem = nullptr;
 	}
 
-	Super::OnTaskFinished(BehaviourTree, NodeMemory, Result);
+	Super::OnTaskFinished(BehaviorTree, NodeMemory, Result);
 }
 
-void UFuBTTask_TagListener::OnTagChanged(const FGameplayTag ThisTag, const int32 NewCount) const
+void UFuBTTask_TagListener::OnTagChanged(const FGameplayTag ThisTag, const int32 NewCount,
+                                         const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree) const
 {
 	// ReSharper disable CppRedundantParentheses
-	if ((WaitMode == EFuTagListenerWaitMode::WaitForTagAdd && NewCount > 0) ||
-	    (WaitMode == EFuTagListenerWaitMode::WaitForTagRemove && NewCount <= 0))
-	// ReSharper restore CppRedundantParentheses
+	if ((WaitMode == EFuTagListenerWaitMode::WaitForTagAdd && NewCount > 0 ||
+	     WaitMode == EFuTagListenerWaitMode::WaitForTagRemove && NewCount <= 0) &&
+	    // ReSharper restore CppRedundantParentheses
+	    FU_ENSURE(BehaviorTree.IsValid()))
 	{
-		auto* BehaviorTree{Cast<UBehaviorTreeComponent>(GetOuter())};
-		if (IsValid(BehaviorTree))
-		{
-			FinishLatentTask(*BehaviorTree, EBTNodeResult::Succeeded);
-		}
+		FinishLatentTask(*BehaviorTree, EBTNodeResult::Succeeded);
 	}
 }

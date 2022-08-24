@@ -5,12 +5,12 @@
 
 struct FFuRandomizedLoopMemory
 {
-	uint8 RemainingLoopsCount;
+	uint8 RemainingLoopsCount{0};
 };
 
 UFuBTDecorator_RandomizedLoop::UFuBTDecorator_RandomizedLoop()
 {
-	NodeName = TEXT("Randomized Loop");
+	NodeName = TEXT("Fu Randomized Loop");
 
 	bAllowAbortNone = false;
 	bAllowAbortLowerPri = false;
@@ -35,14 +35,14 @@ void UFuBTDecorator_RandomizedLoop::PostEditChangeProperty(FPropertyChangedEvent
 }
 #endif
 
-void UFuBTDecorator_RandomizedLoop::DescribeRuntimeValues(const UBehaviorTreeComponent& BehaviourTree, uint8* NodeMemory,
+void UFuBTDecorator_RandomizedLoop::DescribeRuntimeValues(const UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory,
                                                           const EBTDescriptionVerbosity::Type Verbosity, TArray<FString>& Values) const
 {
-	Super::DescribeRuntimeValues(BehaviourTree, NodeMemory, Verbosity, Values);
+	Super::DescribeRuntimeValues(BehaviorTree, NodeMemory, Verbosity, Values);
 
-	const auto* Memory{CastInstanceNodeMemory<FFuRandomizedLoopMemory>(NodeMemory)};
+	const auto& Memory{*CastInstanceNodeMemory<FFuRandomizedLoopMemory>(NodeMemory)};
 
-	Values.Add(FString::Format(TEXT("Loops remaining: {0}"), {Memory->RemainingLoopsCount}));
+	Values.Add(FString::Format(TEXT("Loops remaining: {0}"), {Memory.RemainingLoopsCount}));
 }
 
 uint16 UFuBTDecorator_RandomizedLoop::GetInstanceMemorySize() const
@@ -59,22 +59,22 @@ void UFuBTDecorator_RandomizedLoop::OnNodeActivation(FBehaviorTreeSearchData& Se
 {
 	Super::OnNodeActivation(SearchData);
 
-	const auto* ParentMemory{GetParentNode()->GetNodeMemory<FBTCompositeMemory>(SearchData)};
+	const auto& ParentMemory{*GetParentNode()->GetNodeMemory<FBTCompositeMemory>(SearchData)};
 	const auto bParentIsSpecialNode{GetParentNode()->IsA<UBTComposite_SimpleParallel>()};
 
-	auto* Memory{GetNodeMemory<FFuRandomizedLoopMemory>(SearchData)};
+	auto& Memory{*GetNodeMemory<FFuRandomizedLoopMemory>(SearchData)};
 
 	// ReSharper disable CppRedundantParentheses
-	if ((bParentIsSpecialNode && ParentMemory->CurrentChild == BTSpecialChild::NotInitialized) ||
-	    (!bParentIsSpecialNode && ParentMemory->CurrentChild != ChildIndex))
+	if ((bParentIsSpecialNode && ParentMemory.CurrentChild == BTSpecialChild::NotInitialized) ||
+	    (!bParentIsSpecialNode && ParentMemory.CurrentChild != ChildIndex))
 	// ReSharper restore CppRedundantParentheses
 	{
-		Memory->RemainingLoopsCount = FMath::RandRange(MinLoopsCount, MaxLoopsCount);
+		Memory.RemainingLoopsCount = FMath::RandRange(MinLoopsCount, MaxLoopsCount);
 	}
 
-	Memory->RemainingLoopsCount -= 1;
+	Memory.RemainingLoopsCount -= 1;
 
-	if (Memory->RemainingLoopsCount > 0)
+	if (Memory.RemainingLoopsCount > 0)
 	{
 		GetParentNode()->SetChildOverride(SearchData, ChildIndex);
 	}

@@ -32,10 +32,10 @@ public:
 	static bool SwitchIsPrimaryAbilityInstanceActive(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility")
-	static bool CanActiveAbilityByClass(UAbilitySystemComponent* AbilitySystem, TSubclassOf<UGameplayAbility> AbilityClass);
+	static bool CanActivateAbilityByClass(UAbilitySystemComponent* AbilitySystem, TSubclassOf<UGameplayAbility> AbilityClass);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility")
-	static bool CanActiveAbilityByHandle(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle);
+	static bool CanActivateAbilityByHandle(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility")
 	static bool TryBatchRpcActivateAbility(UAbilitySystemComponent* AbilitySystem,

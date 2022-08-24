@@ -2,8 +2,8 @@
 
 #include "AbilitySystem/FuGameplayAbility.h"
 
-bool UFuAbilityUtility::CanActiveAbilityByClass(UAbilitySystemComponent* AbilitySystem,
-                                                const TSubclassOf<UGameplayAbility> AbilityClass)
+bool UFuAbilityUtility::CanActivateAbilityByClass(UAbilitySystemComponent* AbilitySystem,
+                                                  const TSubclassOf<UGameplayAbility> AbilityClass)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(IsValid(AbilityClass)))
 	{
@@ -16,7 +16,8 @@ bool UFuAbilityUtility::CanActiveAbilityByClass(UAbilitySystemComponent* Ability
 	       AbilitySpecification->Ability->CanActivateAbility(AbilitySpecification->Handle, AbilitySystem->AbilityActorInfo.Get());
 }
 
-bool UFuAbilityUtility::CanActiveAbilityByHandle(UAbilitySystemComponent* AbilitySystem, const FGameplayAbilitySpecHandle AbilityHandle)
+bool UFuAbilityUtility::CanActivateAbilityByHandle(UAbilitySystemComponent* AbilitySystem,
+                                                   const FGameplayAbilitySpecHandle AbilityHandle)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(AbilityHandle.IsValid()))
 	{
