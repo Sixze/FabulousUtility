@@ -13,21 +13,35 @@ bool UFuActorUtility::TryGetComponentByClass(AActor* Actor, const TSubclassOf<UA
 FVector UFuActorUtility::GetActorFeetLocation(const AActor* Actor)
 {
 	const auto* Pawn{Cast<APawn>(Actor)};
+	const auto* MovementComponent{IsValid(Pawn) ? Pawn->GetMovementComponent() : nullptr};
 
-	return IsValid(Pawn)
-		       ? Pawn->GetMovementComponent()->GetActorFeetLocation()
-		       : FU_ENSURE(IsValid(Actor)) && FU_ENSURE(IsValid(Actor->GetRootComponent()))
-		       ? Actor->GetRootComponent()->GetComponentLocation() - FVector{0.0, 0.0, Actor->GetRootComponent()->Bounds.BoxExtent.Z}
-		       : FNavigationSystem::InvalidLocation;
+	if (IsValid(MovementComponent))
+	{
+		return MovementComponent->GetActorFeetLocation();
+	}
+
+	if (FU_ENSURE(IsValid(Actor) && IsValid(Actor->GetRootComponent())))
+	{
+		return Actor->GetRootComponent()->GetComponentLocation() - FVector{0.0f, 0.0f, Actor->GetRootComponent()->Bounds.BoxExtent.Z};
+	}
+
+	return FNavigationSystem::InvalidLocation;
 }
 
 FVector UFuActorUtility::GetActorFeetOffset(const AActor* Actor)
 {
 	const auto* Pawn{Cast<APawn>(Actor)};
+	const auto* MovementComponent{IsValid(Pawn) ? Pawn->GetMovementComponent() : nullptr};
 
-	return IsValid(Pawn)
-		       ? FVector{0.0, 0.0, Pawn->GetMovementComponent()->UpdatedComponent->Bounds.BoxExtent.Z}
-		       : FU_ENSURE(IsValid(Actor)) && FU_ENSURE(IsValid(Actor->GetRootComponent()))
-		       ? FVector{0.0, 0.0, Actor->GetRootComponent()->Bounds.BoxExtent.Z}
-		       : FVector::ZeroVector;
+	if (IsValid(MovementComponent))
+	{
+		return FVector{0.0f, 0.0f, MovementComponent->UpdatedComponent->Bounds.BoxExtent.Z};
+	}
+
+	if (FU_ENSURE(IsValid(Actor) && IsValid(Actor->GetRootComponent())))
+	{
+		return FVector{0.0f, 0.0f, Actor->GetRootComponent()->Bounds.BoxExtent.Z};
+	}
+
+	return FVector::ZeroVector;
 }

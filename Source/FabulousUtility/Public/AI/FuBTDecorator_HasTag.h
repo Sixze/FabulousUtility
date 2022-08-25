@@ -5,6 +5,13 @@
 
 struct FFuHasTagMemory;
 
+UENUM(BlueprintType)
+enum class EFuHasTagMatchMode : uint8
+{
+	AnyTag,
+	AllTags
+};
+
 UCLASS(DisplayName = "Fu Has Tag", Meta = (ShowWorldContextPin))
 class FABULOUSUTILITY_API UFuBTDecorator_HasTag : public UBTDecorator
 {
@@ -15,7 +22,7 @@ private:
 	FBlackboardKeySelector TargetKey;
 
 	UPROPERTY(EditAnywhere, Category = "Settings")
-	EGameplayContainerMatchType TagsMatchMode{EGameplayContainerMatchType::All};
+	EFuHasTagMatchMode MatchMode{EFuHasTagMatchMode::AnyTag};
 
 	UPROPERTY(EditAnywhere, Category = "Settings")
 	FGameplayTagContainer Tags;
