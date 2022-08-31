@@ -1,4 +1,4 @@
-#include "AbilitySystem/FuAnimNotify_GameplayEvent.h"
+#include "Animation/FuAnimNotify_GameplayEvent.h"
 
 #include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
 #include "AbilitySystem/Utility/FuEventDataUtility.h"
@@ -27,9 +27,10 @@ void UFuAnimNotify_GameplayEvent::Notify(USkeletalMeshComponent* Mesh, UAnimSequ
 	UAbilitySystemComponent* AbilitySystem;
 	if (UFuAbilitySystemUtility::TryGetAbilitySystem(Owner, AbilitySystem))
 	{
-		FScopedPredictionWindow ScopedPredictionWindow{AbilitySystem, true};
+		const auto EventData{UFuEventDataUtility::MakeEventDataFromAbilitySystems(AbilitySystem, AbilitySystem)};
 
-		const auto EventData{UFuEventDataUtility::MakeEventDataFromActorInfoAndAvatar(*AbilitySystem->AbilityActorInfo.Get(), Owner)};
+		FScopedPredictionWindow PredictionWindow{AbilitySystem, true};
+
 		AbilitySystem->HandleGameplayEvent(EventTag, &EventData);
 	}
 }

@@ -12,6 +12,18 @@ class FABULOUSUTILITY_API UFuEventDataUtility : public UBlueprintFunctionLibrary
 public:
 	static FGameplayEventData MakeEventDataFromEffectModificationData(const FGameplayEffectModCallbackData& Data);
 
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Event Data Utility")
+	static FGameplayEventData MakeEventDataFromAbilitySystems(const UAbilitySystemComponent* InstigatorAbilitySystem,
+	                                                          const UAbilitySystemComponent* TargetAbilitySystem);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Event Data Utility")
+	static FGameplayEventData MakeEventDataFromAbilitySystemAndAvatar(const UAbilitySystemComponent* InstigatorAbilitySystem,
+	                                                                  const AActor* TargetAvatar);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Event Data Utility")
+	static FGameplayEventData MakeEventDataFromAvatarAndAbilitySystem(const AActor* InstigatorAvatar,
+	                                                                  const UAbilitySystemComponent* TargetAbilitySystem);
+
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Event Data Utility",
 		Meta = (AutoCreateRefTerm = "InstigatorActorInfo, TargetActorInfo"))
 	static FGameplayEventData MakeEventDataFromActorInfos(const FGameplayAbilityActorInfo& InstigatorActorInfo,
@@ -20,10 +32,6 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Event Data Utility", Meta = (AutoCreateRefTerm = "InstigatorActorInfo"))
 	static FGameplayEventData MakeEventDataFromActorInfoAndAvatar(const FGameplayAbilityActorInfo& InstigatorActorInfo,
 	                                                              const AActor* TargetAvatar);
-
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Event Data Utility")
-	static FGameplayEventData MakeEventDataFromAbilitySystemAndAvatar(const UAbilitySystemComponent* InstigatorAbilitySystem,
-	                                                                  const AActor* TargetAvatar);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Event Data Utility")
 	static FGameplayEventData MakeEventDataFromAvatars(const AActor* InstigatorAvatar, const AActor* TargetAvatar);

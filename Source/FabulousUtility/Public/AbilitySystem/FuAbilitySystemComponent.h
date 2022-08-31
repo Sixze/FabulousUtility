@@ -5,14 +5,13 @@
 
 class UFuAbilitySystemComponent;
 
-DECLARE_MULTICAST_DELEGATE_TwoParams(FFuAbilityAddedOrRemovedDelegate, UFuAbilitySystemComponent* AbilitySystem,
-                                     const FGameplayAbilitySpec& AbilitySpecification);
+using FFuAbilityAddedOrRemovedDelegate = TMulticastDelegate<void(UFuAbilitySystemComponent* AbilitySystem,
+                                                                 const FGameplayAbilitySpec& AbilitySpecification)>;
 
-DECLARE_MULTICAST_DELEGATE_TwoParams(FFuAbilityActivatedDelegate, FGameplayAbilitySpecHandle AbilityHandle,
-                                     UGameplayAbility* Ability);
+using FFuAbilityActivatedDelegate = TMulticastDelegate<void(FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability)>;
 
-DECLARE_MULTICAST_DELEGATE_ThreeParams(FFuAbilityFailedDelegate, FGameplayAbilitySpecHandle AbilityHandle,
-                                       UGameplayAbility* Ability, const FGameplayTagContainer& FailureTags);
+using FFuAbilityFailedDelegate = TMulticastDelegate<void(FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability,
+                                                         const FGameplayTagContainer& FailureTags)>;
 
 UCLASS()
 class FABULOUSUTILITY_API UFuAbilitySystemComponent : public UAbilitySystemComponent

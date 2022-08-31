@@ -19,7 +19,7 @@ void UFuAbilityTask_ClientSendTargetData::Activate()
 	if (IsLocallyControlled())
 	{
 		// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
-		FScopedPredictionWindow ScopedPredictionWindow{
+		FScopedPredictionWindow PredictionWindow{
 			AbilitySystemComponent,
 			!Ability->GetCurrentActorInfo()->IsNetAuthority() && !AbilitySystemComponent->ScopedPredictionKey.IsValidForMorePrediction()
 		};
