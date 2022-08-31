@@ -10,25 +10,25 @@ struct FABULOUSUTILITY_API FFuViewportWatermarkTextSettings
 {
 	GENERATED_USTRUCT_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
 	TEnumAsByte<EHorizontalAlignment> HorizontalAlignment{HAlign_Center};
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
 	TEnumAsByte<EVerticalAlignment> VerticalAlignment{VAlign_Center};
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (AllowPreserveRatio))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility", Meta = (AllowPreserveRatio))
 	FVector2D Padding{50.0f, 50.0f};
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
 	FSlateFontInfo Font;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
 	FLinearColor ColorAndOpacity{0.8f, 0.8f, 0.8f, 0.2f};
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (AllowPreserveRatio))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility", Meta = (AllowPreserveRatio))
 	FVector2D ShadowOffset{FVector2D::ZeroVector};
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
 	FLinearColor ShadowColorAndOpacity{0.0f, 0.0f, 0.0f, 0.0f};
 };
 

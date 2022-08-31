@@ -4,6 +4,7 @@
 #include "FuMacros.h"
 #include "Engine/Engine.h"
 #include "Engine/GameViewportClient.h"
+#include "Widgets/SWindow.h"
 #include "Windows/WindowsHWrapper.h"
 #endif
 

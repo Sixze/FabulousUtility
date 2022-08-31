@@ -11,7 +11,7 @@ struct FABULOUSUTILITY_API FFuAbilityTargetData_Float : public FGameplayAbilityT
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
 	float Value{0.0f};
 
 public:

@@ -11,7 +11,7 @@ struct FABULOUSUTILITY_API FFuAbilityTargetData_Vector : public FGameplayAbility
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
 	FVector Vector{ForceInit};
 
 public:

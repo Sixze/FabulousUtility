@@ -3,6 +3,7 @@
 #include "Engine/Engine.h"
 #include "Engine/GameViewportClient.h"
 #include "Engine/UserInterfaceSettings.h"
+#include "Framework/Application/SlateApplication.h"
 
 void UFuSlateUtility::PlaySound(const FSlateSound& Sound)
 {

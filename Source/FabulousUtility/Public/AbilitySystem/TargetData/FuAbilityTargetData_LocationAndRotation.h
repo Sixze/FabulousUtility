@@ -11,10 +11,10 @@ struct FABULOUSUTILITY_API FFuAbilityTargetData_LocationAndRotation : public FGa
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
 	FVector Location{ForceInit};
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
 	FRotator Rotation{ForceInit};
 
 public:
