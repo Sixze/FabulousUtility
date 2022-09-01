@@ -57,6 +57,11 @@ FString UFuBTDecorator_CanActivateAbility::GetStaticDescription() const
 	}
 	else
 	{
+		if (bAborts || bInversed)
+		{
+			Description += TEXT(' ');
+		}
+
 		Description += TEXT("Can Activate Abilities: ");
 
 		for (const auto& Tag : AbilityTags)

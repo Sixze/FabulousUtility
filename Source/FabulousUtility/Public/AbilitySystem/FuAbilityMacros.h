@@ -15,6 +15,11 @@
 		return AttributeName.GetCurrentValue(); \
 	} \
 	\
+	float Get##AttributeName##Base() const \
+	{ \
+		return AttributeName.GetBaseValue(); \
+	} \
+	\
 	void Set##AttributeName##Base(const float New##AttributeName) \
 	{ \
 		auto* AbilitySystem{GetOwningAbilitySystemComponent()}; \
