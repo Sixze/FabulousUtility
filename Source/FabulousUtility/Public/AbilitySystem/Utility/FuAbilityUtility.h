@@ -21,6 +21,9 @@ public:
 		Meta = (DefaultToSelf = "Ability", ExpandBoolAsExecs = "ReturnValue"))
 	static bool IsAbilityInputPressed(const UGameplayAbility* Ability);
 
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility", Meta = (DefaultToSelf = "Ability"))
+	static FActiveGameplayEffectHandle GetEffectHandleFromGrantedAbility(const UGameplayAbility* Ability);
+
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility")
 	static const UGameplayAbility* GetPrimaryAbilityInstance(UAbilitySystemComponent* AbilitySystem,
 	                                                         FGameplayAbilitySpecHandle AbilityHandle);
@@ -78,6 +81,13 @@ inline bool UFuAbilityUtility::IsAbilityInputPressed(const UGameplayAbility* Abi
 	const auto* AbilitySpecification{IsValid(Ability) ? Ability->GetCurrentAbilitySpec() : nullptr};
 
 	return FU_ENSURE(AbilitySpecification != nullptr) && AbilitySpecification->InputPressed;
+}
+
+inline FActiveGameplayEffectHandle UFuAbilityUtility::GetEffectHandleFromGrantedAbility(const UGameplayAbility* Ability)
+{
+	const auto* AbilitySpecification{IsValid(Ability) ? Ability->GetCurrentAbilitySpec() : nullptr};
+
+	return FU_ENSURE(AbilitySpecification != nullptr) ? AbilitySpecification->GameplayEffectHandle : FActiveGameplayEffectHandle{};
 }
 
 inline const UGameplayAbility* UFuAbilityUtility::GetPrimaryAbilityInstance(UAbilitySystemComponent* AbilitySystem,
