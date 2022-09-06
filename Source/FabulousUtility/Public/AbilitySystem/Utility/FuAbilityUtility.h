@@ -17,9 +17,19 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility")
 	static TSubclassOf<UGameplayAbility> GetAbilityClass(const FGameplayAbilitySpec& AbilitySpecification);
 
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility", Meta = (DefaultToSelf = "Ability"))
+	static bool IsAbilityActive(const UGameplayAbility* Ability);
+
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility",
 		Meta = (DefaultToSelf = "Ability", ExpandBoolAsExecs = "ReturnValue"))
+	static bool SwitchIsAbilityActive(const UGameplayAbility* Ability);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility", Meta = (DefaultToSelf = "Ability"))
 	static bool IsAbilityInputPressed(const UGameplayAbility* Ability);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility",
+		Meta = (DefaultToSelf = "Ability", ExpandBoolAsExecs = "ReturnValue"))
+	static bool SwitchIsAbilityInputPressed(const UGameplayAbility* Ability);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility", Meta = (DefaultToSelf = "Ability"))
 	static FActiveGameplayEffectHandle GetEffectHandleFromGrantedAbility(const UGameplayAbility* Ability);
@@ -76,11 +86,26 @@ inline TSubclassOf<UGameplayAbility> UFuAbilityUtility::GetAbilityClass(const FG
 	return AbilitySpecification.Ability->GetClass();
 }
 
+inline bool UFuAbilityUtility::IsAbilityActive(const UGameplayAbility* Ability)
+{
+	return FU_ENSURE(IsValid(Ability)) && Ability->IsActive();
+}
+
+inline bool UFuAbilityUtility::SwitchIsAbilityActive(const UGameplayAbility* Ability)
+{
+	return IsAbilityActive(Ability);
+}
+
 inline bool UFuAbilityUtility::IsAbilityInputPressed(const UGameplayAbility* Ability)
 {
 	const auto* AbilitySpecification{IsValid(Ability) ? Ability->GetCurrentAbilitySpec() : nullptr};
 
 	return FU_ENSURE(AbilitySpecification != nullptr) && AbilitySpecification->InputPressed;
+}
+
+inline bool UFuAbilityUtility::SwitchIsAbilityInputPressed(const UGameplayAbility* Ability)
+{
+	return IsAbilityInputPressed(Ability);
 }
 
 inline FActiveGameplayEffectHandle UFuAbilityUtility::GetEffectHandleFromGrantedAbility(const UGameplayAbility* Ability)
