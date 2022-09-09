@@ -4,6 +4,7 @@
 #include "AbilitySystemInterface.h"
 #include "FuMacros.h"
 #include "AbilitySystem/FuGameplayAbility.h"
+#include "AbilitySystem/FuGameplayEffect.h"
 
 bool UFuAbilitySystemComponent::TryGetFuAbilitySystem(const UObject* Object, ThisClass*& AbilitySystem, const bool bAllowFindComponent)
 {
@@ -26,6 +27,34 @@ bool UFuAbilitySystemComponent::TryGetFuAbilitySystem(const UObject* Object, Thi
 
 	AbilitySystem = nullptr;
 	return false;
+}
+
+void UFuAbilitySystemComponent::OnRegister()
+{
+	Super::OnRegister();
+
+	// Subscribe to the event here after calling Super::OnRegister() so that UFuAbilitySystemComponent::OnAnyTagChanged()
+	// is called before FActiveGameplayEffectsContainer::OnOwnerTagChange().
+
+	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &ThisClass::OnGameplayEffectApplied);
+
+	RegisterGenericGameplayTagEvent().AddUObject(this, &ThisClass::OnAnyTagChanged);
+}
+
+FActiveGameplayEffectHandle UFuAbilitySystemComponent::ApplyGameplayEffectSpecToSelf(const FGameplayEffectSpec& EffectSpecification,
+                                                                                     const FPredictionKey PredictionKey)
+{
+	// The code block below should be called after the call to FActiveGameplayEffectsContainer::HasApplicationImmunityToSpec()
+	// in the UAbilitySystemComponent::ApplyGameplayEffectSpecToSelf() function, but currently it is not possible.
+
+	const auto* Effect{Cast<UFuGameplayEffect>(EffectSpecification.Def)};
+
+	if (IsValid(Effect) && Effect->GetRemovalRequirementAnyTag().HasAny(GameplayTagCountContainer.GetExplicitGameplayTags()))
+	{
+		return {};
+	}
+
+	return Super::ApplyGameplayEffectSpecToSelf(EffectSpecification, PredictionKey);
 }
 
 void UFuAbilitySystemComponent::NotifyAbilityActivated(const FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability)
@@ -376,6 +405,51 @@ void UFuAbilitySystemComponent::BlockAbilitiesWithoutTags(const FGameplayTagCont
 void UFuAbilitySystemComponent::UnBlockAbilitiesWithoutTags(const FGameplayTagContainer& Tags)
 {
 	BlockedAbilityWithoutTags.UpdateTagCount(Tags, -1);
+}
+
+void UFuAbilitySystemComponent::OnGameplayEffectApplied(UAbilitySystemComponent* InstigatorAbilitySystem,
+                                                        const FGameplayEffectSpec& EffectSpecification,
+                                                        const FActiveGameplayEffectHandle EffectHandle)
+{
+	// The code block below should be called right after the call to
+	// FActiveGameplayEffectsContainer::AttemptRemoveActiveEffectsOnEffectApplication() in
+	// the UAbilitySystemComponent::ApplyGameplayEffectSpecToSelf() function, but currently it is not possible.
+
+	if (IsOwnerActorAuthoritative())
+	{
+		const auto* Tags{EffectSpecification.CapturedTargetTags.GetAggregatedTags()};
+		FGameplayEffectQuery EffectQuery;
+
+		EffectQuery.CustomMatchDelegate.BindLambda([Tags](const FActiveGameplayEffect& ActiveEffect)
+		{
+			const auto* Effect{Cast<UFuGameplayEffect>(ActiveEffect.Spec.Def)};
+
+			return IsValid(Effect) && Effect->GetRemovalRequirementAnyTag().HasAny(*Tags);
+		});
+
+		ActiveGameplayEffects.RemoveActiveEffects(EffectQuery, -1);
+	}
+}
+
+void UFuAbilitySystemComponent::OnAnyTagChanged(const FGameplayTag Tag, const int32 NewCount)
+{
+	// Unfortunately, there is currently no way to optimize this the way it
+	// is done inside FActiveGameplayEffectsContainer::OnOwnerTagChange().
+
+	if (NewCount > 0)
+	{
+		const auto& Tags{GameplayTagCountContainer.GetExplicitGameplayTags()};
+		FGameplayEffectQuery EffectQuery;
+
+		EffectQuery.CustomMatchDelegate.BindLambda([&Tags](const FActiveGameplayEffect& ActiveEffect)
+		{
+			const auto* Effect{Cast<UFuGameplayEffect>(ActiveEffect.Spec.Def)};
+
+			return IsValid(Effect) && Effect->GetRemovalRequirementAnyTag().HasAny(Tags);
+		});
+
+		ActiveGameplayEffects.RemoveActiveEffects(EffectQuery, -1);
+	}
 }
 
 void UFuAbilitySystemComponent::GetEffectTimeRemainingAndDurationByTag(const FGameplayTag& EffectTag,
