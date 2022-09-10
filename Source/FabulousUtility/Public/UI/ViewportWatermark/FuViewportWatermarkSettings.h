@@ -41,40 +41,42 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Viewport Watermark", Config)
 	bool bEnabled;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Viewport Watermark", Config)
-	bool bShowTitle{true};
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Viewport Watermark", Config, Meta = (MultiLine = "true"))
-	FText TitleText;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Viewport Watermark", Config)
-	bool bShowCopyright{true};
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Viewport Watermark", Config, Meta = (MultiLine = "true"))
-	FText CopyrightText;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Viewport Watermark", Config)
-	bool bAddEngineVersionToCopyright{true};
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Viewport Watermark", Transient, Meta = (MultiLine = "true"))
-	FText EngineVersionText;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Viewport Watermark", Config)
-	bool bShowSystemInfo{true};
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Viewport Watermark", Transient, Meta = (MultiLine = "true"))
-	FText SystemInfoText;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Visuals", Config, DisplayName = "Widget Z Order")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Viewport Watermark", Config, DisplayName = "Widget Z Order")
 	int32 WidgetZOrder{1000};
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Visuals", Config)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Title", Config)
+	bool bShowTitle{true};
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Title",
+		Config, Meta = (MultiLine = "true", EditCondition = "bShowTitle"))
+	FText TitleText;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Title", Config, Meta = (EditCondition = "bShowTitle"))
 	FFuViewportWatermarkTextSettings TitleSettings;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Visuals", Config)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Copyright", Config)
+	bool bShowCopyright{true};
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Copyright",
+		Config, Meta = (MultiLine = "true", EditCondition = "bShowCopyright"))
+	FText CopyrightText;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Copyright", Config, Meta = (EditCondition = "bShowCopyright"))
+	bool bAddEngineVersionToCopyright{true};
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Copyright", Transient, Meta = (MultiLine = "true"))
+	FText EngineVersionText;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Copyright", Config, Meta = (EditCondition = "bShowCopyright"))
 	FFuViewportWatermarkTextSettings CopyrightSettings;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Visuals", Config)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "System Info", Config)
+	bool bShowSystemInfo{true};
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "System Info", Transient, Meta = (MultiLine = "true"))
+	FText SystemInfoText;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "System Info", Config, Meta = (EditCondition = "bShowSystemInfo"))
 	FFuViewportWatermarkTextSettings SystemInfoSettings;
 
 public:

@@ -10,12 +10,38 @@ void UFuSlateNavigationSubsystem::Initialize(FSubsystemCollectionBase& Collectio
 {
 	Super::Initialize(Collection);
 
-	// https://www.reddit.com/r/unrealengine/comments/bmibsu/how_to_disable_default_gamepad_behaviour_in/
+	const auto* Settings{GetDefault<UFuSlateNavigationSettings>()};
 
-	if (FSlateApplication::IsInitialized() && GetDefault<UFuSlateNavigationSettings>()->bDisableSlateNavigation)
+	if (FSlateApplication::IsInitialized() && Settings->bApplySettings)
 	{
-		FSlateApplication::Get().SetNavigationConfig(MakeShared<FNullNavigationConfig>());
+		const auto NavigationConfig{MakeShared<FNavigationConfig>()};
+
+		NavigationConfig->bTabNavigation = Settings->bAllowTabNavigation;
+		NavigationConfig->bKeyNavigation = Settings->bAllowKeyNavigation;
+		NavigationConfig->bAnalogNavigation = Settings->bAllowAnalogNavigation;
+
+		NavigationConfig->AnalogNavigationHorizontalThreshold = Settings->AnalogNavigationThreshold;
+		NavigationConfig->AnalogNavigationVerticalThreshold = Settings->AnalogNavigationThreshold;
+
+		NavigationConfig->AnalogHorizontalKey = Settings->AnalogNavigationHorizontalKey;
+		NavigationConfig->AnalogVerticalKey = Settings->AnalogNavigationVerticalKey;
+
+		NavigationConfig->KeyEventRules = Settings->KeyNavigationMappings;
+
+		FSlateApplication::Get().SetNavigationConfig(NavigationConfig);
 	}
+}
+
+void UFuSlateNavigationSubsystem::Deinitialize()
+{
+#if WITH_EDITOR
+	if (FSlateApplication::IsInitialized() && GetDefault<UFuSlateNavigationSettings>()->bApplySettings)
+	{
+		FSlateApplication::Get().SetNavigationConfig(MakeShared<FNavigationConfig>());
+	}
+#endif
+
+	Super::Deinitialize();
 }
 
 #endif
