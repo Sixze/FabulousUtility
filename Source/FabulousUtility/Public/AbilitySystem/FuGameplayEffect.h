@@ -8,9 +8,9 @@ class FABULOUSUTILITY_API UFuGameplayEffect : public UGameplayEffect
 {
 	GENERATED_BODY()
 
-private:
+protected:
 	// Effect will be removed if the actor has ANY of these tags. Also prevents effect application.
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Effect", Meta = (AllowPrivateAccess))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Effect")
 	FGameplayTagContainer RemovalRequirementAnyTag;
 
 public:

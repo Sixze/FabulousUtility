@@ -31,7 +31,7 @@ void UFuAbilityTask_EffectStackListener::Activate()
 
 	auto bAnyEffectValid{false};
 
-	for (const auto& ActiveEffect : AbilitySystem->GetActiveEffects())
+	for (const auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
 	{
 		bAnyEffectValid = bAnyEffectValid || ActiveEffect.Spec.Def->GetClass() == EffectClass1;
 
@@ -52,7 +52,7 @@ void UFuAbilityTask_EffectStackListener::OnDestroy(const bool bInOwnerFinished)
 		AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.RemoveAll(this);
 		AbilitySystem->OnAnyGameplayEffectRemovedDelegate().RemoveAll(this);
 
-		for (auto& ActiveEffect : AbilitySystem->GetActiveEffectsMutable())
+		for (auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
 		{
 			ActiveEffect.EventSet.OnStackChanged.RemoveAll(this);
 		}

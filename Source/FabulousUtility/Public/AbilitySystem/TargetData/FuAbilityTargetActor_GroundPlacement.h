@@ -8,7 +8,7 @@ class FABULOUSUTILITY_API AFuAbilityTargetActor_GroundPlacement : public AGamepl
 {
 	GENERATED_BODY()
 
-private:
+protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Settings", Meta = (AllowPrivateAccess, ClampMin = 0, ForceUnits = "cm"))
 	float SphereSweepRadius{84.0f};
 
@@ -47,10 +47,9 @@ public:
 
 	virtual void ConfirmTargetingAndContinue() override;
 
-private:
+protected:
 	bool PerformGroundPlacement(FVector& ResultLocation, FRotator& ResultRotation) const;
 
-protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Fabulous Utility|Fu Ground Placement Ability Target Actor",
 		DisplayName = "Last Ground Place Valid Changed")
 	void ReceiveLastGroundPlaceValidChanged(bool bNewLastGroundPlaceValid);

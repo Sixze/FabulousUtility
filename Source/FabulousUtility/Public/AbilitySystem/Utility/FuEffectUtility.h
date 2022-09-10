@@ -1,10 +1,10 @@
 #pragma once
 
-#include "AbilitySystemComponent.h"
-#include "FuMacros.h"
-#include "AbilitySystem/FuGameplayEffectContext.h"
+#include "GameplayEffect.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuEffectUtility.generated.h"
+
+class UFuAbilitySystemComponent;
 
 UCLASS()
 class FABULOUSUTILITY_API UFuEffectUtility : public UBlueprintFunctionLibrary
@@ -18,90 +18,52 @@ public:
 	static const FGameplayTagContainer& GetEffectOwnedTags(TSubclassOf<UGameplayEffect> EffectClass);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility")
+	static int32 GetEffectStackCountByClass(const UFuAbilitySystemComponent* AbilitySystem, TSubclassOf<UGameplayEffect> EffectClass);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility", Meta = (AutoCreateRefTerm = "EffectQuery"))
+	static bool HasAnyActiveEffectsByQuery(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayEffectQuery& EffectQuery);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility", Meta = (AutoCreateRefTerm = "EffectQuery"))
+	static void GetActiveEffectsByQuery(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayEffectQuery& EffectQuery,
+	                                    TArray<FActiveGameplayEffect>& ActiveEffects);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility", Meta = (AutoCreateRefTerm = "EffectTag"))
+	static bool HasAnyActiveEffectsWithTag(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag& EffectTag,
+	                                       bool bIgnoreInhibitedEffects = false);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility", Meta = (AutoCreateRefTerm = "EffectTags"))
+	static bool HasAnyActiveEffectsWithAnyTags(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer& EffectTags,
+	                                           bool bIgnoreInhibitedEffects = false);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility", Meta = (AutoCreateRefTerm = "EffectTag"))
+	static int32 GetEffectsCountWithTag(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag& EffectTag,
+	                                    bool bIgnoreInhibitedEffects = false);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility", Meta = (AutoCreateRefTerm = "EffectTags"))
+	static int32 GetEffectsCountWithAnyTags(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer& EffectTags,
+	                                        bool bIgnoreInhibitedEffects = false);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility", Meta = (AutoCreateRefTerm = "EffectTag"))
+	static void GetEffectTimeRemainingAndDurationByTag(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag& EffectTag,
+	                                                   float& TimeRemaining, float& Duration);
+
+	static const FActiveGameplayEffect* GetActiveEffectTimeRemainingAndDurationByTag(
+		const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag& EffectTag, float& TimeRemaining, float& Duration);
+
+	// Effect Handle
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility")
 	static bool IsEffectActive(FActiveGameplayEffectHandle EffectHandle);
 
-	// Effect Context
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility")
+	static void RecalculateEffectModifiers(FActiveGameplayEffectHandle EffectHandle);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility", Meta = (AutoCreateRefTerm = "EffectContextHandle"))
-	static FGameplayEffectContextHandle DuplicateEffectContext(const FGameplayEffectContextHandle& EffectContextHandle);
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility")
+	static void SetEffectDuration(FActiveGameplayEffectHandle EffectHandle, float Duration);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility", Meta = (AutoCreateRefTerm = "EffectContextHandle"))
-	static FGameplayAbilityTargetDataHandle GetTargetDataHandleFromEffectContext(const FGameplayEffectContextHandle& EffectContextHandle);
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility")
+	static void SetEffectTimeRemaining(FActiveGameplayEffectHandle EffectHandle, float TimeRemaining);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility",
-		Meta = (AutoCreateRefTerm = "EffectContextHandle, TargetDataHandle"))
-	static void AddTargetDataToEffectContext(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle,
-	                                         const FGameplayAbilityTargetDataHandle& TargetDataHandle);
-
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility",
-		Meta = (AutoCreateRefTerm = "EffectContextHandle, TargetDataHandle"))
-	static void SetTargetDataToEffectContext(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle,
-	                                         const FGameplayAbilityTargetDataHandle& TargetDataHandle);
-
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility",
-		Meta = (AutoCreateRefTerm = "EffectContextHandle, TargetDataHandle"))
-	static void ClearTargetDataInEffectContext(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle);
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility")
+	static void IncreaseEffectTimeRemaining(FActiveGameplayEffectHandle EffectHandle, float AdditionalTimeRemaining);
 };
-
-inline const FGameplayTagContainer& UFuEffectUtility::GetEffectOwnedTags(const TSubclassOf<UGameplayEffect> EffectClass)
-{
-	if (FU_ENSURE(IsValid(EffectClass)))
-	{
-		return EffectClass.GetDefaultObject()->InheritableOwnedTagsContainer.CombinedTags;
-	}
-
-	static const FGameplayTagContainer None;
-	check(None.IsEmpty())
-
-	return None;
-}
-
-inline bool UFuEffectUtility::IsEffectActive(const FActiveGameplayEffectHandle EffectHandle)
-{
-	const auto* AbilitySystem{EffectHandle.GetOwningAbilitySystemComponent()};
-
-	return IsValid(AbilitySystem) && AbilitySystem->GetActiveGameplayEffect(EffectHandle) != nullptr;
-}
-
-inline FGameplayEffectContextHandle UFuEffectUtility::DuplicateEffectContext(const FGameplayEffectContextHandle& EffectContextHandle)
-{
-	return EffectContextHandle.Duplicate();
-}
-
-inline FGameplayAbilityTargetDataHandle UFuEffectUtility::GetTargetDataHandleFromEffectContext(
-	const FGameplayEffectContextHandle& EffectContextHandle)
-{
-	return FU_ENSURE(EffectContextHandle.IsValid()) &&
-	       FU_ENSURE(EffectContextHandle.Get()->GetScriptStruct()->IsChildOf(FFuGameplayEffectContext::StaticStruct()))
-		       ? static_cast<const FFuGameplayEffectContext*>(EffectContextHandle.Get())->GetTargetDataHandle()
-		       : FGameplayAbilityTargetDataHandle{};
-}
-
-inline void UFuEffectUtility::AddTargetDataToEffectContext(FGameplayEffectContextHandle& EffectContextHandle,
-                                                           const FGameplayAbilityTargetDataHandle& TargetDataHandle)
-{
-	if (FU_ENSURE(EffectContextHandle.IsValid()) &&
-	    FU_ENSURE(EffectContextHandle.Get()->GetScriptStruct()->IsChildOf(FFuGameplayEffectContext::StaticStruct())))
-	{
-		static_cast<FFuGameplayEffectContext*>(EffectContextHandle.Get())->AddTargetDataHandle(TargetDataHandle);
-	}
-}
-
-inline void UFuEffectUtility::SetTargetDataToEffectContext(FGameplayEffectContextHandle& EffectContextHandle,
-                                                           const FGameplayAbilityTargetDataHandle& TargetDataHandle)
-{
-	if (FU_ENSURE(EffectContextHandle.IsValid()) &&
-	    FU_ENSURE(EffectContextHandle.Get()->GetScriptStruct()->IsChildOf(FFuGameplayEffectContext::StaticStruct())))
-	{
-		static_cast<FFuGameplayEffectContext*>(EffectContextHandle.Get())->SetTargetDataHandle(TargetDataHandle);
-	}
-}
-
-inline void UFuEffectUtility::ClearTargetDataInEffectContext(FGameplayEffectContextHandle& EffectContextHandle)
-{
-	if (FU_ENSURE(EffectContextHandle.IsValid()) &&
-	    FU_ENSURE(EffectContextHandle.Get()->GetScriptStruct()->IsChildOf(FFuGameplayEffectContext::StaticStruct())))
-	{
-		static_cast<FFuGameplayEffectContext*>(EffectContextHandle.Get())->ClearTargetDataHandle();
-	}
-}

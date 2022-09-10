@@ -1,8 +1,9 @@
 #include "AbilitySystem/AbilityAsync/FuAbilityAsync_EffectTimeListener.h"
 
 #include "AbilitySystemGlobals.h"
+#include "FuMacros.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
-#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
+#include "AbilitySystem/Utility/FuEffectUtility.h"
 
 UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListenForEffectTimeChangeActor(
 	const AActor* Actor, const FGameplayTag EffectTag, const bool bWaitForTimeFromServer)
@@ -78,7 +79,7 @@ void UFuAbilityAsync_EffectTimeListener::Activate()
 		             .AddUObject(this, &ThisClass::OnEffectTagChanged);
 	}
 
-	for (auto& ActiveEffect : AbilitySystem->GetActiveEffectsMutable())
+	for (auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
 	{
 		if (ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasAny(EffectTags1) ||
 		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(EffectTags1))
@@ -106,7 +107,7 @@ void UFuAbilityAsync_EffectTimeListener::EndAction()
 			AbilitySystem->RegisterGameplayTagEvent(EffectTag, EGameplayTagEventType::NewOrRemoved).RemoveAll(this);
 		}
 
-		for (auto& ActiveEffect : AbilitySystem->GetActiveEffectsMutable())
+		for (auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
 		{
 			ActiveEffect.EventSet.OnTimeChanged.RemoveAll(this);
 		}
@@ -125,7 +126,10 @@ void UFuAbilityAsync_EffectTimeListener::RefreshEffectTimeRemainingAndDurationFo
 	const auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(GetAbilitySystemComponent())};
 
 	float TimeRemaining, Duration;
-	const auto* ActiveEffect{AbilitySystem->GetActiveEffectTimeRemainingAndDurationByTag(EffectTag, TimeRemaining, Duration)};
+
+	const auto* ActiveEffect{
+		UFuEffectUtility::GetActiveEffectTimeRemainingAndDurationByTag(AbilitySystem, EffectTag, TimeRemaining, Duration)
+	};
 
 	if (ActiveEffect == nullptr)
 	{

@@ -1,8 +1,9 @@
 #include "AbilitySystem/AbilityAsync/FuAbilityAsync_AbilityCooldownListener.h"
 
 #include "AbilitySystemGlobals.h"
+#include "FuMacros.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
-#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
+#include "AbilitySystem/Utility/FuEffectUtility.h"
 
 UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownActor(
 	const AActor* Actor, const int32 InputId, const bool bWaitForTimeFromServer)
@@ -60,7 +61,7 @@ void UFuAbilityAsync_AbilityCooldownListener::Activate()
 		             .AddUObject(this, &ThisClass::OnEffectTagChanged);
 	}
 
-	for (auto& ActiveEffect : AbilitySystem->GetActiveEffectsMutable())
+	for (auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
 	{
 		if (ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasAny(EffectTags.GetExplicitGameplayTags()) ||
 		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(EffectTags.GetExplicitGameplayTags()))
@@ -91,7 +92,7 @@ void UFuAbilityAsync_AbilityCooldownListener::EndAction()
 			AbilitySystem->RegisterGameplayTagEvent(EffectTag, EGameplayTagEventType::NewOrRemoved).RemoveAll(this);
 		}
 
-		for (auto& ActiveEffect : AbilitySystem->GetActiveEffectsMutable())
+		for (auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
 		{
 			ActiveEffect.EventSet.OnTimeChanged.RemoveAll(this);
 		}
@@ -148,7 +149,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(
 
 	// Re-register effect time change events.
 
-	for (auto& ActiveEffect : AbilitySystem->GetActiveEffectsMutable())
+	for (auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
 	{
 		ActiveEffect.EventSet.OnTimeChanged.RemoveAll(this);
 
@@ -170,7 +171,10 @@ void UFuAbilityAsync_AbilityCooldownListener::RefreshEffectTimeRemainingAndDurat
 	const auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(GetAbilitySystemComponent())};
 
 	float TimeRemaining, Duration;
-	const auto* ActiveEffect{AbilitySystem->GetActiveEffectTimeRemainingAndDurationByTag(EffectTag, TimeRemaining, Duration)};
+
+	const auto* ActiveEffect{
+		UFuEffectUtility::GetActiveEffectTimeRemainingAndDurationByTag(AbilitySystem, EffectTag, TimeRemaining, Duration)
+	};
 
 	if (ActiveEffect == nullptr)
 	{

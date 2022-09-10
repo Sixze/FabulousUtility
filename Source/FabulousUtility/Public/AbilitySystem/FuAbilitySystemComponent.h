@@ -18,7 +18,7 @@ class FABULOUSUTILITY_API UFuAbilitySystemComponent : public UAbilitySystemCompo
 {
 	GENERATED_BODY()
 
-private:
+protected:
 	FGameplayTagCountContainer BlockedAbilityWithoutTags;
 
 public:
@@ -57,53 +57,10 @@ protected:
 
 	virtual void AbilityLocalInputPressed(int32 InputId) override;
 
-	// Effect
-
 public:
-	const FActiveGameplayEffectsContainer* GetActiveEffects() const;
+	const FActiveGameplayEffectsContainer& GetActiveEffects() const;
 
-	FActiveGameplayEffectsContainer* GetActiveEffectsMutable();
-
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability System", Meta = (AutoCreateRefTerm = "EffectQuery"))
-	bool HasAnyActiveEffectsByQuery(const FGameplayEffectQuery& EffectQuery) const;
-
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability System", Meta = (AutoCreateRefTerm = "EffectQuery"))
-	void GetActiveEffectsByQuery(const FGameplayEffectQuery& EffectQuery, TArray<FActiveGameplayEffect>& ActiveEffects) const;
-
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability System", Meta = (AutoCreateRefTerm = "EffectTag"))
-	bool HasAnyActiveEffectsWithTag(const FGameplayTag& EffectTag, bool bIgnoreInhibitedEffects = false) const;
-
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability System", Meta = (AutoCreateRefTerm = "EffectTags"))
-	bool HasAnyActiveEffectsWithAnyTags(const FGameplayTagContainer& EffectTags, bool bIgnoreInhibitedEffects = false) const;
-
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability System", Meta = (AutoCreateRefTerm = "EffectTag"))
-	int32 GetEffectsCountWithTag(const FGameplayTag& EffectTag, bool bIgnoreInhibitedEffects = false) const;
-
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability System", Meta = (AutoCreateRefTerm = "EffectTags"))
-	int32 GetEffectsCountWithAnyTags(const FGameplayTagContainer& EffectTags, bool bIgnoreInhibitedEffects = false) const;
-
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability System")
-	int32 GetEffectStacksCountByClass(TSubclassOf<UGameplayEffect> EffectClass) const;
-
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability System")
-	void RecalculateEffectModifiers(FActiveGameplayEffectHandle EffectHandle);
-
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability System")
-	void SetEffectDuration(FActiveGameplayEffectHandle EffectHandle, float Duration);
-
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability System")
-	void SetEffectTimeRemaining(FActiveGameplayEffectHandle EffectHandle, float TimeRemaining);
-
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability System")
-	void IncreaseEffectTimeRemaining(FActiveGameplayEffectHandle EffectHandle, float AdditionalTimeRemaining);
-
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability System", Meta = (AutoCreateRefTerm = "EffectTag"))
-	void GetEffectTimeRemainingAndDurationByTag(const FGameplayTag& EffectTag, float& TimeRemaining, float& Duration) const;
-
-	const FActiveGameplayEffect* GetActiveEffectTimeRemainingAndDurationByTag(const FGameplayTag& EffectTag, float& TimeRemaining,
-	                                                                          float& Duration) const;
-
-	// Ability
+	FActiveGameplayEffectsContainer& GetActiveEffects();
 
 	void BlockAbilitiesWithoutTags(const FGameplayTagContainer& Tags);
 
@@ -116,12 +73,12 @@ private:
 	void OnAnyTagChanged(FGameplayTag Tag, int32 NewCount);
 };
 
-inline const FActiveGameplayEffectsContainer* UFuAbilitySystemComponent::GetActiveEffects() const
+inline const FActiveGameplayEffectsContainer& UFuAbilitySystemComponent::GetActiveEffects() const
 {
-	return &ActiveGameplayEffects;
+	return ActiveGameplayEffects;
 }
 
-inline FActiveGameplayEffectsContainer* UFuAbilitySystemComponent::GetActiveEffectsMutable()
+inline FActiveGameplayEffectsContainer& UFuAbilitySystemComponent::GetActiveEffects()
 {
-	return &ActiveGameplayEffects;
+	return ActiveGameplayEffects;
 }
