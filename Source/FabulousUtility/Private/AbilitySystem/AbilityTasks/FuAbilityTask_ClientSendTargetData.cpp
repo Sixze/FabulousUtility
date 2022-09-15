@@ -16,28 +16,7 @@ void UFuAbilityTask_ClientSendTargetData::Activate()
 {
 	Super::Activate();
 
-	if (IsLocallyControlled())
-	{
-		// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
-		FScopedPredictionWindow PredictionWindow{
-			AbilitySystemComponent,
-			!Ability->GetCurrentActorInfo()->IsNetAuthority() && !AbilitySystemComponent->ScopedPredictionKey.IsValidForMorePrediction()
-		};
-
-		if (IsPredictingClient())
-		{
-			AbilitySystemComponent->CallServerSetReplicatedTargetData(GetAbilitySpecHandle(), GetActivationPredictionKey(), TargetData1,
-			                                                          {}, AbilitySystemComponent->ScopedPredictionKey);
-		}
-
-		if (ShouldBroadcastAbilityTaskDelegates())
-		{
-			OnTargetDataReceived.Broadcast(TargetData1);
-		}
-
-		EndTask();
-	}
-	else
+	if (!IsLocallyControlled())
 	{
 		AbilitySystemComponent->AbilityTargetDataSetDelegate(GetAbilitySpecHandle(), GetActivationPredictionKey())
 		                      .AddUObject(this, &ThisClass::OnAbilityTargetDataSet);
@@ -45,7 +24,27 @@ void UFuAbilityTask_ClientSendTargetData::Activate()
 		AbilitySystemComponent->CallReplicatedTargetDataDelegatesIfSet(GetAbilitySpecHandle(), GetActivationPredictionKey());
 
 		SetWaitingOnRemotePlayerData();
+		return;
 	}
+
+	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
+	FScopedPredictionWindow PredictionWindow{
+		AbilitySystemComponent,
+		!Ability->GetCurrentActorInfo()->IsNetAuthority() && !AbilitySystemComponent->ScopedPredictionKey.IsValidForMorePrediction()
+	};
+
+	if (IsPredictingClient())
+	{
+		AbilitySystemComponent->CallServerSetReplicatedTargetData(GetAbilitySpecHandle(), GetActivationPredictionKey(), TargetData1,
+		                                                          {}, AbilitySystemComponent->ScopedPredictionKey);
+	}
+
+	if (ShouldBroadcastAbilityTaskDelegates())
+	{
+		OnTargetDataReceived.Broadcast(TargetData1);
+	}
+
+	EndTask();
 }
 
 void UFuAbilityTask_ClientSendTargetData::OnDestroy(const bool bInOwnerFinished)

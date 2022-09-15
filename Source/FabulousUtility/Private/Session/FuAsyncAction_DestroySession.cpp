@@ -1,19 +1,19 @@
-#include "Session/FuDestroySessionTask.h"
+#include "Session/FuAsyncAction_DestroySession.h"
 
 #include "FuMacros.h"
 #include "OnlineSubsystemUtils.h"
 #include "GameFramework/PlayerController.h"
 
-UFuDestroySessionTask* UFuDestroySessionTask::FuDestroySession(APlayerController* PlayerController)
+UFuAsyncAction_DestroySession* UFuAsyncAction_DestroySession::FuDestroySession(APlayerController* PlayerController)
 {
-	auto* Task{NewObject<UFuDestroySessionTask>()};
+	auto* Task{NewObject<UFuAsyncAction_DestroySession>()};
 
 	Task->PlayerController1 = PlayerController;
 
 	return Task;
 }
 
-void UFuDestroySessionTask::Activate()
+void UFuAsyncAction_DestroySession::Activate()
 {
 	Super::Activate();
 
@@ -34,7 +34,7 @@ void UFuDestroySessionTask::Activate()
 	Session->DestroySession(NAME_GameSession, FOnDestroySessionCompleteDelegate::CreateUObject(this, &ThisClass::OnDestroySessionComplete));
 }
 
-void UFuDestroySessionTask::OnDestroySessionComplete(const FName SessionName, const bool bSuccess) const
+void UFuAsyncAction_DestroySession::OnDestroySessionComplete(const FName SessionName, const bool bSuccess) const
 {
 	if (bSuccess)
 	{

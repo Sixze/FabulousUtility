@@ -77,7 +77,7 @@ void UFuAbilityAsync_AbilityFailureListener::Activate()
 
 	if (!IsValid(GetAbilitySystemComponent()) || !FU_ENSURE(IsValid(AbilitySystem)))
 	{
-		SetReadyToDestroy();
+		EndAction();
 		return;
 	}
 

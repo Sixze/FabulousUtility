@@ -33,7 +33,7 @@ void UFuAbilityAsync_EffectStackListener::Activate()
 	if (!IsValid(GetAbilitySystemComponent()) || !FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(IsValid(EffectClass1)) ||
 	    !FU_ENSURE(EffectClass1.GetDefaultObject()->StackingType != EGameplayEffectStackingType::None))
 	{
-		SetReadyToDestroy();
+		EndAction();
 		return;
 	}
 

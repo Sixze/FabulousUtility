@@ -2,10 +2,10 @@
 
 #include "FindSessionsCallbackProxy.h"
 #include "Engine/EngineTypes.h"
-#include "FuCreateSessionTask.generated.h"
+#include "FuAsyncAction_CreateSession.generated.h"
 
-UCLASS()
-class FABULOUSUTILITY_API UFuCreateSessionTask : public UOnlineBlueprintCallProxyBase
+UCLASS(DisplayName = "Fu Create Session Async Action")
+class FABULOUSUTILITY_API UFuAsyncAction_CreateSession : public UOnlineBlueprintCallProxyBase
 {
 	GENERATED_BODY()
 
@@ -22,16 +22,16 @@ private:
 		DisplayName = "Use Lan", Meta = (AllowPrivateAccess))
 	bool bUseLan1;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Create Session", Meta = (AllowPrivateAccess))
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Create Session Async Action", Meta = (AllowPrivateAccess))
 	FEmptyOnlineDelegate OnSuccess;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Create Session", Meta = (AllowPrivateAccess))
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Create Session Async Action", Meta = (AllowPrivateAccess))
 	FEmptyOnlineDelegate OnFailure;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session",
 		BlueprintInternalUseOnly, Meta = (DefaultToSelf = "PlayerController"))
-	static UFuCreateSessionTask* FuCreateSession(APlayerController* PlayerController, int32 PublicConnections, bool bUseLan);
+	static UFuAsyncAction_CreateSession* FuCreateSession(APlayerController* PlayerController, int32 PublicConnections, bool bUseLan);
 
 	virtual void Activate() override;
 

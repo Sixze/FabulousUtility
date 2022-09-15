@@ -64,7 +64,7 @@ void UFuAbilityAsync_AttributeListener::Activate()
 
 	if (!IsValid(AbilitySystem) || Attributes1.IsEmpty())
 	{
-		SetReadyToDestroy();
+		EndAction();
 		return;
 	}
 

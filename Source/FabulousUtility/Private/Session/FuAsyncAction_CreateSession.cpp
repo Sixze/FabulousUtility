@@ -1,14 +1,14 @@
-#include "Session/FuCreateSessionTask.h"
+#include "Session/FuAsyncAction_CreateSession.h"
 
 #include "FuMacros.h"
 #include "OnlineSubsystemUtils.h"
 #include "TimerManager.h"
 #include "GameFramework/PlayerController.h"
 
-UFuCreateSessionTask* UFuCreateSessionTask::FuCreateSession(APlayerController* PlayerController,
-                                                            const int32 PublicConnections, const bool bUseLan)
+UFuAsyncAction_CreateSession* UFuAsyncAction_CreateSession::FuCreateSession(APlayerController* PlayerController,
+                                                                            const int32 PublicConnections, const bool bUseLan)
 {
-	auto* Task{NewObject<UFuCreateSessionTask>()};
+	auto* Task{NewObject<UFuAsyncAction_CreateSession>()};
 
 	Task->PlayerController1 = PlayerController;
 	Task->PublicConnections1 = FMath::Max(0, PublicConnections);
@@ -17,7 +17,7 @@ UFuCreateSessionTask* UFuCreateSessionTask::FuCreateSession(APlayerController* P
 	return Task;
 }
 
-void UFuCreateSessionTask::Activate()
+void UFuAsyncAction_CreateSession::Activate()
 {
 	Super::Activate();
 
@@ -54,7 +54,7 @@ void UFuCreateSessionTask::Activate()
 	}
 }
 
-void UFuCreateSessionTask::OnCreateSessionComplete(const FName SessionName, const bool bSuccess)
+void UFuAsyncAction_CreateSession::OnCreateSessionComplete(const FName SessionName, const bool bSuccess)
 {
 	if (!PlayerController1.IsValid())
 	{
@@ -87,7 +87,7 @@ void UFuCreateSessionTask::OnCreateSessionComplete(const FName SessionName, cons
 	}
 }
 
-void UFuCreateSessionTask::OnStartSessionComplete(FName SessionName, bool bSuccess)
+void UFuAsyncAction_CreateSession::OnStartSessionComplete(const FName SessionName, const bool bSuccess)
 {
 	if (!PlayerController1.IsValid())
 	{

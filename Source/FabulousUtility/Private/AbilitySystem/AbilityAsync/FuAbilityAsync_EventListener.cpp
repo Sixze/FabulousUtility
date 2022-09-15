@@ -28,7 +28,7 @@ void UFuAbilityAsync_EventListener::Activate()
 
 	if (!IsValid(AbilitySystem) || !FU_ENSURE(EventTag1.IsValid()))
 	{
-		SetReadyToDestroy();
+		EndAction();
 		return;
 	}
 

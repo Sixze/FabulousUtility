@@ -33,7 +33,7 @@ void UFuAbilityAsync_AbilityCooldownListener::Activate()
 
 	if (!IsValid(GetAbilitySystemComponent()) || !FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(InputId1 > 0))
 	{
-		SetReadyToDestroy();
+		EndAction();
 		return;
 	}
 

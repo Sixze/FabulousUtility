@@ -16,15 +16,18 @@ void UFuAbilityTask_ServerReceiveTargetData::Activate()
 {
 	Super::Activate();
 
-	if (Ability->GetCurrentActorInfo()->IsNetAuthority())
+	if (!Ability->GetCurrentActorInfo()->IsNetAuthority())
 	{
-		AbilitySystemComponent->AbilityTargetDataSetDelegate(GetAbilitySpecHandle(), GetActivationPredictionKey())
-		                      .AddUObject(this, &ThisClass::OnAbilityTargetDataSet);
-
-		AbilitySystemComponent->CallReplicatedTargetDataDelegatesIfSet(GetAbilitySpecHandle(), GetActivationPredictionKey());
-
-		SetWaitingOnRemotePlayerData();
+		EndTask();
+		return;
 	}
+
+	AbilitySystemComponent->AbilityTargetDataSetDelegate(GetAbilitySpecHandle(), GetActivationPredictionKey())
+	                      .AddUObject(this, &ThisClass::OnAbilityTargetDataSet);
+
+	AbilitySystemComponent->CallReplicatedTargetDataDelegatesIfSet(GetAbilitySpecHandle(), GetActivationPredictionKey());
+
+	SetWaitingOnRemotePlayerData();
 }
 
 void UFuAbilityTask_ServerReceiveTargetData::OnDestroy(const bool bInOwnerFinished)

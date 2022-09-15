@@ -66,7 +66,7 @@ void UFuAbilityAsync_EffectTimeListener::Activate()
 
 	if (!IsValid(GetAbilitySystemComponent()) || !FU_ENSURE(IsValid(AbilitySystem)) || EffectTags1.IsEmpty())
 	{
-		SetReadyToDestroy();
+		EndAction();
 		return;
 	}
 

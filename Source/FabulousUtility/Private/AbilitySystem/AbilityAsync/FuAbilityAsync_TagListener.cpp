@@ -55,7 +55,7 @@ void UFuAbilityAsync_TagListener::Activate()
 
 	if (!IsValid(AbilitySystem) || Tags1.IsEmpty())
 	{
-		SetReadyToDestroy();
+		EndAction();
 		return;
 	}
 

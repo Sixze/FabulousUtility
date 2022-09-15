@@ -1,10 +1,10 @@
 #pragma once
 
 #include "FindSessionsCallbackProxy.h"
-#include "FuJoinSessionTask.generated.h"
+#include "FuAsyncAction_JoinSession.generated.h"
 
-UCLASS()
-class FABULOUSUTILITY_API UFuJoinSessionTask : public UOnlineBlueprintCallProxyBase
+UCLASS(DisplayName = "Fu Join Session Async Action")
+class FABULOUSUTILITY_API UFuAsyncAction_JoinSession : public UOnlineBlueprintCallProxyBase
 {
 	GENERATED_BODY()
 
@@ -21,20 +21,20 @@ private:
 		DisplayName = "Delay Before Travel", Meta = (AllowPrivateAccess, ForceUnits = "s"))
 	float DelayBeforeTravel1;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Join Session", Meta = (AllowPrivateAccess))
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Join Session Async Action", Meta = (AllowPrivateAccess))
 	FEmptyOnlineDelegate OnSuccess;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Join Session", Meta = (AllowPrivateAccess))
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Join Session Async Action", Meta = (AllowPrivateAccess))
 	FEmptyOnlineDelegate OnTravelDelayStarted;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Join Session", Meta = (AllowPrivateAccess))
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Join Session Async Action", Meta = (AllowPrivateAccess))
 	FEmptyOnlineDelegate OnFailure;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session",
 		BlueprintInternalUseOnly, Meta = (DefaultToSelf = "PlayerController"))
-	static UFuJoinSessionTask* FuJoinSession(APlayerController* PlayerController, const FBlueprintSessionResult& SearchResult,
-	                                         float DelayBeforeTravel = 0.0f);
+	static UFuAsyncAction_JoinSession* FuJoinSession(APlayerController* PlayerController, const FBlueprintSessionResult& SearchResult,
+	                                                 float DelayBeforeTravel = 0.0f);
 
 	virtual void Activate() override;
 

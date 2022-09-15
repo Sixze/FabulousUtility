@@ -1,15 +1,15 @@
-#include "Session/FuJoinSessionTask.h"
+#include "Session/FuAsyncAction_JoinSession.h"
 
 #include "FuMacros.h"
 #include "OnlineSubsystemUtils.h"
 #include "TimerManager.h"
 #include "GameFramework/PlayerController.h"
 
-UFuJoinSessionTask* UFuJoinSessionTask::FuJoinSession(APlayerController* PlayerController,
-                                                      const FBlueprintSessionResult& SearchResult,
-                                                      const float DelayBeforeTravel)
+UFuAsyncAction_JoinSession* UFuAsyncAction_JoinSession::FuJoinSession(APlayerController* PlayerController,
+                                                                      const FBlueprintSessionResult& SearchResult,
+                                                                      const float DelayBeforeTravel)
 {
-	auto* Task{NewObject<UFuJoinSessionTask>()};
+	auto* Task{NewObject<UFuAsyncAction_JoinSession>()};
 
 	Task->PlayerController1 = PlayerController;
 	Task->SearchResult1 = SearchResult;
@@ -18,7 +18,7 @@ UFuJoinSessionTask* UFuJoinSessionTask::FuJoinSession(APlayerController* PlayerC
 	return Task;
 }
 
-void UFuJoinSessionTask::Activate()
+void UFuAsyncAction_JoinSession::Activate()
 {
 	Super::Activate();
 
@@ -47,7 +47,7 @@ void UFuJoinSessionTask::Activate()
 	}
 }
 
-void UFuJoinSessionTask::OnJoinSessionComplete(const FName SessionName, const EOnJoinSessionCompleteResult::Type Result)
+void UFuAsyncAction_JoinSession::OnJoinSessionComplete(const FName SessionName, const EOnJoinSessionCompleteResult::Type Result)
 {
 	if (!PlayerController1.IsValid())
 	{
@@ -83,7 +83,7 @@ void UFuJoinSessionTask::OnJoinSessionComplete(const FName SessionName, const EO
 	                                                   DelayBeforeTravel1, false);
 }
 
-void UFuJoinSessionTask::OnDelayBeforeTravelEnded() const
+void UFuAsyncAction_JoinSession::OnDelayBeforeTravelEnded() const
 {
 	if (!PlayerController1.IsValid())
 	{
