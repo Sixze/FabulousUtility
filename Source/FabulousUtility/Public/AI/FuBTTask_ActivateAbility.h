@@ -19,7 +19,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Settings")
 	bool bWaitForAbilityEnd{true};
 
-	UPROPERTY(EditAnywhere, Category = "Settings")
+	UPROPERTY(EditAnywhere, Category = "Settings", Meta = (EditCondition = "bWaitForAbilityEnd"))
 	bool bCancelAbilityOnAbort;
 
 public:

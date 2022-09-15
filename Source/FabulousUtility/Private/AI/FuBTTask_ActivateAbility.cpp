@@ -29,7 +29,16 @@ uint16 UFuBTTask_ActivateAbility::GetInstanceMemorySize() const
 
 FString UFuBTTask_ActivateAbility::GetStaticDescription() const
 {
-	return FString::Printf(TEXT("Activate Ability: %s"), *AbilityTag.ToString());
+	FString Description;
+
+	if (bWaitForAbilityEnd)
+	{
+		Description = bCancelAbilityOnAbort
+			              ? TEXT("( wait for end, cancel on abort )") LINE_TERMINATOR
+			              : TEXT("( wait for end )") LINE_TERMINATOR;
+	}
+
+	return Description + FString::Printf(TEXT("Activate Ability: %s"), *AbilityTag.ToString());
 }
 
 #if WITH_EDITOR
