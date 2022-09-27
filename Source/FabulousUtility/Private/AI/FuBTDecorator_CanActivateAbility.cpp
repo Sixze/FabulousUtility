@@ -62,7 +62,7 @@ FString UFuBTDecorator_CanActivateAbility::GetStaticDescription() const
 			Description += TEXT(' ');
 		}
 
-		Description += TEXT("Can Activate Abilities: ");
+		Description += TEXT("Can Activate Any Ability: ");
 
 		for (const auto& Tag : AbilityTags)
 		{

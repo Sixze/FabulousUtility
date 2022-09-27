@@ -2,6 +2,25 @@
 
 #include "AbilitySystem/FuGameplayAbility.h"
 
+bool UFuAbilityUtility::CanActivateAbilityByTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag)
+{
+	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(Tag.IsValid()))
+	{
+		return false;
+	}
+
+	for (const auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
+	{
+		if (AbilitySpecification.Ability->AbilityTags.HasTag(Tag) &&
+		    AbilitySpecification.Ability->CanActivateAbility(AbilitySpecification.Handle, AbilitySystem->AbilityActorInfo.Get()))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool UFuAbilityUtility::CanActivateAbilityByClass(UAbilitySystemComponent* AbilitySystem,
                                                   const TSubclassOf<UGameplayAbility> AbilityClass)
 {

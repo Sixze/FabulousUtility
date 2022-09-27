@@ -80,7 +80,7 @@ void UFuAbilityTask_AttributeListener::OnDestroy(const bool bInOwnerFinished)
 
 void UFuAbilityTask_AttributeListener::AbilitySystem_OnAttributeChanged(const FOnAttributeChangeData& Data) const
 {
-	if (ShouldBroadcastAbilityTaskDelegates())
+	if (ShouldBroadcastAbilityTaskDelegates() && Data.NewValue != Data.OldValue)
 	{
 		OnAttributeChanged.Broadcast(Data.Attribute, Data.NewValue, Data.OldValue);
 	}

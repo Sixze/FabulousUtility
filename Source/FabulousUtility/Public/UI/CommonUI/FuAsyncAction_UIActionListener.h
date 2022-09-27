@@ -8,6 +8,10 @@
 
 class UCommonUserWidget;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuUIActionExecutedDelegate, const FUIActionTag&, ActionTag);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuUIActionHeldDelegate, const FUIActionTag&, ActionTag, float, HeldPercent);
+
 USTRUCT(BlueprintType, DisplayName = "Fu UI Action Binding Arguments")
 struct FABULOUSUTILITY_API FFuUIActionBindingArguments
 {
@@ -39,10 +43,6 @@ struct FABULOUSUTILITY_API FFuUIActionBindingArguments
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
 	FText DisplayNameOverride;
 };
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuUIActionExecutedDelegate, const FUIActionTag&, ActionTag);
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuUIActionHeldDelegate, const FUIActionTag&, ActionTag, float, HeldPercent);
 
 UCLASS(DisplayName = "Fu UI Action Listener Async Action")
 class FABULOUSUTILITY_API UFuAsyncAction_UIActionListener : public UCancellableAsyncAction

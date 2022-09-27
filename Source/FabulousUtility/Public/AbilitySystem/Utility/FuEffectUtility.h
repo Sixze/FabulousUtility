@@ -55,6 +55,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility")
 	static bool IsEffectActive(FActiveGameplayEffectHandle EffectHandle);
 
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
+	static bool SwitchIsEffectActive(FActiveGameplayEffectHandle EffectHandle);
+
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility")
 	static void RecalculateEffectModifiers(FActiveGameplayEffectHandle EffectHandle);
 

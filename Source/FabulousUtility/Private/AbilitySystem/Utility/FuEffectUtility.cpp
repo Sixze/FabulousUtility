@@ -228,6 +228,11 @@ bool UFuEffectUtility::IsEffectActive(const FActiveGameplayEffectHandle EffectHa
 	return IsValid(AbilitySystem) && AbilitySystem->GetActiveGameplayEffect(EffectHandle) != nullptr;
 }
 
+bool UFuEffectUtility::SwitchIsEffectActive(const FActiveGameplayEffectHandle EffectHandle)
+{
+	return IsEffectActive(EffectHandle);
+}
+
 void UFuEffectUtility::RecalculateEffectModifiers(FActiveGameplayEffectHandle EffectHandle)
 {
 	// https://github.com/tranek/GASDocumentation#concepts-ge-definition

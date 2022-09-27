@@ -18,6 +18,17 @@ bool UFuAttributeUtility::TryGetAttributeValue(const UAbilitySystemComponent* Ab
 	return bFound;
 }
 
+bool UFuAttributeUtility::TryGetAttributeValueAbility(const UGameplayAbility* Ability, const FGameplayAttribute& Attribute, float& Value)
+{
+	if (!IsValid(Ability))
+	{
+		Value = 0.0f;
+		return false;
+	}
+
+	return TryGetAttributeValue(Ability->GetAbilitySystemComponentFromActorInfo(), Attribute, Value);
+}
+
 bool UFuAttributeUtility::TryGetAttributePercent(const UAbilitySystemComponent* AbilitySystem, const FGameplayAttribute& Attribute,
                                                  const FGameplayAttribute& MaxAttribute, float& Percent)
 {
@@ -33,6 +44,18 @@ bool UFuAttributeUtility::TryGetAttributePercent(const UAbilitySystemComponent* 
 
 	Percent = Value / MaxValue;
 	return true;
+}
+
+bool UFuAttributeUtility::TryGetAttributePercentAbility(const UGameplayAbility* Ability, const FGameplayAttribute& Attribute,
+                                                        const FGameplayAttribute& MaxAttribute, float& Percent)
+{
+	if (!IsValid(Ability))
+	{
+		Percent = 0.0f;
+		return false;
+	}
+
+	return TryGetAttributePercent(Ability->GetAbilitySystemComponentFromActorInfo(), Attribute, MaxAttribute, Percent);
 }
 
 void UFuAttributeUtility::AdjustAttributeForMaxChange(UAbilitySystemComponent* AbilitySystem, const FGameplayAttribute& Attribute,
