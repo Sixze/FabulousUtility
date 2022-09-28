@@ -3,6 +3,10 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuArrayUtility.generated.h"
 
+DECLARE_DYNAMIC_DELEGATE_RetVal_TwoParams(bool, FFuSortByPredicatObjectDelegate, const UObject*, A, const UObject*, B);
+
+DECLARE_DYNAMIC_DELEGATE_RetVal_TwoParams(bool, FFuSortByPredicateActorDelegate, const AActor*, A, const AActor*, B);
+
 UCLASS()
 class FABULOUSUTILITY_API UFuArrayUtility : public UBlueprintFunctionLibrary
 {
@@ -17,6 +21,12 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Array Utility", Meta = (AutoCreateRefTerm = "Array"))
 	static int32 GetWeightedRandomIndex(const TArray<float>& Array);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", Meta = (AutoCreateRefTerm = "Array"))
+	static void SortByPredicateObject(UPARAM(ref) TArray<UObject*>& Array, const FFuSortByPredicatObjectDelegate& Predicate);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", Meta = (AutoCreateRefTerm = "Array"))
+	static void SortByPredicateActor(UPARAM(ref) TArray<AActor*>& Array, const FFuSortByPredicateActorDelegate& Predicate);
 
 	// Internal blueprint only functions.
 

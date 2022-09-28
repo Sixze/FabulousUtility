@@ -1,7 +1,7 @@
 #include "FuActorUtility.h"
 
 #include "FuMacros.h"
-#include "GameFramework/Pawn.h"
+#include "Engine/World.h"
 #include "GameFramework/PawnMovementComponent.h"
 
 bool UFuActorUtility::TryGetComponentByClass(AActor* Actor, const TSubclassOf<UActorComponent> ComponentClass, UActorComponent*& Component)
@@ -44,4 +44,23 @@ FVector UFuActorUtility::GetActorFeetOffset(const AActor* Actor)
 	}
 
 	return FVector::ZeroVector;
+}
+
+bool UFuActorUtility::IsEncroachingBlockingGeometry(const UObject* WorldContext, const TSubclassOf<AActor> ActorClass,
+                                                    const FVector& Location, const FRotator& Rotation)
+{
+	auto* World{WorldContext->GetWorld()};
+
+	return FU_ENSURE(IsValid(World)) && FU_ENSURE(IsValid(ActorClass)) &&
+	       World->EncroachingBlockingGeometry(ActorClass->GetDefaultObject<AActor>(), Location, Rotation);
+}
+
+bool UFuActorUtility::IsEncroachingBlockingGeometryWithAdjustment(const UObject* WorldContext, const TSubclassOf<AActor> ActorClass,
+                                                                  const FVector& Location, const FRotator& Rotation,
+                                                                  FVector& ProposedAdjustment)
+{
+	auto* World{WorldContext->GetWorld()};
+
+	return FU_ENSURE(IsValid(World)) && FU_ENSURE(IsValid(ActorClass)) &&
+	       World->EncroachingBlockingGeometry(ActorClass->GetDefaultObject<AActor>(), Location, Rotation, &ProposedAdjustment);
 }
