@@ -13,15 +13,16 @@ private:
 
 	float Duration;
 	int32 LoopsCount;
+	bool bStop;
 
 	float TimeRemaining;
 	int32& LoopIndex;
 
-	EFuDelayStatus& Status;
+	EFuDelayOutputExecs& Output;
 
 public:
 	FFuDelayLatentAction(const FLatentActionInfo& LatentInfo, const float Duration, const int32 LoopsCount,
-	                     bool bNewSkipFirstDelay, int32& LoopIndex, EFuDelayStatus& Status);
+	                     bool bNewSkipFirstDelay, int32& LoopIndex, EFuDelayOutputExecs& Output);
 
 	virtual void UpdateOperation(FLatentResponse& Response) override;
 
@@ -29,27 +30,37 @@ public:
 	virtual FString GetDescription() const override;
 #endif
 
+public:
 	void Retrigger(float NewDuration, int32 NewLoopsCount, bool bNewSkipFirstDelay);
+
+	void Stop();
 };
 
 FFuDelayLatentAction::FFuDelayLatentAction(const FLatentActionInfo& LatentInfo, const float Duration, const int32 LoopsCount,
-                                           const bool bNewSkipFirstDelay, int32& LoopIndex, EFuDelayStatus& Status) : ExecutionFunction
+                                           const bool bNewSkipFirstDelay, int32& LoopIndex, EFuDelayOutputExecs& Output) : ExecutionFunction
 	{LatentInfo.ExecutionFunction},
 	Linkage{LatentInfo.Linkage},
 	CallbackTarget{LatentInfo.CallbackTarget},
 	Duration{FMath::Max(0.0f, Duration)},
-	LoopsCount{FMath::Max(1, LoopsCount)},
+	LoopsCount{FMath::Max(-1, LoopsCount)},
+	bStop{false},
 	TimeRemaining{this->Duration},
 	LoopIndex{LoopIndex},
-	Status{Status}
+	Output{Output}
 {
 	this->TimeRemaining = bNewSkipFirstDelay ? 0.0f : this->Duration;
 	this->LoopIndex = -1;
-	this->Status = EFuDelayStatus::OnLoop;
+	this->Output = EFuDelayOutputExecs::OnLoop;
 }
 
 void FFuDelayLatentAction::UpdateOperation(FLatentResponse& Response)
 {
+	if (bStop)
+	{
+		Response.DoneIf(true);
+		return;
+	}
+
 	TimeRemaining -= Response.ElapsedTime();
 	if (TimeRemaining > 0.0f)
 	{
@@ -59,8 +70,8 @@ void FFuDelayLatentAction::UpdateOperation(FLatentResponse& Response)
 	if (Duration <= SMALL_NUMBER)
 	{
 		TimeRemaining = 0.0f;
-		LoopIndex = LoopsCount - 1;
-		Status = EFuDelayStatus::OnDelayEnded;
+		LoopIndex = FMath::Max(0, LoopsCount);
+		Output = EFuDelayOutputExecs::OnDelayEnded;
 
 		Response.FinishAndTriggerIf(true, ExecutionFunction, Linkage, CallbackTarget);
 		return;
@@ -69,11 +80,11 @@ void FFuDelayLatentAction::UpdateOperation(FLatentResponse& Response)
 	const auto PassedLoops{FMath::TruncToInt32(-TimeRemaining / Duration) + 1};
 	LoopIndex += PassedLoops;
 
-	if (LoopIndex >= LoopsCount - 1)
+	if (LoopsCount >= 0 && LoopIndex >= LoopsCount)
 	{
 		TimeRemaining = 0.0f;
-		LoopIndex = LoopsCount - 1;
-		Status = EFuDelayStatus::OnDelayEnded;
+		LoopIndex = LoopsCount;
+		Output = EFuDelayOutputExecs::OnDelayEnded;
 
 		Response.FinishAndTriggerIf(true, ExecutionFunction, Linkage, CallbackTarget);
 		return;
@@ -94,17 +105,22 @@ FString FFuDelayLatentAction::GetDescription() const
 void FFuDelayLatentAction::Retrigger(const float NewDuration, const int32 NewLoopsCount, const bool bNewSkipFirstDelay)
 {
 	Duration = FMath::Max(0.0f, NewDuration);
-	LoopsCount = FMath::Max(1, NewLoopsCount);
+	LoopsCount = FMath::Max(-1, NewLoopsCount);
 
 	TimeRemaining = bNewSkipFirstDelay ? 0.0f : Duration;
 	LoopIndex = -1;
 
-	Status = EFuDelayStatus::OnLoop;
+	Output = EFuDelayOutputExecs::OnLoop;
 }
 
-void UFuLatentActions::FuDelay(const UObject* WorldContext, const FLatentActionInfo LatentInfo,
+void FFuDelayLatentAction::Stop()
+{
+	bStop = true;
+}
+
+void UFuLatentActions::FuDelay(const UObject* WorldContext, const FLatentActionInfo LatentInfo, const EFuDelayInputExecs Input,
                                const float Duration, const int32 LoopsCount, const bool bSkipFirstDelay,
-                               const bool bRetriggerable, int32& LoopIndex, EFuDelayStatus& Status)
+                               const bool bRetriggerable, int32& LoopIndex, EFuDelayOutputExecs& Output)
 {
 	auto* World{WorldContext->GetWorld()};
 	if (!FU_ENSURE(IsValid(World)))
@@ -115,13 +131,22 @@ void UFuLatentActions::FuDelay(const UObject* WorldContext, const FLatentActionI
 	auto& LatentActionManager{World->GetLatentActionManager()};
 	auto* DelayAction{LatentActionManager.FindExistingAction<FFuDelayLatentAction>(LatentInfo.CallbackTarget, LatentInfo.UUID)};
 
-	if (DelayAction == nullptr)
+	if (Input == EFuDelayInputExecs::Start)
 	{
-		LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID,
-		                                 new FFuDelayLatentAction{LatentInfo, Duration, LoopsCount, bSkipFirstDelay, LoopIndex, Status});
+		if (DelayAction == nullptr)
+		{
+			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID,
+			                                 new FFuDelayLatentAction{
+				                                 LatentInfo, Duration, LoopsCount, bSkipFirstDelay, LoopIndex, Output
+			                                 });
+		}
+		else if (bRetriggerable)
+		{
+			DelayAction->Retrigger(Duration, LoopsCount, bSkipFirstDelay);
+		}
 	}
-	else if (bRetriggerable)
+	else if (Input == EFuDelayInputExecs::Stop && DelayAction != nullptr)
 	{
-		DelayAction->Retrigger(Duration, LoopsCount, bSkipFirstDelay);
+		DelayAction->Stop();
 	}
 }

@@ -38,7 +38,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_Delay* FuWaitForDelay(UGameplayAbility* OwningAbility, float Duration = 0.2f,
-	                                            int32 LoopsCount = 1, bool bSkipFirstDelay = false);
+	                                            int32 LoopsCount = 0, bool bSkipFirstDelay = false);
 
 protected:
 	virtual void Activate() override;

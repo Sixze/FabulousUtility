@@ -11,7 +11,7 @@ UFuAbilityTask_Delay* UFuAbilityTask_Delay::FuWaitForDelay(UGameplayAbility* Own
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
 	Task->Duration1 = FMath::Max(0.0f, Duration);
-	Task->LoopsCount1 = FMath::Max(1, LoopsCount);
+	Task->LoopsCount1 = FMath::Max(-1, LoopsCount);
 	Task->bSkipFirstDelay1 = bSkipFirstDelay;
 
 	return Task;
@@ -25,12 +25,13 @@ void UFuAbilityTask_Delay::Activate()
 	{
 		if (ShouldBroadcastAbilityTaskDelegates())
 		{
-			for (auto i{0}; i < LoopsCount1 - 1; i++)
+			for (auto i{0}; i < LoopsCount1; i++)
 			{
-				OnLoop.Broadcast(i);
+				OnLoop.Broadcast(LoopIndex);
+				LoopIndex += 1;
 			}
 
-			OnDelayEnded.Broadcast(LoopsCount1 - 1);
+			OnDelayEnded.Broadcast(LoopIndex);
 		}
 
 		EndTask();
@@ -44,7 +45,7 @@ void UFuAbilityTask_Delay::Activate()
 
 	if (!IsFinished())
 	{
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ThisClass::OnTimerEnded, Duration1, LoopsCount1 > 1);
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ThisClass::OnTimerEnded, Duration1, LoopsCount1 != 0);
 	}
 }
 
@@ -68,7 +69,7 @@ void UFuAbilityTask_Delay::OnTimerEnded()
 		return;
 	}
 
-	if (LoopIndex < LoopsCount1 - 1)
+	if (LoopsCount1 < 0 || LoopIndex < LoopsCount1)
 	{
 		if (ShouldBroadcastAbilityTaskDelegates())
 		{
