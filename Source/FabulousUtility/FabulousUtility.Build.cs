@@ -8,8 +8,8 @@ public class FabulousUtility : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new[]
 		{
-			"Core", "CoreUObject", "Engine", "EngineSettings", "InputCore", "NetCore", "RHI", "SlateCore",
-			"Slate", "OnlineSubsystem", "OnlineSubsystemUtils", "GameplayTags", "GameplayTasks",
+			"Core", "CoreUObject", "Engine", "EngineSettings", "InputCore", "EnhancedInput", "NetCore", "RHI",
+			"SlateCore", "Slate", "OnlineSubsystem", "OnlineSubsystemUtils", "GameplayTags", "GameplayTasks",
 			"GameplayAbilities", "CommonUI", "NavigationSystem", "AIModule", "DeveloperSettings"
 		});
 	}

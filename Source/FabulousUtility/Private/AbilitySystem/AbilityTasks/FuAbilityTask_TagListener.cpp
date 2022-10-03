@@ -34,7 +34,7 @@ void UFuAbilityTask_TagListener::Activate()
 {
 	Super::Activate();
 
-	if (!FU_ENSURE(IsValid(AbilitySystemComponent)) || Tags1.IsEmpty())
+	if (Tags1.IsEmpty())
 	{
 		EndTask();
 		return;

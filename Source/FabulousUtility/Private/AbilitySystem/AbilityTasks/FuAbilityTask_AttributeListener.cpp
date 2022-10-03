@@ -37,7 +37,7 @@ void UFuAbilityTask_AttributeListener::Activate()
 {
 	Super::Activate();
 
-	if (!FU_ENSURE(IsValid(AbilitySystemComponent)) || Attributes1.IsEmpty())
+	if (Attributes1.IsEmpty())
 	{
 		EndTask();
 		return;
