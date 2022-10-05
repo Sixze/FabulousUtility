@@ -2,6 +2,26 @@
 
 #include "AbilitySystem/FuGameplayAbility.h"
 
+bool UFuAbilityUtility::TryCommitAbility(UGameplayAbility* Ability, const bool bCancelOnFailure)
+{
+	if (!FU_ENSURE(IsValid(Ability)))
+	{
+		return false;
+	}
+
+	if (Ability->K2_CommitAbility())
+	{
+		return true;
+	}
+
+	if (bCancelOnFailure)
+	{
+		Ability->K2_CancelAbility();
+	}
+
+	return false;
+}
+
 bool UFuAbilityUtility::CanActivateAbilityByTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(Tag.IsValid()))
@@ -105,6 +125,9 @@ void UFuAbilityUtility::RemoveAbilitiesWithAnyTags(UAbilitySystemComponent* Abil
 	{
 		return;
 	}
+
+	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
+	FScopedAbilityListLock AbilitiesScopeLock{*AbilitySystem};
 
 	for (auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
 	{

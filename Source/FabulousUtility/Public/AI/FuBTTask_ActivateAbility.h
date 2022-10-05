@@ -1,10 +1,8 @@
 #pragma once
 
-#include "GameplayAbilitySpec.h"
 #include "BehaviorTree/BTTaskNode.h"
 #include "FuBTTask_ActivateAbility.generated.h"
 
-class UFuAbilitySystemComponent;
 struct FAbilityEndedData;
 
 UCLASS(DisplayName = "Fu Activate Ability", Meta = (ShowWorldContextPin))
@@ -41,8 +39,5 @@ protected:
 	virtual void OnTaskFinished(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory, EBTNodeResult::Type Result) override;
 
 private:
-	void OnAbilityActivated(FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability,
-	                        TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree);
-
 	void OnAbilityEnded(const FAbilityEndedData& EndedData, TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree);
 };

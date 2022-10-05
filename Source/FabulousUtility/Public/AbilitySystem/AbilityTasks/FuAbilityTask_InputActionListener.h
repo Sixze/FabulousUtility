@@ -48,15 +48,17 @@ public:
 
 public:
 	// Listens for an input action on the player controller.
-	// Avoid using UInputComponent::bBlockInput and UUserWidget::bStopAction variables to control input
-	// blocking (they should always be set to false), otherwise this task may not work properly!
+	// Warning! This task only works locally, its events will never be called on the server!
+	// Also avoid using UInputComponent::bBlockInput and UUserWidget::bStopAction variables to control
+	// input blocking (they should always be set to false), otherwise this task may not work properly!
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_InputActionListener* FuWaitForInputAction(UGameplayAbility* OwningAbility, UInputAction* InputAction);
 
 	// Listens for input actions on the player controller.
-	// Avoid using UInputComponent::bBlockInput and UUserWidget::bStopAction variables to control input
-	// blocking (they should always be set to false), otherwise this task may not work properly!
+	// Warning! This task only works locally, its events will never be called on the server!
+	// Also avoid using UInputComponent::bBlockInput and UUserWidget::bStopAction variables to control
+	// input blocking (they should always be set to false), otherwise this task may not work properly!
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_InputActionListener* FuWaitForInputActions(UGameplayAbility* OwningAbility,

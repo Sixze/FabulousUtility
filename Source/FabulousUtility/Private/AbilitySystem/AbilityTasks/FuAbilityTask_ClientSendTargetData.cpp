@@ -49,7 +49,10 @@ void UFuAbilityTask_ClientSendTargetData::Activate()
 
 void UFuAbilityTask_ClientSendTargetData::OnDestroy(const bool bInOwnerFinished)
 {
-	AbilitySystemComponent->AbilityTargetDataSetDelegate(GetAbilitySpecHandle(), GetActivationPredictionKey()).RemoveAll(this);
+	if (IsValid(AbilitySystemComponent))
+	{
+		AbilitySystemComponent->AbilityTargetDataSetDelegate(GetAbilitySpecHandle(), GetActivationPredictionKey()).RemoveAll(this);
+	}
 
 	Super::OnDestroy(bInOwnerFinished);
 }

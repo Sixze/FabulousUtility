@@ -1,13 +1,13 @@
 #include "AI/FuBTTask_ActivateAbility.h"
 
+#include "AbilitySystemComponent.h"
 #include "AbilitySystemGlobals.h"
 #include "AIController.h"
 #include "FuMacros.h"
-#include "AbilitySystem/FuAbilitySystemComponent.h"
 
 struct FFuActivateAbilityMemory
 {
-	TWeakObjectPtr<UFuAbilitySystemComponent> AbilitySystem;
+	TWeakObjectPtr<UAbilitySystemComponent> AbilitySystem;
 
 	TSet<FGameplayAbilitySpecHandle> ActiveAbilityHandles;
 
@@ -63,18 +63,15 @@ EBTNodeResult::Type UFuBTTask_ActivateAbility::ExecuteTask(UBehaviorTreeComponen
 
 	const auto* Controller{BehaviorTree.GetAIOwner()};
 	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn() : nullptr};
-	Memory.AbilitySystem = Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn));
+	Memory.AbilitySystem = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn);
 
 	if (!FU_ENSURE(Memory.AbilitySystem.IsValid()))
 	{
 		return EBTNodeResult::Failed;
 	}
 
-	Memory.AbilitySystem->OnAbilityActivated.AddUObject(this, &ThisClass::OnAbilityActivated,
-	                                                    TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
-
 	const auto AbilityEndedHandle{
-		Memory.AbilitySystem->OnAbilityEnded.AddWeakLambda(this, [&Memory](const FAbilityEndedData& EndedData)
+		Memory.AbilitySystem->OnAbilityEnded.AddLambda([&Memory](const FAbilityEndedData& EndedData)
 		{
 			if (Memory.ActiveAbilityHandles.Remove(EndedData.AbilitySpecHandle) > 0)
 			{
@@ -83,16 +80,27 @@ EBTNodeResult::Type UFuBTTask_ActivateAbility::ExecuteTask(UBehaviorTreeComponen
 		})
 	};
 
-	for (const auto& AbilitySpecification : Memory.AbilitySystem->GetActivatableAbilities())
 	{
-		if (AbilitySpecification.Ability->AbilityTags.HasTag(AbilityTag))
+		// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
+		FScopedAbilityListLock AbilitiesScopeLock{*Memory.AbilitySystem};
+
+		for (const auto& AbilitySpecification : Memory.AbilitySystem->GetActivatableAbilities())
 		{
-			Memory.AbilitySystem->TryActivateAbility(AbilitySpecification.Handle);
+			if (!AbilitySpecification.Ability->AbilityTags.HasTag(AbilityTag))
+			{
+				continue;
+			}
+
+			Memory.ActiveAbilityHandles.Add(AbilitySpecification.Handle);
+
+			if (!Memory.AbilitySystem->TryActivateAbility(AbilitySpecification.Handle))
+			{
+				Memory.ActiveAbilityHandles.Remove(AbilitySpecification.Handle);
+			}
 		}
 	}
 
 	Memory.AbilitySystem->OnAbilityEnded.Remove(AbilityEndedHandle);
-	Memory.AbilitySystem->OnAbilityActivated.RemoveAll(this);
 
 	if (!bWaitForAbilityEnd)
 	{
@@ -114,7 +122,7 @@ EBTNodeResult::Type UFuBTTask_ActivateAbility::ExecuteTask(UBehaviorTreeComponen
 
 EBTNodeResult::Type UFuBTTask_ActivateAbility::AbortTask(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory)
 {
-	auto& Memory{*CastInstanceNodeMemory<FFuActivateAbilityMemory>(NodeMemory)};
+	const auto& Memory{*CastInstanceNodeMemory<FFuActivateAbilityMemory>(NodeMemory)};
 
 	if (bCancelAbilityOnAbort && Memory.AbilitySystem.IsValid())
 	{
@@ -143,20 +151,6 @@ void UFuBTTask_ActivateAbility::OnTaskFinished(UBehaviorTreeComponent& BehaviorT
 	Memory.bAnyAbilitySuccessfullyEnded = false;
 
 	Super::OnTaskFinished(BehaviorTree, NodeMemory, Result);
-}
-
-void UFuBTTask_ActivateAbility::OnAbilityActivated(const FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability,
-                                                   const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
-{
-	if (FU_ENSURE(BehaviorTree.IsValid()))
-	{
-		auto& Memory{
-			*CastInstanceNodeMemory<FFuActivateAbilityMemory>(
-				BehaviorTree->GetNodeMemory(this, BehaviorTree->FindInstanceContainingNode(this)))
-		};
-
-		Memory.ActiveAbilityHandles.Add(AbilityHandle);
-	}
 }
 
 void UFuBTTask_ActivateAbility::OnAbilityEnded(const FAbilityEndedData& EndedData,

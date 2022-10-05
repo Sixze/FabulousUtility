@@ -24,6 +24,9 @@ public:
 		Meta = (DefaultToSelf = "Ability", ExpandBoolAsExecs = "ReturnValue"))
 	static bool SwitchIsAbilityActive(const UGameplayAbility* Ability);
 
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Specification Utility", Meta = (DefaultToSelf = "Ability"))
+	static uint8 GetAbilityInputId(const UGameplayAbility* Ability);
+
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility", Meta = (DefaultToSelf = "Ability"))
 	static bool IsAbilityInputPressed(const UGameplayAbility* Ability);
 
@@ -33,6 +36,10 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility", Meta = (DefaultToSelf = "Ability"))
 	static FActiveGameplayEffectHandle GetEffectHandleFromGrantedAbility(const UGameplayAbility* Ability);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility",
+		Meta = (DefaultToSelf = "Ability", ExpandBoolAsExecs = "ReturnValue"))
+	static bool TryCommitAbility(UGameplayAbility* Ability, bool bCancelOnFailure = true);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility")
 	static const UGameplayAbility* GetPrimaryAbilityInstance(UAbilitySystemComponent* AbilitySystem,
@@ -107,6 +114,13 @@ inline bool UFuAbilityUtility::IsAbilityActive(const UGameplayAbility* Ability)
 inline bool UFuAbilityUtility::SwitchIsAbilityActive(const UGameplayAbility* Ability)
 {
 	return IsAbilityActive(Ability);
+}
+
+inline uint8 UFuAbilityUtility::GetAbilityInputId(const UGameplayAbility* Ability)
+{
+	const auto* AbilitySpecification{IsValid(Ability) ? Ability->GetCurrentAbilitySpec() : nullptr};
+
+	return FU_ENSURE(AbilitySpecification != nullptr) ? static_cast<uint8>(AbilitySpecification->InputID) : -1;
 }
 
 inline bool UFuAbilityUtility::IsAbilityInputPressed(const UGameplayAbility* Ability)
