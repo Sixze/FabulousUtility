@@ -7,6 +7,11 @@
 #include "UI/ViewportWatermark/FuViewportWatermarkSettings.h"
 #include "UI/ViewportWatermark/FuViewportWatermarkWidget.h"
 
+bool UFuViewportWatermarkSubsystem::ShouldCreateSubsystem(UObject* Outer) const
+{
+	return !CastChecked<UGameInstance>(Outer)->IsDedicatedServerInstance();
+}
+
 void UFuViewportWatermarkSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);

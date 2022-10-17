@@ -6,6 +6,11 @@
 #include "Framework/Application/NavigationConfig.h"
 #include "UI/SlateNavigation/FuSlateNavigationSettings.h"
 
+bool UFuSlateNavigationSubsystem::ShouldCreateSubsystem(UObject* Outer) const
+{
+	return !CastChecked<UGameInstance>(Outer)->IsDedicatedServerInstance();
+}
+
 void UFuSlateNavigationSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);

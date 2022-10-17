@@ -46,9 +46,21 @@ void UFuAbilityTask_TagListener::Activate()
 		                      .AddUObject(this, &ThisClass::OnTagChanged);
 	}
 
+	if (!ShouldBroadcastAbilityTaskDelegates())
+	{
+		return;
+	}
+
 	for (const auto& Tag : Tags1)
 	{
-		OnTagChanged(Tag, AbilitySystemComponent->GetTagCount(Tag));
+		if (AbilitySystemComponent->GetTagCount(Tag) > 0)
+		{
+			OnTagAdded.Broadcast(Tag);
+		}
+		else
+		{
+			OnTagRemoved.Broadcast(Tag);
+		}
 	}
 }
 
@@ -67,12 +79,15 @@ void UFuAbilityTask_TagListener::OnDestroy(const bool bInOwnerFinished)
 
 void UFuAbilityTask_TagListener::OnTagChanged(const FGameplayTag Tag, const int32 NewCount) const
 {
-	if (NewCount > 0)
+	if (ShouldBroadcastAbilityTaskDelegates())
 	{
-		OnTagAdded.Broadcast(Tag);
-	}
-	else
-	{
-		OnTagRemoved.Broadcast(Tag);
+		if (NewCount > 0)
+		{
+			OnTagAdded.Broadcast(Tag);
+		}
+		else
+		{
+			OnTagRemoved.Broadcast(Tag);
+		}
 	}
 }

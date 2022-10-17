@@ -56,11 +56,11 @@ void UFuAbilityTask_InputActionListener::Activate()
 
 	for (const auto InputAction : InputActions1)
 	{
-		ActionBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Triggered, this, &ThisClass::Input_OnTriggered));
-		ActionBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Started, this, &ThisClass::Input_OnStarted));
-		ActionBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Ongoing, this, &ThisClass::Input_OnOngoing));
-		ActionBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Canceled, this, &ThisClass::Input_OnCanceled));
-		ActionBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Completed, this, &ThisClass::Input_OnCompleted));
+		InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Triggered, this, &ThisClass::Input_OnTriggered));
+		InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Started, this, &ThisClass::Input_OnStarted));
+		InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Ongoing, this, &ThisClass::Input_OnOngoing));
+		InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Canceled, this, &ThisClass::Input_OnCanceled));
+		InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Completed, this, &ThisClass::Input_OnCompleted));
 	}
 
 	const auto* PlayerInput{Cast<UEnhancedPlayerInput>(AbilitySystemComponent->AbilityActorInfo->PlayerController->PlayerInput)};
@@ -113,9 +113,9 @@ void UFuAbilityTask_InputActionListener::OnDestroy(const bool bInOwnerFinished)
 {
 	if (Input.IsValid())
 	{
-		for (const auto& ActionBinding : ActionBindings)
+		for (const auto& InputBinding : InputBindings)
 		{
-			Input->RemoveBinding(ActionBinding);
+			Input->RemoveBinding(InputBinding);
 		}
 	}
 

@@ -127,7 +127,7 @@ void UFuAbilityUtility::RemoveAbilitiesWithAnyTags(UAbilitySystemComponent* Abil
 	}
 
 	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
-	FScopedAbilityListLock AbilitiesScopeLock{*AbilitySystem};
+	FScopedAbilityListLock AbilityScopeLock{*AbilitySystem};
 
 	for (auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
 	{

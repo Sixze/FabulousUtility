@@ -18,7 +18,7 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Input Actions", Meta = (AllowPrivateAccess))
 	TArray<TObjectPtr<UInputAction>> InputActions1;
 
-	TArray<FInputBindingHandle> ActionBindings;
+	TArray<FInputBindingHandle> InputBindings;
 
 public:
 	// Triggering occurred after one or more processing ticks.

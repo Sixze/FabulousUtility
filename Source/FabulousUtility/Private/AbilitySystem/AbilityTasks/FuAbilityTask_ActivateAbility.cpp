@@ -24,8 +24,6 @@ void UFuAbilityTask_ActivateAbility::Activate()
 		return;
 	}
 
-	const auto bDelegatesBroadcastAllowed{ShouldBroadcastAbilityTaskDelegates()};
-
 	auto bAbilityEnded{false};
 	auto bAbilityCanceled{false};
 
@@ -43,6 +41,8 @@ void UFuAbilityTask_ActivateAbility::Activate()
 	const auto bAbilityActivated{AbilitySystemComponent->TryActivateAbility(AbilityHandle1)};
 
 	AbilitySystemComponent->OnAbilityEnded.Remove(AbilityEndedHandle);
+
+	const auto bDelegatesBroadcastAllowed{ShouldBroadcastAbilityTaskDelegates()};
 
 	if (!bAbilityActivated)
 	{

@@ -64,9 +64,21 @@ void UFuAbilityAsync_TagListener::Activate()
 		AbilitySystem->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &ThisClass::OnTagChanged);
 	}
 
+	if (!ShouldBroadcastDelegates())
+	{
+		return;
+	}
+
 	for (const auto& Tag : Tags1)
 	{
-		OnTagChanged(Tag, AbilitySystem->GetTagCount(Tag));
+		if (AbilitySystem->GetTagCount(Tag) > 0)
+		{
+			OnTagAdded.Broadcast(Tag);
+		}
+		else
+		{
+			OnTagRemoved.Broadcast(Tag);
+		}
 	}
 }
 
@@ -86,17 +98,15 @@ void UFuAbilityAsync_TagListener::EndAction()
 
 void UFuAbilityAsync_TagListener::OnTagChanged(const FGameplayTag Tag, const int32 NewCount) const
 {
-	if (!ShouldBroadcastDelegates())
+	if (ShouldBroadcastDelegates())
 	{
-		return;
-	}
-
-	if (NewCount > 0)
-	{
-		OnTagAdded.Broadcast(Tag);
-	}
-	else
-	{
-		OnTagRemoved.Broadcast(Tag);
+		if (NewCount > 0)
+		{
+			OnTagAdded.Broadcast(Tag);
+		}
+		else
+		{
+			OnTagRemoved.Broadcast(Tag);
+		}
 	}
 }

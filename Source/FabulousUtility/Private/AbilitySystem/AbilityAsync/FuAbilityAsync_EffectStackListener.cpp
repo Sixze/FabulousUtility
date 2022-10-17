@@ -40,16 +40,29 @@ void UFuAbilityAsync_EffectStackListener::Activate()
 	AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(this, &ThisClass::OnActiveGameplayEffectAdded);
 	AbilitySystem->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &ThisClass::OnActiveGameplayEffectRemoved);
 
+	const auto bDelegatesBroadcastAllowed{ShouldBroadcastDelegates()};
 	auto bAnyEffectValid{false};
+
+	FScopedActiveGameplayEffectLock EffectScopeLock{AbilitySystem->GetActiveEffects()};
 
 	for (const auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
 	{
-		bAnyEffectValid = bAnyEffectValid || ActiveEffect.Spec.Def->GetClass() == EffectClass1;
+		if (ActiveEffect.Spec.Def->GetClass() != EffectClass1)
+		{
+			continue;
+		}
 
-		OnActiveGameplayEffectAdded(AbilitySystem, ActiveEffect.Spec, ActiveEffect.Handle);
+		bAnyEffectValid = true;
+
+		AbilitySystem->OnGameplayEffectStackChangeDelegate(ActiveEffect.Handle)->AddUObject(this, &ThisClass::OnEffectStackChanged);
+
+		if (bDelegatesBroadcastAllowed)
+		{
+			OnStackChanged.Broadcast(ActiveEffect.Handle, ActiveEffect.Spec.StackCount, 0);
+		}
 	}
 
-	if (ShouldBroadcastDelegates() && !bAnyEffectValid)
+	if (!bAnyEffectValid || !bDelegatesBroadcastAllowed)
 	{
 		OnStackChanged.Broadcast({}, 0, 0);
 	}
@@ -78,8 +91,7 @@ void UFuAbilityAsync_EffectStackListener::OnActiveGameplayEffectAdded(UAbilitySy
 {
 	if (ShouldBroadcastDelegates() && EffectSpecification.Def->GetClass() == EffectClass1)
 	{
-		AbilitySystem->OnGameplayEffectStackChangeDelegate(EffectHandle)
-		             ->AddUObject(this, &ThisClass::OnEffectStackChanged);
+		AbilitySystem->OnGameplayEffectStackChangeDelegate(EffectHandle)->AddUObject(this, &ThisClass::OnEffectStackChanged);
 
 		OnStackChanged.Broadcast(EffectHandle, EffectSpecification.StackCount, 0);
 	}
@@ -87,11 +99,14 @@ void UFuAbilityAsync_EffectStackListener::OnActiveGameplayEffectAdded(UAbilitySy
 
 void UFuAbilityAsync_EffectStackListener::OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const
 {
-	if (ShouldBroadcastDelegates() && ActiveEffect.Spec.Def->GetClass() == EffectClass1)
+	if (ActiveEffect.Spec.Def->GetClass() == EffectClass1)
 	{
 		const_cast<FActiveGameplayEffect&>(ActiveEffect).EventSet.OnStackChanged.RemoveAll(this);
 
-		OnStackChanged.Broadcast(ActiveEffect.Handle, 0, ActiveEffect.Spec.StackCount);
+		if (ShouldBroadcastDelegates())
+		{
+			OnStackChanged.Broadcast(ActiveEffect.Handle, 0, ActiveEffect.Spec.StackCount);
+		}
 	}
 }
 

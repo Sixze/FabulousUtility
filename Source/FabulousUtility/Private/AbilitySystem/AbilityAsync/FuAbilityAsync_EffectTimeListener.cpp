@@ -39,7 +39,7 @@ UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListen
 }
 
 UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListenForEffectsTimeChange(
-	UFuAbilitySystemComponent* AbilitySystem, FGameplayTagContainer EffectTags, const bool bWaitForTimeFromServer)
+	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer EffectTags, const bool bWaitForTimeFromServer)
 {
 	auto* Task{NewObject<ThisClass>()};
 
@@ -201,11 +201,15 @@ void UFuAbilityAsync_EffectTimeListener::OnActiveGameplayEffectRemoved(const FAc
 void UFuAbilityAsync_EffectTimeListener::OnEffectTimeChanged(const FActiveGameplayEffectHandle EffectHandle,
                                                              const float NewStartTime, const float NewDuration) const
 {
-	auto* ActiveEffect{GetAbilitySystemComponent()->GetActiveGameplayEffect(EffectHandle)};
+	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(GetAbilitySystemComponent())};
+
+	auto* ActiveEffect{AbilitySystem->GetActiveGameplayEffect(EffectHandle)};
 	if (ActiveEffect == nullptr)
 	{
 		return;
 	}
+
+	FScopedActiveGameplayEffectLock EffectScopeLock{AbilitySystem->GetActiveEffects()};
 
 	for (const auto& EffectTag : EffectTags1)
 	{

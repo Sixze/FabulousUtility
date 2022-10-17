@@ -32,7 +32,6 @@ public:
 	// 	virtual void PreReplication(IRepChangedPropertyTracker& ChangedPropertyTracker);
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Object")
 	AActor* GetOwner() const;
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Object")

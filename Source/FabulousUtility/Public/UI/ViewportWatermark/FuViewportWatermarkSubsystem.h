@@ -10,6 +10,8 @@ class FABULOUSUTILITY_API UFuViewportWatermarkSubsystem : public UGameInstanceSu
 
 #if !UE_SERVER
 public:
+	virtual bool ShouldCreateSubsystem(UObject* Outer) const override;
+
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
 private:
