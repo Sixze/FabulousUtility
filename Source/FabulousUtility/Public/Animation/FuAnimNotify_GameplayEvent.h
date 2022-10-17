@@ -9,8 +9,8 @@ class FABULOUSUTILITY_API UFuAnimNotify_GameplayEvent : public UAnimNotify
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings", Meta = (AllowPrivateAccess))
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
 	FGameplayTag EventTag;
 
 public:

@@ -8,7 +8,7 @@ class FABULOUSUTILITY_API UFuBTTask_GameplayEvent : public UBTTaskNode
 {
 	GENERATED_BODY()
 
-private:
+protected:
 	UPROPERTY(EditAnywhere, Category = "Settings")
 	FBlackboardKeySelector TargetKey;
 

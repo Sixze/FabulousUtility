@@ -25,7 +25,7 @@ class FABULOUSUTILITY_API UFuBTTask_TagListener : public UBTTaskNode
 {
 	GENERATED_BODY()
 
-private:
+protected:
 	UPROPERTY(EditAnywhere, Category = "Settings")
 	FGameplayTag Tag;
 

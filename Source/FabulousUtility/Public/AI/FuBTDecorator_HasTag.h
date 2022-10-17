@@ -17,7 +17,7 @@ class FABULOUSUTILITY_API UFuBTDecorator_HasTag : public UBTDecorator
 {
 	GENERATED_BODY()
 
-private:
+protected:
 	UPROPERTY(EditAnywhere, Category = "Settings")
 	FBlackboardKeySelector TargetKey;
 

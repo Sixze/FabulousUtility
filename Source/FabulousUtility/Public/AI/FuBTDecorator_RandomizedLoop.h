@@ -10,7 +10,7 @@ class FABULOUSUTILITY_API UFuBTDecorator_RandomizedLoop : public UBTDecorator
 {
 	GENERATED_BODY()
 
-private:
+protected:
 	UPROPERTY(EditAnywhere, Category = "Settings", Meta = (ClampMin = 1))
 	int32 MinLoopsCount{1};
 

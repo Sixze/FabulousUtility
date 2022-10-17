@@ -11,7 +11,7 @@ class FABULOUSUTILITY_API UFuBTDecorator_CanActivateAbility : public UBTDecorato
 {
 	GENERATED_BODY()
 
-private:
+protected:
 	UPROPERTY(EditAnywhere, Category = "Settings")
 	FGameplayTagContainer AbilityTags;
 

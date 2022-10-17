@@ -10,7 +10,7 @@ class FABULOUSUTILITY_API UFuBTTask_ActivateAbility : public UBTTaskNode
 {
 	GENERATED_BODY()
 
-private:
+protected:
 	UPROPERTY(EditAnywhere, Category = "Settings")
 	FGameplayTag AbilityTag;
 
