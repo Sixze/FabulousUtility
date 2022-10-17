@@ -178,10 +178,10 @@ int32 UFuEffectUtility::GetEffectsCountWithAnyTags(const UFuAbilitySystemCompone
 	return Count;
 }
 
-void UFuEffectUtility::GetEffectTimeRemainingAndDurationByTag(const UFuAbilitySystemComponent* AbilitySystem,
-                                                              const FGameplayTag& EffectTag, float& TimeRemaining, float& Duration)
+bool UFuEffectUtility::TryGetEffectTimeRemainingAndDurationByTag(const UFuAbilitySystemComponent* AbilitySystem,
+                                                                 const FGameplayTag& EffectTag, float& TimeRemaining, float& Duration)
 {
-	GetActiveEffectTimeRemainingAndDurationByTag(AbilitySystem, EffectTag, TimeRemaining, Duration);
+	return GetActiveEffectTimeRemainingAndDurationByTag(AbilitySystem, EffectTag, TimeRemaining, Duration) != nullptr;
 }
 
 const FActiveGameplayEffect* UFuEffectUtility::GetActiveEffectTimeRemainingAndDurationByTag(
@@ -206,6 +206,18 @@ const FActiveGameplayEffect* UFuEffectUtility::GetActiveEffectTimeRemainingAndDu
 		    ActiveEffect.Spec.DynamicGrantedTags.HasTag(EffectTag))
 		{
 			const auto OtherDuration{ActiveEffect.GetDuration()};
+
+			if (OtherDuration < 0.0f)
+			{
+				// Special case for infinite effects.
+
+				Result = &ActiveEffect;
+
+				TimeRemaining = FGameplayEffectConstants::INFINITE_DURATION;
+				Duration = FGameplayEffectConstants::INFINITE_DURATION;
+				break;
+			}
+
 			const auto OtherTimeRemaining{OtherDuration + ActiveEffect.StartWorldTime - Time};
 
 			if (OtherTimeRemaining > TimeRemaining)
@@ -261,6 +273,32 @@ void UFuEffectUtility::RecalculateEffectModifiers(FActiveGameplayEffectHandle Ef
 	}
 }
 
+bool UFuEffectUtility::TryGetEffectTimeRemainingAndDurationByHandle(FActiveGameplayEffectHandle EffectHandle,
+                                                                    float& TimeRemaining, float& Duration)
+{
+	TimeRemaining = -1.0f;
+	Duration = -1.0f;
+
+	const auto* AbilitySystem{EffectHandle.GetOwningAbilitySystemComponent()};
+	if (!FU_ENSURE(IsValid(AbilitySystem)))
+	{
+		return false;
+	}
+
+	const auto* ActiveEffect{AbilitySystem->GetActiveGameplayEffect(EffectHandle)};
+	if (ActiveEffect == nullptr)
+	{
+		return false;
+	}
+
+	Duration = ActiveEffect->GetDuration();
+
+	TimeRemaining = Duration < 0.0f
+		                ? FGameplayEffectConstants::INFINITE_DURATION
+		                : Duration + ActiveEffect->StartWorldTime - AbilitySystem->GetWorld()->GetTimeSeconds();
+	return true;
+}
+
 void UFuEffectUtility::SetEffectDuration(FActiveGameplayEffectHandle EffectHandle, float Duration)
 {
 	// https://github.com/tranek/GASDocumentation#concepts-ge-duration
@@ -279,17 +317,16 @@ void UFuEffectUtility::SetEffectDuration(FActiveGameplayEffectHandle EffectHandl
 		return;
 	}
 
-	Duration = FMath::Max(0.01f, Duration);
-	const auto Time{ActiveEffects.GetWorldTime() - ActiveEffect->StartWorldTime};
+	if (!FU_ENSURE(Duration > 0.0f))
+	{
+		Duration = 0.001f;
+	}
 
 	ActiveEffect->Spec.Duration = Duration;
 
-	if (Time > Duration)
-	{
-		ActiveEffect->StartServerWorldTime = ActiveEffects.GetServerWorldTime() - Duration;
-		ActiveEffect->CachedStartServerWorldTime = ActiveEffect->StartServerWorldTime;
-		ActiveEffect->StartWorldTime = ActiveEffects.GetWorldTime() - Duration;
-	}
+	ActiveEffect->StartServerWorldTime = ActiveEffects.GetServerWorldTime();
+	ActiveEffect->CachedStartServerWorldTime = ActiveEffect->StartServerWorldTime;
+	ActiveEffect->StartWorldTime = ActiveEffects.GetWorldTime();
 
 	ActiveEffects.CheckDuration(EffectHandle);
 
@@ -316,24 +353,38 @@ void UFuEffectUtility::SetEffectTimeRemaining(FActiveGameplayEffectHandle Effect
 		return;
 	}
 
-	TimeRemaining = FMath::Max(0.0f, TimeRemaining);
-	const auto Time{ActiveEffect->GetDuration() - TimeRemaining};
-
-	if (Time >= 0.0f)
+	if (!FU_ENSURE(TimeRemaining > 0.0f))
 	{
-		ActiveEffect->StartServerWorldTime = ActiveEffects.GetServerWorldTime() - Time;
+		TimeRemaining = 0.001f;
+	}
+
+	if (ActiveEffect->GetDuration() < 0.0f)
+	{
+		// Special case for infinite effects.
+
+		ActiveEffect->Spec.Duration = TimeRemaining;
+		ActiveEffect->StartServerWorldTime = ActiveEffects.GetServerWorldTime();
 		ActiveEffect->CachedStartServerWorldTime = ActiveEffect->StartServerWorldTime;
-		ActiveEffect->StartWorldTime = ActiveEffects.GetWorldTime() - Time;
+		ActiveEffect->StartWorldTime = ActiveEffects.GetWorldTime();
 	}
 	else
 	{
-		// If the time remaining is greater than the duration, then adjust the duration to match the time remaining.
+		const auto Time{ActiveEffect->GetDuration() - TimeRemaining};
+		if (Time >= 0.0f)
+		{
+			ActiveEffect->StartServerWorldTime = ActiveEffects.GetServerWorldTime() - Time;
+			ActiveEffect->CachedStartServerWorldTime = ActiveEffect->StartServerWorldTime;
+			ActiveEffect->StartWorldTime = ActiveEffects.GetWorldTime() - Time;
+		}
+		else
+		{
+			// If the time remaining is greater than the duration, then adjust the duration to match the time remaining.
 
-		ActiveEffect->Spec.Duration -= Time;
-
-		ActiveEffect->StartServerWorldTime = ActiveEffects.GetServerWorldTime() - TimeRemaining;
-		ActiveEffect->CachedStartServerWorldTime = ActiveEffect->StartServerWorldTime;
-		ActiveEffect->StartWorldTime = ActiveEffects.GetWorldTime() - TimeRemaining;
+			ActiveEffect->Spec.Duration = TimeRemaining;
+			ActiveEffect->StartServerWorldTime = ActiveEffects.GetServerWorldTime() - TimeRemaining;
+			ActiveEffect->CachedStartServerWorldTime = ActiveEffect->StartServerWorldTime;
+			ActiveEffect->StartWorldTime = ActiveEffects.GetWorldTime() - TimeRemaining;
+		}
 	}
 
 	ActiveEffects.CheckDuration(EffectHandle);
@@ -347,17 +398,18 @@ void UFuEffectUtility::SetEffectTimeRemaining(FActiveGameplayEffectHandle Effect
 
 void UFuEffectUtility::IncreaseEffectTimeRemaining(FActiveGameplayEffectHandle EffectHandle, const float AdditionalTimeRemaining)
 {
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(EffectHandle.GetOwningAbilitySystemComponent())};
+	const auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(EffectHandle.GetOwningAbilitySystemComponent())};
 	if (!FU_ENSURE(IsValid(AbilitySystem)))
 	{
 		return;
 	}
 
-	const auto& ActiveEffects{AbilitySystem->GetActiveEffects()};
+	const auto* ActiveEffect{AbilitySystem->GetActiveGameplayEffect(EffectHandle)};
 
-	const auto* ActiveEffect{ActiveEffects.GetActiveGameplayEffect(EffectHandle)};
-	if (ActiveEffect != nullptr)
+	// Infinite effects will be skipped.
+	if (ActiveEffect != nullptr && FU_ENSURE(ActiveEffect->GetDuration() >= 0.0f))
 	{
-		SetEffectTimeRemaining(EffectHandle, ActiveEffect->GetTimeRemaining(ActiveEffects.GetWorldTime()) + AdditionalTimeRemaining);
+		SetEffectTimeRemaining(EffectHandle,
+		                       ActiveEffect->GetTimeRemaining(AbilitySystem->GetWorld()->GetTimeSeconds()) + AdditionalTimeRemaining);
 	}
 }

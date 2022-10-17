@@ -43,9 +43,10 @@ public:
 	static int32 GetEffectsCountWithAnyTags(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer& EffectTags,
 	                                        bool bIgnoreInhibitedEffects = false);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility", Meta = (AutoCreateRefTerm = "EffectTag"))
-	static void GetEffectTimeRemainingAndDurationByTag(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag& EffectTag,
-	                                                   float& TimeRemaining, float& Duration);
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility",
+		Meta = (AutoCreateRefTerm = "EffectTag", ExpandBoolAsExecs = "ReturnValue"))
+	static bool TryGetEffectTimeRemainingAndDurationByTag(
+		const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag& EffectTag, float& TimeRemaining, float& Duration);
 
 	static const FActiveGameplayEffect* GetActiveEffectTimeRemainingAndDurationByTag(
 		const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag& EffectTag, float& TimeRemaining, float& Duration);
@@ -64,6 +65,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility")
 	static void RecalculateEffectModifiers(FActiveGameplayEffectHandle EffectHandle);
 
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
+	static bool TryGetEffectTimeRemainingAndDurationByHandle(FActiveGameplayEffectHandle EffectHandle,
+	                                                         float& TimeRemaining, float& Duration);
+
+	// This function will also restart the effect timer from the beginning. If you just want to modify the remaining
+	// effect time, use UFuEffectUtility::SetEffectTimeRemaining() or UFuEffectUtility::IncreaseEffectTimeRemaining().
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility")
 	static void SetEffectDuration(FActiveGameplayEffectHandle EffectHandle, float Duration);
 
