@@ -6,7 +6,7 @@
 struct FFuHasTagMemory;
 
 UENUM(BlueprintType)
-enum class EFuHasTagMatchMode : uint8
+enum class EFuTagMatchMode : uint8
 {
 	AnyTag,
 	AllTags
@@ -22,7 +22,7 @@ protected:
 	FBlackboardKeySelector TargetKey;
 
 	UPROPERTY(EditAnywhere, Category = "Settings")
-	EFuHasTagMatchMode MatchMode{EFuHasTagMatchMode::AnyTag};
+	EFuTagMatchMode MatchMode{EFuTagMatchMode::AnyTag};
 
 	UPROPERTY(EditAnywhere, Category = "Settings")
 	FGameplayTagContainer Tags;

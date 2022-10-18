@@ -3,8 +3,8 @@
 #include "FuMacros.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 
-UFuAbilityTask_EffectListener* UFuAbilityTask_EffectListener::FuWaitForEffectByTag(
-	UGameplayAbility* OwningAbility, const FGameplayTag EffectTag)
+UFuAbilityTask_EffectListener* UFuAbilityTask_EffectListener::FuWaitForEffectChangeByTag(UGameplayAbility* OwningAbility,
+                                                                                         const FGameplayTag EffectTag)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
@@ -16,8 +16,8 @@ UFuAbilityTask_EffectListener* UFuAbilityTask_EffectListener::FuWaitForEffectByT
 	return Task;
 }
 
-UFuAbilityTask_EffectListener* UFuAbilityTask_EffectListener::FuWaitForEffectByTags(
-	UGameplayAbility* OwningAbility, const FGameplayTagContainer EffectTags)
+UFuAbilityTask_EffectListener* UFuAbilityTask_EffectListener::FuWaitForEffectChangeByTags(UGameplayAbility* OwningAbility,
+                                                                                          const FGameplayTagContainer EffectTags)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 

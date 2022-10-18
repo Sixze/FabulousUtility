@@ -1,12 +1,12 @@
 #pragma once
 
 #include "Abilities/Tasks/AbilityTask.h"
-#include "FuAbilityTask_ClientSendTargetData.generated.h"
+#include "FuAbilityTask_TargetDataSender.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuTargetDataReceivedDelegate, const FGameplayAbilityTargetDataHandle&, TargetData);
 
-UCLASS(DisplayName = "Fu Client Send Target Data Ability Task")
-class FABULOUSUTILITY_API UFuAbilityTask_ClientSendTargetData : public UAbilityTask
+UCLASS(DisplayName = "Fu Target Data Sender Ability Task")
+class FABULOUSUTILITY_API UFuAbilityTask_TargetDataSender : public UAbilityTask
 {
 	GENERATED_BODY()
 
@@ -15,14 +15,14 @@ private:
 	FGameplayAbilityTargetDataHandle TargetData1;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Client Send Target Data Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Target Data Sender Ability Task")
 	FFuTargetDataReceivedDelegate OnTargetDataReceived;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_ClientSendTargetData* FuClientSendTargetData(UGameplayAbility* OwningAbility,
-	                                                                   const FGameplayAbilityTargetDataHandle& TargetData);
+	static UFuAbilityTask_TargetDataSender* FuSendTargetData(UGameplayAbility* OwningAbility,
+	                                                         const FGameplayAbilityTargetDataHandle& TargetData);
 
 protected:
 	virtual void Activate() override;

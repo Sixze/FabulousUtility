@@ -1,10 +1,12 @@
 ﻿#pragma once
 
-#include "FuAbilityTask_ClientSendTargetData.h"
-#include "FuAbilityTask_ServerReceiveTargetData.generated.h"
+#include "FuAbilityTask_TargetDataSender.h"
+#include "FuAbilityTask_TargetDataReceiver.generated.h"
 
-UCLASS(DisplayName = "Fu Server Receive Target Data Ability Task")
-class FABULOUSUTILITY_API UFuAbilityTask_ServerReceiveTargetData : public UAbilityTask
+// In most cases, you probably won't need to use UFuAbilityTask_TargetDataReceiver because
+// UFuAbilityTask_TargetDataSender also handles receiving target data on the server.
+UCLASS(DisplayName = "Fu Target Data Receiver Ability Task")
+class FABULOUSUTILITY_API UFuAbilityTask_TargetDataReceiver : public UAbilityTask
 {
 	GENERATED_BODY()
 
@@ -13,13 +15,13 @@ private:
 	bool bReceiveOnce1;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Server Receive Target Data Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Target Data Receiver Ability Task")
 	FFuTargetDataReceivedDelegate OnTargetDataReceived;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_ServerReceiveTargetData* FuServerWaitForTargetData(UGameplayAbility* OwningAbility, bool bReceiveOnce = false);
+	static UFuAbilityTask_TargetDataReceiver* FuReceiveTargetData(UGameplayAbility* OwningAbility, bool bReceiveOnce = false);
 
 protected:
 	virtual void Activate() override;

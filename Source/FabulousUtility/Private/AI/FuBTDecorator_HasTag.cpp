@@ -64,7 +64,7 @@ FString UFuBTDecorator_HasTag::GetStaticDescription() const
 	}
 	else
 	{
-		Description += MatchMode == EFuHasTagMatchMode::AnyTag ? TEXT("Has Any Tag: ") : TEXT("Has All Tags: ");
+		Description += MatchMode == EFuTagMatchMode::AnyTag ? TEXT("Has Any Tag: ") : TEXT("Has All Tags: ");
 
 		for (const auto& Tag : Tags)
 		{
@@ -130,10 +130,10 @@ bool UFuBTDecorator_HasTag::CalculateRawConditionValue(UBehaviorTreeComponent& B
 
 	switch (MatchMode)
 	{
-		case EFuHasTagMatchMode::AnyTag:
+		case EFuTagMatchMode::AnyTag:
 			return AbilitySystem->HasAnyMatchingGameplayTags(Tags);
 
-		case EFuHasTagMatchMode::AllTags:
+		case EFuTagMatchMode::AllTags:
 			return AbilitySystem->HasAllMatchingGameplayTags(Tags);
 
 		default:

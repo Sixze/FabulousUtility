@@ -51,7 +51,7 @@ void UFuAbilityTask_EffectStackListener::Activate()
 		}
 	}
 
-	if (!bAnyEffectValid && bDelegatesBroadcastAllowed)
+	if (bDelegatesBroadcastAllowed && !bAnyEffectValid)
 	{
 		OnStackChanged.Broadcast({}, 0, 0);
 	}

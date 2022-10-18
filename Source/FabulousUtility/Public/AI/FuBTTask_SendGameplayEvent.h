@@ -1,10 +1,10 @@
 #pragma once
 
 #include "BehaviorTree/BTTaskNode.h"
-#include "FuBTTask_GameplayEvent.generated.h"
+#include "FuBTTask_SendGameplayEvent.generated.h"
 
 UCLASS(DisplayName = "Fu Send Gameplay Event", Meta = (ShowWorldContextPin))
-class FABULOUSUTILITY_API UFuBTTask_GameplayEvent : public UBTTaskNode
+class FABULOUSUTILITY_API UFuBTTask_SendGameplayEvent : public UBTTaskNode
 {
 	GENERATED_BODY()
 
@@ -16,7 +16,7 @@ protected:
 	FGameplayTag EventTag;
 
 public:
-	UFuBTTask_GameplayEvent();
+	UFuBTTask_SendGameplayEvent();
 
 	virtual void InitializeFromAsset(UBehaviorTree& Asset) override;
 

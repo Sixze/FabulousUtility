@@ -24,11 +24,11 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_EffectListener* FuWaitForEffectByTag(UGameplayAbility* OwningAbility, FGameplayTag EffectTag);
+	static UFuAbilityTask_EffectListener* FuWaitForEffectChangeByTag(UGameplayAbility* OwningAbility, FGameplayTag EffectTag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_EffectListener* FuWaitForEffectByTags(UGameplayAbility* OwningAbility, FGameplayTagContainer EffectTags);
+	static UFuAbilityTask_EffectListener* FuWaitForEffectChangeByTags(UGameplayAbility* OwningAbility, FGameplayTagContainer EffectTags);
 
 protected:
 	virtual void Activate() override;

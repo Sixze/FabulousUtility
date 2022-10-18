@@ -1,4 +1,4 @@
-#include "AI/FuBTTask_GameplayEvent.h"
+#include "AI/FuBTTask_SendGameplayEvent.h"
 
 #include "AIController.h"
 #include "FuMacros.h"
@@ -7,7 +7,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"
 
-UFuBTTask_GameplayEvent::UFuBTTask_GameplayEvent()
+UFuBTTask_SendGameplayEvent::UFuBTTask_SendGameplayEvent()
 {
 	NodeName = "Fu Send Gameplay Event";
 
@@ -16,7 +16,7 @@ UFuBTTask_GameplayEvent::UFuBTTask_GameplayEvent()
 	INIT_TASK_NODE_NOTIFY_FLAGS();
 }
 
-void UFuBTTask_GameplayEvent::InitializeFromAsset(UBehaviorTree& Asset)
+void UFuBTTask_SendGameplayEvent::InitializeFromAsset(UBehaviorTree& Asset)
 {
 	Super::InitializeFromAsset(Asset);
 
@@ -27,20 +27,20 @@ void UFuBTTask_GameplayEvent::InitializeFromAsset(UBehaviorTree& Asset)
 	}
 }
 
-FString UFuBTTask_GameplayEvent::GetStaticDescription() const
+FString UFuBTTask_SendGameplayEvent::GetStaticDescription() const
 {
 	return FString::Printf(TEXT("Send Gameplay Event: %s") LINE_TERMINATOR TEXT("Target: %s"),
 	                       *EventTag.ToString(), *TargetKey.SelectedKeyName.ToString());
 }
 
 #if WITH_EDITOR
-FName UFuBTTask_GameplayEvent::GetNodeIconName() const
+FName UFuBTTask_SendGameplayEvent::GetNodeIconName() const
 {
 	return TEXT("BTEditor.Graph.BTNode.Task.RunEQSQuery.Icon");
 }
 #endif
 
-EBTNodeResult::Type UFuBTTask_GameplayEvent::ExecuteTask(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory)
+EBTNodeResult::Type UFuBTTask_SendGameplayEvent::ExecuteTask(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory)
 {
 	const auto* Blackboard{BehaviorTree.GetBlackboardComponent()};
 	if (!FU_ENSURE(IsValid(Blackboard)))

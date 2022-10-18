@@ -1,9 +1,9 @@
-﻿#include "AbilitySystem/AbilityTasks/FuAbilityTask_ServerReceiveTargetData.h"
+﻿#include "AbilitySystem/AbilityTasks/FuAbilityTask_TargetDataReceiver.h"
 
 #include "AbilitySystemComponent.h"
 
-UFuAbilityTask_ServerReceiveTargetData* UFuAbilityTask_ServerReceiveTargetData::FuServerWaitForTargetData(
-	UGameplayAbility* OwningAbility, const bool bReceiveOnce)
+UFuAbilityTask_TargetDataReceiver* UFuAbilityTask_TargetDataReceiver::FuReceiveTargetData(UGameplayAbility* OwningAbility,
+                                                                                          const bool bReceiveOnce)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
@@ -12,7 +12,7 @@ UFuAbilityTask_ServerReceiveTargetData* UFuAbilityTask_ServerReceiveTargetData::
 	return Task;
 }
 
-void UFuAbilityTask_ServerReceiveTargetData::Activate()
+void UFuAbilityTask_TargetDataReceiver::Activate()
 {
 	Super::Activate();
 
@@ -30,7 +30,7 @@ void UFuAbilityTask_ServerReceiveTargetData::Activate()
 	SetWaitingOnRemotePlayerData();
 }
 
-void UFuAbilityTask_ServerReceiveTargetData::OnDestroy(const bool bInOwnerFinished)
+void UFuAbilityTask_TargetDataReceiver::OnDestroy(const bool bInOwnerFinished)
 {
 	if (IsValid(AbilitySystemComponent))
 	{
@@ -40,8 +40,8 @@ void UFuAbilityTask_ServerReceiveTargetData::OnDestroy(const bool bInOwnerFinish
 	Super::OnDestroy(bInOwnerFinished);
 }
 
-void UFuAbilityTask_ServerReceiveTargetData::OnAbilityTargetDataSet(const FGameplayAbilityTargetDataHandle& TargetData,
-                                                                    const FGameplayTag ActivationTag)
+void UFuAbilityTask_TargetDataReceiver::OnAbilityTargetDataSet(const FGameplayAbilityTargetDataHandle& TargetData,
+                                                               const FGameplayTag ActivationTag)
 {
 	const auto TargetDataCopy{TargetData};
 

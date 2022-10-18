@@ -1,12 +1,12 @@
 #pragma once
 
 #include "BehaviorTree/BTTaskNode.h"
-#include "FuBTTask_TagListener.generated.h"
+#include "FuBTTask_WaitForTagChange.generated.h"
 
 class UAbilitySystemComponent;
 
 UENUM(BlueprintType)
-enum class EFuTagListenerWaitMode : uint8
+enum class EFuTagWaitMode : uint8
 {
 	WaitForTagAdd,
 	WaitForTagRemove,
@@ -14,14 +14,14 @@ enum class EFuTagListenerWaitMode : uint8
 
 namespace FuTagListenerWaitMode
 {
-	constexpr bool IsValid(const EFuTagListenerWaitMode WaitMode)
+	constexpr bool IsValid(const EFuTagWaitMode WaitMode)
 	{
-		return WaitMode >= EFuTagListenerWaitMode::WaitForTagAdd && WaitMode <= EFuTagListenerWaitMode::WaitForTagRemove;
+		return WaitMode >= EFuTagWaitMode::WaitForTagAdd && WaitMode <= EFuTagWaitMode::WaitForTagRemove;
 	}
 }
 
 UCLASS(DisplayName = "Fu Wait for Tag Change", Meta = (ShowWorldContextPin))
-class FABULOUSUTILITY_API UFuBTTask_TagListener : public UBTTaskNode
+class FABULOUSUTILITY_API UFuBTTask_WaitForTagChange : public UBTTaskNode
 {
 	GENERATED_BODY()
 
@@ -30,10 +30,10 @@ protected:
 	FGameplayTag Tag;
 
 	UPROPERTY(EditAnywhere, Category = "Settings")
-	EFuTagListenerWaitMode WaitMode{EFuTagListenerWaitMode::WaitForTagRemove};
+	EFuTagWaitMode WaitMode{EFuTagWaitMode::WaitForTagRemove};
 
 public:
-	UFuBTTask_TagListener();
+	UFuBTTask_WaitForTagChange();
 
 #if WITH_EDITOR
 	virtual bool CanEditChange(const FProperty* Property) const override;

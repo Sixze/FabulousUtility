@@ -1,9 +1,9 @@
-#include "AbilitySystem/AbilityTasks/FuAbilityTask_ClientSendTargetData.h"
+#include "AbilitySystem/AbilityTasks/FuAbilityTask_TargetDataSender.h"
 
 #include "AbilitySystemComponent.h"
 
-UFuAbilityTask_ClientSendTargetData* UFuAbilityTask_ClientSendTargetData::FuClientSendTargetData(
-	UGameplayAbility* OwningAbility, const FGameplayAbilityTargetDataHandle& TargetData)
+UFuAbilityTask_TargetDataSender* UFuAbilityTask_TargetDataSender::FuSendTargetData(UGameplayAbility* OwningAbility,
+                                                                                   const FGameplayAbilityTargetDataHandle& TargetData)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
@@ -12,7 +12,7 @@ UFuAbilityTask_ClientSendTargetData* UFuAbilityTask_ClientSendTargetData::FuClie
 	return Task;
 }
 
-void UFuAbilityTask_ClientSendTargetData::Activate()
+void UFuAbilityTask_TargetDataSender::Activate()
 {
 	Super::Activate();
 
@@ -47,7 +47,7 @@ void UFuAbilityTask_ClientSendTargetData::Activate()
 	EndTask();
 }
 
-void UFuAbilityTask_ClientSendTargetData::OnDestroy(const bool bInOwnerFinished)
+void UFuAbilityTask_TargetDataSender::OnDestroy(const bool bInOwnerFinished)
 {
 	if (IsValid(AbilitySystemComponent))
 	{
@@ -57,8 +57,8 @@ void UFuAbilityTask_ClientSendTargetData::OnDestroy(const bool bInOwnerFinished)
 	Super::OnDestroy(bInOwnerFinished);
 }
 
-void UFuAbilityTask_ClientSendTargetData::OnAbilityTargetDataSet(const FGameplayAbilityTargetDataHandle& TargetData,
-                                                                 FGameplayTag ActivationTag)
+void UFuAbilityTask_TargetDataSender::OnAbilityTargetDataSet(const FGameplayAbilityTargetDataHandle& TargetData,
+                                                             FGameplayTag ActivationTag)
 {
 	const auto TargetDataCopy{TargetData};
 

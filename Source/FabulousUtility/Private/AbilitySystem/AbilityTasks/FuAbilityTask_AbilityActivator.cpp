@@ -1,9 +1,9 @@
-#include "AbilitySystem/AbilityTasks/FuAbilityTask_ActivateAbility.h"
+#include "AbilitySystem/AbilityTasks/FuAbilityTask_AbilityActivator.h"
 
 #include "AbilitySystemComponent.h"
 #include "FuMacros.h"
 
-UFuAbilityTask_ActivateAbility* UFuAbilityTask_ActivateAbility::FuActivateAbilityByHandle(
+UFuAbilityTask_AbilityActivator* UFuAbilityTask_AbilityActivator::FuActivateAbilityByHandle(
 	UGameplayAbility* OwningAbility, const FGameplayAbilitySpecHandle AbilityHandle, const bool bCancelAbilityOnDestroy)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
@@ -14,7 +14,7 @@ UFuAbilityTask_ActivateAbility* UFuAbilityTask_ActivateAbility::FuActivateAbilit
 	return Task;
 }
 
-void UFuAbilityTask_ActivateAbility::Activate()
+void UFuAbilityTask_AbilityActivator::Activate()
 {
 	Super::Activate();
 
@@ -81,7 +81,7 @@ void UFuAbilityTask_ActivateAbility::Activate()
 	AbilitySystemComponent->OnAbilityEnded.AddUObject(this, &ThisClass::AbilitySystem_OnAbilityEnded);
 }
 
-void UFuAbilityTask_ActivateAbility::OnDestroy(const bool bInOwnerFinished)
+void UFuAbilityTask_AbilityActivator::OnDestroy(const bool bInOwnerFinished)
 {
 	if (IsValid(AbilitySystemComponent))
 	{
@@ -96,7 +96,7 @@ void UFuAbilityTask_ActivateAbility::OnDestroy(const bool bInOwnerFinished)
 	Super::OnDestroy(bInOwnerFinished);
 }
 
-void UFuAbilityTask_ActivateAbility::AbilitySystem_OnAbilityEnded(const FAbilityEndedData& EndedData)
+void UFuAbilityTask_AbilityActivator::AbilitySystem_OnAbilityEnded(const FAbilityEndedData& EndedData)
 {
 	if (EndedData.AbilitySpecHandle != AbilityHandle1)
 	{
