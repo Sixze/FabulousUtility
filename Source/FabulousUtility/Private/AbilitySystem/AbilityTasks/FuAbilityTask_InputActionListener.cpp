@@ -1,19 +1,14 @@
 #include "AbilitySystem/AbilityTasks/FuAbilityTask_InputActionListener.h"
 
 #include "AbilitySystemComponent.h"
-#include "EnhancedPlayerInput.h"
 #include "FuMacros.h"
-#include "GameFramework/PlayerController.h"
 
 UFuAbilityTask_InputActionListener* UFuAbilityTask_InputActionListener::FuWaitForInputAction(
 	UGameplayAbility* OwningAbility, UInputAction* InputAction)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
-	// Listen for input on the player controller instead of the avatar.
-
-	const auto* PlayerController{Task->AbilitySystemComponent->AbilityActorInfo->PlayerController.Get()};
-	Task->Input = IsValid(PlayerController) ? Cast<UEnhancedInputComponent>(PlayerController->InputComponent) : nullptr;
+	Task->Input = Cast<UEnhancedInputComponent>(Task->AbilitySystemComponent->GetAvatarActor_Direct()->InputComponent);
 
 	if (FU_ENSURE(IsValid(InputAction)))
 	{
@@ -28,10 +23,7 @@ UFuAbilityTask_InputActionListener* UFuAbilityTask_InputActionListener::FuWaitFo
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
-	// Listen for input on the player controller instead of the avatar.
-
-	const auto* PlayerController{Task->AbilitySystemComponent->AbilityActorInfo->PlayerController.Get()};
-	Task->Input = IsValid(PlayerController) ? Cast<UEnhancedInputComponent>(PlayerController->InputComponent) : nullptr;
+	Task->Input = Cast<UEnhancedInputComponent>(Task->AbilitySystemComponent->GetAvatarActor_Direct()->InputComponent);
 
 	for (const auto& InputAction : InputActions)
 	{
@@ -48,68 +40,50 @@ void UFuAbilityTask_InputActionListener::Activate()
 {
 	Super::Activate();
 
-	if (!Input.IsValid() || InputActions1.IsEmpty())
+	if (InputActions1.IsEmpty())
 	{
 		EndTask();
 		return;
 	}
 
-	for (const auto InputAction : InputActions1)
+	auto* Pawn{Cast<APawn>(AbilitySystemComponent->GetAvatarActor_Direct())};
+	if (IsValid(Pawn))
 	{
-		InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Triggered, this, &ThisClass::Input_OnTriggered));
-		InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Started, this, &ThisClass::Input_OnStarted));
-		InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Ongoing, this, &ThisClass::Input_OnOngoing));
-		InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Canceled, this, &ThisClass::Input_OnCanceled));
-		InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Completed, this, &ThisClass::Input_OnCompleted));
+		Pawn->ReceiveRestartedDelegate.AddDynamic(this, &ThisClass::OnPawnRestarted);
 	}
 
-	const auto* PlayerInput{Cast<UEnhancedPlayerInput>(AbilitySystemComponent->AbilityActorInfo->PlayerController->PlayerInput)};
+	BindActions();
+}
 
-	if (!IsValid(PlayerInput) || !ShouldBroadcastAbilityTaskDelegates())
+void UFuAbilityTask_InputActionListener::OnDestroy(const bool bInOwnerFinished)
+{
+	auto* Pawn{Cast<APawn>(AbilitySystemComponent->GetAvatarActor_Direct())};
+	if (IsValid(Pawn))
 	{
-		return;
+		Pawn->ReceiveRestartedDelegate.RemoveAll(this);
 	}
 
-	// UInputComponent::bBlockInput is ignored when broadcasting events on task activation!
+	UnBindActions();
 
-	for (const auto InputAction : InputActions1)
+	Super::OnDestroy(bInOwnerFinished);
+}
+
+void UFuAbilityTask_InputActionListener::BindActions()
+{
+	if (Input.IsValid())
 	{
-		const auto* ActionInstance{PlayerInput->FindActionInstanceData(InputAction)};
-		if (ActionInstance == nullptr)
+		for (const auto InputAction : InputActions1)
 		{
-			continue;
-		}
-
-		// ReSharper disable once CppDefaultCaseNotHandledInSwitchStatement
-		// ReSharper disable once CppIncompleteSwitchStatement
-		switch (ActionInstance->GetTriggerEvent())
-		{
-			case ETriggerEvent::Triggered:
-				OnTriggered.Broadcast(ActionInstance->GetSourceAction(), ActionInstance->GetValue());
-				break;
-
-			case ETriggerEvent::Started:
-				OnStarted.Broadcast(ActionInstance->GetSourceAction(), ActionInstance->GetValue());
-				break;
-
-			case ETriggerEvent::Ongoing:
-				// There is no way to tell which event was before ETriggerEvent::Ongoing, and because of that, we cannot broadcast
-				// ETriggerEvent::Triggered and ETriggerEvent::Started before ETriggerEvent::Ongoing during task activation.
-				OnOngoing.Broadcast(ActionInstance->GetSourceAction(), ActionInstance->GetValue());
-				break;
-
-			case ETriggerEvent::Canceled:
-				OnCanceled.Broadcast(ActionInstance->GetSourceAction(), ActionInstance->GetValue());
-				break;
-
-			case ETriggerEvent::Completed:
-				OnCompleted.Broadcast(ActionInstance->GetSourceAction(), ActionInstance->GetValue());
-				break;
+			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Triggered, this, &ThisClass::Input_OnTriggered));
+			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Started, this, &ThisClass::Input_OnStarted));
+			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Ongoing, this, &ThisClass::Input_OnOngoing));
+			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Canceled, this, &ThisClass::Input_OnCanceled));
+			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Completed, this, &ThisClass::Input_OnCompleted));
 		}
 	}
 }
 
-void UFuAbilityTask_InputActionListener::OnDestroy(const bool bInOwnerFinished)
+void UFuAbilityTask_InputActionListener::UnBindActions()
 {
 	if (Input.IsValid())
 	{
@@ -117,9 +91,18 @@ void UFuAbilityTask_InputActionListener::OnDestroy(const bool bInOwnerFinished)
 		{
 			Input->RemoveBinding(InputBinding);
 		}
-	}
 
-	Super::OnDestroy(bInOwnerFinished);
+		InputBindings.Reset();
+	}
+}
+
+void UFuAbilityTask_InputActionListener::OnPawnRestarted(APawn* Pawn)
+{
+	UnBindActions();
+
+	Input = Cast<UEnhancedInputComponent>(Pawn->InputComponent);
+
+	BindActions();
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
