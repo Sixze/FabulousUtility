@@ -13,6 +13,9 @@ class FABULOUSUTILITY_API UFuAbilityAsync_AbilityCooldownListener : public UAbil
 private:
 	FGameplayTagCountContainer EffectTags;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Ability Tags", Meta = (AllowPrivateAccess))
+	FGameplayTagContainer AbilityTags1;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Input Id", Meta = (AllowPrivateAccess))
 	int32 InputId1{-1};
 
@@ -29,14 +32,28 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownActor(const AActor* Actor,
-	                                                                                int32 InputId,
-	                                                                                bool bWaitForTimeFromServer = true);
+	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownByAbilityTagActor(
+		const AActor* Actor, FGameplayTag AbilityTag, bool bWaitForTimeFromServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldown(UFuAbilitySystemComponent* AbilitySystem,
-	                                                                           int32 InputId,
-	                                                                           bool bWaitForTimeFromServer = true);
+	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownByAbilityTagsActor(
+		const AActor* Actor, FGameplayTagContainer AbilityTags, bool bWaitForTimeFromServer = true);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownByInputIdActor(
+		const AActor* Actor, int32 InputId, bool bWaitForTimeFromServer = true);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownByAbilityTag(
+		UFuAbilitySystemComponent* AbilitySystem, FGameplayTag AbilityTag, bool bWaitForTimeFromServer = true);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownByAbilityTags(
+		UFuAbilitySystemComponent* AbilitySystem, FGameplayTagContainer AbilityTags, bool bWaitForTimeFromServer = true);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownByInputId(
+		UFuAbilitySystemComponent* AbilitySystem, int32 InputId, bool bWaitForTimeFromServer = true);
 
 public:
 	virtual void Activate() override;

@@ -135,7 +135,7 @@ void UFuAbilityAsync_EffectTimeListener::RefreshEffectTimeRemainingAndDurationFo
 	{
 		if (!AbilitySystem->HasMatchingGameplayTag(EffectTag))
 		{
-			OnEffectEnded.Broadcast(EffectTag, -1.0f, -1.0f, false);
+			OnEffectEnded.Broadcast(EffectTag, 0.0f, 0.0f, false);
 		}
 
 		return;
@@ -225,6 +225,6 @@ void UFuAbilityAsync_EffectTimeListener::OnEffectTagChanged(const FGameplayTag E
 {
 	if (ShouldBroadcastDelegates() && NewCount <= 0)
 	{
-		OnEffectEnded.Broadcast(EffectTag, -1.0f, -1.0f, false);
+		OnEffectEnded.Broadcast(EffectTag, 0.0f, 0.0f, false);
 	}
 }
