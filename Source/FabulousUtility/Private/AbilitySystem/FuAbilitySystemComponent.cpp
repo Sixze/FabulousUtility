@@ -149,6 +149,102 @@ void UFuAbilitySystemComponent::AbilityLocalInputPressed(const int32 InputId)
 	}
 }
 
+void UFuAbilitySystemComponent::InputTagPressed(const FGameplayTag& InputTag)
+{
+	// Based on UAbilitySystemComponent::AbilityLocalInputPressed().
+
+	if (!InputTag.IsValid())
+	{
+		return;
+	}
+
+	if (ConfirmInputTag == InputTag)
+	{
+		LocalInputConfirm();
+		return;
+	}
+
+	if (CancelInputTag == InputTag)
+	{
+		LocalInputCancel();
+		return;
+	}
+
+	ABILITYLIST_SCOPE_LOCK();
+
+	for (auto& AbilitySpecification : GetActivatableAbilities())
+	{
+		if (!IsValid(AbilitySpecification.Ability) ||
+		    // ReSharper disable once CppRedundantParentheses
+		    (!AbilitySpecification.DynamicAbilityTags.HasTag(InputTag) &&
+		     !AbilitySpecification.Ability->AbilityTags.HasTag(InputTag)))
+		{
+			continue;
+		}
+
+		AbilitySpecification.InputPressed = true;
+
+		if (AbilitySpecification.IsActive())
+		{
+			if (AbilitySpecification.Ability->bReplicateInputDirectly && !IsOwnerActorAuthoritative())
+			{
+				ServerSetInputPressed(AbilitySpecification.Handle);
+			}
+
+			AbilitySpecInputPressed(AbilitySpecification);
+
+			InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputPressed, AbilitySpecification.Handle,
+			                      AbilitySpecification.ActivationInfo.GetActivationPredictionKey());
+			continue;
+		}
+
+		const auto* FuAbility{Cast<UFuGameplayAbility>(AbilitySpecification.Ability)};
+
+		if (!IsValid(FuAbility) || FuAbility->IsActivationByInputAllowed())
+		{
+			TryActivateAbility(AbilitySpecification.Handle);
+		}
+	}
+}
+
+void UFuAbilitySystemComponent::InputTagReleased(const FGameplayTag& InputTag)
+{
+	// Based on UAbilitySystemComponent::AbilityLocalInputReleased().
+
+	if (!InputTag.IsValid())
+	{
+		return;
+	}
+
+	ABILITYLIST_SCOPE_LOCK();
+
+	for (auto& AbilitySpecification : GetActivatableAbilities())
+	{
+		if (!IsValid(AbilitySpecification.Ability) ||
+		    // ReSharper disable once CppRedundantParentheses
+		    (!AbilitySpecification.DynamicAbilityTags.HasTag(InputTag) &&
+		     !AbilitySpecification.Ability->AbilityTags.HasTag(InputTag)))
+		{
+			continue;
+		}
+
+		AbilitySpecification.InputPressed = false;
+
+		if (AbilitySpecification.IsActive())
+		{
+			if (AbilitySpecification.Ability->bReplicateInputDirectly && !IsOwnerActorAuthoritative())
+			{
+				ServerSetInputReleased(AbilitySpecification.Handle);
+			}
+
+			AbilitySpecInputReleased(AbilitySpecification);
+
+			InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputReleased, AbilitySpecification.Handle,
+			                      AbilitySpecification.ActivationInfo.GetActivationPredictionKey());
+		}
+	}
+}
+
 void UFuAbilitySystemComponent::BlockAbilitiesWithoutTags(const FGameplayTagContainer& Tags)
 {
 	BlockedAbilityWithoutTags.UpdateTagCount(Tags, 1);

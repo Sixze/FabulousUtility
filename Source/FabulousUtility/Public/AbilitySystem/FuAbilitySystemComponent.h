@@ -18,6 +18,13 @@ class FABULOUSUTILITY_API UFuAbilitySystemComponent : public UAbilitySystemCompo
 {
 	GENERATED_BODY()
 
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
+	FGameplayTag ConfirmInputTag;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
+	FGameplayTag CancelInputTag;
+
 protected:
 	FGameplayTagCountContainer BlockedAbilityWithoutTags;
 
@@ -61,6 +68,10 @@ public:
 	const FActiveGameplayEffectsContainer& GetActiveEffects() const;
 
 	FActiveGameplayEffectsContainer& GetActiveEffects();
+
+	void InputTagPressed(const FGameplayTag& InputTag);
+
+	void InputTagReleased(const FGameplayTag& InputTag);
 
 	void BlockAbilitiesWithoutTags(const FGameplayTagContainer& Tags);
 
