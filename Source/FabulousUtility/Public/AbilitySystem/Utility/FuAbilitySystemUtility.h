@@ -23,6 +23,12 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability System Utility", Meta = (AutoCreateRefTerm = "ParentTag"))
 	static FGameplayTag GetFirstDescendantTag(const UAbilitySystemComponent* AbilitySystem, const FGameplayTag& ParentTag);
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, Category = "Fabulous Utility|Fu Ability System Utility",
+		Meta = (AutoCreateRefTerm = "DynamicAbilityTags"))
+	static FGameplayAbilitySpecHandle GiveAbilityWithDynamicTags(
+		UAbilitySystemComponent* AbilitySystem, TSubclassOf<UGameplayAbility> AbilityClass,
+		int32 Level, const FGameplayTagContainer& DynamicAbilityTags);
+
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility", Meta = (AutoCreateRefTerm = "Tag"))
 	static bool AddLooseTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag, bool bReplicate = false);
 

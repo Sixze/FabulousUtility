@@ -46,6 +46,32 @@ FGameplayTag UFuAbilitySystemUtility::GetFirstDescendantTag(const UAbilitySystem
 	return Tag;
 }
 
+FGameplayAbilitySpecHandle UFuAbilitySystemUtility::GiveAbilityWithDynamicTags(
+	UAbilitySystemComponent* AbilitySystem, const TSubclassOf<UGameplayAbility> AbilityClass,
+	const int32 Level, const FGameplayTagContainer& DynamicAbilityTags)
+{
+	if (!FU_ENSURE(IsValid(AbilitySystem)))
+	{
+		return {};
+	}
+
+	auto AbilitySpecification{AbilitySystem->BuildAbilitySpecFromClass(AbilityClass, Level)};
+	if (!IsValid(AbilitySpecification.Ability))
+	{
+		return {};
+	}
+
+	for (const auto& Tag : DynamicAbilityTags)
+	{
+		if (Tag.IsValid())
+		{
+			AbilitySpecification.DynamicAbilityTags.AddTag(Tag);
+		}
+	}
+
+	return AbilitySystem->GiveAbility(AbilitySpecification);
+}
+
 bool UFuAbilitySystemUtility::AddLooseTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag, const bool bReplicate)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(Tag.IsValid()))
