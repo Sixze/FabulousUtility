@@ -12,6 +12,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Input Utility", Meta = (DefaultToSelf = "Actor"))
 	static void SetBlockInput(AActor* Actor, bool bBlockInput);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Input Utility", Meta = (DefaultToSelf = "PlayerController"))
-	static void FuSetInputModeGameOnly(APlayerController* PlayerController, bool bConsumeCaptureMouseDown);
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Input Utility", Meta = (DefaultToSelf = "Player"))
+	static void FuSetInputModeGameOnly(APlayerController* Player, bool bConsumeCaptureMouseDown);
 };

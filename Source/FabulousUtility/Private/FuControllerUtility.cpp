@@ -36,8 +36,8 @@ APlayerController* UFuControllerUtility::GetPlayerController(AActor* Actor)
 	return Cast<APlayerController>(GetController(Actor));
 }
 
-bool UFuControllerUtility::TryGetPlayerController(AActor* Actor, APlayerController*& Controller)
+bool UFuControllerUtility::TryGetPlayerController(AActor* Actor, APlayerController*& Player)
 {
-	Controller = GetPlayerController(Actor);
-	return IsValid(Controller);
+	Player = GetPlayerController(Actor);
+	return IsValid(Player);
 }

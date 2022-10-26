@@ -46,7 +46,7 @@ void UFuAsyncAction_UIActionListener::Activate()
 
 	if (!FU_ENSURE(Widget1.IsValid()) || ActionTags1.IsEmpty())
 	{
-		Cancel();
+		SetReadyToDestroy();
 		return;
 	}
 
@@ -56,7 +56,7 @@ void UFuAsyncAction_UIActionListener::Activate()
 	auto* ActionRouter{UCommonUIActionRouterBase::Get(*Widget1.Get())};
 	if (!IsValid(ActionRouter))
 	{
-		Cancel();
+		SetReadyToDestroy();
 		return;
 	}
 

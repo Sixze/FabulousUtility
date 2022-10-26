@@ -9,9 +9,8 @@ class FABULOUSUTILITY_API UFuAsyncAction_JoinSession : public UOnlineBlueprintCa
 	GENERATED_BODY()
 
 private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient,
-		DisplayName = "Player Controller", Meta = (AllowPrivateAccess))
-	TWeakObjectPtr<APlayerController> PlayerController1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Player", Meta = (AllowPrivateAccess))
+	TWeakObjectPtr<APlayerController> Player1;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient,
 		DisplayName = "Search Result", Meta = (AllowPrivateAccess))
@@ -31,9 +30,8 @@ private:
 	FEmptyOnlineDelegate OnFailure;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session",
-		BlueprintInternalUseOnly, Meta = (DefaultToSelf = "PlayerController"))
-	static UFuAsyncAction_JoinSession* FuJoinSession(APlayerController* PlayerController, const FBlueprintSessionResult& SearchResult,
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "Player"))
+	static UFuAsyncAction_JoinSession* FuJoinSession(APlayerController* Player, const FBlueprintSessionResult& SearchResult,
 	                                                 float DelayBeforeTravel = 0.0f);
 
 	virtual void Activate() override;
@@ -41,5 +39,5 @@ public:
 private:
 	void OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result);
 
-	void OnDelayBeforeTravelEnded() const;
+	void OnDelayBeforeTravelEnded();
 };

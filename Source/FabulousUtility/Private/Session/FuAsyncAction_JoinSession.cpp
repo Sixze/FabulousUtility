@@ -5,13 +5,12 @@
 #include "TimerManager.h"
 #include "GameFramework/PlayerController.h"
 
-UFuAsyncAction_JoinSession* UFuAsyncAction_JoinSession::FuJoinSession(APlayerController* PlayerController,
-                                                                      const FBlueprintSessionResult& SearchResult,
-                                                                      const float DelayBeforeTravel)
+UFuAsyncAction_JoinSession* UFuAsyncAction_JoinSession::FuJoinSession(
+	APlayerController* Player, const FBlueprintSessionResult& SearchResult, const float DelayBeforeTravel)
 {
 	auto* Task{NewObject<UFuAsyncAction_JoinSession>()};
 
-	Task->PlayerController1 = PlayerController;
+	Task->Player1 = Player;
 	Task->SearchResult1 = SearchResult;
 	Task->DelayBeforeTravel1 = DelayBeforeTravel;
 
@@ -22,43 +21,49 @@ void UFuAsyncAction_JoinSession::Activate()
 {
 	Super::Activate();
 
-	if (!FU_ENSURE(PlayerController1.IsValid()))
+	if (!FU_ENSURE(Player1.IsValid()))
 	{
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 		return;
 	}
 
-	const auto Session{Online::GetSessionInterface(PlayerController1->GetWorld())};
+	const auto Session{Online::GetSessionInterface(Player1->GetWorld())};
 	if (!FU_ENSURE(Session.IsValid()))
 	{
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 		return;
 	}
 
 	Session->AddOnJoinSessionCompleteDelegate_Handle(
 		FOnJoinSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnJoinSessionComplete));
 
-	if (!FU_ENSURE(IsValid(PlayerController1->PlayerState)) ||
-	    !Session->JoinSession(*PlayerController1->PlayerState->GetUniqueId().GetUniqueNetId(),
+	if (!FU_ENSURE(IsValid(Player1->PlayerState)) ||
+	    !Session->JoinSession(*Player1->PlayerState->GetUniqueId().GetUniqueNetId(),
 	                          NAME_GameSession, SearchResult1.OnlineResult))
 	{
 		Session->ClearOnJoinSessionCompleteDelegates(this);
+
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 	}
 }
 
 void UFuAsyncAction_JoinSession::OnJoinSessionComplete(const FName SessionName, const EOnJoinSessionCompleteResult::Type Result)
 {
-	if (!PlayerController1.IsValid())
+	if (!Player1.IsValid())
 	{
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 		return;
 	}
 
-	const auto Session{Online::GetSessionInterface(PlayerController1->GetWorld())};
+	const auto Session{Online::GetSessionInterface(Player1->GetWorld())};
 	if (!Session.IsValid())
 	{
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 		return;
 	}
 
@@ -67,6 +72,7 @@ void UFuAsyncAction_JoinSession::OnJoinSessionComplete(const FName SessionName, 
 	if (Result != EOnJoinSessionCompleteResult::Success)
 	{
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 		return;
 	}
 
@@ -79,22 +85,23 @@ void UFuAsyncAction_JoinSession::OnJoinSessionComplete(const FName SessionName, 
 	}
 
 	FTimerHandle TimerHandle;
-	PlayerController1->GetWorldTimerManager().SetTimer(TimerHandle, this, &ThisClass::OnDelayBeforeTravelEnded,
-	                                                   DelayBeforeTravel1, false);
+	Player1->GetWorldTimerManager().SetTimer(TimerHandle, this, &ThisClass::OnDelayBeforeTravelEnded, DelayBeforeTravel1, false);
 }
 
-void UFuAsyncAction_JoinSession::OnDelayBeforeTravelEnded() const
+void UFuAsyncAction_JoinSession::OnDelayBeforeTravelEnded()
 {
-	if (!PlayerController1.IsValid())
+	if (!Player1.IsValid())
 	{
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 		return;
 	}
 
-	const auto Session{Online::GetSessionInterface(PlayerController1->GetWorld())};
+	const auto Session{Online::GetSessionInterface(Player1->GetWorld())};
 	if (!Session.IsValid())
 	{
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 		return;
 	}
 
@@ -102,9 +109,12 @@ void UFuAsyncAction_JoinSession::OnDelayBeforeTravelEnded() const
 	if (!Session->GetResolvedConnectString(NAME_GameSession, ConnectString))
 	{
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 		return;
 	}
 
-	PlayerController1->ClientTravel(ConnectString, TRAVEL_Absolute);
+	Player1->ClientTravel(ConnectString, TRAVEL_Absolute);
+
 	OnSuccess.Broadcast();
+	SetReadyToDestroy();
 }

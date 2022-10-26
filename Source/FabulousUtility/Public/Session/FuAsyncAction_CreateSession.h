@@ -10,9 +10,8 @@ class FABULOUSUTILITY_API UFuAsyncAction_CreateSession : public UOnlineBlueprint
 	GENERATED_BODY()
 
 private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient,
-		DisplayName = "Player Controller", Meta = (AllowPrivateAccess))
-	TWeakObjectPtr<APlayerController> PlayerController1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Player", Meta = (AllowPrivateAccess))
+	TWeakObjectPtr<APlayerController> Player1;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient,
 		DisplayName = "Public Connections", Meta = (AllowPrivateAccess))
@@ -29,9 +28,8 @@ private:
 	FEmptyOnlineDelegate OnFailure;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session",
-		BlueprintInternalUseOnly, Meta = (DefaultToSelf = "PlayerController"))
-	static UFuAsyncAction_CreateSession* FuCreateSession(APlayerController* PlayerController, int32 PublicConnections, bool bUseLan);
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "Player"))
+	static UFuAsyncAction_CreateSession* FuCreateSession(APlayerController* Player, int32 PublicConnections, bool bUseLan);
 
 	virtual void Activate() override;
 

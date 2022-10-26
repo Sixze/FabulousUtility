@@ -4,11 +4,11 @@
 #include "OnlineSubsystemUtils.h"
 #include "GameFramework/PlayerController.h"
 
-UFuAsyncAction_DestroySession* UFuAsyncAction_DestroySession::FuDestroySession(APlayerController* PlayerController)
+UFuAsyncAction_DestroySession* UFuAsyncAction_DestroySession::FuDestroySession(APlayerController* Player)
 {
 	auto* Task{NewObject<UFuAsyncAction_DestroySession>()};
 
-	Task->PlayerController1 = PlayerController;
+	Task->Player1 = Player;
 
 	return Task;
 }
@@ -17,24 +17,26 @@ void UFuAsyncAction_DestroySession::Activate()
 {
 	Super::Activate();
 
-	if (!FU_ENSURE(PlayerController1.IsValid()))
+	if (!FU_ENSURE(Player1.IsValid()))
 	{
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 		return;
 	}
 
-	const auto Session{Online::GetSessionInterface(PlayerController1->GetWorld())};
+	const auto Session{Online::GetSessionInterface(Player1->GetWorld())};
 
 	if (!FU_ENSURE(Session.IsValid()) || Session->GetNamedSession(NAME_GameSession) == nullptr)
 	{
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 		return;
 	}
 
 	Session->DestroySession(NAME_GameSession, FOnDestroySessionCompleteDelegate::CreateUObject(this, &ThisClass::OnDestroySessionComplete));
 }
 
-void UFuAsyncAction_DestroySession::OnDestroySessionComplete(const FName SessionName, const bool bSuccess) const
+void UFuAsyncAction_DestroySession::OnDestroySessionComplete(const FName SessionName, const bool bSuccess)
 {
 	if (bSuccess)
 	{
@@ -44,4 +46,6 @@ void UFuAsyncAction_DestroySession::OnDestroySessionComplete(const FName Session
 	{
 		OnFailure.Broadcast();
 	}
+
+	SetReadyToDestroy();
 }

@@ -5,12 +5,12 @@
 #include "TimerManager.h"
 #include "GameFramework/PlayerController.h"
 
-UFuAsyncAction_CreateSession* UFuAsyncAction_CreateSession::FuCreateSession(APlayerController* PlayerController,
-                                                                            const int32 PublicConnections, const bool bUseLan)
+UFuAsyncAction_CreateSession* UFuAsyncAction_CreateSession::FuCreateSession(
+	APlayerController* Player, const int32 PublicConnections, const bool bUseLan)
 {
 	auto* Task{NewObject<UFuAsyncAction_CreateSession>()};
 
-	Task->PlayerController1 = PlayerController;
+	Task->Player1 = Player;
 	Task->PublicConnections1 = FMath::Max(0, PublicConnections);
 	Task->bUseLan1 = bUseLan;
 
@@ -21,16 +21,18 @@ void UFuAsyncAction_CreateSession::Activate()
 {
 	Super::Activate();
 
-	if (!FU_ENSURE(PlayerController1.IsValid()))
+	if (!FU_ENSURE(Player1.IsValid()))
 	{
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 		return;
 	}
 
-	const auto Session{Online::GetSessionInterface(PlayerController1->GetWorld())};
+	const auto Session{Online::GetSessionInterface(Player1->GetWorld())};
 	if (!FU_ENSURE(Session.IsValid()))
 	{
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 		return;
 	}
 
@@ -46,26 +48,30 @@ void UFuAsyncAction_CreateSession::Activate()
 	Settings.bAllowJoinViaPresence = true;
 	Settings.bUseLobbiesIfAvailable = true;
 
-	if (!FU_ENSURE(IsValid(PlayerController1->PlayerState)) ||
-	    !Session->CreateSession(*PlayerController1->PlayerState->GetUniqueId().GetUniqueNetId(), NAME_GameSession, Settings))
+	if (!FU_ENSURE(IsValid(Player1->PlayerState)) ||
+	    !Session->CreateSession(*Player1->PlayerState->GetUniqueId().GetUniqueNetId(), NAME_GameSession, Settings))
 	{
 		Session->ClearOnCreateSessionCompleteDelegates(this);
+
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 	}
 }
 
 void UFuAsyncAction_CreateSession::OnCreateSessionComplete(const FName SessionName, const bool bSuccess)
 {
-	if (!PlayerController1.IsValid())
+	if (!Player1.IsValid())
 	{
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 		return;
 	}
 
-	const auto Session{Online::GetSessionInterface(PlayerController1->GetWorld())};
+	const auto Session{Online::GetSessionInterface(Player1->GetWorld())};
 	if (!Session.IsValid())
 	{
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 		return;
 	}
 
@@ -74,6 +80,7 @@ void UFuAsyncAction_CreateSession::OnCreateSessionComplete(const FName SessionNa
 	if (!bSuccess)
 	{
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 		return;
 	}
 
@@ -83,22 +90,26 @@ void UFuAsyncAction_CreateSession::OnCreateSessionComplete(const FName SessionNa
 	if (!Session->StartSession(NAME_GameSession))
 	{
 		Session->ClearOnStartSessionCompleteDelegates(this);
+
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 	}
 }
 
 void UFuAsyncAction_CreateSession::OnStartSessionComplete(const FName SessionName, const bool bSuccess)
 {
-	if (!PlayerController1.IsValid())
+	if (!Player1.IsValid())
 	{
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 		return;
 	}
 
-	const auto Session{Online::GetSessionInterface(PlayerController1->GetWorld())};
+	const auto Session{Online::GetSessionInterface(Player1->GetWorld())};
 	if (!Session.IsValid())
 	{
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 		return;
 	}
 
@@ -107,8 +118,10 @@ void UFuAsyncAction_CreateSession::OnStartSessionComplete(const FName SessionNam
 	if (!bSuccess)
 	{
 		OnFailure.Broadcast();
+		SetReadyToDestroy();
 		return;
 	}
 
 	OnSuccess.Broadcast();
+	SetReadyToDestroy();
 }

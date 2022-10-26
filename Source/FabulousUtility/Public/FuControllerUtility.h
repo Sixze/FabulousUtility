@@ -38,7 +38,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Controller Utility",
 		Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
-	static bool TryGetPlayerController(AActor* Actor, APlayerController*& Controller);
+	static bool TryGetPlayerController(AActor* Actor, APlayerController*& Player);
 };
 
 inline bool UFuControllerUtility::HasController(AActor* Actor)
