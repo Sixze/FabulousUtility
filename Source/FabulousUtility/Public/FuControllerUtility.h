@@ -39,6 +39,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Controller Utility",
 		Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryGetPlayerController(AActor* Actor, APlayerController*& Player);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Controller Utility", Meta = (DefaultToSelf = "Player"))
+	static ULocalPlayer* GetLocalPlayer(const APlayerController* Player);
 };
 
 inline bool UFuControllerUtility::HasController(AActor* Actor)
@@ -59,4 +62,9 @@ inline bool UFuControllerUtility::HasPlayerController(AActor* Actor)
 inline bool UFuControllerUtility::SwitchHasPlayerController(AActor* Actor)
 {
 	return HasPlayerController(Actor);
+}
+
+inline ULocalPlayer* UFuControllerUtility::GetLocalPlayer(const APlayerController* Player)
+{
+	return Player->GetLocalPlayer();
 }

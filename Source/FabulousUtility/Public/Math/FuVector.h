@@ -18,6 +18,12 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector", Meta = (AutoCreateRefTerm = "From, To"))
 	static double AngleBetween(const FVector& From, const FVector& To);
 
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector", Meta = (AutoCreateRefTerm = "From, To"))
+	static double AngleBetweenXY(const FVector& From, const FVector& To);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector", Meta = (AutoCreateRefTerm = "From, To"))
+	static double AngleBetweenSignedXY(const FVector& From, const FVector& To);
+
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector",
 		DisplayName = "Angle Between (Skip Normalization)", Meta = (AutoCreateRefTerm = "From, To"))
 	static double AngleBetweenSkipNormalization(const FVector& From, const FVector& To);
@@ -49,6 +55,21 @@ inline double UFuVector::DirectionToAngleXY(const FVector& Direction)
 inline double UFuVector::AngleBetween(const FVector& From, const FVector& To)
 {
 	return FMath::RadiansToDegrees(FMath::Acos(From.GetSafeNormal() | To.GetSafeNormal()));
+}
+
+inline double UFuVector::AngleBetweenXY(const FVector& From, const FVector& To)
+{
+	return FMath::RadiansToDegrees(FMath::Acos(From.GetSafeNormal2D() | To.GetSafeNormal2D()));
+}
+
+inline double UFuVector::AngleBetweenSignedXY(const FVector& From, const FVector& To)
+{
+	const auto FromXY{FVector2D{From}.GetSafeNormal()};
+	const auto ToXY{FVector2D{To}.GetSafeNormal()};
+
+	// return FMath::RadiansToDegrees(FMath::Atan2(FromXY ^ ToXY, FromXY | ToXY));
+
+	return FMath::RadiansToDegrees(FMath::Acos(FromXY | ToXY)) * FMath::Sign(FromXY ^ ToXY);
 }
 
 inline double UFuVector::AngleBetweenSkipNormalization(const FVector& From, const FVector& To)

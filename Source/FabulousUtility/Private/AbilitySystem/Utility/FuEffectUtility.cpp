@@ -310,9 +310,10 @@ void UFuEffectUtility::SetEffectDuration(FActiveGameplayEffectHandle EffectHandl
 	}
 
 	auto& ActiveEffects{AbilitySystem->GetActiveEffects()};
-
 	auto* ActiveEffect{ActiveEffects.GetActiveGameplayEffect(EffectHandle)};
-	if (ActiveEffect == nullptr)
+
+	if (ActiveEffect == nullptr ||
+	    !FU_ENSURE_MESSAGE(ActiveEffect->GetDuration() > 0.0f, TEXT("Changing duration of instant or infinite effects is not allowed!")))
 	{
 		return;
 	}
@@ -323,7 +324,6 @@ void UFuEffectUtility::SetEffectDuration(FActiveGameplayEffectHandle EffectHandl
 	}
 
 	ActiveEffect->Spec.Duration = Duration;
-
 	ActiveEffect->StartServerWorldTime = ActiveEffects.GetServerWorldTime();
 	ActiveEffect->CachedStartServerWorldTime = ActiveEffect->StartServerWorldTime;
 	ActiveEffect->StartWorldTime = ActiveEffects.GetWorldTime();
@@ -346,9 +346,10 @@ void UFuEffectUtility::SetEffectTimeRemaining(FActiveGameplayEffectHandle Effect
 	}
 
 	auto& ActiveEffects{AbilitySystem->GetActiveEffects()};
-
 	auto* ActiveEffect{ActiveEffects.GetActiveGameplayEffect(EffectHandle)};
-	if (ActiveEffect == nullptr)
+
+	if (ActiveEffect == nullptr ||
+	    !FU_ENSURE_MESSAGE(ActiveEffect->GetDuration() > 0.0f, TEXT("Changing duration of instant or infinite effects is not allowed!")))
 	{
 		return;
 	}
@@ -358,33 +359,21 @@ void UFuEffectUtility::SetEffectTimeRemaining(FActiveGameplayEffectHandle Effect
 		TimeRemaining = 0.001f;
 	}
 
-	if (ActiveEffect->GetDuration() < 0.0f)
+	const auto Time{ActiveEffect->GetDuration() - TimeRemaining};
+	if (Time >= 0.0f)
 	{
-		// Special case for infinite effects.
-
-		ActiveEffect->Spec.Duration = TimeRemaining;
-		ActiveEffect->StartServerWorldTime = ActiveEffects.GetServerWorldTime();
+		ActiveEffect->StartServerWorldTime = ActiveEffects.GetServerWorldTime() - Time;
 		ActiveEffect->CachedStartServerWorldTime = ActiveEffect->StartServerWorldTime;
-		ActiveEffect->StartWorldTime = ActiveEffects.GetWorldTime();
+		ActiveEffect->StartWorldTime = ActiveEffects.GetWorldTime() - Time;
 	}
 	else
 	{
-		const auto Time{ActiveEffect->GetDuration() - TimeRemaining};
-		if (Time >= 0.0f)
-		{
-			ActiveEffect->StartServerWorldTime = ActiveEffects.GetServerWorldTime() - Time;
-			ActiveEffect->CachedStartServerWorldTime = ActiveEffect->StartServerWorldTime;
-			ActiveEffect->StartWorldTime = ActiveEffects.GetWorldTime() - Time;
-		}
-		else
-		{
-			// If the time remaining is greater than the duration, then adjust the duration to match the time remaining.
+		// If the time remaining is greater than the duration, then adjust the duration to match the time remaining.
 
-			ActiveEffect->Spec.Duration = TimeRemaining;
-			ActiveEffect->StartServerWorldTime = ActiveEffects.GetServerWorldTime() - TimeRemaining;
-			ActiveEffect->CachedStartServerWorldTime = ActiveEffect->StartServerWorldTime;
-			ActiveEffect->StartWorldTime = ActiveEffects.GetWorldTime() - TimeRemaining;
-		}
+		ActiveEffect->Spec.Duration = TimeRemaining;
+		ActiveEffect->StartServerWorldTime = ActiveEffects.GetServerWorldTime() - TimeRemaining;
+		ActiveEffect->CachedStartServerWorldTime = ActiveEffect->StartServerWorldTime;
+		ActiveEffect->StartWorldTime = ActiveEffects.GetWorldTime() - TimeRemaining;
 	}
 
 	ActiveEffects.CheckDuration(EffectHandle);
@@ -404,12 +393,12 @@ void UFuEffectUtility::IncreaseEffectTimeRemaining(FActiveGameplayEffectHandle E
 		return;
 	}
 
-	const auto* ActiveEffect{AbilitySystem->GetActiveGameplayEffect(EffectHandle)};
+	auto& ActiveEffects{AbilitySystem->GetActiveEffects()};
+	auto* ActiveEffect{ActiveEffects.GetActiveGameplayEffect(EffectHandle)};
 
-	// Infinite effects will be skipped.
-	if (ActiveEffect != nullptr && FU_ENSURE(ActiveEffect->GetDuration() >= 0.0f))
+	if (ActiveEffect != nullptr)
 	{
 		SetEffectTimeRemaining(EffectHandle,
-		                       ActiveEffect->GetTimeRemaining(AbilitySystem->GetWorld()->GetTimeSeconds()) + AdditionalTimeRemaining);
+		                       ActiveEffect->GetTimeRemaining(ActiveEffects.GetWorldTime()) + AdditionalTimeRemaining);
 	}
 }
