@@ -22,11 +22,11 @@ public:
 	FFuEffectChangedDelegate OnEffectRemoved;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly,
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_EffectListener* FuWaitForEffectChangeByTag(UGameplayAbility* OwningAbility, FGameplayTag EffectTag);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly,
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_EffectListener* FuWaitForEffectChangeByTags(UGameplayAbility* OwningAbility, FGameplayTagContainer EffectTags);
 

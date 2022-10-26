@@ -19,7 +19,7 @@ public:
 	FFuTargetDataReceivedDelegate OnTargetDataReceived;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly,
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_TargetDataSender* FuSendTargetData(UGameplayAbility* OwningAbility,
 	                                                         const FGameplayAbilityTargetDataHandle& TargetData);

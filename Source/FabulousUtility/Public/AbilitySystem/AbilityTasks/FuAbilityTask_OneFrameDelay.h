@@ -15,7 +15,7 @@ public:
 	FFuOneFrameDelayEndedDelegate OnDelayEnded;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly,
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_OneFrameDelay* FuWaitForOneFrameDelay(UGameplayAbility* OwningAbility);
 

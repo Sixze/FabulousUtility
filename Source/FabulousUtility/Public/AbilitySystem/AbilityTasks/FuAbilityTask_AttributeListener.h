@@ -18,11 +18,11 @@ public:
 	FFuAttributeChangedDelegate OnAttributeChanged;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly,
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_AttributeListener* FuWaitForAttributeChange(UGameplayAbility* OwningAbility, FGameplayAttribute Attribute);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly,
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_AttributeListener* FuWaitForAttributesChange(UGameplayAbility* OwningAbility,
 	                                                                   const TArray<FGameplayAttribute>& Attributes);

@@ -19,10 +19,10 @@ public:
 	FFuEventReceivedDelegate OnReceived;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_EventListener* FuListenForEventActor(const AActor* Actor, FGameplayTag EventTag);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_EventListener* FuListenForEvent(UAbilitySystemComponent* AbilitySystem, FGameplayTag EventTag);
 
 public:

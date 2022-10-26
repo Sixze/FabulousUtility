@@ -29,22 +29,22 @@ public:
 	FFuEffectTimeChangedDelegate OnEffectEnded;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_EffectTimeListener* FuListenForEffectTimeChangeActor(const AActor* Actor,
 	                                                                            FGameplayTag EffectTag,
 	                                                                            bool bWaitForTimeFromServer = true);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_EffectTimeListener* FuListenForEffectsTimeChangeActor(const AActor* Actor,
 	                                                                             FGameplayTagContainer EffectTags,
 	                                                                             bool bWaitForTimeFromServer = true);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_EffectTimeListener* FuListenForEffectTimeChange(UFuAbilitySystemComponent* AbilitySystem,
 	                                                                       FGameplayTag EffectTag,
 	                                                                       bool bWaitForTimeFromServer = true);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_EffectTimeListener* FuListenForEffectsTimeChange(UFuAbilitySystemComponent* AbilitySystem,
 	                                                                        FGameplayTagContainer EffectTags,
 	                                                                        bool bWaitForTimeFromServer = true);

@@ -33,7 +33,7 @@ public:
 	FFuAbilityEventDelegate OnAbilityCanceled;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly,
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_AbilityActivator* FuActivateAbilityByHandle(UGameplayAbility* OwningAbility,
 	                                                                  FGameplayAbilitySpecHandle AbilityHandle,

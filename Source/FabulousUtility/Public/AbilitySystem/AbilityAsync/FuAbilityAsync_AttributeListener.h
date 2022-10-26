@@ -24,22 +24,22 @@ public:
 	FFuAttributeChangedDelegate OnAttributeChanged;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AttributeListener* FuListenForAttributeChangeActor(const AActor* Actor,
 	                                                                          FGameplayAttribute Attribute,
 	                                                                          bool bSkipEqualValuesOnServer = true);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AttributeListener* FuListenForAttributesChangeActor(const AActor* Actor,
 	                                                                           const TArray<FGameplayAttribute>& Attributes,
 	                                                                           bool bSkipEqualValuesOnServer = true);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AttributeListener* FuListenForAttributeChange(UAbilitySystemComponent* AbilitySystem,
 	                                                                     FGameplayAttribute Attribute,
 	                                                                     bool bSkipEqualValuesOnServer = true);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AttributeListener* FuListenForAttributesChange(UAbilitySystemComponent* AbilitySystem,
 	                                                                      const TArray<FGameplayAttribute>& Attributes,
 	                                                                      bool bSkipEqualValuesOnServer = true);

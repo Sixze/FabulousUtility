@@ -20,11 +20,11 @@ public:
 	FFuEffectStackChangedDelegate OnStackChanged;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_EffectStackListener* FuListenForEffectStackChangeActor(const AActor* Actor,
 	                                                                              TSubclassOf<UGameplayEffect> EffectClass);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_EffectStackListener* FuListenForEffectStackChange(UFuAbilitySystemComponent* AbilitySystem,
 	                                                                         TSubclassOf<UGameplayEffect> EffectClass);
 

@@ -22,16 +22,16 @@ public:
 	FFuTagChangedDelegate OnTagRemoved;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_TagListener* FuListenForTagChangeActor(const AActor* Actor, FGameplayTag Tag);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_TagListener* FuListenForTagsChangeActor(const AActor* Actor, FGameplayTagContainer Tags);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_TagListener* FuListenForTagChange(UAbilitySystemComponent* AbilitySystem, FGameplayTag Tag);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_TagListener* FuListenForTagsChange(UAbilitySystemComponent* AbilitySystem, FGameplayTagContainer Tags);
 
 public:
