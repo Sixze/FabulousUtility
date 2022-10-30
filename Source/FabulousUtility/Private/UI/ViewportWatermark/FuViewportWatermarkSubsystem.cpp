@@ -38,7 +38,7 @@ void UFuViewportWatermarkSubsystem::OnViewportCreated() const
 	{
 		UGameViewportClient::OnViewportCreated().RemoveAll(this);
 
-		Viewport->AddViewportWidgetContent(SNew(SFuViewportWatermarkWidget), GetDefault<UFuViewportWatermarkSettings>()->WidgetZOrder);
+		Viewport->AddViewportWidgetContent(SNew(SFuViewportWatermarkWidget), GetDefault<UFuViewportWatermarkSettings>()->ZOrder);
 	}
 }
 

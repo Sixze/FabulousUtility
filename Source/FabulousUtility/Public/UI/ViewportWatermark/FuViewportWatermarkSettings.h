@@ -41,8 +41,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Viewport Watermark", Config)
 	bool bEnabled;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Viewport Watermark", Config, DisplayName = "Widget Z Order")
-	int32 WidgetZOrder{1000};
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Viewport Watermark", Config, DisplayName = "Z Order")
+	int32 ZOrder{10000};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Title", Config)
 	bool bShowTitle{true};
