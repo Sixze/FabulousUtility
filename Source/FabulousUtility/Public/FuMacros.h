@@ -41,8 +41,8 @@
 
 #define FU_ENSURE(Expression) FU_ENSURE_IMPLEMENTATION(Expression, false, TEXT(""), )
 #define FU_ENSURE_MESSAGE(Expression, Format, ...) FU_ENSURE_IMPLEMENTATION(Expression, false, Format, &, ##__VA_ARGS__)
-#define FU_ENSURE_ALWAYS(Expression) FU_ENSURE_IMPLEMENTATION(Expression true, TEXT(""), )
-#define FU_ENSURE_ALWAYS_MESSAGE(Expression, Format, ...) FU_ENSURE_IMPLEMENTATION(Expression true, Format, &, ##__VA_ARGS__)
+#define FU_ENSURE_ALWAYS(Expression) FU_ENSURE_IMPLEMENTATION(Expression, true, TEXT(""), )
+#define FU_ENSURE_ALWAYS_MESSAGE(Expression, Format, ...) FU_ENSURE_IMPLEMENTATION(Expression, true, Format, &, ##__VA_ARGS__)
 
 #else
 
