@@ -6,13 +6,13 @@
 #include "GameFramework/PlayerController.h"
 
 UFuAsyncAction_JoinSession* UFuAsyncAction_JoinSession::FuJoinSession(
-	APlayerController* Player, const FBlueprintSessionResult& SearchResult, const float DelayBeforeTravel)
+	APlayerController* Player, const FBlueprintSessionResult& SearchResult, const bool bTravelOnSuccess)
 {
 	auto* Task{NewObject<UFuAsyncAction_JoinSession>()};
 
 	Task->Player1 = Player;
 	Task->SearchResult1 = SearchResult;
-	Task->DelayBeforeTravel1 = DelayBeforeTravel;
+	Task->bTravelOnSuccess1 = bTravelOnSuccess;
 
 	return Task;
 }
@@ -76,35 +76,6 @@ void UFuAsyncAction_JoinSession::OnJoinSessionComplete(const FName SessionName, 
 		return;
 	}
 
-	OnTravelDelayStarted.Broadcast();
-
-	if (DelayBeforeTravel1 <= SMALL_NUMBER)
-	{
-		OnDelayBeforeTravelEnded();
-		return;
-	}
-
-	FTimerHandle TimerHandle;
-	Player1->GetWorldTimerManager().SetTimer(TimerHandle, this, &ThisClass::OnDelayBeforeTravelEnded, DelayBeforeTravel1, false);
-}
-
-void UFuAsyncAction_JoinSession::OnDelayBeforeTravelEnded()
-{
-	if (!Player1.IsValid())
-	{
-		OnFailure.Broadcast();
-		SetReadyToDestroy();
-		return;
-	}
-
-	const auto Session{Online::GetSessionInterface(Player1->GetWorld())};
-	if (!Session.IsValid())
-	{
-		OnFailure.Broadcast();
-		SetReadyToDestroy();
-		return;
-	}
-
 	FString ConnectString;
 	if (!Session->GetResolvedConnectString(NAME_GameSession, ConnectString))
 	{
@@ -113,7 +84,10 @@ void UFuAsyncAction_JoinSession::OnDelayBeforeTravelEnded()
 		return;
 	}
 
-	Player1->ClientTravel(ConnectString, TRAVEL_Absolute);
+	if (bTravelOnSuccess1)
+	{
+		Player1->ClientTravel(ConnectString, TRAVEL_Absolute);
+	}
 
 	OnSuccess.Broadcast();
 	SetReadyToDestroy();

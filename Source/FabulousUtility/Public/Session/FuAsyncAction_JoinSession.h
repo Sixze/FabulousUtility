@@ -17,15 +17,12 @@ private:
 	FBlueprintSessionResult SearchResult1;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient,
-		DisplayName = "Delay Before Travel", Meta = (AllowPrivateAccess, ForceUnits = "s"))
-	float DelayBeforeTravel1;
+		DisplayName = "Travel on Success", Meta = (AllowPrivateAccess))
+	bool bTravelOnSuccess1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Join Session Async Action")
 	FEmptyOnlineDelegate OnSuccess;
-
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Join Session Async Action")
-	FEmptyOnlineDelegate OnTravelDelayStarted;
 
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Join Session Async Action")
 	FEmptyOnlineDelegate OnFailure;
@@ -33,12 +30,10 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "Player"))
 	static UFuAsyncAction_JoinSession* FuJoinSession(APlayerController* Player, const FBlueprintSessionResult& SearchResult,
-	                                                 float DelayBeforeTravel = 0.0f);
+	                                                 bool bTravelOnSuccess = true);
 
 	virtual void Activate() override;
 
 private:
 	void OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result);
-
-	void OnDelayBeforeTravelEnded();
 };
