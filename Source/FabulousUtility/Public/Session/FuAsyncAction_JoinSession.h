@@ -20,13 +20,14 @@ private:
 		DisplayName = "Delay Before Travel", Meta = (AllowPrivateAccess, ForceUnits = "s"))
 	float DelayBeforeTravel1;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Join Session Async Action", Meta = (AllowPrivateAccess))
+public:
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Join Session Async Action")
 	FEmptyOnlineDelegate OnSuccess;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Join Session Async Action", Meta = (AllowPrivateAccess))
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Join Session Async Action")
 	FEmptyOnlineDelegate OnTravelDelayStarted;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Join Session Async Action", Meta = (AllowPrivateAccess))
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Join Session Async Action")
 	FEmptyOnlineDelegate OnFailure;
 
 public:

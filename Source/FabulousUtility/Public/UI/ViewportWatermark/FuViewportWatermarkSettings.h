@@ -42,7 +42,7 @@ public:
 	bool bEnabled;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Viewport Watermark", Config, DisplayName = "Z Order")
-	int32 ZOrder{10000};
+	int32 ZOrder{100};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Title", Config)
 	bool bShowTitle{true};

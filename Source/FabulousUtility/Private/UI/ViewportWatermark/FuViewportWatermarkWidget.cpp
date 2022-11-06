@@ -8,6 +8,7 @@ BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 void SFuViewportWatermarkWidget::Construct(const FArguments& Arguments)
 {
+	SetCanTick(false);
 	SetVisibility(EVisibility::HitTestInvisible);
 
 	const auto* ViewportWatermarkSettings{GetDefault<UFuViewportWatermarkSettings>()};

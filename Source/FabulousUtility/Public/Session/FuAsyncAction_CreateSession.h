@@ -21,10 +21,11 @@ private:
 		DisplayName = "Use Lan", Meta = (AllowPrivateAccess))
 	bool bUseLan1;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Create Session Async Action", Meta = (AllowPrivateAccess))
+public:
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Create Session Async Action")
 	FEmptyOnlineDelegate OnSuccess;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Create Session Async Action", Meta = (AllowPrivateAccess))
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Create Session Async Action")
 	FEmptyOnlineDelegate OnFailure;
 
 public:

@@ -102,7 +102,7 @@ void UFuGameplayAbility::PreActivate(const FGameplayAbilitySpecHandle AbilityHan
 void UFuGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle AbilityHandle,
                                     const FGameplayAbilityActorInfo* ActorInfo,
                                     const FGameplayAbilityActivationInfo ActivationInfo,
-                                    const bool bReplicateEndAbility, const bool bCancelled)
+                                    const bool bReplicateEndAbility, const bool bCanceled)
 {
 	if (IsEndAbilityValid(AbilityHandle, ActorInfo) &&
 	    (bIsActive || GetInstancingPolicy() == EGameplayAbilityInstancingPolicy::NonInstanced))
@@ -115,7 +115,7 @@ void UFuGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle AbilityHand
 		}
 	}
 
-	Super::EndAbility(AbilityHandle, ActorInfo, ActivationInfo, bReplicateEndAbility, bCancelled);
+	Super::EndAbility(AbilityHandle, ActorInfo, ActivationInfo, bReplicateEndAbility, bCanceled);
 }
 
 bool UFuGameplayAbility::CheckCostBlueprint_Implementation(const FGameplayAbilityActorInfo& ActorInfo,

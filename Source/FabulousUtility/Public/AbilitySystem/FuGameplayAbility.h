@@ -50,7 +50,7 @@ protected:
 	virtual void EndAbility(FGameplayAbilitySpecHandle AbilityHandle,
 	                        const FGameplayAbilityActorInfo* ActorInfo,
 	                        FGameplayAbilityActivationInfo ActivationInfo,
-	                        bool bReplicateEndAbility, bool bCancelled) override;
+	                        bool bReplicateEndAbility, bool bCanceled) override;
 protected:
 	UFUNCTION(BlueprintNativeEvent, Category = "Fabulous Utility|Fu Gameplay Ability", DisplayName = "Check Cost")
 	bool CheckCostBlueprint(const FGameplayAbilityActorInfo& ActorInfo, FGameplayAbilitySpecHandle AbilityHandle) const;
