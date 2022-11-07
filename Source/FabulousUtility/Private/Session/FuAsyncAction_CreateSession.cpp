@@ -37,7 +37,7 @@ void UFuAsyncAction_CreateSession::Activate()
 	}
 
 	Session->AddOnCreateSessionCompleteDelegate_Handle(
-		FOnCreateSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnCreateSessionComplete));
+		FOnCreateSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnCreateSessionCompleted));
 
 	FOnlineSessionSettings Settings;
 	Settings.NumPublicConnections = PublicConnections1;
@@ -58,7 +58,7 @@ void UFuAsyncAction_CreateSession::Activate()
 	}
 }
 
-void UFuAsyncAction_CreateSession::OnCreateSessionComplete(const FName SessionName, const bool bSuccess)
+void UFuAsyncAction_CreateSession::OnCreateSessionCompleted(const FName SessionName, const bool bSuccess)
 {
 	if (!Player1.IsValid())
 	{
@@ -85,7 +85,7 @@ void UFuAsyncAction_CreateSession::OnCreateSessionComplete(const FName SessionNa
 	}
 
 	Session->AddOnStartSessionCompleteDelegate_Handle(
-		FOnStartSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnStartSessionComplete));
+		FOnStartSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnStartSessionCompleted));
 
 	if (!Session->StartSession(NAME_GameSession))
 	{
@@ -96,7 +96,7 @@ void UFuAsyncAction_CreateSession::OnCreateSessionComplete(const FName SessionNa
 	}
 }
 
-void UFuAsyncAction_CreateSession::OnStartSessionComplete(const FName SessionName, const bool bSuccess)
+void UFuAsyncAction_CreateSession::OnStartSessionCompleted(const FName SessionName, const bool bSuccess)
 {
 	if (!Player1.IsValid())
 	{

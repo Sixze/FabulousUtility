@@ -37,7 +37,7 @@ void UFuAsyncAction_JoinSession::Activate()
 	}
 
 	Session->AddOnJoinSessionCompleteDelegate_Handle(
-		FOnJoinSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnJoinSessionComplete));
+		FOnJoinSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnJoinSessionCompleted));
 
 	if (!FU_ENSURE(IsValid(Player1->PlayerState)) ||
 	    !Session->JoinSession(*Player1->PlayerState->GetUniqueId().GetUniqueNetId(),
@@ -50,7 +50,7 @@ void UFuAsyncAction_JoinSession::Activate()
 	}
 }
 
-void UFuAsyncAction_JoinSession::OnJoinSessionComplete(const FName SessionName, const EOnJoinSessionCompleteResult::Type Result)
+void UFuAsyncAction_JoinSession::OnJoinSessionCompleted(const FName SessionName, const EOnJoinSessionCompleteResult::Type Result)
 {
 	if (!Player1.IsValid())
 	{

@@ -35,7 +35,7 @@ public:
 	virtual void Activate() override;
 
 private:
-	void OnCreateSessionComplete(FName SessionName, bool bSuccess);
+	void OnCreateSessionCompleted(FName SessionName, bool bSuccess);
 
-	void OnStartSessionComplete(FName SessionName, bool bSuccess);
+	void OnStartSessionCompleted(FName SessionName, bool bSuccess);
 };

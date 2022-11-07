@@ -21,7 +21,7 @@ bool UFuAbilitySystemComponent::TryGetFuAbilitySystem(const UObject* Object, Thi
 	const auto Actor{Cast<AActor>(Object)};
 	if (bAllowFindComponent && IsValid(Actor))
 	{
-		AbilitySystem = Actor->FindComponentByClass<UFuAbilitySystemComponent>();
+		AbilitySystem = Actor->FindComponentByClass<ThisClass>();
 		return IsValid(AbilitySystem);
 	}
 
