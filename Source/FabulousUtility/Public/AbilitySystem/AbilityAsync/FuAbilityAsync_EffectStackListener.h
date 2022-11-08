@@ -11,13 +11,13 @@ class FABULOUSUTILITY_API UFuAbilityAsync_EffectStackListener : public UAbilityA
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Effect Class", Meta = (AllowPrivateAccess))
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Effect Class")
 	TSubclassOf<UGameplayEffect> EffectClass1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Effect Stack Listener Ability Async")
-	FFuEffectStackChangedDelegate OnStackChanged;
+	FFuEffectStackListenerDelegate OnStackChanged;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)

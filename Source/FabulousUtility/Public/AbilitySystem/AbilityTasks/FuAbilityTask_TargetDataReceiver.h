@@ -10,13 +10,13 @@ class FABULOUSUTILITY_API UFuAbilityTask_TargetDataReceiver : public UAbilityTas
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Receive Once", Meta = (AllowPrivateAccess))
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Receive Once")
 	bool bReceiveOnce1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Target Data Receiver Ability Task")
-	FFuTargetDataReceivedDelegate OnTargetDataReceived;
+	FFuTargetDataSenderDelegate OnTargetDataReceived;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,

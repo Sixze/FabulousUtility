@@ -3,20 +3,20 @@
 #include "Abilities/Async/AbilityAsync.h"
 #include "FuAbilityAsync_EventListener.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuEventReceivedDelegate, const FGameplayEventData&, Payload);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuEventListenerDelegate, const FGameplayEventData&, Payload);
 
 UCLASS(DisplayName = "Fu Event Listener Ability Async")
 class FABULOUSUTILITY_API UFuAbilityAsync_EventListener : public UAbilityAsync
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Event Tag", Meta = (AllowPrivateAccess))
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Event Tag")
 	FGameplayTag EventTag1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Event Listener Ability Async")
-	FFuEventReceivedDelegate OnReceived;
+	FFuEventListenerDelegate OnEventReceived;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
@@ -31,5 +31,5 @@ public:
 	virtual void EndAction() override;
 
 protected:
-	virtual void OnEventReceived(const FGameplayEventData* Payload);
+	virtual void AbilitySystem_OnEventReceived(const FGameplayEventData* Payload);
 };

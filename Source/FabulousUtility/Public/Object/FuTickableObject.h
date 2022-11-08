@@ -17,6 +17,6 @@ public:
 	virtual UWorld* GetTickableGameObjectWorld() const override;
 
 protected:
-	UFUNCTION(BlueprintImplementableEvent, Category = "Fabulous Utility|Fu Tickable Object", DisplayName = "Tick")
+	UFUNCTION(BlueprintImplementableEvent, Category = "Fu Tickable Object", DisplayName = "Tick")
 	void ReceiveTick(float DeltaTime);
 };

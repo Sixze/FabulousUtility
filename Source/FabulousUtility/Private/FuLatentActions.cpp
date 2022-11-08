@@ -6,7 +6,7 @@
 
 class FABULOUSUTILITY_API FFuDelayLatentAction : public FPendingLatentAction
 {
-private:
+protected:
 	FName ExecutionFunction;
 	int32 Linkage;
 	FWeakObjectPtr CallbackTarget;

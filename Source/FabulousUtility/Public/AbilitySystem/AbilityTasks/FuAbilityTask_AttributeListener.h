@@ -9,13 +9,13 @@ class FABULOUSUTILITY_API UFuAbilityTask_AttributeListener : public UAbilityTask
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Attributes", Meta = (AllowPrivateAccess))
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Attributes")
 	TArray<FGameplayAttribute> Attributes1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Attribute Listener Ability Task")
-	FFuAttributeChangedDelegate OnAttributeChanged;
+	FFuAttributeListenerDelegate OnAttributeChanged;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,

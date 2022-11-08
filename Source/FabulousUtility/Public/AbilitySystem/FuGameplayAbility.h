@@ -52,10 +52,10 @@ protected:
 	                        FGameplayAbilityActivationInfo ActivationInfo,
 	                        bool bReplicateEndAbility, bool bCanceled) override;
 protected:
-	UFUNCTION(BlueprintNativeEvent, Category = "Fabulous Utility|Fu Gameplay Ability", DisplayName = "Check Cost")
+	UFUNCTION(BlueprintNativeEvent, Category = "Fu Gameplay Ability", DisplayName = "Check Cost")
 	bool CheckCostBlueprint(const FGameplayAbilityActorInfo& ActorInfo, FGameplayAbilitySpecHandle AbilityHandle) const;
 
-	UFUNCTION(BlueprintNativeEvent, Category = "Fabulous Utility|Fu Gameplay Ability", DisplayName = "Apply Cost")
+	UFUNCTION(BlueprintNativeEvent, Category = "Fu Gameplay Ability", DisplayName = "Apply Cost")
 	void ApplyCostBlueprint(const FGameplayAbilityActorInfo& ActorInfo, FGameplayAbilitySpecHandle AbilityHandle,
 	                        FGameplayAbilityActivationInfo ActivationInfo) const;
 

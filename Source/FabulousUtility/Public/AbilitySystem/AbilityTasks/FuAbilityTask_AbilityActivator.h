@@ -3,34 +3,32 @@
 #include "Abilities/Tasks/AbilityTask.h"
 #include "FuAbilityTask_AbilityActivator.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFuAbilityEventDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFuAbilityActivatorDelegate);
 
 UCLASS(DisplayName = "Fu Ability Activator Ability Task")
 class FABULOUSUTILITY_API UFuAbilityTask_AbilityActivator : public UAbilityTask
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient,
-		DisplayName = "Ability Handle", Meta = (AllowPrivateAccess))
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Ability Handle")
 	FGameplayAbilitySpecHandle AbilityHandle1;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient,
-		DisplayName = "Cancel Ability on Destroy", Meta = (AllowPrivateAccess))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Cancel Ability on Destroy")
 	bool bCancelAbilityOnDestroy1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Ability Activator Ability Task")
-	FFuAbilityEventDelegate OnAbilityActivated;
+	FFuAbilityActivatorDelegate OnAbilityActivated;
 
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Ability Activator Ability Task")
-	FFuAbilityEventDelegate OnAbilityFailed;
+	FFuAbilityActivatorDelegate OnAbilityFailed;
 
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Ability Activator Ability Task")
-	FFuAbilityEventDelegate OnAbilityEnded;
+	FFuAbilityActivatorDelegate OnAbilityEnded;
 
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Ability Activator Ability Task")
-	FFuAbilityEventDelegate OnAbilityCanceled;
+	FFuAbilityActivatorDelegate OnAbilityCanceled;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,

@@ -3,23 +3,23 @@
 #include "Abilities/Tasks/AbilityTask.h"
 #include "FuAbilityTask_EffectListener.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuEffectChangedDelegate, FActiveGameplayEffectHandle, EffectHandle);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuEffectListenerDelegate, FActiveGameplayEffectHandle, EffectHandle);
 
 UCLASS(DisplayName = "Fu Effect Listener Ability Task")
 class FABULOUSUTILITY_API UFuAbilityTask_EffectListener : public UAbilityTask
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Effect Tags", Meta = (AllowPrivateAccess))
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Effect Tags")
 	FGameplayTagContainer EffectTags1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Effect Listener Ability Task")
-	FFuEffectChangedDelegate OnEffectAdded;
+	FFuEffectListenerDelegate OnEffectAdded;
 
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Effect Listener Ability Task")
-	FFuEffectChangedDelegate OnEffectRemoved;
+	FFuEffectListenerDelegate OnEffectRemoved;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,

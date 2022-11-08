@@ -8,16 +8,14 @@ class FABULOUSUTILITY_API UFuAsyncAction_JoinSession : public UOnlineBlueprintCa
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Player", Meta = (AllowPrivateAccess))
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Player")
 	TWeakObjectPtr<APlayerController> Player1;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient,
-		DisplayName = "Search Result", Meta = (AllowPrivateAccess))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Search Result")
 	FBlueprintSessionResult SearchResult1;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient,
-		DisplayName = "Travel on Success", Meta = (AllowPrivateAccess))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Travel on Success")
 	bool bTravelOnSuccess1;
 
 public:

@@ -5,7 +5,7 @@
 
 class UFuAbilitySystemComponent;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuAbilityFailureDelegate, FGameplayAbilitySpecHandle, AbilityHandle,
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuAbilityFailureListenerDelegate, FGameplayAbilitySpecHandle, AbilityHandle,
                                              const FGameplayTagContainer&, FailureTags);
 
 UCLASS(DisplayName = "Fu Ability Failure Listener Ability Async")
@@ -13,16 +13,16 @@ class FABULOUSUTILITY_API UFuAbilityAsync_AbilityFailureListener : public UAbili
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Ability Tags", Meta = (AllowPrivateAccess))
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Ability Tags")
 	FGameplayTagContainer AbilityTags1;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Failure Tags", Meta = (AllowPrivateAccess))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Failure Tags")
 	FGameplayTagContainer FailureTags1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Ability Failure Listener Ability Async")
-	FFuAbilityFailureDelegate OnAbilityFailed;
+	FFuAbilityFailureListenerDelegate OnAbilityFailed;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)

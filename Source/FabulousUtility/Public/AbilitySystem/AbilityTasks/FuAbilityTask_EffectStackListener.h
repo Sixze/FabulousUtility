@@ -3,7 +3,7 @@
 #include "Abilities/Tasks/AbilityTask.h"
 #include "FuAbilityTask_EffectStackListener.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FFuEffectStackChangedDelegate, FActiveGameplayEffectHandle, EffectHandle,
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FFuEffectStackListenerDelegate, FActiveGameplayEffectHandle, EffectHandle,
                                                int32, NewCount, int32, PreviousCount);
 
 UCLASS(DisplayName = "Fu Effect Stack Listener Ability Task")
@@ -11,13 +11,13 @@ class FABULOUSUTILITY_API UFuAbilityTask_EffectStackListener : public UAbilityTa
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Effect Class", Meta = (AllowPrivateAccess))
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Effect Class")
 	TSubclassOf<UGameplayEffect> EffectClass1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Effect Stack Listener Ability Task")
-	FFuEffectStackChangedDelegate OnStackChanged;
+	FFuEffectStackListenerDelegate OnStackChanged;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,

@@ -10,25 +10,24 @@ class FABULOUSUTILITY_API UFuAbilityAsync_AbilityCooldownListener : public UAbil
 {
 	GENERATED_BODY()
 
-private:
+protected:
 	FGameplayTagCountContainer EffectTags;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Ability Tags", Meta = (AllowPrivateAccess))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Ability Tags")
 	FGameplayTagContainer AbilityTags1;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Input Id", Meta = (AllowPrivateAccess))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Input Id")
 	int32 InputId1{-1};
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient,
-		DisplayName = "Wait For Time From Server", Meta = (AllowPrivateAccess))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Wait For Time From Server")
 	bool bWaitForTimeFromServer1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Ability Cooldown Listener Ability Async")
-	FFuEffectTimeChangedDelegate OnEffectStated;
+	FFuEffectTimeListenerDelegate OnEffectStated;
 
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Ability Cooldown Listener Ability Async")
-	FFuEffectTimeChangedDelegate OnEffectEnded;
+	FFuEffectTimeListenerDelegate OnEffectEnded;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)

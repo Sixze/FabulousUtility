@@ -49,7 +49,7 @@ public:
 protected:
 	bool PerformGroundPlacement(FVector& ResultLocation, FRotator& ResultRotation) const;
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Fabulous Utility|Fu Ground Placement Ability Target Actor",
+	UFUNCTION(BlueprintImplementableEvent, Category = "Fu Ground Placement Ability Target Actor",
 		DisplayName = "Last Ground Place Valid Changed")
 	void ReceiveLastGroundPlaceValidChanged(bool bNewLastGroundPlaceValid);
 };

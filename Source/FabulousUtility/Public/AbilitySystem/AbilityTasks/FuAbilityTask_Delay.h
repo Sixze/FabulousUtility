@@ -3,36 +3,35 @@
 #include "Abilities/Tasks/AbilityTask.h"
 #include "FuAbilityTask_Delay.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuDelayEndedDelegate, int32, LoopIndex);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuDelayDelegate, int32, LoopIndex);
 
 UCLASS(DisplayName = "Fu Delay Ability Task")
 class FABULOUSUTILITY_API UFuAbilityTask_Delay : public UAbilityTask
 {
 	GENERATED_BODY()
 
-private:
+protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient,
-		Meta = (AllowPrivateAccess, ClampMin = 0, DisplayName = "Duration", ForceUnits = "s"))
+		Meta = (ClampMin = 0, DisplayName = "Duration", ForceUnits = "s"))
 	float Duration1;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Loop Count", Meta = (AllowPrivateAccess))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Loop Count")
 	int32 LoopsCount1;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient,
-		DisplayName = "Skip First Delay", Meta = (AllowPrivateAccess))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Skip First Delay")
 	bool bSkipFirstDelay1;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, Meta = (AllowPrivateAccess, ClampMin = 0))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, Meta = (ClampMin = 0))
 	int32 LoopIndex;
 
 	FTimerHandle TimerHandle;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Delay Ability Task")
-	FFuDelayEndedDelegate OnLoop;
+	FFuDelayDelegate OnLoop;
 
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Delay Ability Task")
-	FFuDelayEndedDelegate OnDelayEnded;
+	FFuDelayDelegate OnDelayEnded;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,

@@ -3,7 +3,7 @@
 #include "Abilities/Tasks/AbilityTask.h"
 #include "FuAbilityTask_OneFrameDelay.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFuOneFrameDelayEndedDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFuOneFrameDelayDelegate);
 
 UCLASS(DisplayName = "Fu One Frame Delay Ability Task")
 class FABULOUSUTILITY_API UFuAbilityTask_OneFrameDelay : public UAbilityTask
@@ -12,7 +12,7 @@ class FABULOUSUTILITY_API UFuAbilityTask_OneFrameDelay : public UAbilityTask
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu One Frame Delay Ability Task")
-	FFuOneFrameDelayEndedDelegate OnDelayEnded;
+	FFuOneFrameDelayDelegate OnDelayEnded;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,

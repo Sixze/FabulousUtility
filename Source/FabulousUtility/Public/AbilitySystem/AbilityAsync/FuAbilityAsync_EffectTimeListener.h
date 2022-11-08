@@ -5,7 +5,7 @@
 
 class UFuAbilitySystemComponent;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FFuEffectTimeChangedDelegate, const FGameplayTag&, EffectTag,
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FFuEffectTimeListenerDelegate, const FGameplayTag&, EffectTag,
                                               float, TimeRemaining, float, Duration, bool, bWaitingForTimeFromServer);
 
 UCLASS(DisplayName = "Fu Effect Time Listener Ability Async")
@@ -13,20 +13,19 @@ class FABULOUSUTILITY_API UFuAbilityAsync_EffectTimeListener : public UAbilityAs
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Effect Tags", Meta = (AllowPrivateAccess))
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Effect Tags")
 	FGameplayTagContainer EffectTags1;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient,
-		DisplayName = "Wait For Time From Server", Meta = (AllowPrivateAccess))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Wait For Time From Server")
 	bool bWaitForTimeFromServer1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Effect Time Listene Ability Async")
-	FFuEffectTimeChangedDelegate OnEffectStated;
+	FFuEffectTimeListenerDelegate OnEffectStated;
 
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Effect Time Listener Ability Async")
-	FFuEffectTimeChangedDelegate OnEffectEnded;
+	FFuEffectTimeListenerDelegate OnEffectEnded;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)

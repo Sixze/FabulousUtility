@@ -8,8 +8,8 @@ class FABULOUSUTILITY_API UFuAsyncAction_DestroySession : public UOnlineBlueprin
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Player", Meta = (AllowPrivateAccess))
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Player")
 	TWeakObjectPtr<APlayerController> Player1;
 
 public:

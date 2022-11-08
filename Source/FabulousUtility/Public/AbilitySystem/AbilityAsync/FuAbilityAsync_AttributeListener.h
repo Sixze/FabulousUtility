@@ -3,7 +3,7 @@
 #include "Abilities/Async/AbilityAsync.h"
 #include "FuAbilityAsync_AttributeListener.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FFuAttributeChangedDelegate, const FGameplayAttribute&, Attribute,
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FFuAttributeListenerDelegate, const FGameplayAttribute&, Attribute,
                                                float, NewValue, float, PreviousValue);
 
 UCLASS(DisplayName = "Fu Attribute Listener Ability Async")
@@ -11,17 +11,16 @@ class FABULOUSUTILITY_API UFuAbilityAsync_AttributeListener : public UAbilityAsy
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Attributes", Meta = (AllowPrivateAccess))
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Attributes")
 	TArray<FGameplayAttribute> Attributes1;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient,
-		DisplayName = "Skip Equal Values On Server", Meta = (AllowPrivateAccess))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Skip Equal Values on Server")
 	bool bSkipEqualValuesOnServer1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Attribute Listener Ability Async")
-	FFuAttributeChangedDelegate OnAttributeChanged;
+	FFuAttributeListenerDelegate OnAttributeChanged;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)

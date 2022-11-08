@@ -8,9 +8,7 @@
 
 class UCommonUserWidget;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuUIActionExecutedDelegate, const FUIActionTag&, ActionTag);
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuUIActionHeldDelegate, const FUIActionTag&, ActionTag, float, HeldPercent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuUIActionListenerDelegate, const FUIActionTag&, ActionTag, float, HeldPercent);
 
 USTRUCT(BlueprintType, DisplayName = "Fu UI Action Binding Arguments")
 struct FABULOUSUTILITY_API FFuUIActionBindingArguments
@@ -49,25 +47,24 @@ class FABULOUSUTILITY_API UFuAsyncAction_UIActionListener : public UCancellableA
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Widget", Meta = (AllowPrivateAccess))
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Widget")
 	TWeakObjectPtr<UCommonUserWidget> Widget1;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Action Arguments",
-		Meta = (AllowPrivateAccess))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Action Arguments")
 	FFuUIActionBindingArguments ActionArguments1;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Action Tags", Meta = (AllowPrivateAccess))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Action Tags")
 	TArray<FUIActionTag> ActionTags1;
 
 	TArray<FUIActionBindingHandle> ActionBindings;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu UI Action Listener Async Action")
-	FFuUIActionExecutedDelegate OnActionExecuted;
+	FFuUIActionListenerDelegate OnActionExecuted;
 
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu UI Action Listener Async Action")
-	FFuUIActionHeldDelegate OnActionHeld;
+	FFuUIActionListenerDelegate OnActionHeld;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Async Actions",

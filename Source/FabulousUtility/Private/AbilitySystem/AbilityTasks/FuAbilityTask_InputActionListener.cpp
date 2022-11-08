@@ -74,11 +74,11 @@ void UFuAbilityTask_InputActionListener::BindActions()
 	{
 		for (const auto InputAction : InputActions1)
 		{
-			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Triggered, this, &ThisClass::Input_OnTriggered));
-			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Started, this, &ThisClass::Input_OnStarted));
-			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Ongoing, this, &ThisClass::Input_OnOngoing));
-			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Canceled, this, &ThisClass::Input_OnCanceled));
-			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Completed, this, &ThisClass::Input_OnCompleted));
+			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Triggered, this, &ThisClass::Input_OnActionTriggered));
+			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Started, this, &ThisClass::Input_OnActionStarted));
+			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Ongoing, this, &ThisClass::Input_OnActionOngoing));
+			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Canceled, this, &ThisClass::Input_OnActionCanceled));
+			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Completed, this, &ThisClass::Input_OnActionCompleted));
 		}
 	}
 }
@@ -96,6 +96,7 @@ void UFuAbilityTask_InputActionListener::UnBindActions()
 	}
 }
 
+// ReSharper disable once CppParameterMayBeConstPtrOrRef
 void UFuAbilityTask_InputActionListener::OnPawnRestarted(APawn* Pawn)
 {
 	UnBindActions();
@@ -106,46 +107,46 @@ void UFuAbilityTask_InputActionListener::OnPawnRestarted(APawn* Pawn)
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
-void UFuAbilityTask_InputActionListener::Input_OnTriggered(const FInputActionInstance& ActionInstance)
+void UFuAbilityTask_InputActionListener::Input_OnActionTriggered(const FInputActionInstance& ActionInstance)
 {
 	if (ShouldBroadcastAbilityTaskDelegates())
 	{
-		OnTriggered.Broadcast(ActionInstance.GetSourceAction(), ActionInstance.GetValue());
+		OnActionTriggered.Broadcast(ActionInstance.GetSourceAction(), ActionInstance.GetValue());
 	}
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
-void UFuAbilityTask_InputActionListener::Input_OnStarted(const FInputActionInstance& ActionInstance)
+void UFuAbilityTask_InputActionListener::Input_OnActionStarted(const FInputActionInstance& ActionInstance)
 {
 	if (ShouldBroadcastAbilityTaskDelegates())
 	{
-		OnStarted.Broadcast(ActionInstance.GetSourceAction(), ActionInstance.GetValue());
+		OnActionStarted.Broadcast(ActionInstance.GetSourceAction(), ActionInstance.GetValue());
 	}
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
-void UFuAbilityTask_InputActionListener::Input_OnOngoing(const FInputActionInstance& ActionInstance)
+void UFuAbilityTask_InputActionListener::Input_OnActionOngoing(const FInputActionInstance& ActionInstance)
 {
 	if (ShouldBroadcastAbilityTaskDelegates())
 	{
-		OnOngoing.Broadcast(ActionInstance.GetSourceAction(), ActionInstance.GetValue());
+		OnActionOngoing.Broadcast(ActionInstance.GetSourceAction(), ActionInstance.GetValue());
 	}
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
-void UFuAbilityTask_InputActionListener::Input_OnCanceled(const FInputActionInstance& ActionInstance)
+void UFuAbilityTask_InputActionListener::Input_OnActionCanceled(const FInputActionInstance& ActionInstance)
 {
 	if (ShouldBroadcastAbilityTaskDelegates())
 	{
-		OnCanceled.Broadcast(ActionInstance.GetSourceAction(), ActionInstance.GetValue());
+		OnActionCanceled.Broadcast(ActionInstance.GetSourceAction(), ActionInstance.GetValue());
 	}
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
-void UFuAbilityTask_InputActionListener::Input_OnCompleted(const FInputActionInstance& ActionInstance)
+void UFuAbilityTask_InputActionListener::Input_OnActionCompleted(const FInputActionInstance& ActionInstance)
 {
 	if (ShouldBroadcastAbilityTaskDelegates())
 	{
-		OnCompleted.Broadcast(ActionInstance.GetSourceAction(), ActionInstance.GetValue());
+		OnActionCompleted.Broadcast(ActionInstance.GetSourceAction(), ActionInstance.GetValue());
 	}
 }

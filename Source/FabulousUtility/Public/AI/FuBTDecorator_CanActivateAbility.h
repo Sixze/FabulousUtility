@@ -3,8 +3,8 @@
 #include "BehaviorTree/BTDecorator.h"
 #include "FuBTDecorator_CanActivateAbility.generated.h"
 
-class UFuAbilitySystemComponent;
 struct FGameplayAbilitySpec;
+class UFuAbilitySystemComponent;
 
 UCLASS(DisplayName = "Fu Can Activate Ability", Meta = (ShowWorldContextPin))
 class FABULOUSUTILITY_API UFuBTDecorator_CanActivateAbility : public UBTDecorator

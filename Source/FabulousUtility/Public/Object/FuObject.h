@@ -40,7 +40,7 @@ public:
 protected:
 	virtual void BeginPlay();
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Fabulous Utility|Fu Object", DisplayName = "Begin Play")
+	UFUNCTION(BlueprintImplementableEvent, Category = "Fu Object", DisplayName = "Begin Play")
 	void ReceiveBeginPlay();
 
 public:

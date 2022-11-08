@@ -4,18 +4,18 @@
 #include "Abilities/Tasks/AbilityTask.h"
 #include "FuAbilityTask_InputActionListener.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuInputDelegate, const UInputAction*, InputAction, FInputActionValue, Value);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuInputActionListenerDelegate, const UInputAction*, InputAction, FInputActionValue, Value);
 
 UCLASS(DisplayName = "Fu Input Action Listener Ability Task")
 class FABULOUSUTILITY_API UFuAbilityTask_InputActionListener : public UAbilityTask
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, Meta = (AllowPrivateAccess))
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
 	TWeakObjectPtr<UEnhancedInputComponent> Input;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Input Actions", Meta = (AllowPrivateAccess))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Input Actions")
 	TArray<TObjectPtr<UInputAction>> InputActions1;
 
 	TArray<FInputBindingHandle> InputBindings;
@@ -24,27 +24,27 @@ public:
 	// Triggering occurred after one or more processing ticks.
 	// ETriggerState (None -> Triggered, Ongoing -> Triggered, Triggered -> Triggered).
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Action Listener Ability Async")
-	FFuInputDelegate OnTriggered;
+	FFuInputActionListenerDelegate OnActionTriggered;
 
 	// An event has occurred that has begun Trigger evaluation. Triggered may also occur this frame.
 	// ETriggerState (None -> Ongoing, None -> Triggered).
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Action Listener Ability Async")
-	FFuInputDelegate OnStarted;
+	FFuInputActionListenerDelegate OnActionStarted;
 
 	// Triggering is still being processed.
 	// ETriggerState (Ongoing -> Ongoing).
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu InputAction Listener Ability Async")
-	FFuInputDelegate OnOngoing;
+	FFuInputActionListenerDelegate OnActionOngoing;
 
 	// Triggering has been canceled.
 	// ETriggerState (Ongoing -> None).
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Action Listener Ability Async")
-	FFuInputDelegate OnCanceled;
+	FFuInputActionListenerDelegate OnActionCanceled;
 
 	// The trigger state has transitioned from Triggered to None this frame, i.e. Triggering has finished.
 	// ETriggerState (Triggered -> None).
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Action Listener Ability Async")
-	FFuInputDelegate OnCompleted;
+	FFuInputActionListenerDelegate OnActionCompleted;
 
 public:
 	// Warning! This task only works locally, its events will never be called on the server!
@@ -71,13 +71,13 @@ private:
 	UFUNCTION()
 	void OnPawnRestarted(APawn* Pawn);
 
-	void Input_OnTriggered(const FInputActionInstance& ActionInstance);
+	void Input_OnActionTriggered(const FInputActionInstance& ActionInstance);
 
-	void Input_OnStarted(const FInputActionInstance& ActionInstance);
+	void Input_OnActionStarted(const FInputActionInstance& ActionInstance);
 
-	void Input_OnOngoing(const FInputActionInstance& ActionInstance);
+	void Input_OnActionOngoing(const FInputActionInstance& ActionInstance);
 
-	void Input_OnCanceled(const FInputActionInstance& ActionInstance);
+	void Input_OnActionCanceled(const FInputActionInstance& ActionInstance);
 
-	void Input_OnCompleted(const FInputActionInstance& ActionInstance);
+	void Input_OnActionCompleted(const FInputActionInstance& ActionInstance);
 };

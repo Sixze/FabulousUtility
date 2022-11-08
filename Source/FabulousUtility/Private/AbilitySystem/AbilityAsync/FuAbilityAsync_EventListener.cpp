@@ -32,7 +32,7 @@ void UFuAbilityAsync_EventListener::Activate()
 		return;
 	}
 
-	AbilitySystem->GenericGameplayEventCallbacks.FindOrAdd(EventTag1).AddUObject(this, &ThisClass::OnEventReceived);
+	AbilitySystem->GenericGameplayEventCallbacks.FindOrAdd(EventTag1).AddUObject(this, &ThisClass::AbilitySystem_OnEventReceived);
 }
 
 void UFuAbilityAsync_EventListener::EndAction()
@@ -46,10 +46,10 @@ void UFuAbilityAsync_EventListener::EndAction()
 	Super::EndAction();
 }
 
-void UFuAbilityAsync_EventListener::OnEventReceived(const FGameplayEventData* Payload)
+void UFuAbilityAsync_EventListener::AbilitySystem_OnEventReceived(const FGameplayEventData* Payload)
 {
 	if (ShouldBroadcastDelegates())
 	{
-		OnReceived.Broadcast(*Payload);
+		OnEventReceived.Broadcast(*Payload);
 	}
 }

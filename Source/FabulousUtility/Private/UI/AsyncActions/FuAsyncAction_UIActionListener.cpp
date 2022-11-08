@@ -123,7 +123,7 @@ void UFuAsyncAction_UIActionListener::Widget_OnActionExecuted(const FUIActionTag
 {
 	if (ShouldBroadcastDelegates())
 	{
-		OnActionExecuted.Broadcast(ActionTag);
+		OnActionExecuted.Broadcast(ActionTag, 0.0f);
 	}
 }
 

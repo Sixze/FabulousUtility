@@ -9,16 +9,16 @@ class FABULOUSUTILITY_API UFuAbilityTask_TagListener : public UAbilityTask
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Tags", Meta = (AllowPrivateAccess))
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Tags")
 	FGameplayTagContainer Tags1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Tag Listener Ability Task")
-	FFuTagChangedDelegate OnTagAdded;
+	FFuTagListenerDelegate OnTagAdded;
 
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Tag Listener Ability Task")
-	FFuTagChangedDelegate OnTagRemoved;
+	FFuTagListenerDelegate OnTagRemoved;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
