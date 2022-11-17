@@ -254,6 +254,18 @@ void UFuEffectUtility::RemoveActiveEffect(FActiveGameplayEffectHandle EffectHand
 	}
 }
 
+void UFuEffectUtility::RemoveActiveEffects(const TArray<FActiveGameplayEffectHandle>& EffectHandles, const int32 StacksToRemove)
+{
+	for (auto EffectHandle : EffectHandles)
+	{
+		auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(EffectHandle.GetOwningAbilitySystemComponent())};
+		if (IsValid(AbilitySystem))
+		{
+			AbilitySystem->RemoveActiveGameplayEffect(EffectHandle, StacksToRemove);
+		}
+	}
+}
+
 void UFuEffectUtility::RecalculateEffectModifiers(FActiveGameplayEffectHandle EffectHandle)
 {
 	// https://github.com/tranek/GASDocumentation#concepts-ge-definition

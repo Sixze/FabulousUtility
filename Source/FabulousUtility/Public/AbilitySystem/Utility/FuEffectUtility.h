@@ -63,6 +63,9 @@ public:
 	static void RemoveActiveEffect(FActiveGameplayEffectHandle EffectHandle, int32 StacksToRemove = -1);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility")
+	static void RemoveActiveEffects(const TArray<FActiveGameplayEffectHandle>& EffectHandles, int32 StacksToRemove = -1);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility")
 	static void RecalculateEffectModifiers(FActiveGameplayEffectHandle EffectHandle);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
