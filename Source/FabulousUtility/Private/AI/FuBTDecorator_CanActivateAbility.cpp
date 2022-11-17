@@ -128,7 +128,22 @@ void UFuBTDecorator_CanActivateAbility::TickNode(UBehaviorTreeComponent& Behavio
 {
 	Super::TickNode(BehaviorTree, NodeMemory, DeltaTime);
 
-	BehaviorTree.RequestExecution(this);
+	const auto bExecutingBranch{BehaviorTree.IsExecutingBranch(GetMyNode(), GetChildIndex())};
+
+	// ReSharper disable CppRedundantParentheses
+	const auto bAbortAllowed{
+		(bExecutingBranch && ((FlowAbortMode == EBTFlowAbortMode::Self || FlowAbortMode == EBTFlowAbortMode::Both) &&
+		                      CalculateRawConditionValue(BehaviorTree, NodeMemory) == IsInversed())) ||
+		(!bExecutingBranch && ((FlowAbortMode == EBTFlowAbortMode::LowerPriority || FlowAbortMode == EBTFlowAbortMode::Both) &&
+		                       CalculateRawConditionValue(BehaviorTree, NodeMemory) != IsInversed()))
+
+	};
+	// ReSharper restore CppRedundantParentheses
+
+	if (bAbortAllowed)
+	{
+		BehaviorTree.RequestExecution(this);
+	}
 }
 
 bool UFuBTDecorator_CanActivateAbility::CalculateRawConditionValue(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory) const
