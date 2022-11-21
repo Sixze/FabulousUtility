@@ -185,8 +185,7 @@ bool UFuBTDecorator_CanActivateAbility::CalculateRawConditionValue(UBehaviorTree
 	return false;
 }
 
-void UFuBTDecorator_CanActivateAbility::OnAbilityGiven(UFuAbilitySystemComponent* AbilitySystem,
-                                                       const FGameplayAbilitySpec& AbilitySpecification,
+void UFuBTDecorator_CanActivateAbility::OnAbilityGiven(const FGameplayAbilitySpec& AbilitySpecification,
                                                        const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
 {
 	if (AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags) && (FU_ENSURE(BehaviorTree.IsValid())))
@@ -200,8 +199,7 @@ void UFuBTDecorator_CanActivateAbility::OnAbilityGiven(UFuAbilitySystemComponent
 	}
 }
 
-void UFuBTDecorator_CanActivateAbility::OnAbilityRemoved(UFuAbilitySystemComponent* AbilitySystem,
-                                                         const FGameplayAbilitySpec& AbilitySpecification,
+void UFuBTDecorator_CanActivateAbility::OnAbilityRemoved(const FGameplayAbilitySpec& AbilitySpecification,
                                                          const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
 {
 	if (AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags) && (FU_ENSURE(BehaviorTree.IsValid())))

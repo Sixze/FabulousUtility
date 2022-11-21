@@ -270,18 +270,17 @@ void UFuAbilityAsync_AbilityCooldownListener::RefreshEffectTimeRemainingAndDurat
 	}
 }
 
-void UFuAbilityAsync_AbilityCooldownListener::OnAbilityGiven(UFuAbilitySystemComponent* AbilitySystem,
-                                                             const FGameplayAbilitySpec& AbilitySpecification)
+void UFuAbilityAsync_AbilityCooldownListener::OnAbilityGiven(const FGameplayAbilitySpec& AbilitySpecification)
 {
 	ProcessAbilitySpecificationChange(AbilitySpecification, true);
 }
 
-void UFuAbilityAsync_AbilityCooldownListener::OnAbilityRemoved(UFuAbilitySystemComponent* AbilitySystem,
-                                                               const FGameplayAbilitySpec& AbilitySpecification)
+void UFuAbilityAsync_AbilityCooldownListener::OnAbilityRemoved(const FGameplayAbilitySpec& AbilitySpecification)
 {
 	ProcessAbilitySpecificationChange(AbilitySpecification, false);
 }
 
+// ReSharper disable once CppParameterMayBeConstPtrOrRef
 void UFuAbilityAsync_AbilityCooldownListener::OnActiveGameplayEffectAdded(UAbilitySystemComponent* AbilitySystem,
                                                                           const FGameplayEffectSpec& EffectSpecification,
                                                                           const FActiveGameplayEffectHandle EffectHandle) const

@@ -5,8 +5,7 @@
 
 class UFuAbilitySystemComponent;
 
-using FFuAbilityAddedOrRemovedDelegate = TMulticastDelegate<void(UFuAbilitySystemComponent* AbilitySystem,
-                                                                 const FGameplayAbilitySpec& AbilitySpecification)>;
+using FFuAbilityAddedOrRemovedDelegate = TMulticastDelegate<void(const FGameplayAbilitySpec& AbilitySpecification)>;
 
 using FFuAbilityActivatedDelegate = TMulticastDelegate<void(FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability)>;
 

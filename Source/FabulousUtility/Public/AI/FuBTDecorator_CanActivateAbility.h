@@ -32,9 +32,7 @@ protected:
 	virtual bool CalculateRawConditionValue(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory) const override;
 
 private:
-	void OnAbilityGiven(UFuAbilitySystemComponent* AbilitySystem, const FGameplayAbilitySpec& AbilitySpecification,
-	                    TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree);
+	void OnAbilityGiven(const FGameplayAbilitySpec& AbilitySpecification, TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree);
 
-	void OnAbilityRemoved(UFuAbilitySystemComponent* AbilitySystem, const FGameplayAbilitySpec& AbilitySpecification,
-	                      TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree);
+	void OnAbilityRemoved(const FGameplayAbilitySpec& AbilitySpecification, TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree);
 };

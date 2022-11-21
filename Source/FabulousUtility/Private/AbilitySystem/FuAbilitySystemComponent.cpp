@@ -81,14 +81,14 @@ void UFuAbilitySystemComponent::OnGiveAbility(FGameplayAbilitySpec& AbilitySpeci
 {
 	Super::OnGiveAbility(AbilitySpecification);
 
-	OnAbilityGiven.Broadcast(this, AbilitySpecification);
+	OnAbilityGiven.Broadcast(AbilitySpecification);
 }
 
 void UFuAbilitySystemComponent::OnRemoveAbility(FGameplayAbilitySpec& AbilitySpecification)
 {
 	Super::OnRemoveAbility(AbilitySpecification);
 
-	OnAbilityRemoved.Broadcast(this, AbilitySpecification);
+	OnAbilityRemoved.Broadcast(AbilitySpecification);
 }
 
 bool UFuAbilitySystemComponent::AreAbilityTagsBlocked(const FGameplayTagContainer& Tags) const

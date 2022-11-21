@@ -64,9 +64,9 @@ private:
 
 	void RefreshEffectTimeRemainingAndDurationForTag(const FGameplayTag& EffectTag) const;
 
-	void OnAbilityGiven(UFuAbilitySystemComponent* AbilitySystem, const FGameplayAbilitySpec& AbilitySpecification);
+	void OnAbilityGiven(const FGameplayAbilitySpec& AbilitySpecification);
 
-	void OnAbilityRemoved(UFuAbilitySystemComponent* AbilitySystem, const FGameplayAbilitySpec& AbilitySpecification);
+	void OnAbilityRemoved(const FGameplayAbilitySpec& AbilitySpecification);
 
 	void OnActiveGameplayEffectAdded(UAbilitySystemComponent* AbilitySystem,
 	                                 const FGameplayEffectSpec& EffectSpecification,
