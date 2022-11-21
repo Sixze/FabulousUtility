@@ -8,7 +8,7 @@
 
 class UCommonUserWidget;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuUIActionListenerDelegate, const FUIActionTag&, ActionTag, float, HeldPercent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuUIActionListenerDelegate, const FGameplayTag&, ActionTag, float, HeldPercent);
 
 USTRUCT(BlueprintType, DisplayName = "Fu UI Action Binding Arguments")
 struct FABULOUSUTILITY_API FFuUIActionBindingArguments
