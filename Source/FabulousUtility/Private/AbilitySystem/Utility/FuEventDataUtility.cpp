@@ -11,7 +11,7 @@ FGameplayEventData UFuEventDataUtility::MakeEventDataFromEffectModificationData(
 
 	EventData.Instigator = EventData.ContextHandle.GetOriginalInstigator();
 
-	const auto* InstigatorAbilitySystem{EventData.ContextHandle.GetOriginalInstigatorAbilitySystemComponent()};
+	const auto* InstigatorAbilitySystem{EventData.ContextHandle.GetInstigatorAbilitySystemComponent()};
 	if (IsValid(InstigatorAbilitySystem))
 	{
 		InstigatorAbilitySystem->GetOwnedGameplayTags(EventData.InstigatorTags);

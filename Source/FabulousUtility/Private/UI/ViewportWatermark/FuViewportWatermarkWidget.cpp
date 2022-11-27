@@ -4,12 +4,11 @@
 #include "UI/ViewportWatermark/FuViewportWatermarkSettings.h"
 #include "Widgets/Layout/SConstraintCanvas.h"
 
-BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
-
 void SFuViewportWatermarkWidget::Construct(const FArguments& Arguments)
 {
+	bCanSupportFocus = false;
+
 	SetCanTick(false);
-	SetVisibility(EVisibility::HitTestInvisible);
 
 	const auto* ViewportWatermarkSettings{GetDefault<UFuViewportWatermarkSettings>()};
 
@@ -82,5 +81,3 @@ void SFuViewportWatermarkWidget::Construct(const FArguments& Arguments)
 		]
 	];
 }
-
-END_SLATE_FUNCTION_BUILD_OPTIMIZATION
