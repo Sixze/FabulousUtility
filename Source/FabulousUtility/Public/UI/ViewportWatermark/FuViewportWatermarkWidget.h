@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SlateBasics.h"
+#include "Widgets/SCompoundWidget.h"
 
 class FABULOUSUTILITY_API SFuViewportWatermarkWidget : public SCompoundWidget
 {

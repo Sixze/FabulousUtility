@@ -2,7 +2,9 @@
 
 #include "Engine/UserInterfaceSettings.h"
 #include "UI/ViewportWatermark/FuViewportWatermarkSettings.h"
+#include "Widgets/SOverlay.h"
 #include "Widgets/Layout/SConstraintCanvas.h"
+#include "Widgets/Text/STextBlock.h"
 
 void SFuViewportWatermarkWidget::Construct(const FArguments& Arguments)
 {
