@@ -11,13 +11,13 @@ class FABULOUSUTILITY_API UFuBTTask_ActivateAbility : public UBTTaskNode
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditAnywhere, Category = "Settings")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
 	FGameplayTag AbilityTag;
 
-	UPROPERTY(EditAnywhere, Category = "Settings")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
 	bool bWaitForAbilityEnd{true};
 
-	UPROPERTY(EditAnywhere, Category = "Settings", Meta = (EditCondition = "bWaitForAbilityEnd"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings", Meta = (EditCondition = "bWaitForAbilityEnd"))
 	bool bCancelAbilityOnAbort;
 
 public:

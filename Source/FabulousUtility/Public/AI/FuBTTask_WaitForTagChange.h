@@ -26,10 +26,10 @@ class FABULOUSUTILITY_API UFuBTTask_WaitForTagChange : public UBTTaskNode
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditAnywhere, Category = "Settings")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
 	FGameplayTag Tag;
 
-	UPROPERTY(EditAnywhere, Category = "Settings")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
 	EFuTagWaitMode WaitMode{EFuTagWaitMode::WaitForTagRemove};
 
 public:

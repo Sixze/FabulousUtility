@@ -16,7 +16,7 @@ struct FFuActivateAbilityMemory
 
 UFuBTTask_ActivateAbility::UFuBTTask_ActivateAbility()
 {
-	NodeName = "Fu Activate Ability";
+	NodeName = TEXT("Fu Activate Ability");
 	bIgnoreRestartSelf = true;
 
 	INIT_TASK_NODE_NOTIFY_FLAGS();

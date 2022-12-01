@@ -9,10 +9,10 @@ class FABULOUSUTILITY_API UFuBTTask_SendGameplayEvent : public UBTTaskNode
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditAnywhere, Category = "Settings")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
 	FBlackboardKeySelector TargetKey;
 
-	UPROPERTY(EditAnywhere, Category = "Settings")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
 	FGameplayTag EventTag;
 
 public:

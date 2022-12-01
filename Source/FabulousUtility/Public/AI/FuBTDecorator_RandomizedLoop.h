@@ -11,10 +11,10 @@ class FABULOUSUTILITY_API UFuBTDecorator_RandomizedLoop : public UBTDecorator
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditAnywhere, Category = "Settings", Meta = (ClampMin = 1))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings", Meta = (ClampMin = 1))
 	int32 MinLoopsCount{1};
 
-	UPROPERTY(EditAnywhere, Category = "Settings", Meta = (ClampMin = 1))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings", Meta = (ClampMin = 1))
 	int32 MaxLoopsCount{3};
 
 public:

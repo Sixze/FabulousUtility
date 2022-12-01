@@ -12,7 +12,7 @@ struct FFuTagListenerMemory
 
 UFuBTTask_WaitForTagChange::UFuBTTask_WaitForTagChange()
 {
-	NodeName = "Fu Wait for Tag Change";
+	NodeName = TEXT("Fu Wait for Tag Change");
 	bIgnoreRestartSelf = false;
 
 	INIT_TASK_NODE_NOTIFY_FLAGS();

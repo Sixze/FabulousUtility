@@ -14,7 +14,7 @@ struct FFuCanActivateAbilityMemory
 
 UFuBTDecorator_CanActivateAbility::UFuBTDecorator_CanActivateAbility()
 {
-	NodeName = "Fu Can Activate Ability";
+	NodeName = TEXT("Fu Can Activate Ability");
 
 	INIT_DECORATOR_NODE_NOTIFY_FLAGS();
 }

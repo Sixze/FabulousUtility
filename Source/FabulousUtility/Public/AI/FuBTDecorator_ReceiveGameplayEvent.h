@@ -1,19 +1,13 @@
 #pragma once
 
 #include "BehaviorTree/BTDecorator.h"
-#include "FuBTDecorator_HasTag.generated.h"
+#include "FuBTDecorator_ReceiveGameplayEvent.generated.h"
 
-struct FFuHasTagMemory;
+struct FGameplayEventData;
+struct FFuReceiveGameplayEventMemory;
 
-UENUM(BlueprintType)
-enum class EFuTagMatchMode : uint8
-{
-	AnyTag,
-	AllTags
-};
-
-UCLASS(DisplayName = "Fu Has Tag", Meta = (ShowWorldContextPin))
-class FABULOUSUTILITY_API UFuBTDecorator_HasTag : public UBTDecorator
+UCLASS(DisplayName = "Fu Receive Gameplay Event", HideCategories = ("Condition"), Meta = (ShowWorldContextPin))
+class FABULOUSUTILITY_API UFuBTDecorator_ReceiveGameplayEvent : public UBTDecorator
 {
 	GENERATED_BODY()
 
@@ -22,13 +16,10 @@ protected:
 	FBlackboardKeySelector TargetKey;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
-	EFuTagMatchMode MatchMode{EFuTagMatchMode::AnyTag};
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
-	FGameplayTagContainer Tags;
+	FGameplayTagContainer EventTags;
 
 public:
-	UFuBTDecorator_HasTag();
+	UFuBTDecorator_ReceiveGameplayEvent();
 
 	virtual void InitializeFromAsset(UBehaviorTree& Asset) override;
 
@@ -44,11 +35,11 @@ protected:
 	virtual bool CalculateRawConditionValue(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory) const override;
 
 private:
-	void ReInitializeDecoratorMemory(UBehaviorTreeComponent& BehaviorTree, FFuHasTagMemory& Memory);
+	void ReInitializeDecoratorMemory(UBehaviorTreeComponent& BehaviorTree, FFuReceiveGameplayEventMemory& Memory);
 
-	void ClearDecoratorMemory(FFuHasTagMemory& Memory);
+	void ClearDecoratorMemory(FFuReceiveGameplayEventMemory& Memory);
 
 	EBlackboardNotificationResult OnTargetKeyChanged(const UBlackboardComponent& Blackboard, FBlackboard::FKey Key);
 
-	void OnTagChanged(FGameplayTag Tag, int32 NewCount, TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree) const;
+	void OnEventReceived(const FGameplayEventData* Payload, TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree);
 };

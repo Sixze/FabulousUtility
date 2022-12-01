@@ -13,7 +13,7 @@ struct FFuHasTagMemory
 
 UFuBTDecorator_HasTag::UFuBTDecorator_HasTag()
 {
-	NodeName = "Fu Has Tag";
+	NodeName = TEXT("Fu Has Tag");
 
 	TargetKey.AddObjectFilter(this, GET_MEMBER_NAME_CHECKED(ThisClass, TargetKey), AActor::StaticClass());
 

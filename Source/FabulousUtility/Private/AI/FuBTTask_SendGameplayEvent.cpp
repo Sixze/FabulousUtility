@@ -9,7 +9,7 @@
 
 UFuBTTask_SendGameplayEvent::UFuBTTask_SendGameplayEvent()
 {
-	NodeName = "Fu Send Gameplay Event";
+	NodeName = TEXT("Fu Send Gameplay Event");
 
 	TargetKey.AddObjectFilter(this, GET_MEMBER_NAME_CHECKED(ThisClass, TargetKey), AActor::StaticClass());
 
