@@ -30,7 +30,7 @@ void AFuAbilityTargetActor_GroundPlacement::Tick(const float DeltaTime)
 	{
 		bLastGroundPlaceValid = bNewGroundPlaceValid;
 
-		ReceiveLastGroundPlaceValidChanged(bNewGroundPlaceValid);
+		OnLastGroundPlaceValidChanged(bNewGroundPlaceValid);
 	}
 }
 
