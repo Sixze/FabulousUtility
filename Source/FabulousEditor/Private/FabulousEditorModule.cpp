@@ -13,7 +13,7 @@ void FFabulousEditorModule::StartupModule()
 
 	auto* Settings{GetMutableDefault<UFuEditorSettings>()};
 
-	if (!Settings->bApplyEditorScale)
+	if (!Settings->bApplyEditorScale || !FSlateApplication::IsInitialized())
 	{
 		return;
 	}
