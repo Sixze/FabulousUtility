@@ -7,4 +7,8 @@ UCLASS()
 class FABULOUSUTILITY_API UFuUtility : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
+
+public:
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Utility")
+	static FString GetObjectName(const TSoftObjectPtr<UObject> SoftObjectReference);
 };
