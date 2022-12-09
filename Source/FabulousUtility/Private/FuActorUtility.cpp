@@ -4,6 +4,11 @@
 #include "Engine/World.h"
 #include "GameFramework/PawnMovementComponent.h"
 
+bool UFuActorUtility::IsActorLoadedFromLevel(const AActor* Actor)
+{
+	return FU_ENSURE(IsValid(Actor)) && Actor->bNetStartup;
+}
+
 bool UFuActorUtility::TryGetComponentByClass(AActor* Actor, const TSubclassOf<UActorComponent> ComponentClass, UActorComponent*& Component)
 {
 	Component = FU_ENSURE(IsValid(Actor)) ? Actor->FindComponentByClass(ComponentClass) : nullptr;

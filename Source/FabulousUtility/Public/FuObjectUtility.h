@@ -15,6 +15,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Object Utility", Meta = (DeterminesOutputType = "Class"))
 	static UObject* GetDefaultObject(TSubclassOf<UObject> Class);
 
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Object Utility",
+		Meta = (DeterminesOutputType = "Object", AutoCreateRefTerm = "Name"))
+	static UObject* DuplicateObject(const UObject* Object, UObject* Outer, const FName& Name = NAME_None);
+
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Object Utility",
 		Meta = (DefaultToSelf = "Object", ExpandBoolAsExecs = "ReturnValue"))
 	static bool SwitchImplementsInterface(const UObject* Object, TSubclassOf<UInterface> InterfaceClass);
@@ -23,6 +27,11 @@ public:
 inline UObject* UFuObjectUtility::GetDefaultObject(const TSubclassOf<UObject> Class)
 {
 	return FU_ENSURE(IsValid(Class)) ? Class.GetDefaultObject() : nullptr;
+}
+
+inline UObject* UFuObjectUtility::DuplicateObject(const UObject* Object, UObject* Outer, const FName& Name)
+{
+	return ::DuplicateObject(Object, Outer, Name);
 }
 
 inline bool UFuObjectUtility::SwitchImplementsInterface(const UObject* Object, const TSubclassOf<UInterface> InterfaceClass)

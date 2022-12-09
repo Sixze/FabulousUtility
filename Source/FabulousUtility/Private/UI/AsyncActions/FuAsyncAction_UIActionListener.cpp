@@ -68,7 +68,7 @@ void UFuAsyncAction_UIActionListener::Activate()
 	ActionArguments.bDisplayInActionBar = ActionArguments1.bDisplayInActionBar;
 	ActionArguments.OverrideDisplayName = ActionArguments1.DisplayNameOverride;
 
-	auto& WidgetActionBindings{const_cast<TArray<FUIActionBindingHandle>&>(Widget1->GetActionBindings())};
+	auto& WidgetActionHandles{const_cast<TArray<FUIActionBindingHandle>&>(Widget1->GetActionBindings())};
 
 	for (const auto& ActionTag : ActionTags1)
 	{
@@ -79,11 +79,11 @@ void UFuAsyncAction_UIActionListener::Activate()
 		ActionArguments.OnHoldActionProgressed = FBindUIActionArgs::FOnHoldActionProgressed::CreateUObject(
 			this, &ThisClass::Widget_OnActionHeld, ActionTag);
 
-		const auto ActionBinding{ActionRouter->RegisterUIActionBinding(*Widget1.Get(), ActionArguments)};
-		if (ActionBinding.IsValid())
+		const auto ActionHandle{ActionRouter->RegisterUIActionBinding(*Widget1.Get(), ActionArguments)};
+		if (ActionHandle.IsValid())
 		{
-			ActionBindings.Add(ActionBinding);
-			WidgetActionBindings.Add(ActionBinding);
+			ActionHandles.Add(ActionHandle);
+			WidgetActionHandles.Add(ActionHandle);
 		}
 	}
 }
@@ -93,22 +93,22 @@ void UFuAsyncAction_UIActionListener::Cancel()
 	if (Widget1.IsValid())
 	{
 		auto* ActionRouter{UCommonUIActionRouterBase::Get(*Widget1.Get())};
-		auto& WidgetActionBindings{const_cast<TArray<FUIActionBindingHandle>&>(Widget1->GetActionBindings())};
+		auto& WidgetActionHandles{const_cast<TArray<FUIActionBindingHandle>&>(Widget1->GetActionBindings())};
 
-		for (const auto& ActionBinding : ActionBindings)
+		for (const auto& ActionHandle : ActionHandles)
 		{
-			WidgetActionBindings.Remove(ActionBinding);
+			WidgetActionHandles.Remove(ActionHandle);
 
 			if (IsValid(ActionRouter))
 			{
-				ActionRouter->RemoveBinding(ActionBinding);
+				ActionRouter->RemoveBinding(ActionHandle);
 			}
 		}
 	}
 
-	for (auto& ActionBinding : ActionBindings)
+	for (auto& ActionHandle : ActionHandles)
 	{
-		ActionBinding.Unregister();
+		ActionHandle.Unregister();
 	}
 
 	Super::Cancel();

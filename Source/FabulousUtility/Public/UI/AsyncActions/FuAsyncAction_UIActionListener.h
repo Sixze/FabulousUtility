@@ -57,7 +57,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Action Tags")
 	TArray<FUIActionTag> ActionTags1;
 
-	TArray<FUIActionBindingHandle> ActionBindings;
+	TArray<FUIActionBindingHandle> ActionHandles;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu UI Action Listener Async Action")

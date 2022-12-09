@@ -10,6 +10,13 @@ class FABULOUSUTILITY_API UFuActorUtility : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Actor Utility", Meta = (DefaultToSelf = "Actor"))
+	static bool IsActorLoadedFromLevel(const AActor* Actor);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Actor Utility",
+		Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
+	static bool SwitchIsActorLoadedFromLevel(const AActor* Actor);
+
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Actor Utility",
 		Meta = (DeterminesOutputType = "ComponentClass", DynamicOutputParam = "Component", ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryGetComponentByClass(AActor* Actor, TSubclassOf<UActorComponent> ComponentClass, UActorComponent*& Component);
@@ -42,6 +49,11 @@ public:
 	                                                              const FVector& Location, const FRotator& Rotation,
 	                                                              FVector& ProposedAdjustment);
 };
+
+inline bool UFuActorUtility::SwitchIsActorLoadedFromLevel(const AActor* Actor)
+{
+	return IsActorLoadedFromLevel(Actor);
+}
 
 inline bool UFuActorUtility::SwitchIsEncroachingBlockingGeometry(const UObject* WorldContext, const TSubclassOf<AActor> ActorClass,
                                                                  const FVector& Location, const FRotator& Rotation)
