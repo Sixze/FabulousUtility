@@ -15,6 +15,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Object Utility", Meta = (DeterminesOutputType = "Class"))
 	static UObject* GetDefaultObject(TSubclassOf<UObject> Class);
 
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Object Utility")
+	static FString GetObjectName(const TSoftObjectPtr<UObject> SoftObjectReference);
+
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Object Utility",
 		Meta = (DeterminesOutputType = "Object", AutoCreateRefTerm = "Name"))
 	static UObject* DuplicateObject(const UObject* Object, UObject* Outer, const FName& Name = NAME_None);
@@ -27,6 +30,11 @@ public:
 inline UObject* UFuObjectUtility::GetDefaultObject(const TSubclassOf<UObject> Class)
 {
 	return FU_ENSURE(IsValid(Class)) ? Class.GetDefaultObject() : nullptr;
+}
+
+inline FString UFuObjectUtility::GetObjectName(const TSoftObjectPtr<UObject> SoftObjectReference)
+{
+	return FPackageName::ObjectPathToObjectName(SoftObjectReference.ToString());
 }
 
 inline UObject* UFuObjectUtility::DuplicateObject(const UObject* Object, UObject* Outer, const FName& Name)

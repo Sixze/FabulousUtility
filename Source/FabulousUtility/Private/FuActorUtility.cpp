@@ -6,6 +6,9 @@
 
 bool UFuActorUtility::IsActorLoadedFromLevel(const AActor* Actor)
 {
+	// https://forums.unrealengine.com/t/check-if-an-actor-was-placed-in-editor-or-spawned-at-runtime/373272/7
+	// https://forums.unrealengine.com/t/check-if-actor-placed-from-the-editor/301700/5
+
 	return FU_ENSURE(IsValid(Actor)) && Actor->bNetStartup;
 }
 
