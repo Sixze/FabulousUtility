@@ -46,7 +46,7 @@ FString UFuBTDecorator_ReceiveGameplayEvent::GetStaticDescription() const
 		TEXT("( aborts ") + UBehaviorTreeTypes::DescribeFlowAbortMode(FlowAbortMode).ToLower() + TEXT(" )") LINE_TERMINATOR
 	};
 
-	if (EventTags.Num() <= 0)
+	if (EventTags.IsEmpty())
 	{
 		Description += TEXT("Receive Gameplay Event: ");
 	}
@@ -124,9 +124,13 @@ void UFuBTDecorator_ReceiveGameplayEvent::ReInitializeDecoratorMemory(UBehaviorT
 		return;
 	}
 
-	Memory.AbilitySystem = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(
-		Cast<AActor>(Blackboard->GetValue<UBlackboardKeyType_Object>(TargetKey.GetSelectedKeyID())));
+	const auto* TargetActor{Cast<AActor>(Blackboard->GetValue<UBlackboardKeyType_Object>(TargetKey.GetSelectedKeyID()))};
+	if (!IsValid(TargetActor))
+	{
+		return;
+	}
 
+	Memory.AbilitySystem = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(TargetActor);
 	if (!FU_ENSURE(Memory.AbilitySystem.IsValid()))
 	{
 		return;

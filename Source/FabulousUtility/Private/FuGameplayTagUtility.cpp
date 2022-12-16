@@ -13,7 +13,7 @@ bool UFuGameplayTagUtility::HasChildTags(const FGameplayTag& Tag)
 {
 	const auto TagNode{UGameplayTagsManager::Get().FindTagNode(Tag)};
 
-	return TagNode.IsValid() && TagNode->GetChildTagNodes().Num() > 0;
+	return TagNode.IsValid() && !TagNode->GetChildTagNodes().IsEmpty();
 }
 
 FGameplayTagContainer UFuGameplayTagUtility::GetChildTagsWithoutDescendants(const FGameplayTag& Tag)

@@ -49,6 +49,6 @@ public:
 protected:
 	bool PerformGroundPlacement(FVector& ResultLocation, FRotator& ResultRotation) const;
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Fu Ground Placement Ability Target Actor")
+	UFUNCTION(BlueprintNativeEvent, Category = "Fu Ground Placement Ability Target Actor")
 	void OnLastGroundPlaceValidChanged(bool bNewLastGroundPlaceValid);
 };

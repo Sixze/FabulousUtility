@@ -37,7 +37,7 @@ FString UFuBTDecorator_CanActivateAbility::GetStaticDescription() const
 		Description = TEXT("( inversed )");
 	}
 
-	if (AbilityTags.Num() <= 0)
+	if (AbilityTags.IsEmpty())
 	{
 		if (bAborts || bInversed)
 		{

@@ -167,3 +167,5 @@ bool AFuAbilityTargetActor_GroundPlacement::PerformGroundPlacement(FVector& Resu
 
 	return !VisibilityTraceHit.IsValidBlockingHit();
 }
+
+void AFuAbilityTargetActor_GroundPlacement::OnLastGroundPlaceValidChanged_Implementation(bool bNewLastGroundPlaceValid) {}

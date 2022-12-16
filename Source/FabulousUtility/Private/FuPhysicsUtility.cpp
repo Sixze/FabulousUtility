@@ -189,7 +189,7 @@ bool UFuPhysicsUtility::BoxOverlapActors(const UObject* WorldContext, const FVec
 
 	Overlaps.Reset();
 
-	return Actors.Num() > 0;
+	return !Actors.IsEmpty();
 }
 
 bool UFuPhysicsUtility::BoxOverlapComponents(const UObject* WorldContext, const FVector& Location, const FRotator& Rotation,
@@ -231,7 +231,7 @@ bool UFuPhysicsUtility::BoxOverlapComponents(const UObject* WorldContext, const 
 
 	Overlaps.Reset();
 
-	return Components.Num() > 0;
+	return !Components.IsEmpty();
 }
 
 bool UFuPhysicsUtility::ConeOverlapActorsSimple(const UObject* WorldContext, const FVector& Location,
@@ -280,7 +280,7 @@ bool UFuPhysicsUtility::ConeOverlapActorsSimple(const UObject* WorldContext, con
 
 	Overlaps.Reset();
 
-	return Actors.Num() > 0;
+	return !Actors.IsEmpty();
 }
 
 bool UFuPhysicsUtility::ConeOverlapComponentsSimple(const UObject* WorldContext, const FVector& Location,
@@ -327,5 +327,5 @@ bool UFuPhysicsUtility::ConeOverlapComponentsSimple(const UObject* WorldContext,
 
 	Overlaps.Reset();
 
-	return Components.Num() > 0;
+	return !Components.IsEmpty();
 }

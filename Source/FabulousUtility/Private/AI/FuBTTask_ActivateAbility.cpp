@@ -104,7 +104,7 @@ EBTNodeResult::Type UFuBTTask_ActivateAbility::ExecuteTask(UBehaviorTreeComponen
 
 	if (!bWaitForAbilityEnd)
 	{
-		return Memory.bAnyAbilitySuccessfullyEnded || Memory.ActiveAbilityHandles.Num() > 0
+		return Memory.bAnyAbilitySuccessfullyEnded || !Memory.ActiveAbilityHandles.IsEmpty()
 			       ? EBTNodeResult::Succeeded
 			       : EBTNodeResult::Failed;
 	}

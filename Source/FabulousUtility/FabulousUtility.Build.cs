@@ -10,7 +10,7 @@ public class FabulousUtility : ModuleRules
 		{
 			"Core", "CoreUObject", "Engine", "EngineSettings", "InputCore", "EnhancedInput", "NetCore", "RHI",
 			"SlateCore", "Slate", "OnlineSubsystem", "OnlineSubsystemUtils", "GameplayTags", "GameplayTasks",
-			"GameplayAbilities", "CommonUI", "NavigationSystem", "AIModule", "DeveloperSettings"
+			"GameplayAbilities", "CommonInput", "CommonUI", "NavigationSystem", "AIModule", "DeveloperSettings"
 		});
 	}
 }
