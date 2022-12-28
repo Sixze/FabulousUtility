@@ -21,7 +21,7 @@ void UFuAsyncAction_CreateSession::Activate()
 {
 	Super::Activate();
 
-	if (!FU_ENSURE(Player1.IsValid()))
+	if (!FU_ENSURE(Player1.IsValid()) || !FU_ENSURE(IsValid(Player1->PlayerState)))
 	{
 		OnFailure.Broadcast();
 		SetReadyToDestroy();
@@ -48,14 +48,7 @@ void UFuAsyncAction_CreateSession::Activate()
 	Settings.bAllowJoinViaPresence = true;
 	Settings.bUseLobbiesIfAvailable = true;
 
-	if (!FU_ENSURE(IsValid(Player1->PlayerState)) ||
-	    !Session->CreateSession(*Player1->PlayerState->GetUniqueId().GetUniqueNetId(), NAME_GameSession, Settings))
-	{
-		Session->ClearOnCreateSessionCompleteDelegates(this);
-
-		OnFailure.Broadcast();
-		SetReadyToDestroy();
-	}
+	Session->CreateSession(*Player1->PlayerState->GetUniqueId().GetUniqueNetId(), NAME_GameSession, Settings);
 }
 
 void UFuAsyncAction_CreateSession::OnCreateSessionCompleted(const FName SessionName, const bool bSuccess)

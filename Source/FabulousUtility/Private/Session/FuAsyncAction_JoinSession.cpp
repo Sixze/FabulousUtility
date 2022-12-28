@@ -21,7 +21,7 @@ void UFuAsyncAction_JoinSession::Activate()
 {
 	Super::Activate();
 
-	if (!FU_ENSURE(Player1.IsValid()))
+	if (!FU_ENSURE(Player1.IsValid()) || !FU_ENSURE(IsValid(Player1->PlayerState)))
 	{
 		OnFailure.Broadcast();
 		SetReadyToDestroy();
@@ -39,15 +39,7 @@ void UFuAsyncAction_JoinSession::Activate()
 	Session->AddOnJoinSessionCompleteDelegate_Handle(
 		FOnJoinSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnJoinSessionCompleted));
 
-	if (!FU_ENSURE(IsValid(Player1->PlayerState)) ||
-	    !Session->JoinSession(*Player1->PlayerState->GetUniqueId().GetUniqueNetId(),
-	                          NAME_GameSession, SearchResult1.OnlineResult))
-	{
-		Session->ClearOnJoinSessionCompleteDelegates(this);
-
-		OnFailure.Broadcast();
-		SetReadyToDestroy();
-	}
+	Session->JoinSession(*Player1->PlayerState->GetUniqueId().GetUniqueNetId(), NAME_GameSession, SearchResult1.OnlineResult);
 }
 
 void UFuAsyncAction_JoinSession::OnJoinSessionCompleted(const FName SessionName, const EOnJoinSessionCompleteResult::Type Result)
