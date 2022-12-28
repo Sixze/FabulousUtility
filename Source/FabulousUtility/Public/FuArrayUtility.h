@@ -23,10 +23,10 @@ public:
 	static int32 GetWeightedRandomIndex(const TArray<float>& Array);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", Meta = (AutoCreateRefTerm = "Array"))
-	static void SortByPredicateObject(UPARAM(ref) TArray<UObject*>& Array, const FFuSortByPredicatObjectDelegate& Predicate);
+	static void SortByPredicateObject(UPARAM(ref) TArray<UObject*>& Objects, const FFuSortByPredicatObjectDelegate& Predicate);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", Meta = (AutoCreateRefTerm = "Array"))
-	static void SortByPredicateActor(UPARAM(ref) TArray<AActor*>& Array, const FFuSortByPredicateActorDelegate& Predicate);
+	static void SortByPredicateActor(UPARAM(ref) TArray<AActor*>& Actors, const FFuSortByPredicateActorDelegate& Predicate);
 
 	// Internal blueprint only functions.
 

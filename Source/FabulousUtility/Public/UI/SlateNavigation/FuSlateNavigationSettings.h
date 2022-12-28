@@ -24,7 +24,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Analog Navigation", Config)
 	bool bAllowAnalogNavigation{true};
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Analog Navigation",
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Analog Navigation",
 		Meta = (ClampMin = 0, ClampMax = 1, EditCondition = "bAllowAnalogNavigation"))
 	float AnalogNavigationThreshold{0.5f};
 

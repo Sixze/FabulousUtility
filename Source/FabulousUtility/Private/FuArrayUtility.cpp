@@ -32,17 +32,17 @@ int32 UFuArrayUtility::GetWeightedRandomIndex(const TArray<float>& Array)
 	return -1;
 }
 
-void UFuArrayUtility::SortByPredicateObject(TArray<UObject*>& Array, const FFuSortByPredicatObjectDelegate& Predicate)
+void UFuArrayUtility::SortByPredicateObject(TArray<UObject*>& Objects, const FFuSortByPredicatObjectDelegate& Predicate)
 {
-	Array.Sort([&Predicate](const UObject& A, const UObject& B)
+	Objects.Sort([&Predicate](const UObject& A, const UObject& B)
 	{
 		return Predicate.Execute(&A, &B);
 	});
 }
 
-void UFuArrayUtility::SortByPredicateActor(TArray<AActor*>& Array, const FFuSortByPredicateActorDelegate& Predicate)
+void UFuArrayUtility::SortByPredicateActor(TArray<AActor*>& Actors, const FFuSortByPredicateActorDelegate& Predicate)
 {
-	Array.Sort([&Predicate](const AActor& A, const AActor& B)
+	Actors.Sort([&Predicate](const AActor& A, const AActor& B)
 	{
 		return Predicate.Execute(&A, &B);
 	});
