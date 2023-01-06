@@ -22,6 +22,25 @@ bool UFuAbilityUtility::TryCommitAbility(UGameplayAbility* Ability, const bool b
 	return false;
 }
 
+bool UFuAbilityUtility::HasAbilityWithTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag)
+{
+	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(Tag.IsValid()))
+	{
+		return false;
+	}
+
+	for (const auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
+	{
+		if (AbilitySpecification.DynamicAbilityTags.HasTag(Tag) ||
+		    AbilitySpecification.Ability->AbilityTags.HasTag(Tag))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool UFuAbilityUtility::CanActivateAbilityByTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(Tag.IsValid()))
@@ -31,7 +50,8 @@ bool UFuAbilityUtility::CanActivateAbilityByTag(UAbilitySystemComponent* Ability
 
 	for (const auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
 	{
-		if (AbilitySpecification.Ability->AbilityTags.HasTag(Tag) &&
+		if ((AbilitySpecification.DynamicAbilityTags.HasTag(Tag) ||
+		     AbilitySpecification.Ability->AbilityTags.HasTag(Tag)) &&
 		    AbilitySpecification.Ability->CanActivateAbility(AbilitySpecification.Handle, AbilitySystem->AbilityActorInfo.Get()))
 		{
 			return true;
@@ -132,7 +152,8 @@ void UFuAbilityUtility::RemoveAbilitiesWithAnyTags(UAbilitySystemComponent* Abil
 	for (auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
 	{
 		if (AbilitySpecification.Handle != IgnoreAbilityHandle &&
-		    AbilitySpecification.Ability->AbilityTags.HasAny(Tags))
+		    (AbilitySpecification.DynamicAbilityTags.HasAny(Tags) ||
+		     AbilitySpecification.Ability->AbilityTags.HasAny(Tags)))
 		{
 			AbilitySystem->CancelAbilityHandle(AbilitySpecification.Handle);
 			AbilitySystem->ClearAbility(AbilitySpecification.Handle);

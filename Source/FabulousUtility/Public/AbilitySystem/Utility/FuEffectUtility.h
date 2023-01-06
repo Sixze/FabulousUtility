@@ -21,19 +21,19 @@ public:
 	static int32 GetEffectStackCountByClass(const UFuAbilitySystemComponent* AbilitySystem, TSubclassOf<UGameplayEffect> EffectClass);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility", Meta = (AutoCreateRefTerm = "EffectQuery"))
-	static bool HasAnyActiveEffectsByQuery(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayEffectQuery& EffectQuery);
+	static bool HasActiveEffectByQuery(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayEffectQuery& EffectQuery);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility", Meta = (AutoCreateRefTerm = "EffectQuery"))
 	static void GetActiveEffectsByQuery(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayEffectQuery& EffectQuery,
 	                                    TArray<FActiveGameplayEffect>& ActiveEffects);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility", Meta = (AutoCreateRefTerm = "EffectTag"))
-	static bool HasAnyActiveEffectsWithTag(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag& EffectTag,
-	                                       bool bIgnoreInhibitedEffects = false);
+	static bool HasActiveEffectWithTag(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag& EffectTag,
+	                                   bool bIgnoreInhibitedEffects = false);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility", Meta = (AutoCreateRefTerm = "EffectTags"))
-	static bool HasAnyActiveEffectsWithAnyTags(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer& EffectTags,
-	                                           bool bIgnoreInhibitedEffects = false);
+	static bool HasActiveEffectWithAnyTags(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer& EffectTags,
+	                                       bool bIgnoreInhibitedEffects = false);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility", Meta = (AutoCreateRefTerm = "EffectTag"))
 	static int32 GetEffectsCountWithTag(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag& EffectTag,

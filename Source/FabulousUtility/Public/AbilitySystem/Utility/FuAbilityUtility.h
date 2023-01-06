@@ -52,6 +52,9 @@ public:
 	static bool SwitchIsPrimaryAbilityInstanceActive(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility", Meta = (AutoCreateRefTerm = "Tag"))
+	static bool HasAbilityWithTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility", Meta = (AutoCreateRefTerm = "Tag"))
 	static bool CanActivateAbilityByTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility",

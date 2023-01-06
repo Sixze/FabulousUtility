@@ -101,7 +101,8 @@ void UFuBTDecorator_CanActivateAbility::OnBecomeRelevant(UBehaviorTreeComponent&
 
 	for (const auto& AbilitySpecification : Memory.AbilitySystem->GetActivatableAbilities())
 	{
-		if (AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags))
+		if (AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||
+		    AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags))
 		{
 			Memory.AbilityHandles.Add(AbilitySpecification.Handle);
 		}
@@ -175,7 +176,8 @@ bool UFuBTDecorator_CanActivateAbility::CalculateRawConditionValue(UBehaviorTree
 
 	for (const auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
 	{
-		if (AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags) &&
+		if ((AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||
+		     AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags)) &&
 		    AbilitySpecification.Ability->CanActivateAbility(AbilitySpecification.Handle, AbilitySystem->AbilityActorInfo.Get()))
 		{
 			return true;
@@ -188,7 +190,9 @@ bool UFuBTDecorator_CanActivateAbility::CalculateRawConditionValue(UBehaviorTree
 void UFuBTDecorator_CanActivateAbility::OnAbilityGiven(const FGameplayAbilitySpec& AbilitySpecification,
                                                        const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
 {
-	if (AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags) && (FU_ENSURE(BehaviorTree.IsValid())))
+	if (FU_ENSURE(BehaviorTree.IsValid()) &&
+	    (AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||
+	     AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags)))
 	{
 		auto& Memory{
 			*CastInstanceNodeMemory<FFuCanActivateAbilityMemory>(
@@ -202,7 +206,9 @@ void UFuBTDecorator_CanActivateAbility::OnAbilityGiven(const FGameplayAbilitySpe
 void UFuBTDecorator_CanActivateAbility::OnAbilityRemoved(const FGameplayAbilitySpec& AbilitySpecification,
                                                          const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
 {
-	if (AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags) && (FU_ENSURE(BehaviorTree.IsValid())))
+	if (FU_ENSURE(BehaviorTree.IsValid()) &&
+	    (AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||
+	     AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags)))
 	{
 		auto& Memory{
 			*CastInstanceNodeMemory<FFuCanActivateAbilityMemory>(

@@ -100,8 +100,12 @@ void UFuAbilityAsync_AbilityFailureListener::AbilitySystem_OnAbilityFailed(const
                                                                            UGameplayAbility* Ability,
                                                                            const FGameplayTagContainer& FailureTags) const
 {
-	if ((AbilityTags1.IsEmpty() || Ability->AbilityTags.HasAny(AbilityTags1)) &&
-	    (FailureTags1.IsEmpty() || FailureTags.HasAny(FailureTags1)))
+	const auto* AbilitySpecification{GetAbilitySystemComponent()->FindAbilitySpecFromHandle(AbilityHandle)};
+
+	if (FailureTags.HasAny(FailureTags1) &&
+	    (Ability->AbilityTags.HasAny(AbilityTags1) ||
+	     // ReSharper disable once CppRedundantParentheses
+	     (AbilitySpecification != nullptr && AbilitySpecification->DynamicAbilityTags.HasAny(AbilityTags1))))
 	{
 		OnAbilityFailed.Broadcast(AbilityHandle, FailureTags);
 	}

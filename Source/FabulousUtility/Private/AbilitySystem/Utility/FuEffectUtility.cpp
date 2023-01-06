@@ -38,8 +38,7 @@ int32 UFuEffectUtility::GetEffectStackCountByClass(const UFuAbilitySystemCompone
 	return MaxCount;
 }
 
-bool UFuEffectUtility::HasAnyActiveEffectsByQuery(const UFuAbilitySystemComponent* AbilitySystem,
-                                                  const FGameplayEffectQuery& EffectQuery)
+bool UFuEffectUtility::HasActiveEffectByQuery(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayEffectQuery& EffectQuery)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)))
 	{
@@ -74,8 +73,8 @@ void UFuEffectUtility::GetActiveEffectsByQuery(const UFuAbilitySystemComponent* 
 	}
 }
 
-bool UFuEffectUtility::HasAnyActiveEffectsWithTag(const UFuAbilitySystemComponent* AbilitySystem,
-                                                  const FGameplayTag& EffectTag, const bool bIgnoreInhibitedEffects)
+bool UFuEffectUtility::HasActiveEffectWithTag(const UFuAbilitySystemComponent* AbilitySystem,
+                                              const FGameplayTag& EffectTag, const bool bIgnoreInhibitedEffects)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)))
 	{
@@ -99,8 +98,8 @@ bool UFuEffectUtility::HasAnyActiveEffectsWithTag(const UFuAbilitySystemComponen
 	return false;
 }
 
-bool UFuEffectUtility::HasAnyActiveEffectsWithAnyTags(const UFuAbilitySystemComponent* AbilitySystem,
-                                                      const FGameplayTagContainer& EffectTags, const bool bIgnoreInhibitedEffects)
+bool UFuEffectUtility::HasActiveEffectWithAnyTags(const UFuAbilitySystemComponent* AbilitySystem,
+                                                  const FGameplayTagContainer& EffectTags, const bool bIgnoreInhibitedEffects)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)))
 	{

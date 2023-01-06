@@ -86,7 +86,8 @@ EBTNodeResult::Type UFuBTTask_ActivateAbility::ExecuteTask(UBehaviorTreeComponen
 
 		for (const auto& AbilitySpecification : Memory.AbilitySystem->GetActivatableAbilities())
 		{
-			if (!AbilitySpecification.Ability->AbilityTags.HasTag(AbilityTag))
+			if (!AbilitySpecification.DynamicAbilityTags.HasTag(AbilityTag) &&
+			    !AbilitySpecification.Ability->AbilityTags.HasTag(AbilityTag))
 			{
 				continue;
 			}
