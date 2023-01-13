@@ -18,6 +18,15 @@ public:
 
 	template <typename UserWidgetType = UUserWidget>
 	static UserWidgetType* FindRootUserWidget(const UWidget* Widget);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Common UI Utility",
+		Meta = (DefaultToSelf = "Widget", DeterminesOutputType = "UserWidgetClass"))
+	static UUserWidget* FindRootUserWidgetOfClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Common UI Utility",
+		Meta = (DefaultToSelf = "Widget", DeterminesOutputType = "UserWidgetClass",
+			DynamicOutputParam = "UserWidget", ExpandBoolAsExecs = "ReturnValue"))
+	static bool TryFindRootUserWidgetOfClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass, UUserWidget*& UserWidget);
 };
 
 template <typename UserWidgetType>
@@ -47,4 +56,11 @@ UserWidgetType* UFuCommonUIUtility::FindRootUserWidget(const UWidget* Widget)
 	}
 
 	return ResultUserWidget;
+}
+
+inline bool UFuCommonUIUtility::TryFindRootUserWidgetOfClass(const UWidget* Widget, const TSubclassOf<UUserWidget> UserWidgetClass,
+                                                             UUserWidget*& UserWidget)
+{
+	UserWidget = FindRootUserWidgetOfClass(Widget, UserWidgetClass);
+	return IsValid(UserWidget);
 }
