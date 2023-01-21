@@ -2,10 +2,10 @@
 
 #include "Widgets/SCompoundWidget.h"
 
-class FABULOUSUTILITY_API SFuViewportWatermarkWidget : public SCompoundWidget
+class FABULOUSUTILITY_API SFuViewportWatermark : public SCompoundWidget
 {
 public:
-	SLATE_BEGIN_ARGS(SFuViewportWatermarkWidget)
+	SLATE_BEGIN_ARGS(SFuViewportWatermark)
 	{
 		_Visibility = EVisibility::HitTestInvisible;
 	}

@@ -5,11 +5,11 @@
 #include "Engine/GameInstance.h"
 #include "Engine/GameViewportClient.h"
 #include "UI/ViewportWatermark/FuViewportWatermarkSettings.h"
-#include "UI/ViewportWatermark/FuViewportWatermarkWidget.h"
+#include "UI/ViewportWatermark/SFuViewportWatermark.h"
 
 bool UFuViewportWatermarkSubsystem::ShouldCreateSubsystem(UObject* Outer) const
 {
-	return !CastChecked<UGameInstance>(Outer)->IsDedicatedServerInstance();
+	return !CastChecked<UGameInstance>(Outer)->IsDedicatedServerInstance() && Super::ShouldCreateSubsystem(Outer);
 }
 
 void UFuViewportWatermarkSubsystem::Initialize(FSubsystemCollectionBase& Collection)
@@ -38,7 +38,7 @@ void UFuViewportWatermarkSubsystem::OnViewportCreated() const
 	{
 		UGameViewportClient::OnViewportCreated().RemoveAll(this);
 
-		Viewport->AddViewportWidgetContent(SNew(SFuViewportWatermarkWidget), GetDefault<UFuViewportWatermarkSettings>()->ZOrder);
+		Viewport->AddViewportWidgetContent(SNew(SFuViewportWatermark), GetDefault<UFuViewportWatermarkSettings>()->ZOrder);
 	}
 }
 

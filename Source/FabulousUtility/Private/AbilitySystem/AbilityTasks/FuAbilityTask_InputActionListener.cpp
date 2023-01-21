@@ -49,7 +49,7 @@ void UFuAbilityTask_InputActionListener::Activate()
 	auto* Pawn{Cast<APawn>(AbilitySystemComponent->GetAvatarActor_Direct())};
 	if (IsValid(Pawn))
 	{
-		Pawn->ReceiveRestartedDelegate.AddDynamic(this, &ThisClass::OnPawnRestarted);
+		Pawn->ReceiveRestartedDelegate.AddUniqueDynamic(this, &ThisClass::OnPawnRestarted);
 	}
 
 	BindActions();

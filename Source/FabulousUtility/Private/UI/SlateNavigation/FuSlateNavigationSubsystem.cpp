@@ -8,7 +8,7 @@
 
 bool UFuSlateNavigationSubsystem::ShouldCreateSubsystem(UObject* Outer) const
 {
-	return !CastChecked<UGameInstance>(Outer)->IsDedicatedServerInstance();
+	return !CastChecked<UGameInstance>(Outer)->IsDedicatedServerInstance() && Super::ShouldCreateSubsystem(Outer);
 }
 
 void UFuSlateNavigationSubsystem::Initialize(FSubsystemCollectionBase& Collection)

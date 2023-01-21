@@ -1,4 +1,4 @@
-#include "UI/ViewportWatermark/FuViewportWatermarkWidget.h"
+#include "UI/ViewportWatermark/SFuViewportWatermark.h"
 
 #include "Engine/UserInterfaceSettings.h"
 #include "UI/ViewportWatermark/FuViewportWatermarkSettings.h"
@@ -6,7 +6,7 @@
 #include "Widgets/Layout/SConstraintCanvas.h"
 #include "Widgets/Text/STextBlock.h"
 
-void SFuViewportWatermarkWidget::Construct(const FArguments& Arguments)
+void SFuViewportWatermark::Construct(const FArguments& Arguments)
 {
 	bCanSupportFocus = false;
 
