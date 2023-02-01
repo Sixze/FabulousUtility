@@ -43,12 +43,12 @@ public:
 	static int32 GetEffectsCountWithAnyTags(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer& EffectTags,
 	                                        bool bIgnoreInhibitedEffects = false);
 
+	static const FActiveGameplayEffect* GetActiveEffectTimeRemainingAndDurationByTag(
+		const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag& EffectTag, float& TimeRemaining, float& Duration);
+
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility",
 		Meta = (AutoCreateRefTerm = "EffectTag", ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryGetEffectTimeRemainingAndDurationByTag(
-		const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag& EffectTag, float& TimeRemaining, float& Duration);
-
-	static const FActiveGameplayEffect* GetActiveEffectTimeRemainingAndDurationByTag(
 		const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag& EffectTag, float& TimeRemaining, float& Duration);
 
 	// Effect Handle

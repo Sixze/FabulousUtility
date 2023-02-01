@@ -93,10 +93,10 @@ void UFuBTDecorator_CanActivateAbility::OnBecomeRelevant(UBehaviorTreeComponent&
 		return;
 	}
 
-	Memory.AbilitySystem->OnAbilityGiven.AddUObject(this, &ThisClass::OnAbilityGiven,
+	Memory.AbilitySystem->OnAbilityGiven.AddUObject(this, &ThisClass::AbilitySystem_OnAbilityGiven,
 	                                                TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
 
-	Memory.AbilitySystem->OnAbilityRemoved.AddUObject(this, &ThisClass::OnAbilityRemoved,
+	Memory.AbilitySystem->OnAbilityRemoved.AddUObject(this, &ThisClass::AbilitySystem_OnAbilityRemoved,
 	                                                  TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
 
 	for (const auto& AbilitySpecification : Memory.AbilitySystem->GetActivatableAbilities())
@@ -187,8 +187,8 @@ bool UFuBTDecorator_CanActivateAbility::CalculateRawConditionValue(UBehaviorTree
 	return false;
 }
 
-void UFuBTDecorator_CanActivateAbility::OnAbilityGiven(const FGameplayAbilitySpec& AbilitySpecification,
-                                                       const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
+void UFuBTDecorator_CanActivateAbility::AbilitySystem_OnAbilityGiven(const FGameplayAbilitySpec& AbilitySpecification,
+                                                                     const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
 {
 	if (FU_ENSURE(BehaviorTree.IsValid()) &&
 	    (AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||
@@ -203,8 +203,8 @@ void UFuBTDecorator_CanActivateAbility::OnAbilityGiven(const FGameplayAbilitySpe
 	}
 }
 
-void UFuBTDecorator_CanActivateAbility::OnAbilityRemoved(const FGameplayAbilitySpec& AbilitySpecification,
-                                                         const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
+void UFuBTDecorator_CanActivateAbility::AbilitySystem_OnAbilityRemoved(const FGameplayAbilitySpec& AbilitySpecification,
+                                                                       const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
 {
 	if (FU_ENSURE(BehaviorTree.IsValid()) &&
 	    (AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||

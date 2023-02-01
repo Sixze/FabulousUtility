@@ -19,10 +19,3 @@ public:
 	static bool TryGetGameInstanceCasted(const UObject* WorldContext, TSubclassOf<UGameInstance> GameInstanceClass,
 	                                     UGameInstance*& GameInstance);
 };
-
-inline bool UFuUtility::TryGetGameInstanceCasted(const UObject* WorldContext, const TSubclassOf<UGameInstance> GameInstanceClass,
-                                                 UGameInstance*& GameInstance)
-{
-	GameInstance = GetGameInstanceCasted(WorldContext, GameInstanceClass);
-	return IsValid(GameInstance);
-}

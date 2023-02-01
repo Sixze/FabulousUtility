@@ -34,11 +34,10 @@ public:
 	virtual void EndAction() override;
 
 private:
-	void OnActiveGameplayEffectAdded(UAbilitySystemComponent* AbilitySystem,
-	                                 const FGameplayEffectSpec& EffectSpecification,
-	                                 FActiveGameplayEffectHandle EffectHandle) const;
+	void AbilitySystem_OnActiveGameplayEffectAdded(UAbilitySystemComponent* AbilitySystem, const FGameplayEffectSpec& EffectSpecification,
+	                                               FActiveGameplayEffectHandle EffectHandle) const;
 
-	void OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const;
+	void AbilitySystem_OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const;
 
-	void OnEffectStackChanged(FActiveGameplayEffectHandle EffectHandle, int32 NewCount, int32 PreviousCount) const;
+	void AbilitySystem_OnEffectStackChanged(FActiveGameplayEffectHandle EffectHandle, int32 NewCount, int32 PreviousCount) const;
 };

@@ -48,7 +48,7 @@ private:
 
 	void ClearDecoratorMemory(FFuHasTagMemory& Memory);
 
-	EBlackboardNotificationResult OnTargetKeyChanged(const UBlackboardComponent& Blackboard, FBlackboard::FKey Key);
+	EBlackboardNotificationResult Blackboard_OnTargetKeyChanged(const UBlackboardComponent& Blackboard, FBlackboard::FKey Key);
 
-	void OnTagChanged(FGameplayTag Tag, int32 NewCount, TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree) const;
+	void AbilitySystem_OnTagChanged(FGameplayTag Tag, int32 NewCount, TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree) const;
 };

@@ -13,7 +13,7 @@ public:
 	bool bApplyEditorScale;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Editor", Config,
-		Meta = (ClampMin = 0.5, ClampMax = 2, EditCondition = "bApplyApplicationScale"))
+		Meta = (ClampMin = 0.5, ClampMax = 2, EditCondition = "bApplyEditorScale", ForceUnits = "x"))
 	float EditorScale{1.0f};
 
 public:

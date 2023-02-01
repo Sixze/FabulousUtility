@@ -77,7 +77,7 @@ void UFuBTDecorator_ReceiveGameplayEvent::OnBecomeRelevant(UBehaviorTreeComponen
 	if (FU_ENSURE(IsValid(Blackboard)))
 	{
 		Blackboard->RegisterObserver(TargetKey.GetSelectedKeyID(), this,
-		                             FOnBlackboardChangeNotification::CreateUObject(this, &ThisClass::OnTargetKeyChanged));
+		                             FOnBlackboardChangeNotification::CreateUObject(this, &ThisClass::Blackboard_OnTargetKeyChanged));
 	}
 
 	ReInitializeDecoratorMemory(BehaviorTree, *CastInstanceNodeMemory<FFuReceiveGameplayEventMemory>(NodeMemory));
@@ -141,7 +141,7 @@ void UFuBTDecorator_ReceiveGameplayEvent::ReInitializeDecoratorMemory(UBehaviorT
 		if (FU_ENSURE(Tag.IsValid()))
 		{
 			Memory.AbilitySystem->GenericGameplayEventCallbacks.FindOrAdd(Tag)
-			      .AddUObject(this, &ThisClass::OnEventReceived, TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
+			      .AddUObject(this, &ThisClass::AbilitySystem_OnEventReceived, TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
 		}
 	}
 }
@@ -165,8 +165,8 @@ void UFuBTDecorator_ReceiveGameplayEvent::ClearDecoratorMemory(FFuReceiveGamepla
 	Memory.EventReceivedCounter = 0;
 }
 
-EBlackboardNotificationResult UFuBTDecorator_ReceiveGameplayEvent::OnTargetKeyChanged(const UBlackboardComponent& Blackboard,
-                                                                                      FBlackboard::FKey Key)
+EBlackboardNotificationResult UFuBTDecorator_ReceiveGameplayEvent::Blackboard_OnTargetKeyChanged(const UBlackboardComponent& Blackboard,
+	const FBlackboard::FKey Key)
 {
 	auto* BehaviorTree{Cast<UBehaviorTreeComponent>(Blackboard.GetBrainComponent())};
 	if (!FU_ENSURE(IsValid(BehaviorTree)))
@@ -182,8 +182,8 @@ EBlackboardNotificationResult UFuBTDecorator_ReceiveGameplayEvent::OnTargetKeyCh
 	return EBlackboardNotificationResult::ContinueObserving;
 }
 
-void UFuBTDecorator_ReceiveGameplayEvent::OnEventReceived(const FGameplayEventData* Payload,
-                                                          const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
+void UFuBTDecorator_ReceiveGameplayEvent::AbilitySystem_OnEventReceived(const FGameplayEventData* Payload,
+                                                                        const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
 {
 	if (!FU_ENSURE(BehaviorTree.IsValid()))
 	{

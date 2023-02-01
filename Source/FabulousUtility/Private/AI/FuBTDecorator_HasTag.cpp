@@ -85,7 +85,7 @@ void UFuBTDecorator_HasTag::OnBecomeRelevant(UBehaviorTreeComponent& BehaviorTre
 	if (FU_ENSURE(IsValid(Blackboard)))
 	{
 		Blackboard->RegisterObserver(TargetKey.GetSelectedKeyID(), this,
-		                             FOnBlackboardChangeNotification::CreateUObject(this, &ThisClass::OnTargetKeyChanged));
+		                             FOnBlackboardChangeNotification::CreateUObject(this, &ThisClass::Blackboard_OnTargetKeyChanged));
 	}
 
 	ReInitializeDecoratorMemory(BehaviorTree, *CastInstanceNodeMemory<FFuHasTagMemory>(NodeMemory));
@@ -169,7 +169,7 @@ void UFuBTDecorator_HasTag::ReInitializeDecoratorMemory(UBehaviorTreeComponent& 
 		if (FU_ENSURE(Tag.IsValid()))
 		{
 			Memory.AbilitySystem->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved)
-			      .AddUObject(this, &ThisClass::OnTagChanged, TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
+			      .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged, TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
 		}
 	}
 }
@@ -192,7 +192,8 @@ void UFuBTDecorator_HasTag::ClearDecoratorMemory(FFuHasTagMemory& Memory)
 	Memory.AbilitySystem = nullptr;
 }
 
-EBlackboardNotificationResult UFuBTDecorator_HasTag::OnTargetKeyChanged(const UBlackboardComponent& Blackboard, FBlackboard::FKey Key)
+EBlackboardNotificationResult UFuBTDecorator_HasTag::Blackboard_OnTargetKeyChanged(const UBlackboardComponent& Blackboard,
+                                                                                   FBlackboard::FKey Key)
 {
 	auto* BehaviorTree{Cast<UBehaviorTreeComponent>(Blackboard.GetBrainComponent())};
 	if (!FU_ENSURE(IsValid(BehaviorTree)))
@@ -208,8 +209,8 @@ EBlackboardNotificationResult UFuBTDecorator_HasTag::OnTargetKeyChanged(const UB
 	return EBlackboardNotificationResult::ContinueObserving;
 }
 
-void UFuBTDecorator_HasTag::OnTagChanged(FGameplayTag Tag, int32 NewCount,
-                                         const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree) const
+void UFuBTDecorator_HasTag::AbilitySystem_OnTagChanged(FGameplayTag Tag, int32 NewCount,
+                                                       const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree) const
 {
 	if (FU_ENSURE(BehaviorTree.IsValid()))
 	{

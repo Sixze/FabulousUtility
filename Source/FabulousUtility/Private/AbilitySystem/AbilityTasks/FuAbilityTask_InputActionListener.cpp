@@ -49,7 +49,7 @@ void UFuAbilityTask_InputActionListener::Activate()
 	auto* Pawn{Cast<APawn>(AbilitySystemComponent->GetAvatarActor_Direct())};
 	if (IsValid(Pawn))
 	{
-		Pawn->ReceiveRestartedDelegate.AddUniqueDynamic(this, &ThisClass::OnPawnRestarted);
+		Pawn->ReceiveRestartedDelegate.AddUniqueDynamic(this, &ThisClass::Pawn_OnRestarted);
 	}
 
 	BindActions();
@@ -97,7 +97,7 @@ void UFuAbilityTask_InputActionListener::UnBindActions()
 }
 
 // ReSharper disable once CppParameterMayBeConstPtrOrRef
-void UFuAbilityTask_InputActionListener::OnPawnRestarted(APawn* Pawn)
+void UFuAbilityTask_InputActionListener::Pawn_OnRestarted(APawn* Pawn)
 {
 	UnBindActions();
 

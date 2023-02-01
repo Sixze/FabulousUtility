@@ -25,7 +25,7 @@ struct FABULOUSUTILITY_API FFuViewportWatermarkTextSettings
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
 	FLinearColor ColorAndOpacity{0.8f, 0.8f, 0.8f, 0.2f};
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility", Meta = (AllowPreserveRatio))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
 	FVector2D ShadowOffset{FVector2D::ZeroVector};
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
@@ -83,6 +83,6 @@ public:
 	UFuViewportWatermarkSettings();
 
 #if WITH_EDITOR
-	virtual FText GetSectionText() const override final;
+	virtual FText GetSectionText() const override;
 #endif
 };

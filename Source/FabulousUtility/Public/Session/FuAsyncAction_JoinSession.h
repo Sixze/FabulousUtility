@@ -33,5 +33,5 @@ public:
 	virtual void Activate() override;
 
 private:
-	void OnJoinSessionCompleted(FName SessionName, EOnJoinSessionCompleteResult::Type Result);
+	void Session_OnJoinSessionCompleted(FName SessionName, EOnJoinSessionCompleteResult::Type Result);
 };

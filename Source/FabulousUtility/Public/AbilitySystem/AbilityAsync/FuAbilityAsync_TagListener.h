@@ -40,5 +40,5 @@ public:
 	virtual void EndAction() override;
 
 private:
-	void OnTagChanged(FGameplayTag Tag, int32 NewCount) const;
+	void AbilitySystem_OnTagChanged(FGameplayTag Tag, int32 NewCount) const;
 };

@@ -85,7 +85,7 @@ EBTNodeResult::Type UFuBTTask_WaitForTagChange::ExecuteTask(UBehaviorTreeCompone
 	}
 
 	Memory.AbilitySystem->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved)
-	      .AddUObject(this, &ThisClass::OnTagChanged, TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
+	      .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged, TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
 
 	return EBTNodeResult::InProgress;
 }
@@ -103,8 +103,8 @@ void UFuBTTask_WaitForTagChange::OnTaskFinished(UBehaviorTreeComponent& Behavior
 	Super::OnTaskFinished(BehaviorTree, NodeMemory, Result);
 }
 
-void UFuBTTask_WaitForTagChange::OnTagChanged(const FGameplayTag ThisTag, const int32 NewCount,
-                                              const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree) const
+void UFuBTTask_WaitForTagChange::AbilitySystem_OnTagChanged(const FGameplayTag ThisTag, const int32 NewCount,
+                                                            const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree) const
 {
 	// ReSharper disable CppRedundantParentheses
 	if ((WaitMode == EFuTagWaitMode::WaitForTagAdd && NewCount > 0 ||

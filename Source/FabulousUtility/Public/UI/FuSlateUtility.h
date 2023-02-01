@@ -14,6 +14,6 @@ public:
 	static void PlaySound(const FSlateSound& Sound);
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "Fabulous Utility|Fu Slate Utility",
-		Meta = (AutoCreateRefTerm = "WidgetSize"))
-	static float GetDpiScale(const FVector2D& WidgetSize);
+		Meta = (AutoCreateRefTerm = "ViewportSize"))
+	static float GetDpiScale(FVector2D ViewportSize);
 };

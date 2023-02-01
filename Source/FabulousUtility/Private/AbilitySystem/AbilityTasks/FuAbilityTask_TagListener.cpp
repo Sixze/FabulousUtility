@@ -43,7 +43,7 @@ void UFuAbilityTask_TagListener::Activate()
 	for (const auto& Tag : Tags1)
 	{
 		AbilitySystemComponent->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved)
-		                      .AddUObject(this, &ThisClass::OnTagChanged);
+		                      .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged);
 	}
 
 	if (!ShouldBroadcastAbilityTaskDelegates())
@@ -77,7 +77,7 @@ void UFuAbilityTask_TagListener::OnDestroy(const bool bInOwnerFinished)
 	Super::OnDestroy(bInOwnerFinished);
 }
 
-void UFuAbilityTask_TagListener::OnTagChanged(const FGameplayTag Tag, const int32 NewCount) const
+void UFuAbilityTask_TagListener::AbilitySystem_OnTagChanged(const FGameplayTag Tag, const int32 NewCount) const
 {
 	if (ShouldBroadcastAbilityTaskDelegates())
 	{

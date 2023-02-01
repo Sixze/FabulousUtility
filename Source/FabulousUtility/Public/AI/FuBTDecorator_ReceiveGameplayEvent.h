@@ -39,7 +39,7 @@ private:
 
 	void ClearDecoratorMemory(FFuReceiveGameplayEventMemory& Memory);
 
-	EBlackboardNotificationResult OnTargetKeyChanged(const UBlackboardComponent& Blackboard, FBlackboard::FKey Key);
+	EBlackboardNotificationResult Blackboard_OnTargetKeyChanged(const UBlackboardComponent& Blackboard, FBlackboard::FKey Key);
 
-	void OnEventReceived(const FGameplayEventData* Payload, TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree);
+	void AbilitySystem_OnEventReceived(const FGameplayEventData* Payload, TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree);
 };

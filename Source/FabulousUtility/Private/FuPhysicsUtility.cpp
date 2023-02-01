@@ -27,9 +27,8 @@ void UFuPhysicsUtility::GetReachableActorsInRadius(const UObject* WorldContext, 
 	static TArray<FOverlapResult> Overlaps;
 	check(Overlaps.IsEmpty())
 
-	World->OverlapMultiByChannel(Overlaps, Center, FQuat::Identity,
-	                             CollisionChannel, FCollisionShape::MakeSphere(Radius),
-	                             {ANSI_TO_TCHAR(__FUNCTION__), false, IgnoredActor}, CollisionResponse);
+	World->OverlapMultiByChannel(Overlaps, Center, FQuat::Identity, CollisionChannel, FCollisionShape::MakeSphere(Radius),
+	                             {__FUNCTION__, false, IgnoredActor}, CollisionResponse);
 
 	FHitResult Hit;
 
@@ -122,7 +121,7 @@ bool UFuPhysicsUtility::IsComponentReachableByTrace(UPrimitiveComponent* Compone
 	}
 
 	if (Component->GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, CollisionChannel,
-	                                                    {ANSI_TO_TCHAR(__FUNCTION__), true, IgnoredActor}, CollisionResponse))
+	                                                    {__FUNCTION__, true, IgnoredActor}, CollisionResponse))
 	{
 		return Hit.Component.Get() == Component;
 	}
@@ -166,7 +165,7 @@ bool UFuPhysicsUtility::BoxOverlapActors(const UObject* WorldContext, const FVec
 		ObjectQueryParameters.AddObjectTypesToQuery(CollisionProfile->ConvertToCollisionChannel(false, ObjectType));
 	}
 
-	FCollisionQueryParams QueryParameters{ANSI_TO_TCHAR(__FUNCTION__), false};
+	FCollisionQueryParams QueryParameters{__FUNCTION__, false};
 	QueryParameters.AddIgnoredActors(IgnoreActors);
 
 	static TArray<FOverlapResult> Overlaps;
@@ -210,7 +209,7 @@ bool UFuPhysicsUtility::BoxOverlapComponents(const UObject* WorldContext, const 
 		ObjectQueryParameters.AddObjectTypesToQuery(CollisionProfile->ConvertToCollisionChannel(false, ObjectType));
 	}
 
-	FCollisionQueryParams QueryParameters{ANSI_TO_TCHAR(__FUNCTION__), false};
+	FCollisionQueryParams QueryParameters{__FUNCTION__, false};
 	QueryParameters.AddIgnoredActors(IgnoreActors);
 
 	static TArray<FOverlapResult> Overlaps;
@@ -253,7 +252,7 @@ bool UFuPhysicsUtility::ConeOverlapActorsSimple(const UObject* WorldContext, con
 		ObjectQueryParameters.AddObjectTypesToQuery(CollisionProfile->ConvertToCollisionChannel(false, ObjectType));
 	}
 
-	FCollisionQueryParams QueryParameters{ANSI_TO_TCHAR(__FUNCTION__), false};
+	FCollisionQueryParams QueryParameters{__FUNCTION__, false};
 	QueryParameters.AddIgnoredActors(IgnoreActors);
 
 	static TArray<FOverlapResult> Overlaps;
@@ -302,7 +301,7 @@ bool UFuPhysicsUtility::ConeOverlapComponentsSimple(const UObject* WorldContext,
 		ObjectQueryParameters.AddObjectTypesToQuery(CollisionProfile->ConvertToCollisionChannel(false, ObjectType));
 	}
 
-	FCollisionQueryParams QueryParameters{ANSI_TO_TCHAR(__FUNCTION__), false};
+	FCollisionQueryParams QueryParameters{__FUNCTION__, false};
 	QueryParameters.AddIgnoredActors(IgnoreActors);
 
 	static TArray<FOverlapResult> Overlaps;

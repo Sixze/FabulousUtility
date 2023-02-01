@@ -40,7 +40,7 @@ int32 UFuEffectUtility::GetEffectStackCountByClass(const UFuAbilitySystemCompone
 
 bool UFuEffectUtility::HasActiveEffectByQuery(const UFuAbilitySystemComponent* AbilitySystem, const FGameplayEffectQuery& EffectQuery)
 {
-	if (!FU_ENSURE(IsValid(AbilitySystem)))
+	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(!EffectQuery.IsEmpty()))
 	{
 		return false;
 	}
@@ -59,7 +59,7 @@ bool UFuEffectUtility::HasActiveEffectByQuery(const UFuAbilitySystemComponent* A
 void UFuEffectUtility::GetActiveEffectsByQuery(const UFuAbilitySystemComponent* AbilitySystem,
                                                const FGameplayEffectQuery& EffectQuery, TArray<FActiveGameplayEffect>& ActiveEffects)
 {
-	if (!FU_ENSURE(IsValid(AbilitySystem)))
+	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(!EffectQuery.IsEmpty()))
 	{
 		return;
 	}
@@ -76,7 +76,7 @@ void UFuEffectUtility::GetActiveEffectsByQuery(const UFuAbilitySystemComponent* 
 bool UFuEffectUtility::HasActiveEffectWithTag(const UFuAbilitySystemComponent* AbilitySystem,
                                               const FGameplayTag& EffectTag, const bool bIgnoreInhibitedEffects)
 {
-	if (!FU_ENSURE(IsValid(AbilitySystem)))
+	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(EffectTag.IsValid()))
 	{
 		return false;
 	}
@@ -101,7 +101,7 @@ bool UFuEffectUtility::HasActiveEffectWithTag(const UFuAbilitySystemComponent* A
 bool UFuEffectUtility::HasActiveEffectWithAnyTags(const UFuAbilitySystemComponent* AbilitySystem,
                                                   const FGameplayTagContainer& EffectTags, const bool bIgnoreInhibitedEffects)
 {
-	if (!FU_ENSURE(IsValid(AbilitySystem)))
+	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(!EffectTags.IsEmpty()))
 	{
 		return false;
 	}
@@ -126,7 +126,7 @@ bool UFuEffectUtility::HasActiveEffectWithAnyTags(const UFuAbilitySystemComponen
 int32 UFuEffectUtility::GetEffectsCountWithTag(const UFuAbilitySystemComponent* AbilitySystem,
                                                const FGameplayTag& EffectTag, const bool bIgnoreInhibitedEffects)
 {
-	if (!FU_ENSURE(IsValid(AbilitySystem)))
+	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(EffectTag.IsValid()))
 	{
 		return false;
 	}
@@ -153,7 +153,7 @@ int32 UFuEffectUtility::GetEffectsCountWithTag(const UFuAbilitySystemComponent* 
 int32 UFuEffectUtility::GetEffectsCountWithAnyTags(const UFuAbilitySystemComponent* AbilitySystem,
                                                    const FGameplayTagContainer& EffectTags, const bool bIgnoreInhibitedEffects)
 {
-	if (!FU_ENSURE(IsValid(AbilitySystem)))
+	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(!EffectTags.IsEmpty()))
 	{
 		return 0;
 	}
@@ -177,15 +177,12 @@ int32 UFuEffectUtility::GetEffectsCountWithAnyTags(const UFuAbilitySystemCompone
 	return Count;
 }
 
-bool UFuEffectUtility::TryGetEffectTimeRemainingAndDurationByTag(const UFuAbilitySystemComponent* AbilitySystem,
-                                                                 const FGameplayTag& EffectTag, float& TimeRemaining, float& Duration)
-{
-	return GetActiveEffectTimeRemainingAndDurationByTag(AbilitySystem, EffectTag, TimeRemaining, Duration) != nullptr;
-}
-
 const FActiveGameplayEffect* UFuEffectUtility::GetActiveEffectTimeRemainingAndDurationByTag(
 	const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag& EffectTag, float& TimeRemaining, float& Duration)
 {
+	TimeRemaining = -1.0f;
+	Duration = -1.0f;
+
 	if (!FU_ENSURE(IsValid(AbilitySystem)))
 	{
 		return nullptr;
@@ -193,43 +190,55 @@ const FActiveGameplayEffect* UFuEffectUtility::GetActiveEffectTimeRemainingAndDu
 
 	const auto& ActiveEffects{AbilitySystem->GetActiveEffects()};
 
-	TimeRemaining = -1.0f;
-	Duration = -1.0f;
-
 	const FActiveGameplayEffect* Result{nullptr};
 	const auto Time{ActiveEffects.GetWorldTime()};
 
 	for (auto& ActiveEffect : &ActiveEffects)
 	{
-		if (ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasTag(EffectTag) ||
-		    ActiveEffect.Spec.DynamicGrantedTags.HasTag(EffectTag))
+		if (!ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasTag(EffectTag) &&
+		    !ActiveEffect.Spec.DynamicGrantedTags.HasTag(EffectTag))
 		{
-			const auto OtherDuration{ActiveEffect.GetDuration()};
+			continue;
+		}
 
-			if (OtherDuration < 0.0f)
-			{
-				// Special case for infinite effects.
+		const auto OtherDuration{ActiveEffect.GetDuration()};
 
-				Result = &ActiveEffect;
+		if (OtherDuration < 0.0f)
+		{
+			// Special case for infinite effects.
 
-				TimeRemaining = FGameplayEffectConstants::INFINITE_DURATION;
-				Duration = FGameplayEffectConstants::INFINITE_DURATION;
-				break;
-			}
+			Result = &ActiveEffect;
 
-			const auto OtherTimeRemaining{OtherDuration + ActiveEffect.StartWorldTime - Time};
+			TimeRemaining = FGameplayEffectConstants::INFINITE_DURATION;
+			Duration = FGameplayEffectConstants::INFINITE_DURATION;
+			break;
+		}
 
-			if (OtherTimeRemaining > TimeRemaining)
-			{
-				Result = &ActiveEffect;
+		const auto OtherTimeRemaining{OtherDuration + ActiveEffect.StartWorldTime - Time};
 
-				TimeRemaining = OtherTimeRemaining;
-				Duration = OtherDuration;
-			}
+		if (OtherTimeRemaining > TimeRemaining)
+		{
+			Result = &ActiveEffect;
+
+			TimeRemaining = OtherTimeRemaining;
+			Duration = OtherDuration;
 		}
 	}
 
 	return Result;
+}
+
+bool UFuEffectUtility::TryGetEffectTimeRemainingAndDurationByTag(const UFuAbilitySystemComponent* AbilitySystem,
+                                                                 const FGameplayTag& EffectTag, float& TimeRemaining, float& Duration)
+{
+	if (!IsValid(AbilitySystem))
+	{
+		TimeRemaining = -1.0f;
+		Duration = -1.0f;
+		return nullptr;
+	}
+
+	return GetActiveEffectTimeRemainingAndDurationByTag(AbilitySystem, EffectTag, TimeRemaining, Duration) != nullptr;
 }
 
 bool UFuEffectUtility::IsEffectActive(const FActiveGameplayEffectHandle EffectHandle)
@@ -291,7 +300,7 @@ bool UFuEffectUtility::TryGetEffectTimeRemainingAndDurationByHandle(FActiveGamep
 	Duration = -1.0f;
 
 	const auto* AbilitySystem{EffectHandle.GetOwningAbilitySystemComponent()};
-	if (!FU_ENSURE(IsValid(AbilitySystem)))
+	if (!IsValid(AbilitySystem))
 	{
 		return false;
 	}

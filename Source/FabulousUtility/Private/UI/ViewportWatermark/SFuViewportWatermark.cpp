@@ -6,12 +6,15 @@
 #include "Widgets/Layout/SConstraintCanvas.h"
 #include "Widgets/Text/STextBlock.h"
 
-void SFuViewportWatermark::Construct(const FArguments& Arguments)
+SFuViewportWatermark::SFuViewportWatermark()
 {
 	bCanSupportFocus = false;
 
 	SetCanTick(false);
+}
 
+void SFuViewportWatermark::Construct(const FArguments& Arguments)
+{
 	const auto* ViewportWatermarkSettings{GetDefault<UFuViewportWatermarkSettings>()};
 
 	const auto Overlay{SNew(SOverlay)};

@@ -19,7 +19,7 @@ void UFuAbilityTask_TargetDataSender::Activate()
 	if (!IsLocallyControlled())
 	{
 		AbilitySystemComponent->AbilityTargetDataSetDelegate(GetAbilitySpecHandle(), GetActivationPredictionKey())
-		                      .AddUObject(this, &ThisClass::OnAbilityTargetDataSet);
+		                      .AddUObject(this, &ThisClass::AbilitySystem_OnAbilityTargetDataSet);
 
 		AbilitySystemComponent->CallReplicatedTargetDataDelegatesIfSet(GetAbilitySpecHandle(), GetActivationPredictionKey());
 
@@ -57,8 +57,8 @@ void UFuAbilityTask_TargetDataSender::OnDestroy(const bool bInOwnerFinished)
 	Super::OnDestroy(bInOwnerFinished);
 }
 
-void UFuAbilityTask_TargetDataSender::OnAbilityTargetDataSet(const FGameplayAbilityTargetDataHandle& TargetData,
-                                                             FGameplayTag ActivationTag)
+void UFuAbilityTask_TargetDataSender::AbilitySystem_OnAbilityTargetDataSet(const FGameplayAbilityTargetDataHandle& TargetData,
+                                                                           FGameplayTag ActivationTag)
 {
 	const auto TargetDataCopy{TargetData};
 

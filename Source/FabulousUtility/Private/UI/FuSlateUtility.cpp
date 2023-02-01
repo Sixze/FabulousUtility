@@ -15,15 +15,15 @@ void UFuSlateUtility::PlaySound(const FSlateSound& Sound)
 #endif
 }
 
-float UFuSlateUtility::GetDpiScale(const FVector2D& WidgetSize)
+float UFuSlateUtility::GetDpiScale(FVector2D ViewportSize)
 {
 	const auto* UserInterfaceSettings{GetDefault<UUserInterfaceSettings>()};
 
-	if (!WidgetSize.IsNearlyZero())
+	if (!ViewportSize.IsNearlyZero())
 	{
 		return UserInterfaceSettings->GetDPIScaleBasedOnSize({
-			FMath::RoundToInt32(WidgetSize.X),
-			FMath::RoundToInt32(WidgetSize.Y)
+			FMath::RoundToInt32(ViewportSize.X),
+			FMath::RoundToInt32(ViewportSize.Y)
 		});
 	}
 
@@ -34,7 +34,6 @@ float UFuSlateUtility::GetDpiScale(const FVector2D& WidgetSize)
 
 		if (IsValid(Viewport))
 		{
-			FVector2D ViewportSize;
 			Viewport->GetViewportSize(ViewportSize);
 
 			const auto ViewportDpiScaleInverse{1.0f / Viewport->GetDPIScale()};

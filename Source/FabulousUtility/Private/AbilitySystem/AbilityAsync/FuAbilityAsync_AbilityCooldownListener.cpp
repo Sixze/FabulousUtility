@@ -92,11 +92,11 @@ void UFuAbilityAsync_AbilityCooldownListener::Activate()
 		return;
 	}
 
-	AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(this, &ThisClass::OnActiveGameplayEffectAdded);
-	AbilitySystem->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &ThisClass::OnActiveGameplayEffectRemoved);
+	AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectAdded);
+	AbilitySystem->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectRemoved);
 
-	AbilitySystem->OnAbilityGiven.AddUObject(this, &ThisClass::OnAbilityGiven);
-	AbilitySystem->OnAbilityRemoved.AddUObject(this, &ThisClass::OnAbilityRemoved);
+	AbilitySystem->OnAbilityGiven.AddUObject(this, &ThisClass::AbilitySystem_OnAbilityGiven);
+	AbilitySystem->OnAbilityRemoved.AddUObject(this, &ThisClass::AbilitySystem_OnAbilityRemoved);
 
 	for (const auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
 	{
@@ -116,7 +116,7 @@ void UFuAbilityAsync_AbilityCooldownListener::Activate()
 	for (const auto& EffectTag : EffectTags.GetExplicitGameplayTags())
 	{
 		AbilitySystem->RegisterGameplayTagEvent(EffectTag, EGameplayTagEventType::NewOrRemoved)
-		             .AddUObject(this, &ThisClass::OnEffectTagChanged);
+		             .AddUObject(this, &ThisClass::AbilitySystem_OnEffectTagChanged);
 	}
 
 	for (auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
@@ -124,7 +124,7 @@ void UFuAbilityAsync_AbilityCooldownListener::Activate()
 		if (ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasAny(EffectTags.GetExplicitGameplayTags()) ||
 		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(EffectTags.GetExplicitGameplayTags()))
 		{
-			ActiveEffect.EventSet.OnTimeChanged.AddUObject(this, &ThisClass::OnEffectTimeChanged);
+			ActiveEffect.EventSet.OnTimeChanged.AddUObject(this, &ThisClass::ActiveEffect_OnTimeChanged);
 		}
 	}
 
@@ -189,7 +189,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(
 			// A cooldown tag has been added.
 
 			AbilitySystem->RegisterGameplayTagEvent(CooldownTag, EGameplayTagEventType::NewOrRemoved)
-			             .AddUObject(this, &ThisClass::OnEffectTagChanged);
+			             .AddUObject(this, &ThisClass::AbilitySystem_OnEffectTagChanged);
 
 			RefreshEffectTimeRemainingAndDurationForTag(CooldownTag);
 		}
@@ -198,7 +198,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(
 			// A cooldown tag has been removed.
 
 			AbilitySystem->RegisterGameplayTagEvent(CooldownTag, EGameplayTagEventType::NewOrRemoved)
-			             .AddUObject(this, &ThisClass::OnEffectTagChanged);
+			             .AddUObject(this, &ThisClass::AbilitySystem_OnEffectTagChanged);
 
 			if (ShouldBroadcastDelegates())
 			{
@@ -216,7 +216,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(
 		if (ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasAny(EffectTags.GetExplicitGameplayTags()) ||
 		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(EffectTags.GetExplicitGameplayTags()))
 		{
-			ActiveEffect.EventSet.OnTimeChanged.AddUObject(this, &ThisClass::OnEffectTimeChanged);
+			ActiveEffect.EventSet.OnTimeChanged.AddUObject(this, &ThisClass::ActiveEffect_OnTimeChanged);
 		}
 	}
 }
@@ -270,52 +270,62 @@ void UFuAbilityAsync_AbilityCooldownListener::RefreshEffectTimeRemainingAndDurat
 	}
 }
 
-void UFuAbilityAsync_AbilityCooldownListener::OnAbilityGiven(const FGameplayAbilitySpec& AbilitySpecification)
+void UFuAbilityAsync_AbilityCooldownListener::AbilitySystem_OnAbilityGiven(const FGameplayAbilitySpec& AbilitySpecification)
 {
 	ProcessAbilitySpecificationChange(AbilitySpecification, true);
 }
 
-void UFuAbilityAsync_AbilityCooldownListener::OnAbilityRemoved(const FGameplayAbilitySpec& AbilitySpecification)
+void UFuAbilityAsync_AbilityCooldownListener::AbilitySystem_OnAbilityRemoved(const FGameplayAbilitySpec& AbilitySpecification)
 {
 	ProcessAbilitySpecificationChange(AbilitySpecification, false);
 }
 
 // ReSharper disable once CppParameterMayBeConstPtrOrRef
-void UFuAbilityAsync_AbilityCooldownListener::OnActiveGameplayEffectAdded(UAbilitySystemComponent* AbilitySystem,
-                                                                          const FGameplayEffectSpec& EffectSpecification,
-                                                                          const FActiveGameplayEffectHandle EffectHandle) const
+void UFuAbilityAsync_AbilityCooldownListener::AbilitySystem_OnActiveGameplayEffectAdded(
+	UAbilitySystemComponent* AbilitySystem, const FGameplayEffectSpec& EffectSpecification,
+	const FActiveGameplayEffectHandle EffectHandle) const
 {
 	auto bEffectTimeChangeEventRegistered{false};
 
 	for (const auto& EffectTag : EffectTags.GetExplicitGameplayTags())
 	{
-		if (EffectSpecification.Def->InheritableOwnedTagsContainer.CombinedTags.HasTag(EffectTag) ||
-		    EffectSpecification.DynamicGrantedTags.HasTag(EffectTag))
+		if (!EffectSpecification.Def->InheritableOwnedTagsContainer.CombinedTags.HasTag(EffectTag) &&
+		    !EffectSpecification.DynamicGrantedTags.HasTag(EffectTag))
 		{
-			if (!bEffectTimeChangeEventRegistered)
-			{
-				auto* ActiveEffect{AbilitySystem->GetActiveGameplayEffect(EffectHandle)};
-				if (ActiveEffect != nullptr)
-				{
-					const_cast<FActiveGameplayEffect*>(ActiveEffect)->EventSet.OnTimeChanged
-					                                                .AddUObject(this, &ThisClass::OnEffectTimeChanged);
-
-					bEffectTimeChangeEventRegistered = true;
-				}
-			}
-
-			RefreshEffectTimeRemainingAndDurationForTag(EffectTag);
+			continue;
 		}
+
+		if (!bEffectTimeChangeEventRegistered)
+		{
+			auto* ActiveEffect{AbilitySystem->GetActiveGameplayEffect(EffectHandle)};
+			if (ActiveEffect != nullptr)
+			{
+				const_cast<FActiveGameplayEffect*>(ActiveEffect)
+					->EventSet.OnTimeChanged.AddUObject(this, &ThisClass::ActiveEffect_OnTimeChanged);
+
+				bEffectTimeChangeEventRegistered = true;
+			}
+		}
+
+		RefreshEffectTimeRemainingAndDurationForTag(EffectTag);
 	}
 }
 
-void UFuAbilityAsync_AbilityCooldownListener::OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const
+void UFuAbilityAsync_AbilityCooldownListener::AbilitySystem_OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const
 {
 	const_cast<FActiveGameplayEffect&>(ActiveEffect).EventSet.OnTimeChanged.RemoveAll(this);
 }
 
-void UFuAbilityAsync_AbilityCooldownListener::OnEffectTimeChanged(const FActiveGameplayEffectHandle EffectHandle,
-                                                                  const float NewStartTime, const float NewDuration) const
+void UFuAbilityAsync_AbilityCooldownListener::AbilitySystem_OnEffectTagChanged(const FGameplayTag EffectTag, const int32 NewCount) const
+{
+	if (ShouldBroadcastDelegates() && NewCount <= 0)
+	{
+		OnEffectEnded.Broadcast(EffectTag, 0.0f, 0.0f, false);
+	}
+}
+
+void UFuAbilityAsync_AbilityCooldownListener::ActiveEffect_OnTimeChanged(const FActiveGameplayEffectHandle EffectHandle,
+                                                                         const float NewStartTime, const float NewDuration) const
 {
 	auto* ActiveEffect{GetAbilitySystemComponent()->GetActiveGameplayEffect(EffectHandle)};
 	if (ActiveEffect == nullptr)
@@ -330,13 +340,5 @@ void UFuAbilityAsync_AbilityCooldownListener::OnEffectTimeChanged(const FActiveG
 		{
 			RefreshEffectTimeRemainingAndDurationForTag(EffectTag);
 		}
-	}
-}
-
-void UFuAbilityAsync_AbilityCooldownListener::OnEffectTagChanged(const FGameplayTag EffectTag, const int32 NewCount) const
-{
-	if (ShouldBroadcastDelegates() && NewCount <= 0)
-	{
-		OnEffectEnded.Broadcast(EffectTag, 0.0f, 0.0f, false);
 	}
 }

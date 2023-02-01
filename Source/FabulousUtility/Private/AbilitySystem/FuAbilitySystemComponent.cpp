@@ -18,7 +18,7 @@ bool UFuAbilitySystemComponent::TryGetFuAbilitySystem(const UObject* Object, Thi
 		}
 	}
 
-	const auto Actor{Cast<AActor>(Object)};
+	const auto* Actor{Cast<AActor>(Object)};
 	if (bAllowFindComponent && IsValid(Actor))
 	{
 		AbilitySystem = Actor->FindComponentByClass<ThisClass>();
@@ -36,9 +36,9 @@ void UFuAbilitySystemComponent::OnRegister()
 	// Subscribe to the event here after calling Super::OnRegister() so that UFuAbilitySystemComponent::OnAnyTagChanged()
 	// is called before FActiveGameplayEffectsContainer::OnOwnerTagChange().
 
-	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &ThisClass::OnGameplayEffectApplied);
+	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &ThisClass::AbilitySystem_OnGameplayEffectApplied);
 
-	RegisterGenericGameplayTagEvent().AddUObject(this, &ThisClass::OnAnyTagChanged);
+	RegisterGenericGameplayTagEvent().AddUObject(this, &ThisClass::AbilitySystem_OnAnyTagChanged);
 }
 
 FActiveGameplayEffectHandle UFuAbilitySystemComponent::ApplyGameplayEffectSpecToSelf(const FGameplayEffectSpec& EffectSpecification,
@@ -255,9 +255,9 @@ void UFuAbilitySystemComponent::UnBlockAbilitiesWithoutTags(const FGameplayTagCo
 	BlockedAbilityWithoutTags.UpdateTagCount(Tags, -1);
 }
 
-void UFuAbilitySystemComponent::OnGameplayEffectApplied(UAbilitySystemComponent* InstigatorAbilitySystem,
-                                                        const FGameplayEffectSpec& EffectSpecification,
-                                                        const FActiveGameplayEffectHandle EffectHandle)
+void UFuAbilitySystemComponent::AbilitySystem_OnGameplayEffectApplied(UAbilitySystemComponent* InstigatorAbilitySystem,
+                                                                      const FGameplayEffectSpec& EffectSpecification,
+                                                                      const FActiveGameplayEffectHandle EffectHandle)
 {
 	// The code block below should be called right after the call to
 	// FActiveGameplayEffectsContainer::AttemptRemoveActiveEffectsOnEffectApplication() in
@@ -279,7 +279,7 @@ void UFuAbilitySystemComponent::OnGameplayEffectApplied(UAbilitySystemComponent*
 	}
 }
 
-void UFuAbilitySystemComponent::OnAnyTagChanged(const FGameplayTag Tag, const int32 NewCount)
+void UFuAbilitySystemComponent::AbilitySystem_OnAnyTagChanged(const FGameplayTag Tag, const int32 NewCount)
 {
 	// Unfortunately, there is currently no way to optimize this the way it
 	// is done inside FActiveGameplayEffectsContainer::OnOwnerTagChange().

@@ -16,7 +16,7 @@ bool UFuAbilitySystemUtility::TryGetAbilitySystem(const UObject* Object, UAbilit
 		}
 	}
 
-	const auto Actor{Cast<AActor>(Object)};
+	const auto* Actor{Cast<AActor>(Object)};
 	if (bAllowFindComponent && IsValid(Actor))
 	{
 		AbilitySystem = Actor->FindComponentByClass<UAbilitySystemComponent>();

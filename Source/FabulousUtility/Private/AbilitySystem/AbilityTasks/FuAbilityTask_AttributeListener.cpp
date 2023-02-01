@@ -78,10 +78,10 @@ void UFuAbilityTask_AttributeListener::OnDestroy(const bool bInOwnerFinished)
 	Super::OnDestroy(bInOwnerFinished);
 }
 
-void UFuAbilityTask_AttributeListener::AbilitySystem_OnAttributeChanged(const FOnAttributeChangeData& Data) const
+void UFuAbilityTask_AttributeListener::AbilitySystem_OnAttributeChanged(const FOnAttributeChangeData& ChangeData) const
 {
-	if (ShouldBroadcastAbilityTaskDelegates() && Data.NewValue != Data.OldValue)
+	if (ShouldBroadcastAbilityTaskDelegates() && ChangeData.NewValue != ChangeData.OldValue)
 	{
-		OnAttributeChanged.Broadcast(Data.Attribute, Data.NewValue, Data.OldValue);
+		OnAttributeChanged.Broadcast(ChangeData.Attribute, ChangeData.NewValue, ChangeData.OldValue);
 	}
 }

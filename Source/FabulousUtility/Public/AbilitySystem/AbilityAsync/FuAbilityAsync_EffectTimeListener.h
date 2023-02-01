@@ -56,13 +56,12 @@ public:
 private:
 	void RefreshEffectTimeRemainingAndDurationForTag(const FGameplayTag& EffectTag) const;
 
-	void OnActiveGameplayEffectAdded(UAbilitySystemComponent* AbilitySystem,
-	                                 const FGameplayEffectSpec& EffectSpecification,
-	                                 FActiveGameplayEffectHandle EffectHandle) const;
+	void AbilitySystem_OnActiveGameplayEffectAdded(UAbilitySystemComponent* AbilitySystem, const FGameplayEffectSpec& EffectSpecification,
+	                                               FActiveGameplayEffectHandle EffectHandle) const;
 
-	void OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const;
+	void AbilitySystem_OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const;
 
-	void OnEffectTimeChanged(FActiveGameplayEffectHandle EffectHandle, float NewStartTime, float NewDuration) const;
+	void AbilitySystem_OnEffectTagChanged(FGameplayTag EffectTag, int32 NewCount) const;
 
-	void OnEffectTagChanged(FGameplayTag EffectTag, int32 NewCount) const;
+	void ActiveEffect_OnTimeChanged(FActiveGameplayEffectHandle EffectHandle, float NewStartTime, float NewDuration) const;
 };

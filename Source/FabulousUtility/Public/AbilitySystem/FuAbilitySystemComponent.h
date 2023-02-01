@@ -77,10 +77,11 @@ public:
 	void UnBlockAbilitiesWithoutTags(const FGameplayTagContainer& Tags);
 
 private:
-	void OnGameplayEffectApplied(UAbilitySystemComponent* InstigatorAbilitySystem, const FGameplayEffectSpec& EffectSpecification,
-	                             FActiveGameplayEffectHandle EffectHandle);
+	void AbilitySystem_OnGameplayEffectApplied(UAbilitySystemComponent* InstigatorAbilitySystem,
+	                                           const FGameplayEffectSpec& EffectSpecification,
+	                                           FActiveGameplayEffectHandle EffectHandle);
 
-	void OnAnyTagChanged(FGameplayTag Tag, int32 NewCount);
+	void AbilitySystem_OnAnyTagChanged(FGameplayTag Tag, int32 NewCount);
 };
 
 inline const FActiveGameplayEffectsContainer& UFuAbilitySystemComponent::GetActiveEffects() const

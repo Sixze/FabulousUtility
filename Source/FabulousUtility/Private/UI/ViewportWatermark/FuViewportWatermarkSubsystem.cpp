@@ -23,15 +23,15 @@ void UFuViewportWatermarkSubsystem::Initialize(FSubsystemCollectionBase& Collect
 
 	if (IsValid(GetGameInstance()->GetGameViewportClient()))
 	{
-		OnViewportCreated();
+		GameViewport_OnViewportCreated();
 	}
 	else
 	{
-		UGameViewportClient::OnViewportCreated().AddUObject(this, &ThisClass::OnViewportCreated);
+		UGameViewportClient::OnViewportCreated().AddUObject(this, &ThisClass::GameViewport_OnViewportCreated);
 	}
 }
 
-void UFuViewportWatermarkSubsystem::OnViewportCreated() const
+void UFuViewportWatermarkSubsystem::GameViewport_OnViewportCreated() const
 {
 	auto* Viewport{GetGameInstance()->GetGameViewportClient()};
 	if (IsValid(Viewport))

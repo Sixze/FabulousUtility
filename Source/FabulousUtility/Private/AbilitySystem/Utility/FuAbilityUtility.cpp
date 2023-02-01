@@ -4,7 +4,7 @@
 
 bool UFuAbilityUtility::TryCommitAbility(UGameplayAbility* Ability, const bool bCancelOnFailure)
 {
-	if (!FU_ENSURE(IsValid(Ability)))
+	if (!IsValid(Ability))
 	{
 		return false;
 	}

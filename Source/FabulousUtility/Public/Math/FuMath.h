@@ -18,10 +18,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Math")
 	static float ExponentialDecay(float DeltaTime, float Lambda);
 
-	template <class ValueType>
+	template <typename ValueType>
 	static ValueType Damp(const ValueType& Current, const ValueType& Target, const float DeltaTime, const float Smoothing);
 
-	template <class ValueType>
+	template <typename ValueType>
 	static ValueType ExponentialDecay(const ValueType& Current, const ValueType& Target, const float DeltaTime, const float Lambda);
 };
 
@@ -48,7 +48,7 @@ inline float UFuMath::ExponentialDecay(const float DeltaTime, const float Lambda
 	return 1.0f - FMath::InvExpApprox(Lambda * DeltaTime);
 }
 
-template <class ValueType>
+template <typename ValueType>
 ValueType UFuMath::Damp(const ValueType& Current, const ValueType& Target, const float DeltaTime, const float Smoothing)
 {
 	return Smoothing > 0.0f
@@ -56,7 +56,7 @@ ValueType UFuMath::Damp(const ValueType& Current, const ValueType& Target, const
 		       : Target;
 }
 
-template <class ValueType>
+template <typename ValueType>
 ValueType UFuMath::ExponentialDecay(const ValueType& Current, const ValueType& Target, const float DeltaTime, const float Lambda)
 {
 	return Lambda > 0.0f

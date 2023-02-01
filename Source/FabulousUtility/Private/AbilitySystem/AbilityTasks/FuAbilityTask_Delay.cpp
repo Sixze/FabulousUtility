@@ -40,12 +40,12 @@ void UFuAbilityTask_Delay::Activate()
 
 	if (bSkipFirstDelay1)
 	{
-		OnTimerEnded();
+		TimerManager_OnTimerEnded();
 	}
 
 	if (!IsFinished())
 	{
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ThisClass::OnTimerEnded, Duration1, LoopsCount1 != 0);
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ThisClass::TimerManager_OnTimerEnded, Duration1, LoopsCount1 != 0);
 	}
 }
 
@@ -62,7 +62,7 @@ void UFuAbilityTask_Delay::OnDestroy(const bool bInOwnerFinished)
 	Super::OnDestroy(bInOwnerFinished);
 }
 
-void UFuAbilityTask_Delay::OnTimerEnded()
+void UFuAbilityTask_Delay::TimerManager_OnTimerEnded()
 {
 	if (IsFinished())
 	{

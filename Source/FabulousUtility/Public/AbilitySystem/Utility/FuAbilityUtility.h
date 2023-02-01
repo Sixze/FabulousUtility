@@ -148,7 +148,7 @@ inline FActiveGameplayEffectHandle UFuAbilityUtility::GetEffectHandleFromGranted
 inline const UGameplayAbility* UFuAbilityUtility::GetPrimaryAbilityInstance(UAbilitySystemComponent* AbilitySystem,
                                                                             const FGameplayAbilitySpecHandle AbilityHandle)
 {
-	if (!FU_ENSURE(IsValid(AbilitySystem)))
+	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(AbilityHandle.IsValid()))
 	{
 		return nullptr;
 	}

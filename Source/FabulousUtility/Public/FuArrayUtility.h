@@ -13,10 +13,10 @@ class FABULOUSUTILITY_API UFuArrayUtility : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	template <class ValueType>
+	template <typename ValueType>
 	static void Shuffle(TArray<ValueType>& Array);
 
-	template <class ValueType>
+	template <typename ValueType>
 	static void ShuffleFirstElements(TArray<ValueType>& Array, int32 FirstElementsCount);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Array Utility", Meta = (AutoCreateRefTerm = "Array"))
@@ -70,7 +70,7 @@ private:
 	static void ShuffleFirstElements(void* Array, const FArrayProperty* Property, int32 FirstElementsCount);
 };
 
-template <class ValueType>
+template <typename ValueType>
 void UFuArrayUtility::Shuffle(TArray<ValueType>& Array)
 {
 	const auto LastIndex{Array.Num() - 1};
@@ -85,7 +85,7 @@ void UFuArrayUtility::Shuffle(TArray<ValueType>& Array)
 	}
 }
 
-template <class ValueType>
+template <typename ValueType>
 void UFuArrayUtility::ShuffleFirstElements(TArray<ValueType>& Array, const int32 FirstElementsCount)
 {
 	const auto LastIndex{Array.Num() - 1};

@@ -27,7 +27,21 @@ AController* UFuControllerUtility::GetController(AActor* Actor)
 
 bool UFuControllerUtility::TryGetController(AActor* Actor, AController*& Controller)
 {
-	Controller = GetController(Actor);
+	if (!IsValid(Actor))
+	{
+		Controller = nullptr;
+		return false;
+	}
+
+	Controller = Cast<AController>(Actor);
+	if (IsValid(Controller))
+	{
+		return true;
+	}
+
+	const auto* Pawn{Cast<APawn>(Actor)};
+
+	Controller = IsValid(Pawn) ? Pawn->GetController() : nullptr;
 	return IsValid(Controller);
 }
 
@@ -38,6 +52,13 @@ APlayerController* UFuControllerUtility::GetPlayerController(AActor* Actor)
 
 bool UFuControllerUtility::TryGetPlayerController(AActor* Actor, APlayerController*& Player)
 {
-	Player = GetPlayerController(Actor);
+	AController* Controller;
+	if (!TryGetController(Actor, Controller))
+	{
+		Player = nullptr;
+		return false;
+	}
+
+	Player = Cast<APlayerController>(Controller);
 	return IsValid(Player);
 }

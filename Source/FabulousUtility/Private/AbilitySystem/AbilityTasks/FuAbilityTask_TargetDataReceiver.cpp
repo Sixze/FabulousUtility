@@ -23,7 +23,7 @@ void UFuAbilityTask_TargetDataReceiver::Activate()
 	}
 
 	AbilitySystemComponent->AbilityTargetDataSetDelegate(GetAbilitySpecHandle(), GetActivationPredictionKey())
-	                      .AddUObject(this, &ThisClass::OnAbilityTargetDataSet);
+	                      .AddUObject(this, &ThisClass::AbilitySystem_OnAbilityTargetDataSet);
 
 	AbilitySystemComponent->CallReplicatedTargetDataDelegatesIfSet(GetAbilitySpecHandle(), GetActivationPredictionKey());
 
@@ -40,8 +40,8 @@ void UFuAbilityTask_TargetDataReceiver::OnDestroy(const bool bInOwnerFinished)
 	Super::OnDestroy(bInOwnerFinished);
 }
 
-void UFuAbilityTask_TargetDataReceiver::OnAbilityTargetDataSet(const FGameplayAbilityTargetDataHandle& TargetData,
-                                                               const FGameplayTag ActivationTag)
+void UFuAbilityTask_TargetDataReceiver::AbilitySystem_OnAbilityTargetDataSet(const FGameplayAbilityTargetDataHandle& TargetData,
+                                                                             const FGameplayTag ActivationTag)
 {
 	const auto TargetDataCopy{TargetData};
 

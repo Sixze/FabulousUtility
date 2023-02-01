@@ -26,12 +26,13 @@ void UFuAbilityTask_EffectStackListener::Activate()
 		return;
 	}
 
-	AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(this, &ThisClass::OnActiveGameplayEffectAdded);
-	AbilitySystem->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &ThisClass::OnActiveGameplayEffectRemoved);
+	AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectAdded);
+	AbilitySystem->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectRemoved);
 
 	const auto bDelegatesBroadcastAllowed{ShouldBroadcastAbilityTaskDelegates()};
 	auto bAnyEffectValid{false};
 
+	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 	FScopedActiveGameplayEffectLock EffectScopeLock{AbilitySystem->GetActiveEffects()};
 
 	for (const auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
@@ -43,7 +44,8 @@ void UFuAbilityTask_EffectStackListener::Activate()
 
 		bAnyEffectValid = true;
 
-		AbilitySystem->OnGameplayEffectStackChangeDelegate(ActiveEffect.Handle)->AddUObject(this, &ThisClass::OnEffectStackChanged);
+		AbilitySystem->OnGameplayEffectStackChangeDelegate(ActiveEffect.Handle)
+		             ->AddUObject(this, &ThisClass::AbilitySystem_OnEffectStackChanged);
 
 		if (bDelegatesBroadcastAllowed)
 		{
@@ -74,13 +76,13 @@ void UFuAbilityTask_EffectStackListener::OnDestroy(const bool bInOwnerFinished)
 	Super::OnDestroy(bInOwnerFinished);
 }
 
-void UFuAbilityTask_EffectStackListener::OnActiveGameplayEffectAdded(UAbilitySystemComponent* AbilitySystem,
-                                                                     const FGameplayEffectSpec& EffectSpecification,
-                                                                     const FActiveGameplayEffectHandle EffectHandle) const
+void UFuAbilityTask_EffectStackListener::AbilitySystem_OnActiveGameplayEffectAdded(UAbilitySystemComponent* AbilitySystem,
+                                                                                   const FGameplayEffectSpec& EffectSpecification,
+                                                                                   const FActiveGameplayEffectHandle EffectHandle) const
 {
 	if (EffectSpecification.Def->GetClass() == EffectClass1)
 	{
-		AbilitySystem->OnGameplayEffectStackChangeDelegate(EffectHandle)->AddUObject(this, &ThisClass::OnEffectStackChanged);
+		AbilitySystem->OnGameplayEffectStackChangeDelegate(EffectHandle)->AddUObject(this, &ThisClass::AbilitySystem_OnEffectStackChanged);
 
 		if (ShouldBroadcastAbilityTaskDelegates())
 		{
@@ -89,7 +91,7 @@ void UFuAbilityTask_EffectStackListener::OnActiveGameplayEffectAdded(UAbilitySys
 	}
 }
 
-void UFuAbilityTask_EffectStackListener::OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const
+void UFuAbilityTask_EffectStackListener::AbilitySystem_OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const
 {
 	if (ActiveEffect.Spec.Def->GetClass() == EffectClass1)
 	{
@@ -102,8 +104,8 @@ void UFuAbilityTask_EffectStackListener::OnActiveGameplayEffectRemoved(const FAc
 	}
 }
 
-void UFuAbilityTask_EffectStackListener::OnEffectStackChanged(const FActiveGameplayEffectHandle EffectHandle,
-                                                              const int32 NewCount, const int32 PreviousCount) const
+void UFuAbilityTask_EffectStackListener::AbilitySystem_OnEffectStackChanged(const FActiveGameplayEffectHandle EffectHandle,
+                                                                            const int32 NewCount, const int32 PreviousCount) const
 {
 	if (ShouldBroadcastAbilityTaskDelegates())
 	{

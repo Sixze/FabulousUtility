@@ -49,5 +49,5 @@ protected:
 	virtual void OnDestroy(bool bInOwnerFinished) override;
 
 private:
-	void OnTimerEnded();
+	void TimerManager_OnTimerEnded();
 };

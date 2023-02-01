@@ -115,7 +115,7 @@ EBTNodeResult::Type UFuBTTask_ActivateAbility::ExecuteTask(UBehaviorTreeComponen
 		return Memory.bAnyAbilitySuccessfullyEnded ? EBTNodeResult::Succeeded : EBTNodeResult::Failed;
 	}
 
-	Memory.AbilitySystem->OnAbilityEnded.AddUObject(this, &ThisClass::OnAbilityEnded,
+	Memory.AbilitySystem->OnAbilityEnded.AddUObject(this, &ThisClass::AbilitySystem_OnAbilityEnded,
 	                                                TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
 
 	return EBTNodeResult::InProgress;
@@ -154,8 +154,8 @@ void UFuBTTask_ActivateAbility::OnTaskFinished(UBehaviorTreeComponent& BehaviorT
 	Super::OnTaskFinished(BehaviorTree, NodeMemory, Result);
 }
 
-void UFuBTTask_ActivateAbility::OnAbilityEnded(const FAbilityEndedData& EndedData,
-                                               const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
+void UFuBTTask_ActivateAbility::AbilitySystem_OnAbilityEnded(const FAbilityEndedData& EndedData,
+                                                             const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
 {
 	if (FU_ENSURE(BehaviorTree.IsValid()))
 	{

@@ -70,13 +70,13 @@ void UFuAbilityAsync_EffectTimeListener::Activate()
 		return;
 	}
 
-	AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(this, &ThisClass::OnActiveGameplayEffectAdded);
-	AbilitySystem->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &ThisClass::OnActiveGameplayEffectRemoved);
+	AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectAdded);
+	AbilitySystem->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectRemoved);
 
 	for (const auto& EffectTag : EffectTags1)
 	{
 		AbilitySystem->RegisterGameplayTagEvent(EffectTag, EGameplayTagEventType::NewOrRemoved)
-		             .AddUObject(this, &ThisClass::OnEffectTagChanged);
+		             .AddUObject(this, &ThisClass::AbilitySystem_OnEffectTagChanged);
 	}
 
 	for (auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
@@ -84,7 +84,7 @@ void UFuAbilityAsync_EffectTimeListener::Activate()
 		if (ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasAny(EffectTags1) ||
 		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(EffectTags1))
 		{
-			ActiveEffect.EventSet.OnTimeChanged.AddUObject(this, &ThisClass::OnEffectTimeChanged);
+			ActiveEffect.EventSet.OnTimeChanged.AddUObject(this, &ThisClass::ActiveEffect_OnTimeChanged);
 		}
 	}
 
@@ -165,41 +165,52 @@ void UFuAbilityAsync_EffectTimeListener::RefreshEffectTimeRemainingAndDurationFo
 	}
 }
 
-void UFuAbilityAsync_EffectTimeListener::OnActiveGameplayEffectAdded(UAbilitySystemComponent* AbilitySystem,
-                                                                     const FGameplayEffectSpec& EffectSpecification,
-                                                                     const FActiveGameplayEffectHandle EffectHandle) const
+// ReSharper disable once CppParameterMayBeConstPtrOrRef
+void UFuAbilityAsync_EffectTimeListener::AbilitySystem_OnActiveGameplayEffectAdded(UAbilitySystemComponent* AbilitySystem,
+                                                                                   const FGameplayEffectSpec& EffectSpecification,
+                                                                                   const FActiveGameplayEffectHandle EffectHandle) const
 {
 	auto bEffectTimeChangeEventRegistered{false};
 
 	for (const auto& EffectTag : EffectTags1)
 	{
-		if (EffectSpecification.Def->InheritableOwnedTagsContainer.CombinedTags.HasTag(EffectTag) ||
-		    EffectSpecification.DynamicGrantedTags.HasTag(EffectTag))
+		if (!EffectSpecification.Def->InheritableOwnedTagsContainer.CombinedTags.HasTag(EffectTag) &&
+		    !EffectSpecification.DynamicGrantedTags.HasTag(EffectTag))
 		{
-			if (!bEffectTimeChangeEventRegistered)
-			{
-				auto* ActiveEffect{AbilitySystem->GetActiveGameplayEffect(EffectHandle)};
-				if (ActiveEffect != nullptr)
-				{
-					const_cast<FActiveGameplayEffect*>(ActiveEffect)->EventSet.OnTimeChanged
-					                                                .AddUObject(this, &ThisClass::OnEffectTimeChanged);
-
-					bEffectTimeChangeEventRegistered = true;
-				}
-			}
-
-			RefreshEffectTimeRemainingAndDurationForTag(EffectTag);
+			continue;
 		}
+
+		if (!bEffectTimeChangeEventRegistered)
+		{
+			auto* ActiveEffect{AbilitySystem->GetActiveGameplayEffect(EffectHandle)};
+			if (ActiveEffect != nullptr)
+			{
+				const_cast<FActiveGameplayEffect*>(ActiveEffect)
+					->EventSet.OnTimeChanged.AddUObject(this, &ThisClass::ActiveEffect_OnTimeChanged);
+
+				bEffectTimeChangeEventRegistered = true;
+			}
+		}
+
+		RefreshEffectTimeRemainingAndDurationForTag(EffectTag);
 	}
 }
 
-void UFuAbilityAsync_EffectTimeListener::OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const
+void UFuAbilityAsync_EffectTimeListener::AbilitySystem_OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const
 {
 	const_cast<FActiveGameplayEffect&>(ActiveEffect).EventSet.OnTimeChanged.RemoveAll(this);
 }
 
-void UFuAbilityAsync_EffectTimeListener::OnEffectTimeChanged(const FActiveGameplayEffectHandle EffectHandle,
-                                                             const float NewStartTime, const float NewDuration) const
+void UFuAbilityAsync_EffectTimeListener::AbilitySystem_OnEffectTagChanged(const FGameplayTag EffectTag, const int32 NewCount) const
+{
+	if (ShouldBroadcastDelegates() && NewCount <= 0)
+	{
+		OnEffectEnded.Broadcast(EffectTag, 0.0f, 0.0f, false);
+	}
+}
+
+void UFuAbilityAsync_EffectTimeListener::ActiveEffect_OnTimeChanged(const FActiveGameplayEffectHandle EffectHandle,
+                                                                    const float NewStartTime, const float NewDuration) const
 {
 	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(GetAbilitySystemComponent())};
 
@@ -209,6 +220,7 @@ void UFuAbilityAsync_EffectTimeListener::OnEffectTimeChanged(const FActiveGamepl
 		return;
 	}
 
+	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 	FScopedActiveGameplayEffectLock EffectScopeLock{AbilitySystem->GetActiveEffects()};
 
 	for (const auto& EffectTag : EffectTags1)
@@ -218,13 +230,5 @@ void UFuAbilityAsync_EffectTimeListener::OnEffectTimeChanged(const FActiveGamepl
 		{
 			RefreshEffectTimeRemainingAndDurationForTag(EffectTag);
 		}
-	}
-}
-
-void UFuAbilityAsync_EffectTimeListener::OnEffectTagChanged(const FGameplayTag EffectTag, const int32 NewCount) const
-{
-	if (ShouldBroadcastDelegates() && NewCount <= 0)
-	{
-		OnEffectEnded.Broadcast(EffectTag, 0.0f, 0.0f, false);
 	}
 }

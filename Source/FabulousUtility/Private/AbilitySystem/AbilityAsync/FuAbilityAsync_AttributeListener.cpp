@@ -103,11 +103,11 @@ void UFuAbilityAsync_AttributeListener::EndAction()
 	Super::EndAction();
 }
 
-void UFuAbilityAsync_AttributeListener::AbilitySystem_OnAttributeChanged(const FOnAttributeChangeData& Data) const
+void UFuAbilityAsync_AttributeListener::AbilitySystem_OnAttributeChanged(const FOnAttributeChangeData& ChangeData) const
 {
-	if (ShouldBroadcastDelegates() && (Data.NewValue != Data.OldValue || !bSkipEqualValuesOnServer1 ||
+	if (ShouldBroadcastDelegates() && (ChangeData.NewValue != ChangeData.OldValue || !bSkipEqualValuesOnServer1 ||
 	                                   GetAbilitySystemComponent()->GetOwnerRole() <= ROLE_AutonomousProxy))
 	{
-		OnAttributeChanged.Broadcast(Data.Attribute, Data.NewValue, Data.OldValue);
+		OnAttributeChanged.Broadcast(ChangeData.Attribute, ChangeData.NewValue, ChangeData.OldValue);
 	}
 }

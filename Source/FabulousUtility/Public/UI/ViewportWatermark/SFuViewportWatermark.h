@@ -13,5 +13,7 @@ public:
 	SLATE_END_ARGS()
 
 public:
+	SFuViewportWatermark();
+
 	void Construct(const FArguments& Arguments);
 };

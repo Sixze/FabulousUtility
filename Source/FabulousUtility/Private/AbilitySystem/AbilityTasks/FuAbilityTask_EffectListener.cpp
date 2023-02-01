@@ -44,14 +44,15 @@ void UFuAbilityTask_EffectListener::Activate()
 		return;
 	}
 
-	AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(this, &ThisClass::OnActiveGameplayEffectAdded);
-	AbilitySystem->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &ThisClass::OnActiveGameplayEffectRemoved);
+	AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectAdded);
+	AbilitySystem->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectRemoved);
 
 	if (!ShouldBroadcastAbilityTaskDelegates())
 	{
 		return;
 	}
 
+	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 	FScopedActiveGameplayEffectLock EffectScopeLock{AbilitySystem->GetActiveEffects()};
 
 	for (const auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
@@ -75,9 +76,9 @@ void UFuAbilityTask_EffectListener::OnDestroy(const bool bInOwnerFinished)
 	Super::OnDestroy(bInOwnerFinished);
 }
 
-void UFuAbilityTask_EffectListener::OnActiveGameplayEffectAdded(UAbilitySystemComponent* AbilitySystem,
-                                                                const FGameplayEffectSpec& EffectSpecification,
-                                                                const FActiveGameplayEffectHandle EffectHandle) const
+void UFuAbilityTask_EffectListener::AbilitySystem_OnActiveGameplayEffectAdded(UAbilitySystemComponent* AbilitySystem,
+                                                                              const FGameplayEffectSpec& EffectSpecification,
+                                                                              const FActiveGameplayEffectHandle EffectHandle) const
 {
 	if (ShouldBroadcastAbilityTaskDelegates() && EffectSpecification.CapturedSourceTags.GetSpecTags().HasAny(EffectTags1))
 	{
@@ -85,7 +86,7 @@ void UFuAbilityTask_EffectListener::OnActiveGameplayEffectAdded(UAbilitySystemCo
 	}
 }
 
-void UFuAbilityTask_EffectListener::OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const
+void UFuAbilityTask_EffectListener::AbilitySystem_OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const
 {
 	if (ShouldBroadcastAbilityTaskDelegates() && ActiveEffect.Spec.CapturedSourceTags.GetSpecTags().HasAny(EffectTags1))
 	{

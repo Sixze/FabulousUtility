@@ -33,7 +33,7 @@ public:
 	virtual void Activate() override;
 
 private:
-	void OnCreateSessionCompleted(FName SessionName, bool bSuccess);
+	void Session_OnCreateSessionCompleted(FName SessionName, bool bSuccess);
 
-	void OnStartSessionCompleted(FName SessionName, bool bSuccess);
+	void Session_OnStartSessionCompleted(FName SessionName, bool bSuccess);
 };

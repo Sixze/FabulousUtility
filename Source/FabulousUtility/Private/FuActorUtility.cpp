@@ -14,7 +14,7 @@ bool UFuActorUtility::IsActorLoadedFromLevel(const AActor* Actor)
 
 bool UFuActorUtility::TryGetComponentByClass(AActor* Actor, const TSubclassOf<UActorComponent> ComponentClass, UActorComponent*& Component)
 {
-	Component = FU_ENSURE(IsValid(Actor)) ? Actor->FindComponentByClass(ComponentClass) : nullptr;
+	Component = IsValid(Actor) ? Actor->FindComponentByClass(ComponentClass) : nullptr;
 	return IsValid(Component);
 }
 
@@ -46,7 +46,7 @@ FVector UFuActorUtility::GetActorFeetOffset(const AActor* Actor)
 		return FVector{0.0f, 0.0f, MovementComponent->UpdatedComponent->Bounds.BoxExtent.Z};
 	}
 
-	if (FU_ENSURE(IsValid(Actor) && IsValid(Actor->GetRootComponent())))
+	if (FU_ENSURE(IsValid(Actor)) && IsValid(Actor->GetRootComponent()))
 	{
 		return FVector{0.0f, 0.0f, Actor->GetRootComponent()->Bounds.BoxExtent.Z};
 	}

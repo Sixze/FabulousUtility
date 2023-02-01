@@ -36,9 +36,8 @@ protected:
 	virtual void OnDestroy(bool bInOwnerFinished) override;
 
 private:
-	void OnActiveGameplayEffectAdded(UAbilitySystemComponent* AbilitySystem,
-	                                 const FGameplayEffectSpec& EffectSpecification,
-	                                 FActiveGameplayEffectHandle EffectHandle) const;
+	void AbilitySystem_OnActiveGameplayEffectAdded(UAbilitySystemComponent* AbilitySystem, const FGameplayEffectSpec& EffectSpecification,
+	                                               FActiveGameplayEffectHandle EffectHandle) const;
 
-	void OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const;
+	void AbilitySystem_OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const;
 };

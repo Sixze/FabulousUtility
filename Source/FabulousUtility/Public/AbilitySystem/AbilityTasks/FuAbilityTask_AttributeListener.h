@@ -33,5 +33,5 @@ protected:
 	virtual void OnDestroy(bool bInOwnerFinished) override;
 
 private:
-	void AbilitySystem_OnAttributeChanged(const FOnAttributeChangeData& Data) const;
+	void AbilitySystem_OnAttributeChanged(const FOnAttributeChangeData& ChangeData) const;
 };

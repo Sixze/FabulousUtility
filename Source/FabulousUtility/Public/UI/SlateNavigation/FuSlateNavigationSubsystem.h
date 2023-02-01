@@ -8,8 +8,8 @@ class FABULOUSUTILITY_API UFuSlateNavigationSubsystem : public UGameInstanceSubs
 {
 	GENERATED_BODY()
 
-#if !UE_SERVER
 public:
+#if !UE_SERVER
 	virtual bool ShouldCreateSubsystem(UObject* Outer) const override;
 
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;

@@ -69,7 +69,7 @@ private:
 	void UnBindActions();
 
 	UFUNCTION()
-	void OnPawnRestarted(APawn* Pawn);
+	void Pawn_OnRestarted(APawn* Pawn);
 
 	void Input_OnActionTriggered(const FInputActionInstance& ActionInstance);
 

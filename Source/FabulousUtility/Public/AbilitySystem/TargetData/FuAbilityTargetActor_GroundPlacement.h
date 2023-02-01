@@ -9,19 +9,19 @@ class FABULOUSUTILITY_API AFuAbilityTargetActor_GroundPlacement : public AGamepl
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Settings", Meta = (ClampMin = 0, ForceUnits = "cm"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings", Meta = (ClampMin = 0, ForceUnits = "cm"))
 	float SphereSweepRadius{84.0f};
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Settings")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
 	FVector2D SphereSweepHeight{-100.0f, 100.0f};
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Settings", Meta = (ClampMin = 0, ClampMax = 90, ForceUnits = "deg"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings", Meta = (ClampMin = 0, ClampMax = 90, ForceUnits = "deg"))
 	float MaxSlopeAngle{20.0f};
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Settings", Meta = (ForceUnits = "cm"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings", Meta = (ForceUnits = "cm"))
 	float TraceHorizontalOffset{200.0f};
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Settings")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
 	FCollisionProfileName TraceProfile{UCollisionProfile::Pawn_ProfileName};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)

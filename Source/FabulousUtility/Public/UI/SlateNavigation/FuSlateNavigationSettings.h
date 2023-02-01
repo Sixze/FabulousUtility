@@ -18,7 +18,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Key Navigation", Config)
 	bool bAllowKeyNavigation{true};
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Key Navigation", Config, Meta = (EditCondition = "bAllowKeyNavigation"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Key Navigation", Config,
+		Meta = (ForceInlineRow, EditCondition = "bAllowKeyNavigation"))
 	TMap<FKey, EUINavigation> KeyNavigationMappings;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Analog Navigation", Config)

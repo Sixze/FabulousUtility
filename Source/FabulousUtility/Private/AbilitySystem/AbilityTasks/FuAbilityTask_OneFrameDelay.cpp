@@ -11,7 +11,7 @@ void UFuAbilityTask_OneFrameDelay::Activate()
 {
 	Super::Activate();
 
-	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ThisClass::OnTimerEnded);
+	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ThisClass::TimerManager_OnTimerEnded);
 }
 
 void UFuAbilityTask_OneFrameDelay::OnDestroy(const bool bInOwnerFinished)
@@ -21,7 +21,7 @@ void UFuAbilityTask_OneFrameDelay::OnDestroy(const bool bInOwnerFinished)
 	Super::OnDestroy(bInOwnerFinished);
 }
 
-void UFuAbilityTask_OneFrameDelay::OnTimerEnded()
+void UFuAbilityTask_OneFrameDelay::TimerManager_OnTimerEnded()
 {
 	if (ShouldBroadcastAbilityTaskDelegates())
 	{
