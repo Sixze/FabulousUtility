@@ -12,27 +12,27 @@ class FABULOUSUTILITY_API UFuAbilityUtility : public UBlueprintFunctionLibrary
 
 public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility")
-	static const FGameplayTagContainer& GetAbilityCooldownTags(TSubclassOf<UGameplayAbility> AbilityClass);
-
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility")
-	static TSubclassOf<UGameplayAbility> GetAbilityClass(const FGameplayAbilitySpec& AbilitySpecification);
+	static const FGameplayTagContainer& GetCooldownTags(TSubclassOf<UGameplayAbility> AbilityClass);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility", Meta = (DefaultToSelf = "Ability"))
-	static bool IsAbilityActive(const UGameplayAbility* Ability);
+	static bool IsActive(const UGameplayAbility* Ability);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility",
 		Meta = (DefaultToSelf = "Ability", ExpandBoolAsExecs = "ReturnValue"))
-	static bool SwitchIsAbilityActive(const UGameplayAbility* Ability);
+	static bool SwitchIsActive(const UGameplayAbility* Ability);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Specification Utility", Meta = (DefaultToSelf = "Ability"))
-	static uint8 GetAbilityInputId(const UGameplayAbility* Ability);
+	static FGameplayAbilitySpecHandle GetAbilityHandle(const UGameplayAbility* Ability);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Specification Utility", Meta = (DefaultToSelf = "Ability"))
+	static uint8 GetInputId(const UGameplayAbility* Ability);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility", Meta = (DefaultToSelf = "Ability"))
-	static bool IsAbilityInputPressed(const UGameplayAbility* Ability);
+	static bool IsInputPressed(const UGameplayAbility* Ability);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility",
 		Meta = (DefaultToSelf = "Ability", ExpandBoolAsExecs = "ReturnValue"))
-	static bool SwitchIsAbilityInputPressed(const UGameplayAbility* Ability);
+	static bool SwitchIsInputPressed(const UGameplayAbility* Ability);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility", Meta = (DefaultToSelf = "Ability"))
 	static FActiveGameplayEffectHandle GetEffectHandleFromGrantedAbility(const UGameplayAbility* Ability);
@@ -40,6 +40,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility",
 		Meta = (DefaultToSelf = "Ability", ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryCommitAbility(UGameplayAbility* Ability, bool bCancelOnFailure = true);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility")
+	static const TArray<FGameplayAbilitySpec>& GetActivatableAbilities(const UAbilitySystemComponent* AbilitySystem);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility")
 	static const UGameplayAbility* GetPrimaryAbilityInstance(UAbilitySystemComponent* AbilitySystem,
@@ -73,9 +76,8 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
 	static bool SwitchCanActivateAbilityByHandle(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility")
-	static bool TryBatchRpcActivateAbility(UAbilitySystemComponent* AbilitySystem,
-	                                       FGameplayAbilitySpecHandle AbilityHandle,
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
+	static bool TryBatchRpcActivateAbility(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle,
 	                                       bool bEndAbilityImmediately);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility")
@@ -94,7 +96,7 @@ public:
 	                                       FGameplayAbilitySpecHandle IgnoreAbilityHandle);
 };
 
-inline const FGameplayTagContainer& UFuAbilityUtility::GetAbilityCooldownTags(const TSubclassOf<UGameplayAbility> AbilityClass)
+inline const FGameplayTagContainer& UFuAbilityUtility::GetCooldownTags(const TSubclassOf<UGameplayAbility> AbilityClass)
 {
 	const auto* Tags{FU_ENSURE(IsValid(AbilityClass)) ? AbilityClass.GetDefaultObject()->GetCooldownTags() : nullptr};
 
@@ -104,38 +106,38 @@ inline const FGameplayTagContainer& UFuAbilityUtility::GetAbilityCooldownTags(co
 	return Tags != nullptr ? *Tags : None;
 }
 
-inline TSubclassOf<UGameplayAbility> UFuAbilityUtility::GetAbilityClass(const FGameplayAbilitySpec& AbilitySpecification)
-{
-	return AbilitySpecification.Ability->GetClass();
-}
-
-inline bool UFuAbilityUtility::IsAbilityActive(const UGameplayAbility* Ability)
+inline bool UFuAbilityUtility::IsActive(const UGameplayAbility* Ability)
 {
 	return FU_ENSURE(IsValid(Ability)) && Ability->IsActive();
 }
 
-inline bool UFuAbilityUtility::SwitchIsAbilityActive(const UGameplayAbility* Ability)
+inline bool UFuAbilityUtility::SwitchIsActive(const UGameplayAbility* Ability)
 {
-	return IsAbilityActive(Ability);
+	return IsActive(Ability);
 }
 
-inline uint8 UFuAbilityUtility::GetAbilityInputId(const UGameplayAbility* Ability)
+inline FGameplayAbilitySpecHandle UFuAbilityUtility::GetAbilityHandle(const UGameplayAbility* Ability)
+{
+	return FU_ENSURE(IsValid(Ability)) ? Ability->GetCurrentAbilitySpecHandle() : FGameplayAbilitySpecHandle{};
+}
+
+inline uint8 UFuAbilityUtility::GetInputId(const UGameplayAbility* Ability)
 {
 	const auto* AbilitySpecification{IsValid(Ability) ? Ability->GetCurrentAbilitySpec() : nullptr};
 
 	return FU_ENSURE(AbilitySpecification != nullptr) ? static_cast<uint8>(AbilitySpecification->InputID) : -1;
 }
 
-inline bool UFuAbilityUtility::IsAbilityInputPressed(const UGameplayAbility* Ability)
+inline bool UFuAbilityUtility::IsInputPressed(const UGameplayAbility* Ability)
 {
 	const auto* AbilitySpecification{IsValid(Ability) ? Ability->GetCurrentAbilitySpec() : nullptr};
 
 	return FU_ENSURE(AbilitySpecification != nullptr) && AbilitySpecification->InputPressed;
 }
 
-inline bool UFuAbilityUtility::SwitchIsAbilityInputPressed(const UGameplayAbility* Ability)
+inline bool UFuAbilityUtility::SwitchIsInputPressed(const UGameplayAbility* Ability)
 {
-	return IsAbilityInputPressed(Ability);
+	return IsInputPressed(Ability);
 }
 
 inline FActiveGameplayEffectHandle UFuAbilityUtility::GetEffectHandleFromGrantedAbility(const UGameplayAbility* Ability)
@@ -143,6 +145,14 @@ inline FActiveGameplayEffectHandle UFuAbilityUtility::GetEffectHandleFromGranted
 	const auto* AbilitySpecification{IsValid(Ability) ? Ability->GetCurrentAbilitySpec() : nullptr};
 
 	return FU_ENSURE(AbilitySpecification != nullptr) ? AbilitySpecification->GameplayEffectHandle : FActiveGameplayEffectHandle{};
+}
+
+inline const TArray<FGameplayAbilitySpec>& UFuAbilityUtility::GetActivatableAbilities(const UAbilitySystemComponent* AbilitySystem)
+{
+	static const TArray<FGameplayAbilitySpec> None;
+	check(None.IsEmpty())
+
+	return FU_ENSURE(IsValid(AbilitySystem)) ? AbilitySystem->GetActivatableAbilities() : None;
 }
 
 inline const UGameplayAbility* UFuAbilityUtility::GetPrimaryAbilityInstance(UAbilitySystemComponent* AbilitySystem,

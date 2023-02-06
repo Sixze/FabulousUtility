@@ -12,7 +12,7 @@ bool UFuActorUtility::IsActorLoadedFromLevel(const AActor* Actor)
 	return FU_ENSURE(IsValid(Actor)) && Actor->bNetStartup;
 }
 
-bool UFuActorUtility::TryGetComponentByClass(AActor* Actor, const TSubclassOf<UActorComponent> ComponentClass, UActorComponent*& Component)
+bool UFuActorUtility::TryFindComponentByClass(AActor* Actor, const TSubclassOf<UActorComponent> ComponentClass, UActorComponent*& Component)
 {
 	Component = IsValid(Actor) ? Actor->FindComponentByClass(ComponentClass) : nullptr;
 	return IsValid(Component);
@@ -33,7 +33,7 @@ FVector UFuActorUtility::GetActorFeetLocation(const AActor* Actor)
 		return Actor->GetRootComponent()->GetComponentLocation() - FVector{0.0f, 0.0f, Actor->GetRootComponent()->Bounds.BoxExtent.Z};
 	}
 
-	return FNavigationSystem::InvalidLocation;
+	return FVector::ZeroVector;
 }
 
 FVector UFuActorUtility::GetActorFeetOffset(const AActor* Actor)

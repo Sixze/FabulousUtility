@@ -13,10 +13,10 @@ class FABULOUSUTILITY_API UFuPawnUtility : public UBlueprintFunctionLibrary
 
 public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Pawn Utility", Meta = (DefaultToSelf = "Pawn"))
-	static APlayerController* GetPlayerController(const APawn* Pawn);
+	static APlayerController* GetPlayerControllerFromPawn(const APawn* Pawn);
 };
 
-inline APlayerController* UFuPawnUtility::GetPlayerController(const APawn* Pawn)
+inline APlayerController* UFuPawnUtility::GetPlayerControllerFromPawn(const APawn* Pawn)
 {
 	return FU_ENSURE(IsValid(Pawn)) ? Cast<APlayerController>(Pawn->Controller) : nullptr;
 }

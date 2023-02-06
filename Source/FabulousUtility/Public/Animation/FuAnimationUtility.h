@@ -12,5 +12,5 @@ class FABULOUSUTILITY_API UFuAnimationUtility : public UBlueprintFunctionLibrary
 
 public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Animation Utility")
-	static float GetSequenceScaledPlayLength(const UAnimSequenceBase* Sequence);
+	static float GetScaledPlayLength(const UAnimSequenceBase* Sequence);
 };

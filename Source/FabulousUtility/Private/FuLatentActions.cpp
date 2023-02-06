@@ -22,7 +22,7 @@ protected:
 
 public:
 	FFuDelayLatentAction(const FLatentActionInfo& LatentInfo, const float Duration, const int32 LoopsCount,
-	                     bool bNewSkipFirstDelay, int32& LoopIndex, EFuDelayOutputExecs& Output);
+	                     bool bSkipFirstDelay, int32& LoopIndex, EFuDelayOutputExecs& Output);
 
 	virtual void UpdateOperation(FLatentResponse& Response) override;
 
@@ -31,13 +31,13 @@ public:
 #endif
 
 public:
-	void Retrigger(float NewDuration, int32 NewLoopsCount, bool bNewSkipFirstDelay);
+	void Retrigger(float NewDuration, int32 NewLoopsCount, bool bSkipFirstDelay);
 
 	void Stop();
 };
 
 FFuDelayLatentAction::FFuDelayLatentAction(const FLatentActionInfo& LatentInfo, const float Duration, const int32 LoopsCount,
-                                           const bool bNewSkipFirstDelay, int32& LoopIndex, EFuDelayOutputExecs& Output) : ExecutionFunction
+                                           const bool bSkipFirstDelay, int32& LoopIndex, EFuDelayOutputExecs& Output) : ExecutionFunction
 	{LatentInfo.ExecutionFunction},
 	Linkage{LatentInfo.Linkage},
 	CallbackTarget{LatentInfo.CallbackTarget},
@@ -48,7 +48,7 @@ FFuDelayLatentAction::FFuDelayLatentAction(const FLatentActionInfo& LatentInfo, 
 	LoopIndex{LoopIndex},
 	Output{Output}
 {
-	this->TimeRemaining = bNewSkipFirstDelay ? 0.0f : this->Duration;
+	this->TimeRemaining = bSkipFirstDelay ? 0.0f : this->Duration;
 	this->LoopIndex = -1;
 	this->Output = EFuDelayOutputExecs::OnLoop;
 }
@@ -102,12 +102,12 @@ FString FFuDelayLatentAction::GetDescription() const
 }
 #endif
 
-void FFuDelayLatentAction::Retrigger(const float NewDuration, const int32 NewLoopsCount, const bool bNewSkipFirstDelay)
+void FFuDelayLatentAction::Retrigger(const float NewDuration, const int32 NewLoopsCount, const bool bSkipFirstDelay)
 {
 	Duration = FMath::Max(0.0f, NewDuration);
 	LoopsCount = FMath::Max(-1, NewLoopsCount);
 
-	TimeRemaining = bNewSkipFirstDelay ? 0.0f : Duration;
+	TimeRemaining = bSkipFirstDelay ? 0.0f : Duration;
 	LoopIndex = -1;
 
 	Output = EFuDelayOutputExecs::OnLoop;

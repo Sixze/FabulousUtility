@@ -25,13 +25,13 @@ protected:
 	FCollisionProfileName TraceProfile{UCollisionProfile::Pawn_ProfileName};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	FVector LastGroundPlaceLocation;
+	FVector GroundPlaceLocation;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	FRotator LastGroundPlaceRotation;
+	FRotator GroundPlaceRotation;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	bool bLastGroundPlaceValid;
+	bool bGroundPlaceValid;
 
 public:
 	AFuAbilityTargetActor_GroundPlacement();
@@ -50,5 +50,5 @@ protected:
 	bool PerformGroundPlacement(FVector& ResultLocation, FRotator& ResultRotation) const;
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Fu Ground Placement Ability Target Actor")
-	void OnLastGroundPlaceValidChanged(bool bNewLastGroundPlaceValid);
+	void OnGroundPlaceValidChanged(bool bNewLastGroundPlaceValid);
 };

@@ -5,7 +5,7 @@
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 #include "AbilitySystem/Utility/FuEffectUtility.h"
 
-UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByAbilityTagActor(
+UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByAbilityTagOnActor(
 	const AActor* Actor, const FGameplayTag AbilityTag, const bool bWaitForTimeFromServer)
 {
 	return FuListenForAbilityCooldownByAbilityTag(
@@ -13,7 +13,7 @@ UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener
 		AbilityTag, bWaitForTimeFromServer);
 }
 
-UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByAbilityTagsActor(
+UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByAbilityTagsOnActor(
 	const AActor* Actor, const FGameplayTagContainer AbilityTags, const bool bWaitForTimeFromServer)
 {
 	return FuListenForAbilityCooldownByAbilityTags(
@@ -21,7 +21,7 @@ UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener
 		AbilityTags, bWaitForTimeFromServer);
 }
 
-UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByInputIdActor(
+UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByInputIdOnActor(
 	const AActor* Actor, const int32 InputId, const bool bWaitForTimeFromServer)
 {
 	return FuListenForAbilityCooldownByInputId(
@@ -116,7 +116,7 @@ void UFuAbilityAsync_AbilityCooldownListener::Activate()
 	for (const auto& EffectTag : EffectTags.GetExplicitGameplayTags())
 	{
 		AbilitySystem->RegisterGameplayTagEvent(EffectTag, EGameplayTagEventType::NewOrRemoved)
-		             .AddUObject(this, &ThisClass::AbilitySystem_OnEffectTagChanged);
+		             .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged);
 	}
 
 	for (auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
@@ -189,7 +189,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(
 			// A cooldown tag has been added.
 
 			AbilitySystem->RegisterGameplayTagEvent(CooldownTag, EGameplayTagEventType::NewOrRemoved)
-			             .AddUObject(this, &ThisClass::AbilitySystem_OnEffectTagChanged);
+			             .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged);
 
 			RefreshEffectTimeRemainingAndDurationForTag(CooldownTag);
 		}
@@ -198,7 +198,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(
 			// A cooldown tag has been removed.
 
 			AbilitySystem->RegisterGameplayTagEvent(CooldownTag, EGameplayTagEventType::NewOrRemoved)
-			             .AddUObject(this, &ThisClass::AbilitySystem_OnEffectTagChanged);
+			             .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged);
 
 			if (ShouldBroadcastDelegates())
 			{
@@ -316,16 +316,16 @@ void UFuAbilityAsync_AbilityCooldownListener::AbilitySystem_OnActiveGameplayEffe
 	const_cast<FActiveGameplayEffect&>(ActiveEffect).EventSet.OnTimeChanged.RemoveAll(this);
 }
 
-void UFuAbilityAsync_AbilityCooldownListener::AbilitySystem_OnEffectTagChanged(const FGameplayTag EffectTag, const int32 NewCount) const
+void UFuAbilityAsync_AbilityCooldownListener::AbilitySystem_OnTagChanged(const FGameplayTag Tag, const int32 Count) const
 {
-	if (ShouldBroadcastDelegates() && NewCount <= 0)
+	if (ShouldBroadcastDelegates() && Count <= 0)
 	{
-		OnEffectEnded.Broadcast(EffectTag, 0.0f, 0.0f, false);
+		OnEffectEnded.Broadcast(Tag, 0.0f, 0.0f, false);
 	}
 }
 
 void UFuAbilityAsync_AbilityCooldownListener::ActiveEffect_OnTimeChanged(const FActiveGameplayEffectHandle EffectHandle,
-                                                                         const float NewStartTime, const float NewDuration) const
+                                                                         const float StartTime, const float Duration) const
 {
 	auto* ActiveEffect{GetAbilitySystemComponent()->GetActiveGameplayEffect(EffectHandle)};
 	if (ActiveEffect == nullptr)

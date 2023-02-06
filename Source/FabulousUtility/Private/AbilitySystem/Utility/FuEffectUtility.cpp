@@ -3,7 +3,7 @@
 #include "FuMacros.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 
-const FGameplayTagContainer& UFuEffectUtility::GetEffectOwnedTags(const TSubclassOf<UGameplayEffect> EffectClass)
+const FGameplayTagContainer& UFuEffectUtility::GetOwnedTags(const TSubclassOf<UGameplayEffect> EffectClass)
 {
 	if (FU_ENSURE(IsValid(EffectClass)))
 	{
@@ -177,8 +177,9 @@ int32 UFuEffectUtility::GetEffectsCountWithAnyTags(const UFuAbilitySystemCompone
 	return Count;
 }
 
-const FActiveGameplayEffect* UFuEffectUtility::GetActiveEffectTimeRemainingAndDurationByTag(
-	const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag& EffectTag, float& TimeRemaining, float& Duration)
+const FActiveGameplayEffect* UFuEffectUtility::GetActiveEffectTimeRemainingAndDurationByTag(const UFuAbilitySystemComponent* AbilitySystem,
+                                                                                            const FGameplayTag& EffectTag,
+                                                                                            float& TimeRemaining, float& Duration)
 {
 	TimeRemaining = -1.0f;
 	Duration = -1.0f;
@@ -239,186 +240,4 @@ bool UFuEffectUtility::TryGetEffectTimeRemainingAndDurationByTag(const UFuAbilit
 	}
 
 	return GetActiveEffectTimeRemainingAndDurationByTag(AbilitySystem, EffectTag, TimeRemaining, Duration) != nullptr;
-}
-
-bool UFuEffectUtility::IsEffectActive(const FActiveGameplayEffectHandle EffectHandle)
-{
-	const auto* AbilitySystem{EffectHandle.GetOwningAbilitySystemComponent()};
-
-	return IsValid(AbilitySystem) && AbilitySystem->GetActiveGameplayEffect(EffectHandle) != nullptr;
-}
-
-bool UFuEffectUtility::SwitchIsEffectActive(const FActiveGameplayEffectHandle EffectHandle)
-{
-	return IsEffectActive(EffectHandle);
-}
-
-void UFuEffectUtility::RemoveActiveEffect(FActiveGameplayEffectHandle EffectHandle, const int32 StacksToRemove)
-{
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(EffectHandle.GetOwningAbilitySystemComponent())};
-	if (IsValid(AbilitySystem))
-	{
-		AbilitySystem->RemoveActiveGameplayEffect(EffectHandle, StacksToRemove);
-	}
-}
-
-void UFuEffectUtility::RemoveActiveEffects(const TArray<FActiveGameplayEffectHandle>& EffectHandles, const int32 StacksToRemove)
-{
-	for (auto EffectHandle : EffectHandles)
-	{
-		auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(EffectHandle.GetOwningAbilitySystemComponent())};
-		if (IsValid(AbilitySystem))
-		{
-			AbilitySystem->RemoveActiveGameplayEffect(EffectHandle, StacksToRemove);
-		}
-	}
-}
-
-void UFuEffectUtility::RecalculateEffectModifiers(FActiveGameplayEffectHandle EffectHandle)
-{
-	// https://github.com/tranek/GASDocumentation#concepts-ge-definition
-
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(EffectHandle.GetOwningAbilitySystemComponent())};
-	if (!FU_ENSURE(IsValid(AbilitySystem)))
-	{
-		return;
-	}
-
-	auto& ActiveEffects{AbilitySystem->GetActiveEffects()};
-
-	const auto* ActiveEffect{ActiveEffects.GetActiveGameplayEffect(EffectHandle)};
-	if (ActiveEffect != nullptr)
-	{
-		ActiveEffects.SetActiveGameplayEffectLevel(EffectHandle, ActiveEffect->Spec.GetLevel());
-	}
-}
-
-bool UFuEffectUtility::TryGetEffectTimeRemainingAndDurationByHandle(FActiveGameplayEffectHandle EffectHandle,
-                                                                    float& TimeRemaining, float& Duration)
-{
-	TimeRemaining = -1.0f;
-	Duration = -1.0f;
-
-	const auto* AbilitySystem{EffectHandle.GetOwningAbilitySystemComponent()};
-	if (!IsValid(AbilitySystem))
-	{
-		return false;
-	}
-
-	const auto* ActiveEffect{AbilitySystem->GetActiveGameplayEffect(EffectHandle)};
-	if (ActiveEffect == nullptr)
-	{
-		return false;
-	}
-
-	Duration = ActiveEffect->GetDuration();
-
-	TimeRemaining = Duration < 0.0f
-		                ? FGameplayEffectConstants::INFINITE_DURATION
-		                : Duration + ActiveEffect->StartWorldTime - AbilitySystem->GetWorld()->GetTimeSeconds();
-	return true;
-}
-
-void UFuEffectUtility::SetEffectDuration(FActiveGameplayEffectHandle EffectHandle, float Duration)
-{
-	// https://github.com/tranek/GASDocumentation#concepts-ge-duration
-
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(EffectHandle.GetOwningAbilitySystemComponent())};
-	if (!FU_ENSURE(IsValid(AbilitySystem)))
-	{
-		return;
-	}
-
-	auto& ActiveEffects{AbilitySystem->GetActiveEffects()};
-	auto* ActiveEffect{ActiveEffects.GetActiveGameplayEffect(EffectHandle)};
-
-	if (ActiveEffect == nullptr ||
-	    !FU_ENSURE_MESSAGE(ActiveEffect->GetDuration() > 0.0f, TEXT("Changing duration of instant or infinite effects is not allowed!")))
-	{
-		return;
-	}
-
-	if (!FU_ENSURE(Duration > 0.0f))
-	{
-		Duration = 0.001f;
-	}
-
-	ActiveEffect->Spec.Duration = Duration;
-	ActiveEffect->StartServerWorldTime = ActiveEffects.GetServerWorldTime();
-	ActiveEffect->CachedStartServerWorldTime = ActiveEffect->StartServerWorldTime;
-	ActiveEffect->StartWorldTime = ActiveEffects.GetWorldTime();
-
-	ActiveEffects.CheckDuration(EffectHandle);
-
-	ActiveEffect->EventSet.OnTimeChanged.Broadcast(ActiveEffect->Handle, ActiveEffect->StartWorldTime, ActiveEffect->Spec.Duration);
-
-	AbilitySystem->OnGameplayEffectDurationChange(*ActiveEffect);
-
-	ActiveEffects.MarkItemDirty(*ActiveEffect);
-}
-
-void UFuEffectUtility::SetEffectTimeRemaining(FActiveGameplayEffectHandle EffectHandle, float TimeRemaining)
-{
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(EffectHandle.GetOwningAbilitySystemComponent())};
-	if (!FU_ENSURE(IsValid(AbilitySystem)))
-	{
-		return;
-	}
-
-	auto& ActiveEffects{AbilitySystem->GetActiveEffects()};
-	auto* ActiveEffect{ActiveEffects.GetActiveGameplayEffect(EffectHandle)};
-
-	if (ActiveEffect == nullptr ||
-	    !FU_ENSURE_MESSAGE(ActiveEffect->GetDuration() > 0.0f, TEXT("Changing duration of instant or infinite effects is not allowed!")))
-	{
-		return;
-	}
-
-	if (!FU_ENSURE(TimeRemaining > 0.0f))
-	{
-		TimeRemaining = 0.001f;
-	}
-
-	const auto Time{ActiveEffect->GetDuration() - TimeRemaining};
-	if (Time >= 0.0f)
-	{
-		ActiveEffect->StartServerWorldTime = ActiveEffects.GetServerWorldTime() - Time;
-		ActiveEffect->CachedStartServerWorldTime = ActiveEffect->StartServerWorldTime;
-		ActiveEffect->StartWorldTime = ActiveEffects.GetWorldTime() - Time;
-	}
-	else
-	{
-		// If the time remaining is greater than the duration, then adjust the duration to match the time remaining.
-
-		ActiveEffect->Spec.Duration = TimeRemaining;
-		ActiveEffect->StartServerWorldTime = ActiveEffects.GetServerWorldTime() - TimeRemaining;
-		ActiveEffect->CachedStartServerWorldTime = ActiveEffect->StartServerWorldTime;
-		ActiveEffect->StartWorldTime = ActiveEffects.GetWorldTime() - TimeRemaining;
-	}
-
-	ActiveEffects.CheckDuration(EffectHandle);
-
-	ActiveEffect->EventSet.OnTimeChanged.Broadcast(ActiveEffect->Handle, ActiveEffect->StartWorldTime, ActiveEffect->GetDuration());
-
-	AbilitySystem->OnGameplayEffectDurationChange(*ActiveEffect);
-
-	ActiveEffects.MarkItemDirty(*ActiveEffect);
-}
-
-void UFuEffectUtility::IncreaseEffectTimeRemaining(FActiveGameplayEffectHandle EffectHandle, const float AdditionalTimeRemaining)
-{
-	const auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(EffectHandle.GetOwningAbilitySystemComponent())};
-	if (!FU_ENSURE(IsValid(AbilitySystem)))
-	{
-		return;
-	}
-
-	auto& ActiveEffects{AbilitySystem->GetActiveEffects()};
-	auto* ActiveEffect{ActiveEffects.GetActiveGameplayEffect(EffectHandle)};
-
-	if (ActiveEffect != nullptr)
-	{
-		SetEffectTimeRemaining(EffectHandle,
-		                       ActiveEffect->GetTimeRemaining(ActiveEffects.GetWorldTime()) + AdditionalTimeRemaining);
-	}
 }

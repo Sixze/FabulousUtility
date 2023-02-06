@@ -4,7 +4,7 @@
 #include "GameFramework/PlayerController.h"
 #include "Net/OnlineEngineInterface.h"
 
-bool UFuSessionUtility::TryTravelToGameSession(APlayerController* Player)
+bool UFuSessionUtility::TravelToGameSession(APlayerController* Player)
 {
 	if (!FU_ENSURE(IsValid(Player)))
 	{

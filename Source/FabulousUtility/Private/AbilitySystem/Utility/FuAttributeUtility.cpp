@@ -18,7 +18,7 @@ bool UFuAttributeUtility::TryGetAttributeValue(const UAbilitySystemComponent* Ab
 	return bFound;
 }
 
-bool UFuAttributeUtility::TryGetAttributeValueAbility(const UGameplayAbility* Ability, const FGameplayAttribute& Attribute, float& Value)
+bool UFuAttributeUtility::TryGetAttributeValueOnAbility(const UGameplayAbility* Ability, const FGameplayAttribute& Attribute, float& Value)
 {
 	if (!IsValid(Ability))
 	{
@@ -46,8 +46,8 @@ bool UFuAttributeUtility::TryGetAttributePercent(const UAbilitySystemComponent* 
 	return true;
 }
 
-bool UFuAttributeUtility::TryGetAttributePercentAbility(const UGameplayAbility* Ability, const FGameplayAttribute& Attribute,
-                                                        const FGameplayAttribute& MaxAttribute, float& Percent)
+bool UFuAttributeUtility::TryGetAttributePercentOnAbility(const UGameplayAbility* Ability, const FGameplayAttribute& Attribute,
+                                                          const FGameplayAttribute& MaxAttribute, float& Percent)
 {
 	if (!IsValid(Ability))
 	{

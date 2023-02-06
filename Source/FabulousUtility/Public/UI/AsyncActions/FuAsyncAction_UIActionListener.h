@@ -67,12 +67,12 @@ public:
 	FFuUIActionListenerDelegate OnActionHeld;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Async Actions",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu UI Async Actions",
 		DisplayName = "Fu Listen For UI Action", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "Widget"))
 	static UFuAsyncAction_UIActionListener* FuListenForUIAction(UCommonUserWidget* Widget, FUIActionTag ActionTag,
 	                                                            FFuUIActionBindingArguments ActionArguments);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Async Actions",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu UI Async Actions",
 		DisplayName = "Fu Listen For UI Actions", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "Widget"))
 	static UFuAsyncAction_UIActionListener* FuListenForUIActions(UCommonUserWidget* Widget, FGameplayTagContainer ActionTags,
 	                                                             FFuUIActionBindingArguments ActionArguments);

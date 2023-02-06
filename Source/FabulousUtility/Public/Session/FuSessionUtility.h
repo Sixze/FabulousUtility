@@ -10,14 +10,14 @@ class FABULOUSUTILITY_API UFuSessionUtility : public UBlueprintFunctionLibrary
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session Utility", Meta = (DefaultToSelf = "Player"))
-	static bool TryTravelToGameSession(APlayerController* Player);
+	static bool TravelToGameSession(APlayerController* Player);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session Utility",
 		Meta = (DefaultToSelf = "Player", ExpandBoolAsExecs = "ReturnValue"))
-	static bool SwitchTryTravelToGameSession(APlayerController* Player);
+	static bool TryTravelToGameSession(APlayerController* Player);
 };
 
-inline bool UFuSessionUtility::SwitchTryTravelToGameSession(APlayerController* Player)
+inline bool UFuSessionUtility::TryTravelToGameSession(APlayerController* Player)
 {
-	return TryTravelToGameSession(Player);
+	return TravelToGameSession(Player);
 }

@@ -24,7 +24,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Object Utility",
 		Meta = (DefaultToSelf = "Object", ExpandBoolAsExecs = "ReturnValue"))
-	static bool SwitchImplementsInterface(const UObject* Object, TSubclassOf<UInterface> InterfaceClass);
+	static bool SwitchDoesImplementInterface(const UObject* Object, TSubclassOf<UInterface> InterfaceClass);
 };
 
 inline UObject* UFuObjectUtility::GetDefaultObject(const TSubclassOf<UObject> Class)
@@ -42,7 +42,7 @@ inline UObject* UFuObjectUtility::DuplicateObject(const UObject* Object, UObject
 	return ::DuplicateObject(Object, Outer, Name);
 }
 
-inline bool UFuObjectUtility::SwitchImplementsInterface(const UObject* Object, const TSubclassOf<UInterface> InterfaceClass)
+inline bool UFuObjectUtility::SwitchDoesImplementInterface(const UObject* Object, const TSubclassOf<UInterface> InterfaceClass)
 {
 	return FU_ENSURE(IsValid(Object)) && Object->GetClass()->ImplementsInterface(InterfaceClass);
 }

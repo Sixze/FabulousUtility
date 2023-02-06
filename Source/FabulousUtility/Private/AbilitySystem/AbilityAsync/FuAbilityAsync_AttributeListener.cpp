@@ -5,14 +5,14 @@
 #include "FuMacros.h"
 #include "AbilitySystem/Utility/FuAttributeUtility.h"
 
-UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::FuListenForAttributeChangeActor(
+UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::FuListenForAttributeChangeOnActor(
 	const AActor* Actor, const FGameplayAttribute Attribute, const bool bSkipEqualValuesOnServer)
 {
 	return FuListenForAttributeChange(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor),
 	                                  Attribute, bSkipEqualValuesOnServer);
 }
 
-UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::FuListenForAttributesChangeActor(
+UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::FuListenForAttributesChangeOnActor(
 	const AActor* Actor, const TArray<FGameplayAttribute>& Attributes, const bool bSkipEqualValuesOnServer)
 {
 	return FuListenForAttributesChange(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor),

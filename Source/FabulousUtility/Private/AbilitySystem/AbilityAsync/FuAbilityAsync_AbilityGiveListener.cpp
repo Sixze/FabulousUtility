@@ -4,14 +4,14 @@
 #include "FuMacros.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 
-UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuListenForAbilityGivenActor(
+UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuListenForAbilityGivenOnActor(
 	const AActor* Actor, const FGameplayTag AbilityTag)
 {
 	return FuListenForAbilityGiven(
 		Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor)), AbilityTag);
 }
 
-UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuListenForAbilitiesGivenActor(
+UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuListenForAbilitiesGivenOnActor(
 	const AActor* Actor, const FGameplayTagContainer AbilityTags)
 {
 	return FuListenForAbilitiesGiven(

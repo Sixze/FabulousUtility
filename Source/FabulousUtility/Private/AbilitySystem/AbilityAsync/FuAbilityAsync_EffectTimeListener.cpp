@@ -5,7 +5,7 @@
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 #include "AbilitySystem/Utility/FuEffectUtility.h"
 
-UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListenForEffectTimeChangeActor(
+UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListenForEffectTimeChangeOnActor(
 	const AActor* Actor, const FGameplayTag EffectTag, const bool bWaitForTimeFromServer)
 {
 	return FuListenForEffectTimeChange(
@@ -13,7 +13,7 @@ UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListen
 		EffectTag, bWaitForTimeFromServer);
 }
 
-UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListenForEffectsTimeChangeActor(
+UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListenForEffectsTimeChangeOnActor(
 	const AActor* Actor, const FGameplayTagContainer EffectTags, const bool bWaitForTimeFromServer)
 {
 	return FuListenForEffectsTimeChange(
@@ -76,7 +76,7 @@ void UFuAbilityAsync_EffectTimeListener::Activate()
 	for (const auto& EffectTag : EffectTags1)
 	{
 		AbilitySystem->RegisterGameplayTagEvent(EffectTag, EGameplayTagEventType::NewOrRemoved)
-		             .AddUObject(this, &ThisClass::AbilitySystem_OnEffectTagChanged);
+		             .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged);
 	}
 
 	for (auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
@@ -201,16 +201,16 @@ void UFuAbilityAsync_EffectTimeListener::AbilitySystem_OnActiveGameplayEffectRem
 	const_cast<FActiveGameplayEffect&>(ActiveEffect).EventSet.OnTimeChanged.RemoveAll(this);
 }
 
-void UFuAbilityAsync_EffectTimeListener::AbilitySystem_OnEffectTagChanged(const FGameplayTag EffectTag, const int32 NewCount) const
+void UFuAbilityAsync_EffectTimeListener::AbilitySystem_OnTagChanged(const FGameplayTag Tag, const int32 Count) const
 {
-	if (ShouldBroadcastDelegates() && NewCount <= 0)
+	if (ShouldBroadcastDelegates() && Count <= 0)
 	{
-		OnEffectEnded.Broadcast(EffectTag, 0.0f, 0.0f, false);
+		OnEffectEnded.Broadcast(Tag, 0.0f, 0.0f, false);
 	}
 }
 
 void UFuAbilityAsync_EffectTimeListener::ActiveEffect_OnTimeChanged(const FActiveGameplayEffectHandle EffectHandle,
-                                                                    const float NewStartTime, const float NewDuration) const
+                                                                    const float StartTime, const float Duration) const
 {
 	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(GetAbilitySystemComponent())};
 

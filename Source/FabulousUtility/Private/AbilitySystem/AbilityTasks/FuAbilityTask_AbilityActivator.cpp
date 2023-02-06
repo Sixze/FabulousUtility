@@ -3,8 +3,9 @@
 #include "AbilitySystemComponent.h"
 #include "FuMacros.h"
 
-UFuAbilityTask_AbilityActivator* UFuAbilityTask_AbilityActivator::FuActivateAbilityByHandle(
-	UGameplayAbility* OwningAbility, const FGameplayAbilitySpecHandle AbilityHandle, const bool bCancelAbilityOnDestroy)
+UFuAbilityTask_AbilityActivator* UFuAbilityTask_AbilityActivator::FuActivateAbilityByHandle(UGameplayAbility* OwningAbility,
+                                                                                            const FGameplayAbilitySpecHandle AbilityHandle,
+                                                                                            const bool bCancelAbilityOnDestroy)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 

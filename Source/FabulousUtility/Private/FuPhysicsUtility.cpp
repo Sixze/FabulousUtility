@@ -3,11 +3,11 @@
 #include "FuMacros.h"
 #include "Components/PrimitiveComponent.h"
 
-void UFuPhysicsUtility::GetReachableActorsInRadius(const UObject* WorldContext, const FVector& Center,
-                                                   const float Radius, const FCollisionProfileName& CollisionProfile,
-                                                   TMap<AActor*, TArray<FHitResult>>& ReachableActors,
-                                                   const TFunctionRef<bool(const FOverlapResult& Overlap)> Predicate,
-                                                   const AActor* IgnoredActor)
+void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext, const FVector& Location,
+                                                    const float Radius, const FCollisionProfileName& CollisionProfile,
+                                                    TMap<AActor*, TArray<FHitResult>>& ReachableActors,
+                                                    const TFunctionRef<bool(const FOverlapResult& Overlap)> Predicate,
+                                                    const AActor* IgnoredActor)
 {
 	// Based on UGameplayStatics::ApplyRadialDamageWithFalloff().
 
@@ -27,7 +27,7 @@ void UFuPhysicsUtility::GetReachableActorsInRadius(const UObject* WorldContext, 
 	static TArray<FOverlapResult> Overlaps;
 	check(Overlaps.IsEmpty())
 
-	World->OverlapMultiByChannel(Overlaps, Center, FQuat::Identity, CollisionChannel, FCollisionShape::MakeSphere(Radius),
+	World->OverlapMultiByChannel(Overlaps, Location, FQuat::Identity, CollisionChannel, FCollisionShape::MakeSphere(Radius),
 	                             {__FUNCTION__, false, IgnoredActor}, CollisionResponse);
 
 	FHitResult Hit;
@@ -46,7 +46,7 @@ void UFuPhysicsUtility::GetReachableActorsInRadius(const UObject* WorldContext, 
 
 		// ReSharper disable once CppRedundantParentheses
 		if ((ActorHits == nullptr && !Predicate(Overlap)) || !Overlap.Component.IsValid() ||
-		    !IsComponentReachableFromLocation(Overlap.Component.Get(), Center, CollisionChannel, CollisionResponse, Hit, IgnoredActor))
+		    !IsComponentReachableFromLocation(Overlap.Component.Get(), Location, CollisionChannel, CollisionResponse, Hit, IgnoredActor))
 		{
 			continue;
 		}
@@ -78,39 +78,39 @@ bool UFuPhysicsUtility::IsComponentReachableFromLocation(UPrimitiveComponent* Co
 	static const FVector TraceStartOffset{0.0f, 0.0f, 50.0f};
 	const FVector TraceEndOffset{0.0f, 0.0f, ComponentBounds.BoxExtent.Z};
 
-	return IsComponentReachableByTrace(Component, Location,
-	                                   ComponentBounds.Origin,
-	                                   CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
-	       IsComponentReachableByTrace(Component, Location,
-	                                   ComponentBounds.Origin + TraceEndOffset,
-	                                   CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
-	       IsComponentReachableByTrace(Component, Location,
-	                                   ComponentBounds.Origin - TraceEndOffset,
-	                                   CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
-	       IsComponentReachableByTrace(Component, Location + TraceStartOffset,
-	                                   ComponentBounds.Origin,
-	                                   CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
-	       IsComponentReachableByTrace(Component, Location + TraceStartOffset,
-	                                   ComponentBounds.Origin + TraceEndOffset,
-	                                   CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
-	       IsComponentReachableByTrace(Component, Location + TraceStartOffset,
-	                                   ComponentBounds.Origin - TraceEndOffset,
-	                                   CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
-	       IsComponentReachableByTrace(Component, Location - TraceStartOffset,
-	                                   ComponentBounds.Origin,
-	                                   CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
-	       IsComponentReachableByTrace(Component, Location - TraceStartOffset,
-	                                   ComponentBounds.Origin + TraceEndOffset,
-	                                   CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
-	       IsComponentReachableByTrace(Component, Location - TraceStartOffset,
-	                                   ComponentBounds.Origin - TraceEndOffset,
-	                                   CollisionChannel, CollisionResponse, Hit, IgnoredActor);
+	return IsComponentReachableByLineTrace(Component, Location,
+	                                       ComponentBounds.Origin,
+	                                       CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
+	       IsComponentReachableByLineTrace(Component, Location,
+	                                       ComponentBounds.Origin + TraceEndOffset,
+	                                       CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
+	       IsComponentReachableByLineTrace(Component, Location,
+	                                       ComponentBounds.Origin - TraceEndOffset,
+	                                       CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
+	       IsComponentReachableByLineTrace(Component, Location + TraceStartOffset,
+	                                       ComponentBounds.Origin,
+	                                       CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
+	       IsComponentReachableByLineTrace(Component, Location + TraceStartOffset,
+	                                       ComponentBounds.Origin + TraceEndOffset,
+	                                       CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
+	       IsComponentReachableByLineTrace(Component, Location + TraceStartOffset,
+	                                       ComponentBounds.Origin - TraceEndOffset,
+	                                       CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
+	       IsComponentReachableByLineTrace(Component, Location - TraceStartOffset,
+	                                       ComponentBounds.Origin,
+	                                       CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
+	       IsComponentReachableByLineTrace(Component, Location - TraceStartOffset,
+	                                       ComponentBounds.Origin + TraceEndOffset,
+	                                       CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
+	       IsComponentReachableByLineTrace(Component, Location - TraceStartOffset,
+	                                       ComponentBounds.Origin - TraceEndOffset,
+	                                       CollisionChannel, CollisionResponse, Hit, IgnoredActor);
 }
 
-bool UFuPhysicsUtility::IsComponentReachableByTrace(UPrimitiveComponent* Component, const FVector& TraceStart,
-                                                    const FVector& TraceEnd, const ECollisionChannel CollisionChannel,
-                                                    const FCollisionResponseParams& CollisionResponse,
-                                                    FHitResult& Hit, const AActor* IgnoredActor)
+bool UFuPhysicsUtility::IsComponentReachableByLineTrace(UPrimitiveComponent* Component, const FVector& TraceStart,
+                                                        const FVector& TraceEnd, const ECollisionChannel CollisionChannel,
+                                                        const FCollisionResponseParams& CollisionResponse,
+                                                        FHitResult& Hit, const AActor* IgnoredActor)
 {
 	// Based on UGameplayStatics::ComponentIsDamageableFrom().
 

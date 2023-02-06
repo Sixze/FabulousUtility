@@ -10,14 +10,14 @@ class FABULOUSUTILITY_API UFuNetworkingUtility : public UBlueprintFunctionLibrar
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Networking Utility", Meta = (DefaultToSelf = "Actor"))
-	static bool IsLocallyControlled(const AActor* Actor);
+	static bool IsActorLocallyControlled(const AActor* Actor);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Networking Utility",
 		Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
-	static bool SwitchIsLocallyControlled(const AActor* Actor);
+	static bool SwitchIsActorLocallyControlled(const AActor* Actor);
 };
 
-inline bool UFuNetworkingUtility::SwitchIsLocallyControlled(const AActor* Actor)
+inline bool UFuNetworkingUtility::SwitchIsActorLocallyControlled(const AActor* Actor)
 {
-	return IsLocallyControlled(Actor);
+	return IsActorLocallyControlled(Actor);
 }

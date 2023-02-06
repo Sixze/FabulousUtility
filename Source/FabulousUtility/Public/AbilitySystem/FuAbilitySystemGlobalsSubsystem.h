@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Subsystems/EngineSubsystem.h"
-#include "FuAbilityGlobalsSubsystem.generated.h"
+#include "FuAbilitySystemGlobalsSubsystem.generated.h"
 
 UCLASS()
-class FABULOUSUTILITY_API UFuAbilityGlobalsSubsystem : public UEngineSubsystem
+class FABULOUSUTILITY_API UFuAbilitySystemGlobalsSubsystem : public UEngineSubsystem
 {
 	GENERATED_BODY()
 

@@ -27,7 +27,8 @@ bool UFuAbilitySystemUtility::TryGetAbilitySystem(const UObject* Object, UAbilit
 	return false;
 }
 
-FGameplayTag UFuAbilitySystemUtility::GetFirstDescendantTag(const UAbilitySystemComponent* AbilitySystem, const FGameplayTag& ParentTag)
+FGameplayTag UFuAbilitySystemUtility::GetFirstOwnedDescendantTag(const UAbilitySystemComponent* AbilitySystem,
+                                                                 const FGameplayTag& ParentTag)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(ParentTag.IsValid()))
 	{
@@ -46,9 +47,9 @@ FGameplayTag UFuAbilitySystemUtility::GetFirstDescendantTag(const UAbilitySystem
 	return Tag;
 }
 
-FGameplayAbilitySpecHandle UFuAbilitySystemUtility::GiveAbilityWithDynamicTags(
-	UAbilitySystemComponent* AbilitySystem, const TSubclassOf<UGameplayAbility> AbilityClass,
-	const int32 Level, const FGameplayTagContainer& DynamicAbilityTags)
+FGameplayAbilitySpecHandle UFuAbilitySystemUtility::GiveAbilityWithDynamicTags(UAbilitySystemComponent* AbilitySystem,
+                                                                               const TSubclassOf<UGameplayAbility> AbilityClass,
+                                                                               const int32 Level, const FGameplayTagContainer& Tags)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)))
 	{
@@ -61,7 +62,7 @@ FGameplayAbilitySpecHandle UFuAbilitySystemUtility::GiveAbilityWithDynamicTags(
 		return {};
 	}
 
-	for (const auto& Tag : DynamicAbilityTags)
+	for (const auto& Tag : Tags)
 	{
 		if (Tag.IsValid())
 		{

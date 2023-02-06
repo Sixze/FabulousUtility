@@ -4,7 +4,7 @@
 #include "FuMacros.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 
-UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::FuListenForAbilityFailureActor(
+UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::FuListenForAbilityFailureOnActor(
 	const AActor* Actor, const FGameplayTag AbilityTag, const FGameplayTagContainer FailureTags)
 {
 	return FuListenForAbilityFailure(
@@ -12,7 +12,7 @@ UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::
 		AbilityTag, FailureTags);
 }
 
-UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::FuListenForAbilitiesFailureActor(
+UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::FuListenForAbilitiesFailureOnActor(
 	const AActor* Actor, const FGameplayTagContainer AbilityTags, const FGameplayTagContainer FailureTags)
 {
 	return FuListenForAbilitiesFailure(

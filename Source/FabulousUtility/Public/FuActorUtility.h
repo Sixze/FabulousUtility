@@ -19,7 +19,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Actor Utility",
 		Meta = (DeterminesOutputType = "ComponentClass", DynamicOutputParam = "Component", ExpandBoolAsExecs = "ReturnValue"))
-	static bool TryGetComponentByClass(AActor* Actor, TSubclassOf<UActorComponent> ComponentClass, UActorComponent*& Component);
+	static bool TryFindComponentByClass(AActor* Actor, TSubclassOf<UActorComponent> ComponentClass, UActorComponent*& Component);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Actor Utility", Meta = (DefaultToSelf = "Actor"))
 	static FVector GetActorFeetLocation(const AActor* Actor);

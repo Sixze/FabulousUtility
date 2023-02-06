@@ -15,5 +15,5 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "Fabulous Utility|Fu Slate Utility",
 		Meta = (AutoCreateRefTerm = "ViewportSize"))
-	static float GetDpiScale(FVector2D ViewportSize);
+	static float GetViewportDpiScale(FVector2D ViewportSize);
 };

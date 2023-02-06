@@ -4,7 +4,7 @@
 #include "GameplayCueManager.h"
 #include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
 
-TArray<AActor*> UFuGameplayCueUtility::GetActorsFromCueParameters(const FGameplayCueParameters& Parameters)
+TArray<AActor*> UFuGameplayCueUtility::GetActors(const FGameplayCueParameters& Parameters)
 {
 	TArray<AActor*> ResultActors;
 
@@ -22,8 +22,8 @@ TArray<AActor*> UFuGameplayCueUtility::GetActorsFromCueParameters(const FGamepla
 	return ResultActors;
 }
 
-void UFuGameplayCueUtility::ExecuteLocalGameplayCueActor(AActor* Actor, const FGameplayTag& GameplayCueTag,
-                                                         const FGameplayCueParameters& Parameters)
+void UFuGameplayCueUtility::ExecuteLocalGameplayCueOnActor(AActor* Actor, const FGameplayTag& GameplayCueTag,
+                                                           const FGameplayCueParameters& Parameters)
 {
 	UAbilitySystemComponent* AbilitySystem;
 	if (UFuAbilitySystemUtility::TryGetAbilitySystem(Actor, AbilitySystem))
@@ -37,8 +37,8 @@ void UFuGameplayCueUtility::ExecuteLocalGameplayCueActor(AActor* Actor, const FG
 	}
 }
 
-void UFuGameplayCueUtility::AddLocalGameplayCueActor(AActor* Actor, const FGameplayTag& GameplayCueTag,
-                                                     const FGameplayCueParameters& Parameters)
+void UFuGameplayCueUtility::AddLocalGameplayCueToActor(AActor* Actor, const FGameplayTag& GameplayCueTag,
+                                                       const FGameplayCueParameters& Parameters)
 {
 	UAbilitySystemComponent* AbilitySystem;
 	if (UFuAbilitySystemUtility::TryGetAbilitySystem(Actor, AbilitySystem))
@@ -54,8 +54,8 @@ void UFuGameplayCueUtility::AddLocalGameplayCueActor(AActor* Actor, const FGamep
 	}
 }
 
-void UFuGameplayCueUtility::RemoveLocalGameplayCueActor(AActor* Actor, const FGameplayTag& GameplayCueTag,
-                                                        const FGameplayCueParameters& Parameters)
+void UFuGameplayCueUtility::RemoveLocalGameplayCueFromActor(AActor* Actor, const FGameplayTag& GameplayCueTag,
+                                                            const FGameplayCueParameters& Parameters)
 {
 	UAbilitySystemComponent* AbilitySystem;
 	if (UFuAbilitySystemUtility::TryGetAbilitySystem(Actor, AbilitySystem))
@@ -69,8 +69,8 @@ void UFuGameplayCueUtility::RemoveLocalGameplayCueActor(AActor* Actor, const FGa
 	}
 }
 
-void UFuGameplayCueUtility::ExecuteLocalGameplayCuesActor(AActor* Actor, const FGameplayTagContainer& GameplayCueTags,
-                                                          const FGameplayCueParameters& Parameters)
+void UFuGameplayCueUtility::ExecuteLocalGameplayCuesOnActor(AActor* Actor, const FGameplayTagContainer& GameplayCueTags,
+                                                            const FGameplayCueParameters& Parameters)
 {
 	UAbilitySystemComponent* AbilitySystem;
 	if (UFuAbilitySystemUtility::TryGetAbilitySystem(Actor, AbilitySystem))
@@ -84,8 +84,8 @@ void UFuGameplayCueUtility::ExecuteLocalGameplayCuesActor(AActor* Actor, const F
 	}
 }
 
-void UFuGameplayCueUtility::AddLocalGameplayCuesActor(AActor* Actor, const FGameplayTagContainer& GameplayCueTags,
-                                                      const FGameplayCueParameters& Parameters)
+void UFuGameplayCueUtility::AddLocalGameplayCuesToActor(AActor* Actor, const FGameplayTagContainer& GameplayCueTags,
+                                                        const FGameplayCueParameters& Parameters)
 {
 	UAbilitySystemComponent* AbilitySystem;
 	if (UFuAbilitySystemUtility::TryGetAbilitySystem(Actor, AbilitySystem))
@@ -101,8 +101,8 @@ void UFuGameplayCueUtility::AddLocalGameplayCuesActor(AActor* Actor, const FGame
 	}
 }
 
-void UFuGameplayCueUtility::RemoveLocalGameplayCuesActor(AActor* Actor, const FGameplayTagContainer& GameplayCueTags,
-                                                         const FGameplayCueParameters& Parameters)
+void UFuGameplayCueUtility::RemoveLocalGameplayCuesFromActor(AActor* Actor, const FGameplayTagContainer& GameplayCueTags,
+                                                             const FGameplayCueParameters& Parameters)
 {
 	UAbilitySystemComponent* AbilitySystem;
 	if (UFuAbilitySystemUtility::TryGetAbilitySystem(Actor, AbilitySystem))

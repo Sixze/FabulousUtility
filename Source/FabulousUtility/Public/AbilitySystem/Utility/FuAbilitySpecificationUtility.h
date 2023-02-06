@@ -1,7 +1,7 @@
 #pragma once
 
-#include "AbilitySystemComponent.h"
-#include "FuMacros.h"
+#include "Abilities/GameplayAbility.h"
+#include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuAbilitySpecificationUtility.generated.h"
 
 UCLASS()
@@ -11,19 +11,23 @@ class FABULOUSUTILITY_API UFuAbilitySpecificationUtility : public UBlueprintFunc
 
 public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Specification Utility")
-	static const TArray<FGameplayAbilitySpec>& GetActivatableAbilities(const UAbilitySystemComponent* AbilitySystem);
+	static FGameplayAbilitySpecHandle GetAbilityHandle(const FGameplayAbilitySpec& AbilitySpecification);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Specification Utility")
+	static TSubclassOf<UGameplayAbility> GetAbilityClass(const FGameplayAbilitySpec& AbilitySpecification);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Specification Utility")
 	static uint8 GetInputId(const FGameplayAbilitySpec& AbilitySpecification);
 };
 
-inline const TArray<FGameplayAbilitySpec>& UFuAbilitySpecificationUtility::GetActivatableAbilities(
-	const UAbilitySystemComponent* AbilitySystem)
+inline FGameplayAbilitySpecHandle UFuAbilitySpecificationUtility::GetAbilityHandle(const FGameplayAbilitySpec& AbilitySpecification)
 {
-	static const TArray<FGameplayAbilitySpec> None;
-	check(None.IsEmpty())
+	return AbilitySpecification.Handle;
+}
 
-	return FU_ENSURE(IsValid(AbilitySystem)) ? AbilitySystem->GetActivatableAbilities() : None;
+inline TSubclassOf<UGameplayAbility> UFuAbilitySpecificationUtility::GetAbilityClass(const FGameplayAbilitySpec& AbilitySpecification)
+{
+	return AbilitySpecification.Ability->GetClass();
 }
 
 inline uint8 UFuAbilitySpecificationUtility::GetInputId(const FGameplayAbilitySpec& AbilitySpecification)

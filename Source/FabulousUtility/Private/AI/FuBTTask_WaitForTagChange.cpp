@@ -103,12 +103,12 @@ void UFuBTTask_WaitForTagChange::OnTaskFinished(UBehaviorTreeComponent& Behavior
 	Super::OnTaskFinished(BehaviorTree, NodeMemory, Result);
 }
 
-void UFuBTTask_WaitForTagChange::AbilitySystem_OnTagChanged(const FGameplayTag ThisTag, const int32 NewCount,
+void UFuBTTask_WaitForTagChange::AbilitySystem_OnTagChanged(const FGameplayTag ThisTag, const int32 Count,
                                                             const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree) const
 {
 	// ReSharper disable CppRedundantParentheses
-	if ((WaitMode == EFuTagWaitMode::WaitForTagAdd && NewCount > 0 ||
-	     WaitMode == EFuTagWaitMode::WaitForTagRemove && NewCount <= 0) &&
+	if ((WaitMode == EFuTagWaitMode::WaitForTagAdd && Count > 0 ||
+	     WaitMode == EFuTagWaitMode::WaitForTagRemove && Count <= 0) &&
 	    // ReSharper restore CppRedundantParentheses
 	    FU_ENSURE(BehaviorTree.IsValid()))
 	{

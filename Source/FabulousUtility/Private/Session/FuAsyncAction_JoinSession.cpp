@@ -5,8 +5,9 @@
 #include "TimerManager.h"
 #include "GameFramework/PlayerController.h"
 
-UFuAsyncAction_JoinSession* UFuAsyncAction_JoinSession::FuJoinSession(
-	APlayerController* Player, const FBlueprintSessionResult& SearchResult, const bool bTravelOnSuccess)
+UFuAsyncAction_JoinSession* UFuAsyncAction_JoinSession::FuJoinSession(APlayerController* Player,
+                                                                      const FBlueprintSessionResult& SearchResult,
+                                                                      const bool bTravelOnSuccess)
 {
 	auto* Task{NewObject<UFuAsyncAction_JoinSession>()};
 
@@ -36,13 +37,12 @@ void UFuAsyncAction_JoinSession::Activate()
 		return;
 	}
 
-	Session->AddOnJoinSessionCompleteDelegate_Handle(
-		FOnJoinSessionCompleteDelegate::CreateUObject(this, &ThisClass::Session_OnJoinSessionCompleted));
+	Session->AddOnJoinSessionCompleteDelegate_Handle(FOnJoinSessionCompleteDelegate::CreateUObject(this, &ThisClass::Session_OnJoined));
 
 	Session->JoinSession(*Player1->PlayerState->GetUniqueId().GetUniqueNetId(), NAME_GameSession, SearchResult1.OnlineResult);
 }
 
-void UFuAsyncAction_JoinSession::Session_OnJoinSessionCompleted(const FName SessionName, const EOnJoinSessionCompleteResult::Type Result)
+void UFuAsyncAction_JoinSession::Session_OnJoined(const FName SessionName, const EOnJoinSessionCompleteResult::Type Result)
 {
 	if (!Player1.IsValid())
 	{

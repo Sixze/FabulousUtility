@@ -17,7 +17,7 @@ protected:
 	int32 PublicConnections1{1};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Use Lan")
-	bool bUseLan1;
+	bool bLanOnly1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Create Session Async Action")
@@ -28,12 +28,12 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "Player"))
-	static UFuAsyncAction_CreateSession* FuCreateSession(APlayerController* Player, int32 PublicConnections, bool bUseLan);
+	static UFuAsyncAction_CreateSession* FuCreateSession(APlayerController* Player, int32 PublicConnections, bool bLanOnly);
 
 	virtual void Activate() override;
 
 private:
-	void Session_OnCreateSessionCompleted(FName SessionName, bool bSuccess);
+	void Session_OnCreated(FName SessionName, bool bSuccess);
 
-	void Session_OnStartSessionCompleted(FName SessionName, bool bSuccess);
+	void Session_OnStarted(FName SessionName, bool bSuccess);
 };

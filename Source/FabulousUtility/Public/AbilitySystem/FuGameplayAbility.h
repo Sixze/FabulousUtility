@@ -41,16 +41,14 @@ public:
 	virtual void OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& AbilitySpecification) override;
 
 protected:
-	virtual void PreActivate(const FGameplayAbilitySpecHandle AbilityHandle,
-	                         const FGameplayAbilityActorInfo* ActorInfo,
+	virtual void PreActivate(const FGameplayAbilitySpecHandle AbilityHandle, const FGameplayAbilityActorInfo* ActorInfo,
 	                         const FGameplayAbilityActivationInfo ActivationInfo,
 	                         FOnGameplayAbilityEnded::FDelegate* OnGameplayAbilityEndedDelegate,
 	                         const FGameplayEventData* TriggerEventData) override;
 
-	virtual void EndAbility(FGameplayAbilitySpecHandle AbilityHandle,
-	                        const FGameplayAbilityActorInfo* ActorInfo,
-	                        FGameplayAbilityActivationInfo ActivationInfo,
-	                        bool bReplicateEndAbility, bool bCanceled) override;
+	virtual void EndAbility(FGameplayAbilitySpecHandle AbilityHandle, const FGameplayAbilityActorInfo* ActorInfo,
+	                        FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bCanceled) override;
+
 protected:
 	UFUNCTION(BlueprintNativeEvent, Category = "Fu Gameplay Ability", DisplayName = "Check Cost")
 	bool CheckCostBlueprint(const FGameplayAbilityActorInfo& ActorInfo, FGameplayAbilitySpecHandle AbilityHandle) const;
@@ -62,7 +60,7 @@ protected:
 public:
 	bool IsActivationByInputAllowed() const;
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Gameplay Ability")
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Gameplay Ability", Meta = (ExpandBoolAsExecs = "ReturnValue"))
 	bool TryBatchRpcActivateAbility(FGameplayAbilitySpecHandle AbilityHandle, bool bEndAbilityImmediately);
 
 	void BatchRpcEndAbility();

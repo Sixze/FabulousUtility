@@ -4,12 +4,13 @@
 #include "AbilitySystemGlobals.h"
 #include "FuMacros.h"
 
-UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::FuListenForTagChangeActor(const AActor* Actor, const FGameplayTag Tag)
+UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::FuListenForTagChangeOnActor(const AActor* Actor, const FGameplayTag Tag)
 {
 	return FuListenForTagChange(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor), Tag);
 }
 
-UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::FuListenForTagsChangeActor(const AActor* Actor, const FGameplayTagContainer Tags)
+UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::FuListenForTagsChangeOnActor(const AActor* Actor,
+                                                                                       const FGameplayTagContainer Tags)
 {
 	return FuListenForTagsChange(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor), Tags);
 }
@@ -97,11 +98,11 @@ void UFuAbilityAsync_TagListener::EndAction()
 	Super::EndAction();
 }
 
-void UFuAbilityAsync_TagListener::AbilitySystem_OnTagChanged(const FGameplayTag Tag, const int32 NewCount) const
+void UFuAbilityAsync_TagListener::AbilitySystem_OnTagChanged(const FGameplayTag Tag, const int32 Count) const
 {
 	if (ShouldBroadcastDelegates())
 	{
-		if (NewCount > 0)
+		if (Count > 0)
 		{
 			OnTagAdded.Broadcast(Tag);
 		}

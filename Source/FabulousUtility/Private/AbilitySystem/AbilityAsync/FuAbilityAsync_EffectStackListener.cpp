@@ -5,7 +5,7 @@
 #include "GameplayEffect.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 
-UFuAbilityAsync_EffectStackListener* UFuAbilityAsync_EffectStackListener::FuListenForEffectStackChangeActor(
+UFuAbilityAsync_EffectStackListener* UFuAbilityAsync_EffectStackListener::FuListenForEffectStackChangeOnActor(
 	const AActor* Actor, const TSubclassOf<UGameplayEffect> EffectClass)
 {
 	return FuListenForEffectStackChange(

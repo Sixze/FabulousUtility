@@ -12,10 +12,8 @@ class FABULOUSUTILITY_API UFuEffectUtility : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	// Effect
-
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility")
-	static const FGameplayTagContainer& GetEffectOwnedTags(TSubclassOf<UGameplayEffect> EffectClass);
+	static const FGameplayTagContainer& GetOwnedTags(TSubclassOf<UGameplayEffect> EffectClass);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility")
 	static int32 GetEffectStackCountByClass(const UFuAbilitySystemComponent* AbilitySystem, TSubclassOf<UGameplayEffect> EffectClass);
@@ -48,38 +46,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility",
 		Meta = (AutoCreateRefTerm = "EffectTag", ExpandBoolAsExecs = "ReturnValue"))
-	static bool TryGetEffectTimeRemainingAndDurationByTag(
-		const UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag& EffectTag, float& TimeRemaining, float& Duration);
-
-	// Effect Handle
-
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Utility")
-	static bool IsEffectActive(FActiveGameplayEffectHandle EffectHandle);
-
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
-	static bool SwitchIsEffectActive(FActiveGameplayEffectHandle EffectHandle);
-
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility")
-	static void RemoveActiveEffect(FActiveGameplayEffectHandle EffectHandle, int32 StacksToRemove = -1);
-
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility")
-	static void RemoveActiveEffects(const TArray<FActiveGameplayEffectHandle>& EffectHandles, int32 StacksToRemove = -1);
-
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility")
-	static void RecalculateEffectModifiers(FActiveGameplayEffectHandle EffectHandle);
-
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
-	static bool TryGetEffectTimeRemainingAndDurationByHandle(FActiveGameplayEffectHandle EffectHandle,
-	                                                         float& TimeRemaining, float& Duration);
-
-	// This function will also restart the effect timer from the beginning. If you just want to modify the remaining
-	// effect time, use UFuEffectUtility::SetEffectTimeRemaining() or UFuEffectUtility::IncreaseEffectTimeRemaining().
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility")
-	static void SetEffectDuration(FActiveGameplayEffectHandle EffectHandle, float Duration);
-
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility")
-	static void SetEffectTimeRemaining(FActiveGameplayEffectHandle EffectHandle, float TimeRemaining);
-
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Utility")
-	static void IncreaseEffectTimeRemaining(FActiveGameplayEffectHandle EffectHandle, float AdditionalTimeRemaining);
+	static bool TryGetEffectTimeRemainingAndDurationByTag(const UFuAbilitySystemComponent* AbilitySystem,
+	                                                      const FGameplayTag& EffectTag, float& TimeRemaining, float& Duration);
 };

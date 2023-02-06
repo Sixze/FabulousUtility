@@ -29,14 +29,14 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_EffectTimeListener* FuListenForEffectTimeChangeActor(const AActor* Actor,
-	                                                                            FGameplayTag EffectTag,
-	                                                                            bool bWaitForTimeFromServer = true);
+	static UFuAbilityAsync_EffectTimeListener* FuListenForEffectTimeChangeOnActor(const AActor* Actor,
+	                                                                              FGameplayTag EffectTag,
+	                                                                              bool bWaitForTimeFromServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_EffectTimeListener* FuListenForEffectsTimeChangeActor(const AActor* Actor,
-	                                                                             FGameplayTagContainer EffectTags,
-	                                                                             bool bWaitForTimeFromServer = true);
+	static UFuAbilityAsync_EffectTimeListener* FuListenForEffectsTimeChangeOnActor(const AActor* Actor,
+	                                                                               FGameplayTagContainer EffectTags,
+	                                                                               bool bWaitForTimeFromServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_EffectTimeListener* FuListenForEffectTimeChange(UFuAbilitySystemComponent* AbilitySystem,
@@ -61,7 +61,7 @@ private:
 
 	void AbilitySystem_OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const;
 
-	void AbilitySystem_OnEffectTagChanged(FGameplayTag EffectTag, int32 NewCount) const;
+	void AbilitySystem_OnTagChanged(FGameplayTag Tag, int32 Count) const;
 
-	void ActiveEffect_OnTimeChanged(FActiveGameplayEffectHandle EffectHandle, float NewStartTime, float NewDuration) const;
+	void ActiveEffect_OnTimeChanged(FActiveGameplayEffectHandle EffectHandle, float StartTime, float Duration) const;
 };

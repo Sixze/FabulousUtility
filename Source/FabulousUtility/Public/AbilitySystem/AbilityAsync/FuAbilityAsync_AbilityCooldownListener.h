@@ -31,15 +31,15 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownByAbilityTagActor(
+	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownByAbilityTagOnActor(
 		const AActor* Actor, FGameplayTag AbilityTag, bool bWaitForTimeFromServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownByAbilityTagsActor(
+	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownByAbilityTagsOnActor(
 		const AActor* Actor, FGameplayTagContainer AbilityTags, bool bWaitForTimeFromServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownByInputIdActor(
+	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownByInputIdOnActor(
 		const AActor* Actor, int32 InputId, bool bWaitForTimeFromServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
@@ -73,7 +73,7 @@ private:
 
 	void AbilitySystem_OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const;
 
-	void AbilitySystem_OnEffectTagChanged(FGameplayTag EffectTag, int32 NewCount) const;
+	void AbilitySystem_OnTagChanged(FGameplayTag Tag, int32 Count) const;
 
-	void ActiveEffect_OnTimeChanged(FActiveGameplayEffectHandle EffectHandle, float NewStartTime, float NewDuration) const;
+	void ActiveEffect_OnTimeChanged(FActiveGameplayEffectHandle EffectHandle, float StartTime, float Duration) const;
 };

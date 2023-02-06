@@ -22,15 +22,15 @@ void AFuAbilityTargetActor_GroundPlacement::Tick(const float DeltaTime)
 		return;
 	}
 
-	const auto bNewGroundPlaceValid{PerformGroundPlacement(LastGroundPlaceLocation, LastGroundPlaceRotation)};
+	const auto bNewGroundPlaceValid{PerformGroundPlacement(GroundPlaceLocation, GroundPlaceRotation)};
 
-	SetActorLocationAndRotation(LastGroundPlaceLocation, LastGroundPlaceRotation);
+	SetActorLocationAndRotation(GroundPlaceLocation, GroundPlaceRotation);
 
-	if (bLastGroundPlaceValid != bNewGroundPlaceValid)
+	if (bGroundPlaceValid != bNewGroundPlaceValid)
 	{
-		bLastGroundPlaceValid = bNewGroundPlaceValid;
+		bGroundPlaceValid = bNewGroundPlaceValid;
 
-		OnLastGroundPlaceValidChanged(bNewGroundPlaceValid);
+		OnGroundPlaceValidChanged(bNewGroundPlaceValid);
 	}
 }
 
@@ -43,7 +43,7 @@ void AFuAbilityTargetActor_GroundPlacement::StartTargeting(UGameplayAbility* Abi
 
 bool AFuAbilityTargetActor_GroundPlacement::IsConfirmTargetingAllowed()
 {
-	return bLastGroundPlaceValid;
+	return bGroundPlaceValid;
 }
 
 void AFuAbilityTargetActor_GroundPlacement::ConfirmTargeting()
@@ -69,8 +69,8 @@ void AFuAbilityTargetActor_GroundPlacement::ConfirmTargetingAndContinue()
 	{
 		auto* TargetData{new FFuAbilityTargetData_LocationAndRotation{}};
 
-		TargetData->Location = LastGroundPlaceLocation;
-		TargetData->Rotation = LastGroundPlaceRotation;
+		TargetData->Location = GroundPlaceLocation;
+		TargetData->Rotation = GroundPlaceRotation;
 
 		TargetDataReadyDelegate.Broadcast({TargetData});
 	}
@@ -168,4 +168,4 @@ bool AFuAbilityTargetActor_GroundPlacement::PerformGroundPlacement(FVector& Resu
 	return !VisibilityTraceHit.IsValidBlockingHit();
 }
 
-void AFuAbilityTargetActor_GroundPlacement::OnLastGroundPlaceValidChanged_Implementation(bool bNewLastGroundPlaceValid) {}
+void AFuAbilityTargetActor_GroundPlacement::OnGroundPlaceValidChanged_Implementation(bool bNewLastGroundPlaceValid) {}

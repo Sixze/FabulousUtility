@@ -279,12 +279,12 @@ void UFuAbilitySystemComponent::AbilitySystem_OnGameplayEffectApplied(UAbilitySy
 	}
 }
 
-void UFuAbilitySystemComponent::AbilitySystem_OnAnyTagChanged(const FGameplayTag Tag, const int32 NewCount)
+void UFuAbilitySystemComponent::AbilitySystem_OnAnyTagChanged(const FGameplayTag Tag, const int32 Count)
 {
 	// Unfortunately, there is currently no way to optimize this the way it
 	// is done inside FActiveGameplayEffectsContainer::OnOwnerTagChange().
 
-	if (NewCount > 0)
+	if (Count > 0)
 	{
 		const auto& Tags{GameplayTagCountContainer.GetExplicitGameplayTags()};
 		FGameplayEffectQuery EffectQuery;

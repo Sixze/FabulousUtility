@@ -4,8 +4,9 @@
 #include "FuMacros.h"
 #include "Input/CommonUIActionRouterBase.h"
 
-UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::FuListenForUIAction(
-	UCommonUserWidget* Widget, const FUIActionTag ActionTag, const FFuUIActionBindingArguments ActionArguments)
+UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::FuListenForUIAction(UCommonUserWidget* Widget,
+                                                                                      const FUIActionTag ActionTag,
+                                                                                      const FFuUIActionBindingArguments ActionArguments)
 {
 	auto* Task{NewObject<ThisClass>()};
 
@@ -20,8 +21,9 @@ UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::FuListenForUIA
 	return Task;
 }
 
-UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::FuListenForUIActions(
-	UCommonUserWidget* Widget, const FGameplayTagContainer ActionTags, const FFuUIActionBindingArguments ActionArguments)
+UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::FuListenForUIActions(UCommonUserWidget* Widget,
+                                                                                       const FGameplayTagContainer ActionTags,
+                                                                                       const FFuUIActionBindingArguments ActionArguments)
 {
 	auto* Task{NewObject<ThisClass>()};
 

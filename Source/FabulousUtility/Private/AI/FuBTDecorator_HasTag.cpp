@@ -209,7 +209,7 @@ EBlackboardNotificationResult UFuBTDecorator_HasTag::Blackboard_OnTargetKeyChang
 	return EBlackboardNotificationResult::ContinueObserving;
 }
 
-void UFuBTDecorator_HasTag::AbilitySystem_OnTagChanged(FGameplayTag Tag, int32 NewCount,
+void UFuBTDecorator_HasTag::AbilitySystem_OnTagChanged(const FGameplayTag Tag, const int32 Count,
                                                        const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree) const
 {
 	if (FU_ENSURE(BehaviorTree.IsValid()))

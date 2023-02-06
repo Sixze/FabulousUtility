@@ -3,17 +3,11 @@
 #include "FuMacros.h"
 #include "GameFramework/Pawn.h"
 
-AController* UFuControllerUtility::GetController(AActor* Actor)
+AController* UFuControllerUtility::GetControllerFromActor(AActor* Actor)
 {
 	if (!FU_ENSURE(IsValid(Actor)))
 	{
 		return nullptr;
-	}
-
-	auto* Controller{Cast<AController>(Actor)};
-	if (IsValid(Controller))
-	{
-		return Controller;
 	}
 
 	const auto* Pawn{Cast<APawn>(Actor)};
@@ -22,43 +16,19 @@ AController* UFuControllerUtility::GetController(AActor* Actor)
 		return Pawn->GetController();
 	}
 
-	return nullptr;
+	return Cast<AController>(Actor);
 }
 
-bool UFuControllerUtility::TryGetController(AActor* Actor, AController*& Controller)
+bool UFuControllerUtility::TryGetControllerFromActor(AActor* Actor, AController*& Controller)
 {
-	if (!IsValid(Actor))
-	{
-		Controller = nullptr;
-		return false;
-	}
+	const auto* Pawn{Cast<APawn>(Actor)};
 
-	Controller = Cast<AController>(Actor);
+	Controller = IsValid(Pawn) ? Pawn->GetController() : nullptr;
 	if (IsValid(Controller))
 	{
 		return true;
 	}
 
-	const auto* Pawn{Cast<APawn>(Actor)};
-
-	Controller = IsValid(Pawn) ? Pawn->GetController() : nullptr;
+	Controller = Cast<AController>(Actor);
 	return IsValid(Controller);
-}
-
-APlayerController* UFuControllerUtility::GetPlayerController(AActor* Actor)
-{
-	return Cast<APlayerController>(GetController(Actor));
-}
-
-bool UFuControllerUtility::TryGetPlayerController(AActor* Actor, APlayerController*& Player)
-{
-	AController* Controller;
-	if (!TryGetController(Actor, Controller))
-	{
-		Player = nullptr;
-		return false;
-	}
-
-	Player = Cast<APlayerController>(Controller);
-	return IsValid(Player);
 }

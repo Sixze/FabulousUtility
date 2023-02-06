@@ -24,14 +24,14 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AttributeListener* FuListenForAttributeChangeActor(const AActor* Actor,
-	                                                                          FGameplayAttribute Attribute,
-	                                                                          bool bSkipEqualValuesOnServer = true);
+	static UFuAbilityAsync_AttributeListener* FuListenForAttributeChangeOnActor(const AActor* Actor,
+	                                                                            FGameplayAttribute Attribute,
+	                                                                            bool bSkipEqualValuesOnServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AttributeListener* FuListenForAttributesChangeActor(const AActor* Actor,
-	                                                                           const TArray<FGameplayAttribute>& Attributes,
-	                                                                           bool bSkipEqualValuesOnServer = true);
+	static UFuAbilityAsync_AttributeListener* FuListenForAttributesChangeOnActor(const AActor* Actor,
+	                                                                             const TArray<FGameplayAttribute>& Attributes,
+	                                                                             bool bSkipEqualValuesOnServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AttributeListener* FuListenForAttributeChange(UAbilitySystemComponent* AbilitySystem,

@@ -33,11 +33,10 @@ void UFuAsyncAction_DestroySession::Activate()
 		return;
 	}
 
-	Session->DestroySession(NAME_GameSession,
-	                        FOnDestroySessionCompleteDelegate::CreateUObject(this, &ThisClass::Session_OnDestroySessionCompleted));
+	Session->DestroySession(NAME_GameSession, FOnDestroySessionCompleteDelegate::CreateUObject(this, &ThisClass::Session_OnDestroyed));
 }
 
-void UFuAsyncAction_DestroySession::Session_OnDestroySessionCompleted(const FName SessionName, const bool bSuccess)
+void UFuAsyncAction_DestroySession::Session_OnDestroyed(const FName SessionName, const bool bSuccess)
 {
 	if (bSuccess)
 	{

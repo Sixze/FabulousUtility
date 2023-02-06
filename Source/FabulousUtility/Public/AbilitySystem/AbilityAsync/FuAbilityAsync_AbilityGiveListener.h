@@ -25,20 +25,20 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AbilityGiveListener* FuListenForAbilityGivenActor(
-		const AActor* Actor, const FGameplayTag AbilityTag);
+	static UFuAbilityAsync_AbilityGiveListener* FuListenForAbilityGivenOnActor(const AActor* Actor,
+	                                                                           const FGameplayTag AbilityTag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AbilityGiveListener* FuListenForAbilitiesGivenActor(
-		const AActor* Actor, const FGameplayTagContainer AbilityTags);
+	static UFuAbilityAsync_AbilityGiveListener* FuListenForAbilitiesGivenOnActor(const AActor* Actor,
+	                                                                             const FGameplayTagContainer AbilityTags);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AbilityGiveListener* FuListenForAbilityGiven(
-		UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag AbilityTag);
+	static UFuAbilityAsync_AbilityGiveListener* FuListenForAbilityGiven(UFuAbilitySystemComponent* AbilitySystem,
+	                                                                    const FGameplayTag AbilityTag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AbilityGiveListener* FuListenForAbilitiesGiven(
-		UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer AbilityTags);
+	static UFuAbilityAsync_AbilityGiveListener* FuListenForAbilitiesGiven(UFuAbilitySystemComponent* AbilitySystem,
+	                                                                      const FGameplayTagContainer AbilityTags);
 
 public:
 	virtual void Activate() override;

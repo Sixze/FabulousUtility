@@ -5,14 +5,14 @@
 #include "TimerManager.h"
 #include "GameFramework/PlayerController.h"
 
-UFuAsyncAction_CreateSession* UFuAsyncAction_CreateSession::FuCreateSession(
-	APlayerController* Player, const int32 PublicConnections, const bool bUseLan)
+UFuAsyncAction_CreateSession* UFuAsyncAction_CreateSession::FuCreateSession(APlayerController* Player, const int32 PublicConnections,
+                                                                            const bool bLanOnly)
 {
 	auto* Task{NewObject<UFuAsyncAction_CreateSession>()};
 
 	Task->Player1 = Player;
 	Task->PublicConnections1 = FMath::Max(0, PublicConnections);
-	Task->bUseLan1 = bUseLan;
+	Task->bLanOnly1 = bLanOnly;
 
 	return Task;
 }
@@ -37,13 +37,13 @@ void UFuAsyncAction_CreateSession::Activate()
 	}
 
 	Session->AddOnCreateSessionCompleteDelegate_Handle(
-		FOnCreateSessionCompleteDelegate::CreateUObject(this, &ThisClass::Session_OnCreateSessionCompleted));
+		FOnCreateSessionCompleteDelegate::CreateUObject(this, &ThisClass::Session_OnCreated));
 
 	FOnlineSessionSettings Settings;
 	Settings.NumPublicConnections = PublicConnections1;
 	Settings.bShouldAdvertise = true;
 	Settings.bAllowJoinInProgress = true;
-	Settings.bIsLANMatch = bUseLan1;
+	Settings.bIsLANMatch = bLanOnly1;
 	Settings.bUsesPresence = true;
 	Settings.bAllowJoinViaPresence = true;
 	Settings.bUseLobbiesIfAvailable = true;
@@ -51,7 +51,7 @@ void UFuAsyncAction_CreateSession::Activate()
 	Session->CreateSession(*Player1->PlayerState->GetUniqueId().GetUniqueNetId(), NAME_GameSession, Settings);
 }
 
-void UFuAsyncAction_CreateSession::Session_OnCreateSessionCompleted(const FName SessionName, const bool bSuccess)
+void UFuAsyncAction_CreateSession::Session_OnCreated(const FName SessionName, const bool bSuccess)
 {
 	if (!Player1.IsValid())
 	{
@@ -77,8 +77,7 @@ void UFuAsyncAction_CreateSession::Session_OnCreateSessionCompleted(const FName 
 		return;
 	}
 
-	Session->AddOnStartSessionCompleteDelegate_Handle(
-		FOnStartSessionCompleteDelegate::CreateUObject(this, &ThisClass::Session_OnStartSessionCompleted));
+	Session->AddOnStartSessionCompleteDelegate_Handle(FOnStartSessionCompleteDelegate::CreateUObject(this, &ThisClass::Session_OnStarted));
 
 	if (!Session->StartSession(NAME_GameSession))
 	{
@@ -89,7 +88,7 @@ void UFuAsyncAction_CreateSession::Session_OnCreateSessionCompleted(const FName 
 	}
 }
 
-void UFuAsyncAction_CreateSession::Session_OnStartSessionCompleted(const FName SessionName, const bool bSuccess)
+void UFuAsyncAction_CreateSession::Session_OnStarted(const FName SessionName, const bool bSuccess)
 {
 	if (!Player1.IsValid())
 	{

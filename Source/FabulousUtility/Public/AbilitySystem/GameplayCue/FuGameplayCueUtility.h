@@ -11,35 +11,36 @@ class FABULOUSUTILITY_API UFuGameplayCueUtility : public UBlueprintFunctionLibra
 
 public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Gameplay Cue Utility")
-	static TArray<AActor*> GetActorsFromCueParameters(const FGameplayCueParameters& Parameters);
+	static TArray<AActor*> GetActors(const FGameplayCueParameters& Parameters);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Gameplay Cue Utility",
 		Meta = (AutoCreateRefTerm = "GameplayCueTag, Parameters", GameplayTagFilter = "GameplayCue"))
-	static void ExecuteLocalGameplayCueActor(AActor* Actor, const FGameplayTag& GameplayCueTag,
-	                                         const FGameplayCueParameters& Parameters);
+	static void ExecuteLocalGameplayCueOnActor(AActor* Actor, const FGameplayTag& GameplayCueTag,
+	                                           const FGameplayCueParameters& Parameters);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Gameplay Cue Utility",
 		Meta = (AutoCreateRefTerm = "GameplayCueTag, Parameters", GameplayTagFilter = "GameplayCue"))
-	static void AddLocalGameplayCueActor(AActor* Actor, const FGameplayTag& GameplayCueTag, const FGameplayCueParameters& Parameters);
+	static void AddLocalGameplayCueToActor(AActor* Actor, const FGameplayTag& GameplayCueTag, const FGameplayCueParameters& Parameters);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Gameplay Cue Utility",
 		Meta = (AutoCreateRefTerm = "GameplayCueTag, Parameters", GameplayTagFilter = "GameplayCue"))
-	static void RemoveLocalGameplayCueActor(AActor* Actor, const FGameplayTag& GameplayCueTag, const FGameplayCueParameters& Parameters);
+	static void RemoveLocalGameplayCueFromActor(AActor* Actor, const FGameplayTag& GameplayCueTag,
+	                                            const FGameplayCueParameters& Parameters);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Gameplay Cue Utility",
 		Meta = (AutoCreateRefTerm = "GameplayCueTags, Parameters", GameplayTagFilter = "GameplayCue"))
-	static void ExecuteLocalGameplayCuesActor(AActor* Actor, const FGameplayTagContainer& GameplayCueTags,
-	                                          const FGameplayCueParameters& Parameters);
+	static void ExecuteLocalGameplayCuesOnActor(AActor* Actor, const FGameplayTagContainer& GameplayCueTags,
+	                                            const FGameplayCueParameters& Parameters);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Gameplay Cue Utility",
 		Meta = (AutoCreateRefTerm = "GameplayCueTags, Parameters", GameplayTagFilter = "GameplayCue"))
-	static void AddLocalGameplayCuesActor(AActor* Actor, const FGameplayTagContainer& GameplayCueTags,
-	                                      const FGameplayCueParameters& Parameters);
+	static void AddLocalGameplayCuesToActor(AActor* Actor, const FGameplayTagContainer& GameplayCueTags,
+	                                        const FGameplayCueParameters& Parameters);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Gameplay Cue Utility",
 		Meta = (AutoCreateRefTerm = "GameplayCueTags, Parameters", GameplayTagFilter = "GameplayCue"))
-	static void RemoveLocalGameplayCuesActor(AActor* Actor, const FGameplayTagContainer& GameplayCueTags,
-	                                         const FGameplayCueParameters& Parameters);
+	static void RemoveLocalGameplayCuesFromActor(AActor* Actor, const FGameplayTagContainer& GameplayCueTags,
+	                                             const FGameplayCueParameters& Parameters);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Gameplay Cue Utility",
 		Meta = (AutoCreateRefTerm = "GameplayCueTag, Parameters", GameplayTagFilter = "GameplayCue"))

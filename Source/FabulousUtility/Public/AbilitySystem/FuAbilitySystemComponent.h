@@ -78,10 +78,9 @@ public:
 
 private:
 	void AbilitySystem_OnGameplayEffectApplied(UAbilitySystemComponent* InstigatorAbilitySystem,
-	                                           const FGameplayEffectSpec& EffectSpecification,
-	                                           FActiveGameplayEffectHandle EffectHandle);
+	                                           const FGameplayEffectSpec& EffectSpecification, FActiveGameplayEffectHandle EffectHandle);
 
-	void AbilitySystem_OnAnyTagChanged(FGameplayTag Tag, int32 NewCount);
+	void AbilitySystem_OnAnyTagChanged(FGameplayTag Tag, int32 Count);
 };
 
 inline const FActiveGameplayEffectsContainer& UFuAbilitySystemComponent::GetActiveEffects() const

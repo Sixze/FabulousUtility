@@ -26,5 +26,5 @@ public:
 	virtual void Activate() override;
 
 private:
-	void Session_OnDestroySessionCompleted(FName SessionName, bool bSuccess);
+	void Session_OnDestroyed(FName SessionName, bool bSuccess);
 };

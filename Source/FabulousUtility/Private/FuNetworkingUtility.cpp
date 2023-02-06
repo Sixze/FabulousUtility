@@ -4,7 +4,7 @@
 #include "GameFramework/Pawn.h"
 #include "GameFramework/PlayerController.h"
 
-bool UFuNetworkingUtility::IsLocallyControlled(const AActor* Actor)
+bool UFuNetworkingUtility::IsActorLocallyControlled(const AActor* Actor)
 {
 	if (!FU_ENSURE(IsValid(Actor)))
 	{

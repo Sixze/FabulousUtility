@@ -56,14 +56,14 @@ private:
 	static bool IsEmpty(void* Array, const FArrayProperty* Property);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", CustomThunk, Meta = (ArrayParm = "Array"))
-	static void Shuffle(TArray<int32>& Array);
+	static void Shuffle(UPARAM(ref) TArray<int32>& Array);
 
 	DECLARE_FUNCTION(execShuffle);
 
 	static void Shuffle(void* Array, const FArrayProperty* Property);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", CustomThunk, Meta = (ArrayParm = "Array"))
-	static void ShuffleFirstElements(TArray<int32>& Array, int32 FirstElementsCount);
+	static void ShuffleFirstElements(UPARAM(ref) TArray<int32>& Array, int32 FirstElementsCount);
 
 	DECLARE_FUNCTION(execShuffleFirstElements);
 

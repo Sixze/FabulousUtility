@@ -24,7 +24,7 @@ public:
 public:
 	FGameplayAbilityTargetDataHandle GetTargetDataHandle() const;
 
-	void AddTargetDataHandle(const FGameplayAbilityTargetDataHandle& NewTargetDataHandle);
+	void AppendTargetDataHandle(const FGameplayAbilityTargetDataHandle& NewTargetDataHandle);
 
 	void SetTargetDataHandle(const FGameplayAbilityTargetDataHandle& NewTargetDataHandle);
 
@@ -46,7 +46,7 @@ inline FGameplayAbilityTargetDataHandle FFuGameplayEffectContext::GetTargetDataH
 	return TargetDataHandle;
 }
 
-inline void FFuGameplayEffectContext::AddTargetDataHandle(const FGameplayAbilityTargetDataHandle& NewTargetDataHandle)
+inline void FFuGameplayEffectContext::AppendTargetDataHandle(const FGameplayAbilityTargetDataHandle& NewTargetDataHandle)
 {
 	TargetDataHandle.Append(NewTargetDataHandle);
 }

@@ -20,7 +20,7 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_EventListener* FuListenForEventActor(const AActor* Actor, FGameplayTag EventTag);
+	static UFuAbilityAsync_EventListener* FuListenForEventOnActor(const AActor* Actor, FGameplayTag EventTag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_EventListener* FuListenForEvent(UAbilitySystemComponent* AbilitySystem, FGameplayTag EventTag);

@@ -73,8 +73,7 @@ void UFuGameplayAbility::OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo,
 	}
 }
 
-void UFuGameplayAbility::PreActivate(const FGameplayAbilitySpecHandle AbilityHandle,
-                                     const FGameplayAbilityActorInfo* ActorInfo,
+void UFuGameplayAbility::PreActivate(const FGameplayAbilitySpecHandle AbilityHandle, const FGameplayAbilityActorInfo* ActorInfo,
                                      const FGameplayAbilityActivationInfo ActivationInfo,
                                      FOnGameplayAbilityEnded::FDelegate* OnGameplayAbilityEndedDelegate,
                                      const FGameplayEventData* TriggerEventData)
@@ -99,10 +98,9 @@ void UFuGameplayAbility::PreActivate(const FGameplayAbilitySpecHandle AbilityHan
 	}
 }
 
-void UFuGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle AbilityHandle,
-                                    const FGameplayAbilityActorInfo* ActorInfo,
-                                    const FGameplayAbilityActivationInfo ActivationInfo,
-                                    const bool bReplicateEndAbility, const bool bCanceled)
+void UFuGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle AbilityHandle, const FGameplayAbilityActorInfo* ActorInfo,
+                                    const FGameplayAbilityActivationInfo ActivationInfo, const bool bReplicateEndAbility,
+                                    const bool bCanceled)
 {
 	if (IsEndAbilityValid(AbilityHandle, ActorInfo) &&
 	    (bIsActive || GetInstancingPolicy() == EGameplayAbilityInstancingPolicy::NonInstanced))

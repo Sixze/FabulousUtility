@@ -15,7 +15,7 @@ void UFuSlateUtility::PlaySound(const FSlateSound& Sound)
 #endif
 }
 
-float UFuSlateUtility::GetDpiScale(FVector2D ViewportSize)
+float UFuSlateUtility::GetViewportDpiScale(FVector2D ViewportSize)
 {
 	const auto* UserInterfaceSettings{GetDefault<UUserInterfaceSettings>()};
 

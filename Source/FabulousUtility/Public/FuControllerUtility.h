@@ -20,11 +20,11 @@ public:
 	static bool SwitchHasController(AActor* Actor);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Controller Utility", Meta = (DefaultToSelf = "Actor"))
-	static AController* GetController(AActor* Actor);
+	static AController* GetControllerFromActor(AActor* Actor);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Controller Utility",
 		Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
-	static bool TryGetController(AActor* Actor, AController*& Controller);
+	static bool TryGetControllerFromActor(AActor* Actor, AController*& Controller);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Controller Utility", Meta = (DefaultToSelf = "Actor"))
 	static bool HasPlayerController(AActor* Actor);
@@ -34,11 +34,11 @@ public:
 	static bool SwitchHasPlayerController(AActor* Actor);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Controller Utility", Meta = (DefaultToSelf = "Actor"))
-	static APlayerController* GetPlayerController(AActor* Actor);
+	static APlayerController* GetPlayerControllerFromActor(AActor* Actor);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Controller Utility",
 		Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
-	static bool TryGetPlayerController(AActor* Actor, APlayerController*& Player);
+	static bool TryGetPlayerControllerFromActor(AActor* Actor, APlayerController*& Player);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Controller Utility", Meta = (DefaultToSelf = "Player"))
 	static ULocalPlayer* GetLocalPlayer(const APlayerController* Player);
@@ -46,7 +46,7 @@ public:
 
 inline bool UFuControllerUtility::HasController(AActor* Actor)
 {
-	return IsValid(GetController(Actor));
+	return IsValid(GetControllerFromActor(Actor));
 }
 
 inline bool UFuControllerUtility::SwitchHasController(AActor* Actor)
@@ -56,12 +56,26 @@ inline bool UFuControllerUtility::SwitchHasController(AActor* Actor)
 
 inline bool UFuControllerUtility::HasPlayerController(AActor* Actor)
 {
-	return IsValid(GetPlayerController(Actor));
+	return IsValid(GetPlayerControllerFromActor(Actor));
 }
 
 inline bool UFuControllerUtility::SwitchHasPlayerController(AActor* Actor)
 {
 	return HasPlayerController(Actor);
+}
+
+inline APlayerController* UFuControllerUtility::GetPlayerControllerFromActor(AActor* Actor)
+{
+	return Cast<APlayerController>(GetControllerFromActor(Actor));
+}
+
+inline bool UFuControllerUtility::TryGetPlayerControllerFromActor(AActor* Actor, APlayerController*& Player)
+{
+	AController* Controller;
+	TryGetControllerFromActor(Actor, Controller);
+
+	Player = Cast<APlayerController>(Controller);
+	return IsValid(Player);
 }
 
 inline ULocalPlayer* UFuControllerUtility::GetLocalPlayer(const APlayerController* Player)
