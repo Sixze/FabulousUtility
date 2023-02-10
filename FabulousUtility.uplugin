@@ -10,7 +10,7 @@
 	"DocsURL": "https://github.com/Sixze/FabulousUtility",
 	"MarketplaceURL": "",
 	"SupportURL": "https://github.com/Sixze/FabulousUtility/discussions",
-	"EngineVersion": "5.0.0",
+	"EngineVersion": "5.1.0",
 	"EnabledByDefault": true,
 	"CanContainContent": false,
 	"IsBetaVersion": false,
