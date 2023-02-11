@@ -1,5 +1,7 @@
 #include "Math/FuEasing.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuEasing)
+
 float UFuEasing::SineEaseIn(const float Value)
 {
 	return FMath::Sin(Value * HALF_PI - HALF_PI) + 1.0f;

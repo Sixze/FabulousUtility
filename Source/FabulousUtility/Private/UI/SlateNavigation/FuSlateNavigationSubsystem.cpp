@@ -2,9 +2,11 @@
 
 #if !UE_SERVER
 
-#include "Engine/GameInstance.h"
 #include "Framework/Application/NavigationConfig.h"
 #include "UI/SlateNavigation/FuSlateNavigationSettings.h"
+
+// ReSharper disable once CppUnusedIncludeDirective
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuSlateNavigationSubsystem)
 
 bool UFuSlateNavigationSubsystem::ShouldCreateSubsystem(UObject* Outer) const
 {

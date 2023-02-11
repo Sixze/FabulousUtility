@@ -1,5 +1,7 @@
 #include "AbilitySystem/TargetData/FuAbilityTargetData_Vector.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTargetData_Vector)
+
 bool FFuAbilityTargetData_Vector::HasOrigin() const
 {
 	return true;

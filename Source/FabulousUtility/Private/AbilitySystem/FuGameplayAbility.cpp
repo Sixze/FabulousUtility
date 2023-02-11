@@ -4,6 +4,8 @@
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 #include "AbilitySystem/Utility/FuAbilityUtility.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuGameplayAbility)
+
 UFuGameplayAbility::UFuGameplayAbility()
 {
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;

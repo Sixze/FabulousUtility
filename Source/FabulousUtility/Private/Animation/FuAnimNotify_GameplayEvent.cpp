@@ -2,6 +2,9 @@
 
 #include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
 #include "AbilitySystem/Utility/FuEventDataUtility.h"
+#include "Components/SkeletalMeshComponent.h"
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAnimNotify_GameplayEvent)
 
 UFuAnimNotify_GameplayEvent::UFuAnimNotify_GameplayEvent()
 {

@@ -1,6 +1,9 @@
 #include "AbilitySystem/AbilityTasks/FuAbilityTask_TagListener.h"
 
-#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
+#include "AbilitySystemComponent.h"
+#include "FuMacros.h"
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_TagListener)
 
 UFuAbilityTask_TagListener* UFuAbilityTask_TagListener::FuWaitForTagChange(UGameplayAbility* OwningAbility, const FGameplayTag Tag)
 {

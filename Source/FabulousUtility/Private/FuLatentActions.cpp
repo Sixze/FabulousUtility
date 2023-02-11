@@ -4,6 +4,9 @@
 #include "LatentActions.h"
 #include "Engine/World.h"
 
+// ReSharper disable once CppUnusedIncludeDirective
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuLatentActions)
+
 class FABULOUSUTILITY_API FFuDelayLatentAction : public FPendingLatentAction
 {
 protected:

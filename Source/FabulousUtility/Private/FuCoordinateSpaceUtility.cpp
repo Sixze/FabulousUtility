@@ -5,6 +5,8 @@
 #include "GameFramework/PlayerController.h"
 #include "Slate/SGameLayerManager.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuCoordinateSpaceUtility)
+
 bool UFuCoordinateSpaceUtility::TryTransformWorldToClipLocation(const APlayerController* Player,
                                                                 const FVector& WorldLocation, FVector4& ClipLocation)
 {

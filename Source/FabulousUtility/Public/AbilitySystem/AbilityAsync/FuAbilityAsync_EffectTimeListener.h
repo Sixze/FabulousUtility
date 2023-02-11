@@ -3,8 +3,6 @@
 #include "Abilities/Async/AbilityAsync.h"
 #include "FuAbilityAsync_EffectTimeListener.generated.h"
 
-class UFuAbilitySystemComponent;
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FFuEffectTimeListenerDelegate, const FGameplayTag&, EffectTag,
                                               float, TimeRemaining, float, Duration, bool, bWaitingForTimeFromServer);
 
@@ -21,7 +19,7 @@ protected:
 	bool bWaitForTimeFromServer1;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Effect Time Listene Ability Async")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Effect Time Listener Ability Async")
 	FFuEffectTimeListenerDelegate OnEffectStated;
 
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Effect Time Listener Ability Async")

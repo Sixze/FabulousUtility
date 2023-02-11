@@ -1,6 +1,9 @@
 #include "AbilitySystem/AbilityTasks/FuAbilityTask_OneFrameDelay.h"
 
 #include "TimerManager.h"
+#include "Engine/World.h"
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_OneFrameDelay)
 
 UFuAbilityTask_OneFrameDelay* UFuAbilityTask_OneFrameDelay::FuWaitForOneFrameDelay(UGameplayAbility* OwningAbility)
 {

@@ -3,8 +3,6 @@
 #include "AbilitySystemComponent.h"
 #include "FuAbilitySystemComponent.generated.h"
 
-class UFuAbilitySystemComponent;
-
 using FFuAbilityAddedOrRemovedDelegate = TMulticastDelegate<void(const FGameplayAbilitySpec& AbilitySpecification)>;
 
 using FFuAbilityActivatedDelegate = TMulticastDelegate<void(FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability)>;

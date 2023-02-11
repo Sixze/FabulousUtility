@@ -3,8 +3,6 @@
 #include "Abilities/Async/AbilityAsync.h"
 #include "FuAbilityAsync_AbilityFailureListener.generated.h"
 
-class UFuAbilitySystemComponent;
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuAbilityFailureListenerDelegate, FGameplayAbilitySpecHandle, AbilityHandle,
                                              const FGameplayTagContainer&, FailureTags);
 

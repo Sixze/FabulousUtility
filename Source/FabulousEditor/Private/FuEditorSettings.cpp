@@ -2,6 +2,8 @@
 
 #include "Framework/Application/SlateApplication.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuEditorSettings)
+
 #define LOCTEXT_NAMESPACE "FuEditorSettings"
 
 UFuEditorSettings::UFuEditorSettings()

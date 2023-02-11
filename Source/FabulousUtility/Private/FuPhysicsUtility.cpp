@@ -3,6 +3,8 @@
 #include "FuMacros.h"
 #include "Components/PrimitiveComponent.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuPhysicsUtility)
+
 void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext, const FVector& Location,
                                                     const float Radius, const FCollisionProfileName& CollisionProfile,
                                                     TMap<AActor*, TArray<FHitResult>>& ReachableActors,

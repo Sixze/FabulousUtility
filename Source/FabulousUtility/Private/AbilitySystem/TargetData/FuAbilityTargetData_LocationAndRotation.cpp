@@ -1,5 +1,7 @@
 #include "AbilitySystem/TargetData/FuAbilityTargetData_LocationAndRotation.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTargetData_LocationAndRotation)
+
 bool FFuAbilityTargetData_LocationAndRotation::HasOrigin() const
 {
 	return true;

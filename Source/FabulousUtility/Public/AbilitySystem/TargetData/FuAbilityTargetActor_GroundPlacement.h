@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Abilities/GameplayAbilityTargetActor.h"
+#include "Engine/CollisionProfile.h"
 #include "FuAbilityTargetActor_GroundPlacement.generated.h"
 
 UCLASS(DisplayName = "Fu Ground Placement Ability Target Actor")

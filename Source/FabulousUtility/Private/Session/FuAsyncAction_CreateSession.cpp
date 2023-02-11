@@ -2,8 +2,9 @@
 
 #include "FuMacros.h"
 #include "OnlineSubsystemUtils.h"
-#include "TimerManager.h"
 #include "GameFramework/PlayerController.h"
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_CreateSession)
 
 UFuAsyncAction_CreateSession* UFuAsyncAction_CreateSession::FuCreateSession(APlayerController* Player, const int32 PublicConnections,
                                                                             const bool bLanOnly)

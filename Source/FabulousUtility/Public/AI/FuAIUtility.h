@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "NavFilters/NavigationQueryFilter.h"
 #include "FuAIUtility.generated.h"
 
 UCLASS(DisplayName = "Fu AI Utility")

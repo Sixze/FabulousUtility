@@ -1,11 +1,12 @@
 #include "AI/FuBTTask_SendGameplayEvent.h"
 
 #include "AIController.h"
-#include "FuMacros.h"
 #include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
 #include "AbilitySystem/Utility/FuEventDataUtility.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTTask_SendGameplayEvent)
 
 UFuBTTask_SendGameplayEvent::UFuBTTask_SendGameplayEvent()
 {

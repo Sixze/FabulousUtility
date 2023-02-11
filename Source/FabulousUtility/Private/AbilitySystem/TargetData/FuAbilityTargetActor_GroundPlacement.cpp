@@ -7,6 +7,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Math/FuVector.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTargetActor_GroundPlacement)
+
 AFuAbilityTargetActor_GroundPlacement::AFuAbilityTargetActor_GroundPlacement()
 {
 	PrimaryActorTick.bCanEverTick = true;

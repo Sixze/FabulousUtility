@@ -1,5 +1,7 @@
 #include "Math/FuVector.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuVector)
+
 FVector UFuVector::SlerpAngleSkipNormalization(const FVector& From, const FVector& To, float Angle)
 {
 	// http://allenchou.net/2018/05/game-math-deriving-the-slerp-formula/

@@ -2,6 +2,8 @@
 
 #include "NavigationSystem.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAIUtility)
+
 bool UFuAIUtility::TryProjectLocationToNavigation(UObject* WorldContext, const FVector& Location, ANavigationData* NavigationData,
                                                   const TSubclassOf<UNavigationQueryFilter> QueryFilterClass,
                                                   const FVector& QueryExtent, FVector& ResultLocation)

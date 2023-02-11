@@ -3,6 +3,9 @@
 #include "FuMacros.h"
 #include "Engine/World.h"
 
+// ReSharper disable once CppUnusedIncludeDirective
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuWorldUtility)
+
 constexpr const TCHAR* UFuWorldUtility::WorldTypeToString(const EWorldType::Type WorldType)
 {
 	if (WorldType < EWorldType::None || WorldType > EWorldType::Inactive)

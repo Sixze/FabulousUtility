@@ -2,6 +2,8 @@
 
 #include "Types/SlateEnums.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuSlateNavigationSettings)
+
 #define LOCTEXT_NAMESPACE "FuSlateNavigationSettings"
 
 UFuSlateNavigationSettings::UFuSlateNavigationSettings()

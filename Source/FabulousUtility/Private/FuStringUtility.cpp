@@ -3,6 +3,8 @@
 #include "Internationalization/Culture.h"
 #include "Internationalization/FastDecimalFormat.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuStringUtility)
+
 FString UFuStringUtility::FloatToFormattedString(const double Value, const TEnumAsByte<ERoundingMode> RoundingMode, const bool bAlwaysSign,
                                                  const bool bUseGrouping, const int32 MinIntegralDigits, const int32 MaxIntegralDigits,
                                                  const int32 MinFractionalDigits, const int32 MaxFractionalDigits)

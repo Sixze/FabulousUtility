@@ -4,6 +4,8 @@
 #include "FuMacros.h"
 #include "AbilitySystem/Utility/FuAttributeUtility.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_AttributeListener)
+
 UFuAbilityTask_AttributeListener* UFuAbilityTask_AttributeListener::FuWaitForAttributeChange(
 	UGameplayAbility* OwningAbility, const FGameplayAttribute Attribute)
 {

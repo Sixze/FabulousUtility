@@ -3,6 +3,8 @@
 #include "GameplayEffectExtension.h"
 #include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuEventDataUtility)
+
 FGameplayEventData UFuEventDataUtility::MakeEventDataFromEffectModificationData(const FGameplayEffectModCallbackData& Data)
 {
 	FGameplayEventData EventData;

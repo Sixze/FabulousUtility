@@ -4,6 +4,8 @@
 #include "OnlineSubsystemUtils.h"
 #include "GameFramework/PlayerController.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_DestroySession)
+
 UFuAsyncAction_DestroySession* UFuAsyncAction_DestroySession::FuDestroySession(APlayerController* Player)
 {
 	auto* Task{NewObject<UFuAsyncAction_DestroySession>()};

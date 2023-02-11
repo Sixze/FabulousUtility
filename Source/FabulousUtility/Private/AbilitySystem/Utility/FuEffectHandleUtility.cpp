@@ -2,6 +2,9 @@
 
 #include "FuMacros.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
+#include "Engine/World.h"
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuEffectHandleUtility)
 
 bool UFuEffectHandleUtility::IsActive(const FActiveGameplayEffectHandle EffectHandle)
 {

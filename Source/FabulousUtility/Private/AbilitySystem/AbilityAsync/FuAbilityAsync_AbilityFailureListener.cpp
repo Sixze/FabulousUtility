@@ -4,6 +4,8 @@
 #include "FuMacros.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AbilityFailureListener)
+
 UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::FuListenForAbilityFailureOnActor(
 	const AActor* Actor, const FGameplayTag AbilityTag, const FGameplayTagContainer FailureTags)
 {

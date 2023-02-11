@@ -5,6 +5,8 @@
 #include "AIController.h"
 #include "FuMacros.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTTask_WaitForTagChange)
+
 struct FFuTagListenerMemory
 {
 	TWeakObjectPtr<UAbilitySystemComponent> AbilitySystem;

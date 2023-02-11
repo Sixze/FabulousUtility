@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Engine/LatentActionManager.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuLatentActions.generated.h"
 

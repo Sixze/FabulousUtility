@@ -1,8 +1,12 @@
 #pragma once
 
-#include "Engine/EngineTypes.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuWorldUtility.generated.h"
+
+namespace EWorldType
+{
+	enum Type;
+}
 
 UCLASS()
 class FABULOUSUTILITY_API UFuWorldUtility : public UBlueprintFunctionLibrary

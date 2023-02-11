@@ -3,8 +3,6 @@
 #include "BehaviorTree/BTTaskNode.h"
 #include "FuBTTask_WaitForTagChange.generated.h"
 
-class UAbilitySystemComponent;
-
 UENUM(BlueprintType)
 enum class EFuTagWaitMode : uint8
 {

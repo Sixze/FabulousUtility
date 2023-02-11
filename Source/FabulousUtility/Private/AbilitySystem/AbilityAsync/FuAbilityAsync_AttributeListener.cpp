@@ -5,6 +5,8 @@
 #include "FuMacros.h"
 #include "AbilitySystem/Utility/FuAttributeUtility.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AttributeListener)
+
 UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::FuListenForAttributeChangeOnActor(
 	const AActor* Actor, const FGameplayAttribute Attribute, const bool bSkipEqualValuesOnServer)
 {

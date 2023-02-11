@@ -6,11 +6,13 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTDecorator_ReceiveGameplayEvent)
+
 struct FFuReceiveGameplayEventMemory
 {
 	TWeakObjectPtr<UAbilitySystemComponent> AbilitySystem;
 
-	int32 EventReceivedCounter;
+	int32 EventReceivedCounter{0};
 };
 
 UFuBTDecorator_ReceiveGameplayEvent::UFuBTDecorator_ReceiveGameplayEvent()

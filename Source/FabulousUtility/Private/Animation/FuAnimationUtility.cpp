@@ -3,6 +3,8 @@
 #include "FuMacros.h"
 #include "Animation/AnimSequenceBase.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAnimationUtility)
+
 float UFuAnimationUtility::GetScaledPlayLength(const UAnimSequenceBase* Sequence)
 {
 	if (!FU_ENSURE(IsValid(Sequence)))

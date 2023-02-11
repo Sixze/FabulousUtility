@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "Sound/SlateSound.h"
 #include "FuSlateUtility.generated.h"
 
 UCLASS()

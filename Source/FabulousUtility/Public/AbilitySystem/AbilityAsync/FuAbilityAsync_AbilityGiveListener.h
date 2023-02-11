@@ -3,8 +3,6 @@
 #include "Abilities/Async/AbilityAsync.h"
 #include "FuAbilityAsync_AbilityGiveListener.generated.h"
 
-class UFuAbilitySystemComponent;
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuAbilityGiveListenerDelegate, FGameplayAbilitySpecHandle, AbilityHandle);
 
 UCLASS(DisplayName = "Fu Ability Give Listener Ability Async")

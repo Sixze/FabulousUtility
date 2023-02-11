@@ -2,6 +2,8 @@
 
 #include "CommonInputSubsystem.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuCommonUIUtility)
+
 ECommonInputType UFuCommonUIUtility::GetInputTypeForKey(const FKey& Key)
 {
 	// Based on FCommonInputPreprocessor::GetInputType().

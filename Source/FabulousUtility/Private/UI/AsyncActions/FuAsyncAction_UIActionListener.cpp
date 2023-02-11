@@ -4,6 +4,8 @@
 #include "FuMacros.h"
 #include "Input/CommonUIActionRouterBase.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_UIActionListener)
+
 UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::FuListenForUIAction(UCommonUserWidget* Widget,
                                                                                       const FUIActionTag ActionTag,
                                                                                       const FFuUIActionBindingArguments ActionArguments)

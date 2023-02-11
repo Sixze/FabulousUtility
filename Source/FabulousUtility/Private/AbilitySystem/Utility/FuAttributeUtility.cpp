@@ -3,6 +3,9 @@
 #include "AbilitySystemComponent.h"
 #include "FuMacros.h"
 
+// ReSharper disable once CppUnusedIncludeDirective
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAttributeUtility)
+
 bool UFuAttributeUtility::TryGetAttributeValue(const UAbilitySystemComponent* AbilitySystem,
                                                const FGameplayAttribute& Attribute, float& Value)
 {

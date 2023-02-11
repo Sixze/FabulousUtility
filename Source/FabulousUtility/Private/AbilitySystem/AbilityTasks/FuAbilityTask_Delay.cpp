@@ -2,6 +2,9 @@
 
 #include "AbilitySystemGlobals.h"
 #include "TimerManager.h"
+#include "Engine/World.h"
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_Delay)
 
 UFuAbilityTask_Delay* UFuAbilityTask_Delay::FuWaitForDelay(UGameplayAbility* OwningAbility, float Duration,
                                                            const int32 LoopsCount, const bool bSkipFirstDelay)

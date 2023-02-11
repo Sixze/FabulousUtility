@@ -3,6 +3,9 @@
 #include "FuMacros.h"
 #include "Engine/World.h"
 
+// ReSharper disable once CppUnusedIncludeDirective
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuUtility)
+
 UGameInstance* UFuUtility::GetGameInstanceCasted(const UObject* WorldContext, const TSubclassOf<UGameInstance> GameInstanceClass)
 {
 	const auto* World{WorldContext->GetWorld()};

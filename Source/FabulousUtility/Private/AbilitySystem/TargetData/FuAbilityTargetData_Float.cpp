@@ -1,5 +1,7 @@
 ﻿#include "AbilitySystem/TargetData/FuAbilityTargetData_Float.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTargetData_Float)
+
 UScriptStruct* FFuAbilityTargetData_Float::GetScriptStruct() const
 {
 	return StaticStruct();

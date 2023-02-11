@@ -2,6 +2,8 @@
 
 #include "AbilitySystemComponent.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_TargetDataSender)
+
 UFuAbilityTask_TargetDataSender* UFuAbilityTask_TargetDataSender::FuSendTargetData(UGameplayAbility* OwningAbility,
                                                                                    const FGameplayAbilityTargetDataHandle& TargetData)
 {

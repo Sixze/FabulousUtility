@@ -1,7 +1,8 @@
 ﻿#include "AI/FuBTDecorator_RandomizedLoop.h"
 
-#include "BehaviorTree/BTCompositeNode.h"
 #include "BehaviorTree/Composites/BTComposite_SimpleParallel.h"
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTDecorator_RandomizedLoop)
 
 struct FFuRandomizedLoopMemory
 {

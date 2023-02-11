@@ -2,6 +2,8 @@
 
 #include "FuMacros.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuGameplayEffectContext)
+
 UScriptStruct* FFuGameplayEffectContext::GetScriptStruct() const
 {
 	return StaticStruct();

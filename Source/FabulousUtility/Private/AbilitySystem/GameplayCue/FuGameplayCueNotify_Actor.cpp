@@ -2,6 +2,8 @@
 
 #include "TimerManager.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuGameplayCueNotify_Actor)
+
 void AFuGameplayCueNotify_Actor::HandleGameplayCue(AActor* Target, const EGameplayCueEvent::Type EventType,
                                                    const FGameplayCueParameters& Parameters)
 {
