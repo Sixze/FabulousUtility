@@ -70,7 +70,7 @@ void FFuDelayLatentAction::UpdateOperation(FLatentResponse& Response)
 		return;
 	}
 
-	if (Duration <= SMALL_NUMBER)
+	if (Duration <= UE_SMALL_NUMBER)
 	{
 		TimeRemaining = 0.0f;
 		LoopIndex = FMath::Max(0, LoopsCount);

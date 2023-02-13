@@ -24,7 +24,7 @@ void UFuAbilityTask_Delay::Activate()
 {
 	Super::Activate();
 
-	if (Duration1 <= SMALL_NUMBER)
+	if (Duration1 <= UE_SMALL_NUMBER)
 	{
 		if (ShouldBroadcastAbilityTaskDelegates())
 		{

@@ -70,7 +70,7 @@ void UFuAttributeUtility::AdjustAttributeForMaxChange(UAbilitySystemComponent* A
 	}
 
 	const auto NewValue{
-		PreviousMaxValue > SMALL_NUMBER
+		PreviousMaxValue > UE_SMALL_NUMBER
 			? AbilitySystem->GetNumericAttributeBase(Attribute) * NewMaxValue / PreviousMaxValue
 			: NewMaxValue
 	};

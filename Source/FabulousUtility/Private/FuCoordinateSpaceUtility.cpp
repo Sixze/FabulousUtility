@@ -44,7 +44,7 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToScreenLocation(const APlayerC
 
 	const auto Scale{
 		FMath::IsNearlyZero(ClipLocation.W)
-			? 1.0f / SMALL_NUMBER
+			? 1.0f / UE_SMALL_NUMBER
 			: 1.0f / FMath::Abs(ClipLocation.W)
 	};
 
@@ -76,7 +76,7 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocation(const APlaye
 
 	const auto Scale{
 		FMath::IsNearlyZero(ClipLocation.W)
-			? 1.0f / SMALL_NUMBER
+			? 1.0f / UE_SMALL_NUMBER
 			: 1.0f / FMath::Abs(ClipLocation.W)
 	};
 

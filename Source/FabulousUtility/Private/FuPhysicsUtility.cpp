@@ -114,7 +114,7 @@ bool UFuPhysicsUtility::IsComponentReachableByLineTrace(UPrimitiveComponent* Com
                                                         const FCollisionResponseParams& CollisionResponse,
                                                         FHitResult& Hit, const AActor* IgnoredActor)
 {
-	// Based on UGameplayStatics::ComponentIsDamageableFrom().
+	// Based on ComponentIsDamageableFrom().
 
 	if (!FU_ENSURE(IsValid(Component)))
 	{
