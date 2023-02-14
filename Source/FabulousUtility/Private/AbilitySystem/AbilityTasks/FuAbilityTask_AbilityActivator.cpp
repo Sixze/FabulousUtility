@@ -84,7 +84,7 @@ void UFuAbilityTask_AbilityActivator::Activate()
 
 void UFuAbilityTask_AbilityActivator::OnDestroy(const bool bInOwnerFinished)
 {
-	if (IsValid(AbilitySystemComponent))
+	if (AbilitySystemComponent.IsValid())
 	{
 		AbilitySystemComponent->OnAbilityEnded.RemoveAll(this);
 

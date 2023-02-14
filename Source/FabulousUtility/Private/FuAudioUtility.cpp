@@ -11,7 +11,7 @@ void UFuAudioUtility::SetTransientMasterVolume(const UObject* WorldContext, cons
 
 	if (AudioDevice != nullptr)
 	{
-		AudioDevice->SetTransientMasterVolume(Volume);
+		AudioDevice->SetTransientPrimaryVolume(Volume);
 	}
 #endif
 }

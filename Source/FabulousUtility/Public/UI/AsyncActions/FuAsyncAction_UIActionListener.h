@@ -2,7 +2,7 @@
 
 #include "UITag.h"
 #include "Engine/CancellableAsyncAction.h"
-#include "Input/CommonInputMode.h"
+#include "CommonInputModeTypes.h"
 #include "Input/UIActionBindingHandle.h"
 #include "FuAsyncAction_UIActionListener.generated.h"
 

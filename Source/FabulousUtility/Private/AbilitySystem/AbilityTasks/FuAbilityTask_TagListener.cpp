@@ -66,7 +66,7 @@ void UFuAbilityTask_TagListener::Activate()
 
 void UFuAbilityTask_TagListener::OnDestroy(const bool bInOwnerFinished)
 {
-	if (IsValid(AbilitySystemComponent))
+	if (AbilitySystemComponent.IsValid())
 	{
 		for (const auto& Tag : Tags1)
 		{

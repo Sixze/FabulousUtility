@@ -58,7 +58,7 @@ void UFuAbilityTask_AttributeListener::Activate()
 
 	for (const auto& Attribute : Attributes1)
 	{
-		if (UFuAttributeUtility::TryGetAttributeValue(AbilitySystemComponent, Attribute, Value))
+		if (UFuAttributeUtility::TryGetAttributeValue(AbilitySystemComponent.Get(), Attribute, Value))
 		{
 			OnAttributeChanged.Broadcast(Attribute, Value, Value);
 		}
@@ -67,7 +67,7 @@ void UFuAbilityTask_AttributeListener::Activate()
 
 void UFuAbilityTask_AttributeListener::OnDestroy(const bool bInOwnerFinished)
 {
-	if (IsValid(AbilitySystemComponent))
+	if (AbilitySystemComponent.IsValid())
 	{
 		for (const auto& Attribute : Attributes1)
 		{
