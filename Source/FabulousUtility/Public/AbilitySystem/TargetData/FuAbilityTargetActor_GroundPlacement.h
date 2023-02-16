@@ -14,7 +14,7 @@ protected:
 	float SphereSweepRadius{84.0f};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
-	FVector2D SphereSweepHeight{-100.0f, 100.0f};
+	FVector2f SphereSweepHeight{-100.0f, 100.0f};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings", Meta = (ClampMin = 0, ClampMax = 90, ForceUnits = "deg"))
 	float MaxSlopeAngle{20.0f};

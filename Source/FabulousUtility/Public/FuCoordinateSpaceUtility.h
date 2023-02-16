@@ -3,7 +3,7 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuCoordinateSpaceUtility.generated.h"
 
-// https://docs.unrealengine.com/en-US/Basics/CoordinateSpace/
+// https://docs.unrealengine.com/coordinate-space-terminology-in-unreal-engine/
 
 UCLASS()
 class FABULOUSUTILITY_API UFuCoordinateSpaceUtility : public UBlueprintFunctionLibrary
