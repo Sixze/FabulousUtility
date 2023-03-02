@@ -8,7 +8,7 @@
 
 UFuSlateNavigationSettings::UFuSlateNavigationSettings()
 {
-	CategoryName = TEXT("Fabulous Utility");
+	CategoryName = FName{TEXTVIEW("Fabulous Utility")};
 
 	KeyNavigationMappings = {
 		{EKeys::Up, EUINavigation::Up},

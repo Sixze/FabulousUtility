@@ -8,7 +8,7 @@
 
 UFuEditorSettings::UFuEditorSettings()
 {
-	CategoryName = TEXT("Fabulous Utility");
+	CategoryName = FName{TEXTVIEW("Fabulous Utility")};
 }
 
 #if WITH_EDITOR

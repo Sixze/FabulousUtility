@@ -22,7 +22,7 @@ protected:
 	bool bSkipFirstDelay1;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, Meta = (ClampMin = 0))
-	int32 LoopIndex;
+	int32 LoopIndex{-1};
 
 	FTimerHandle TimerHandle;
 

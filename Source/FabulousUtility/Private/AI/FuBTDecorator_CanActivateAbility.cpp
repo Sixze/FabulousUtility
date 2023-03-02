@@ -16,63 +16,47 @@ struct FFuCanActivateAbilityMemory
 
 UFuBTDecorator_CanActivateAbility::UFuBTDecorator_CanActivateAbility()
 {
-	NodeName = TEXT("Fu Can Activate Ability");
+	NodeName = TEXTVIEW("Fu Can Activate Ability");
 
 	INIT_DECORATOR_NODE_NOTIFY_FLAGS();
 }
 
 FString UFuBTDecorator_CanActivateAbility::GetStaticDescription() const
 {
-	FString Description;
+	TStringBuilder<512> DescriptionBuilder;
 
 	const auto bAborts{FlowAbortMode != EBTFlowAbortMode::None};
 	const auto bInversed{bShowInverseConditionDesc && IsInversed()};
 
 	if (bAborts)
 	{
-		Description = FString::Printf(TEXT("( aborts %s%s )"),
-		                              *UBehaviorTreeTypes::DescribeFlowAbortMode(FlowAbortMode).ToLower(),
-		                              bInversed ? TEXT(", inversed") : TEXT(""));
+		DescriptionBuilder << TEXTVIEW("( aborts ") << *UBehaviorTreeTypes::DescribeFlowAbortMode(FlowAbortMode).ToLower()
+			<< (bInversed ? TEXTVIEW(", inversed )") LINE_TERMINATOR : TEXTVIEW(" )") LINE_TERMINATOR);
 	}
 	else if (bInversed)
 	{
-		Description = TEXT("( inversed )");
+		DescriptionBuilder << TEXTVIEW("( inversed )") LINE_TERMINATOR;
 	}
 
 	if (AbilityTags.IsEmpty())
 	{
-		if (bAborts || bInversed)
-		{
-			Description += LINE_TERMINATOR;
-		}
-
-		Description += TEXT("Can Activate Ability: ");
+		DescriptionBuilder << TEXTVIEW("Can Activate Ability:");
 	}
 	else if (AbilityTags.Num() == 1)
 	{
-		if (bAborts || bInversed)
-		{
-			Description += LINE_TERMINATOR;
-		}
-
-		Description += TEXT("Can Activate Ability: ") + AbilityTags.First().ToString();
+		DescriptionBuilder << TEXT("Can Activate Ability: ") << AbilityTags.First().GetTagName();
 	}
 	else
 	{
-		if (bAborts || bInversed)
-		{
-			Description += TEXT(' ');
-		}
-
-		Description += TEXT("Can Activate Any Ability: ");
+		DescriptionBuilder << TEXTVIEW("Can Activate Any Ability: ");
 
 		for (const auto& Tag : AbilityTags)
 		{
-			Description += LINE_TERMINATOR + Tag.ToString();
+			DescriptionBuilder << LINE_TERMINATOR << Tag.GetTagName();
 		}
 	}
 
-	return Description;
+	return FString{DescriptionBuilder};
 }
 
 uint16 UFuBTDecorator_CanActivateAbility::GetInstanceMemorySize() const

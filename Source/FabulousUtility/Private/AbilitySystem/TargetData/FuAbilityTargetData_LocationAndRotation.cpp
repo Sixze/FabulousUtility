@@ -19,7 +19,7 @@ UScriptStruct* FFuAbilityTargetData_LocationAndRotation::GetScriptStruct() const
 
 FString FFuAbilityTargetData_LocationAndRotation::ToString() const
 {
-	return FU_GET_TYPE_STRING(FFuAbilityTargetData_LocationAndRotation);
+	return FString{FU_GET_TYPE_STRING(FFuAbilityTargetData_LocationAndRotation)};
 }
 
 bool FFuAbilityTargetData_LocationAndRotation::NetSerialize(FArchive& Archive, UPackageMap* Map, bool& bSuccess)

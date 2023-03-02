@@ -9,7 +9,7 @@ UScriptStruct* FFuAbilityTargetData_Float::GetScriptStruct() const
 
 FString FFuAbilityTargetData_Float::ToString() const
 {
-	return FU_GET_TYPE_STRING(FFuAbilityTargetData_Float);
+	return FString{FU_GET_TYPE_STRING(FFuAbilityTargetData_Float)};
 }
 
 bool FFuAbilityTargetData_Float::NetSerialize(FArchive& Archive, UPackageMap* Map, bool& bSuccess)

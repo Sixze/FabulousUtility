@@ -10,7 +10,7 @@
 
 UFuBTTask_SendGameplayEvent::UFuBTTask_SendGameplayEvent()
 {
-	NodeName = TEXT("Fu Send Gameplay Event");
+	NodeName = TEXTVIEW("Fu Send Gameplay Event");
 
 	TargetKey.AddObjectFilter(this, GET_MEMBER_NAME_CHECKED(ThisClass, TargetKey), AActor::StaticClass());
 
@@ -30,14 +30,24 @@ void UFuBTTask_SendGameplayEvent::InitializeFromAsset(UBehaviorTree& Asset)
 
 FString UFuBTTask_SendGameplayEvent::GetStaticDescription() const
 {
-	return FString::Printf(TEXT("Send Gameplay Event: %s") LINE_TERMINATOR TEXT("Target: %s"),
-	                       *EventTag.ToString(), *TargetKey.SelectedKeyName.ToString());
+	TStringBuilder<256> DescriptionBuilder;
+
+	DescriptionBuilder << TEXTVIEW("Send Gameplay Event: ");
+
+	if (EventTag.IsValid())
+	{
+		DescriptionBuilder << EventTag.GetTagName();
+	}
+
+	DescriptionBuilder << LINE_TERMINATOR TEXTVIEW("Target: ") << TargetKey.SelectedKeyName;
+
+	return FString{DescriptionBuilder};
 }
 
 #if WITH_EDITOR
 FName UFuBTTask_SendGameplayEvent::GetNodeIconName() const
 {
-	return TEXT("BTEditor.Graph.BTNode.Task.RunEQSQuery.Icon");
+	return FName{TEXTVIEW("BTEditor.Graph.BTNode.Task.RunEQSQuery.Icon")};
 }
 #endif
 
@@ -63,6 +73,7 @@ EBTNodeResult::Type UFuBTTask_SendGameplayEvent::ExecuteTask(UBehaviorTreeCompon
 	const auto EventData{UFuEventDataUtility::MakeEventDataFromAvatarAndAbilitySystem(Pawn, TargetAbilitySystem)};
 
 	{
+		// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 		FScopedPredictionWindow PredictionWindow{TargetAbilitySystem, true};
 
 		TargetAbilitySystem->HandleGameplayEvent(EventTag, &EventData);

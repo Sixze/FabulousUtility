@@ -30,11 +30,11 @@ void UFuAbilityTask_Delay::Activate()
 		{
 			for (auto i{0}; i < LoopsCount1; i++)
 			{
-				OnLoop.Broadcast(LoopIndex);
 				LoopIndex += 1;
+				OnLoop.Broadcast(LoopIndex);
 			}
 
-			OnDelayEnded.Broadcast(LoopIndex);
+			OnDelayEnded.Broadcast(FMath::Max(LoopIndex + 1, LoopsCount1));
 		}
 
 		EndTask();
@@ -54,8 +54,13 @@ void UFuAbilityTask_Delay::Activate()
 
 FString UFuAbilityTask_Delay::GetDebugString() const
 {
-	return FString::Printf(TEXT("%s (%s): Time Remaining: %.2f, Loop Index: %d."), *GetName(), *InstanceName.ToString(),
-	                       Duration1 - GetWorld()->GetTimerManager().GetTimerRemaining(TimerHandle), LoopIndex);
+	TStringBuilder<256> DebugStringBuilder;
+
+	DebugStringBuilder << GetFName() << TEXTVIEW(" (") << InstanceName << TEXTVIEW("): Time Remaining: ");
+	DebugStringBuilder.Appendf(TEXT("%.2f"), Duration1 - GetWorld()->GetTimerManager().GetTimerRemaining(TimerHandle));
+	DebugStringBuilder << TEXTVIEW(", Loop Index: ") << LoopIndex;
+
+	return FString{DebugStringBuilder};
 }
 
 void UFuAbilityTask_Delay::OnDestroy(const bool bInOwnerFinished)
@@ -72,6 +77,8 @@ void UFuAbilityTask_Delay::TimerManager_OnTimerEnded()
 		return;
 	}
 
+	LoopIndex += 1;
+
 	if (LoopsCount1 < 0 || LoopIndex < LoopsCount1)
 	{
 		if (ShouldBroadcastAbilityTaskDelegates())
@@ -79,7 +86,6 @@ void UFuAbilityTask_Delay::TimerManager_OnTimerEnded()
 			OnLoop.Broadcast(LoopIndex);
 		}
 
-		LoopIndex += 1;
 		return;
 	}
 
