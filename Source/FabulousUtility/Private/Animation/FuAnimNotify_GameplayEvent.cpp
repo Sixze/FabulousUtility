@@ -2,6 +2,9 @@
 
 #include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
 #include "AbilitySystem/Utility/FuEventDataUtility.h"
+#include "Components/SkeletalMeshComponent.h"
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAnimNotify_GameplayEvent)
 
 UFuAnimNotify_GameplayEvent::UFuAnimNotify_GameplayEvent()
 {
@@ -14,7 +17,11 @@ UFuAnimNotify_GameplayEvent::UFuAnimNotify_GameplayEvent()
 
 FString UFuAnimNotify_GameplayEvent::GetNotifyName_Implementation() const
 {
-	return FString::Format(TEXT("Fu Gameplay Event: {0}"), {EventTag.ToString()});
+	TStringBuilder<256> NotifyNameBuilder;
+
+	NotifyNameBuilder << TEXTVIEW("Fu Gameplay Event: ") << EventTag.GetTagName();
+
+	return FString{NotifyNameBuilder};
 }
 
 void UFuAnimNotify_GameplayEvent::Notify(USkeletalMeshComponent* Mesh, UAnimSequenceBase* Animation,
@@ -29,6 +36,7 @@ void UFuAnimNotify_GameplayEvent::Notify(USkeletalMeshComponent* Mesh, UAnimSequ
 	{
 		const auto EventData{UFuEventDataUtility::MakeEventDataFromAbilitySystems(AbilitySystem, AbilitySystem)};
 
+		// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 		FScopedPredictionWindow PredictionWindow{AbilitySystem, true};
 
 		AbilitySystem->HandleGameplayEvent(EventTag, &EventData);

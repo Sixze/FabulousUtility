@@ -2,11 +2,13 @@
 
 #include "Framework/Application/SlateApplication.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuEditorSettings)
+
 #define LOCTEXT_NAMESPACE "FuEditorSettings"
 
 UFuEditorSettings::UFuEditorSettings()
 {
-	CategoryName = TEXT("Fabulous Utility");
+	CategoryName = FName{TEXTVIEW("Fabulous Utility")};
 }
 
 #if WITH_EDITOR

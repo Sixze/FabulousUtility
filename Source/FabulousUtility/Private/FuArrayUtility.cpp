@@ -2,6 +2,8 @@
 
 #include "Net/Core/PushModel/PushModel.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuArrayUtility)
+
 int32 UFuArrayUtility::GetWeightedRandomIndex(const TArray<float>& Array)
 {
 	if (Array.IsEmpty())

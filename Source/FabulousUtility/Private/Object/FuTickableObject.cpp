@@ -1,5 +1,7 @@
 #include "Object/FuTickableObject.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuTickableObject)
+
 void UFuTickableObject::Tick(const float DeltaTime)
 {
 	ReceiveTick(DeltaTime);

@@ -3,8 +3,6 @@
 #include "FuAbilityAsync_EffectTimeListener.h"
 #include "FuAbilityAsync_AbilityCooldownListener.generated.h"
 
-class UFuAbilitySystemComponent;
-
 UCLASS(DisplayName = "Fu Ability Cooldown Listener Ability Async")
 class FABULOUSUTILITY_API UFuAbilityAsync_AbilityCooldownListener : public UAbilityAsync
 {

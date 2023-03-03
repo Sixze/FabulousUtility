@@ -3,6 +3,8 @@
 #include "AbilitySystemComponent.h"
 #include "FuMacros.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_AbilityActivator)
+
 UFuAbilityTask_AbilityActivator* UFuAbilityTask_AbilityActivator::FuActivateAbilityByHandle(UGameplayAbility* OwningAbility,
                                                                                             const FGameplayAbilitySpecHandle AbilityHandle,
                                                                                             const bool bCancelAbilityOnDestroy)
@@ -84,7 +86,7 @@ void UFuAbilityTask_AbilityActivator::Activate()
 
 void UFuAbilityTask_AbilityActivator::OnDestroy(const bool bInOwnerFinished)
 {
-	if (IsValid(AbilitySystemComponent))
+	if (AbilitySystemComponent.IsValid())
 	{
 		AbilitySystemComponent->OnAbilityEnded.RemoveAll(this);
 

@@ -2,10 +2,12 @@
 
 #if !UE_SERVER
 
-#include "Engine/GameInstance.h"
 #include "Engine/GameViewportClient.h"
 #include "UI/ViewportWatermark/FuViewportWatermarkSettings.h"
 #include "UI/ViewportWatermark/SFuViewportWatermark.h"
+
+// ReSharper disable once CppUnusedIncludeDirective
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuViewportWatermarkSubsystem)
 
 bool UFuViewportWatermarkSubsystem::ShouldCreateSubsystem(UObject* Outer) const
 {

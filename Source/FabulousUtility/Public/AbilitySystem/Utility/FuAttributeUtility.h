@@ -1,6 +1,5 @@
 #pragma once
 
-#include "AttributeSet.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuAttributeUtility.generated.h"
 

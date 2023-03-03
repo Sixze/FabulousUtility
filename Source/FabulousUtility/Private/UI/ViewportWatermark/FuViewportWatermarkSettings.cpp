@@ -7,11 +7,14 @@
 #include "Launch/Resources/Version.h"
 #include "UObject/ConstructorHelpers.h"
 
+// ReSharper disable once CppUnusedIncludeDirective
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuViewportWatermarkSettings)
+
 #define LOCTEXT_NAMESPACE "FuViewportWatermarkSettings"
 
 UFuViewportWatermarkSettings::UFuViewportWatermarkSettings()
 {
-	CategoryName = TEXT("Fabulous Utility");
+	CategoryName = FName{TEXTVIEW("Fabulous Utility")};
 
 	TitleText = LOCTEXT("Title", "WORK IN PROGRESS - DOES NOT REPRESENT THE FINAL LOOK OF THE GAME");
 
@@ -19,7 +22,7 @@ UFuViewportWatermarkSettings::UFuViewportWatermarkSettings()
 
 	EngineVersionText = FText::Format(LOCTEXT("EngineVersion", "Built using Unreal Engine {EngineVersion}"),
 	                                  {
-		                                  {TEXT("EngineVersion"), FText::AsCultureInvariant(ENGINE_VERSION_STRING)}
+		                                  {FString{TEXTVIEW("EngineVersion")}, FText::AsCultureInvariant(ENGINE_VERSION_STRING)}
 	                                  });
 
 	SystemInfoText =
@@ -29,11 +32,14 @@ UFuViewportWatermarkSettings::UFuViewportWatermarkSettings()
 			        "{GpuBrand}" LINE_TERMINATOR
 			        "RHI: {Rhi} Driver: {GpuDriver}"),
 			{
-				{TEXT("CpuBrand"), FText::AsCultureInvariant(FPlatformMisc::GetCPUBrand())},
-				{TEXT("CpuCores"), FText::AsNumber(FPlatformMisc::NumberOfCores())},
-				{TEXT("GpuBrand"), FText::AsCultureInvariant(GRHIAdapterName)},
-				{TEXT("Rhi"), FText::AsCultureInvariant(FHardwareInfo::GetHardwareInfo(NAME_RHI))},
-				{TEXT("GpuDriver"), FText::AsCultureInvariant(FPlatformMisc::GetGPUDriverInfo(GRHIAdapterName).UserDriverVersion)}
+				{FString{TEXTVIEW("CpuBrand")}, FText::AsCultureInvariant(FPlatformMisc::GetCPUBrand())},
+				{FString{TEXTVIEW("CpuCores")}, FText::AsNumber(FPlatformMisc::NumberOfCores())},
+				{FString{TEXTVIEW("GpuBrand")}, FText::AsCultureInvariant(GRHIAdapterName)},
+				{FString{TEXTVIEW("Rhi")}, FText::AsCultureInvariant(FHardwareInfo::GetHardwareInfo(NAME_RHI))},
+				{
+					FString{TEXTVIEW("GpuDriver")},
+					FText::AsCultureInvariant(FPlatformMisc::GetGPUDriverInfo(GRHIAdapterName).UserDriverVersion)
+				}
 			});
 
 	TitleSettings.HorizontalAlignment = HAlign_Center;
@@ -50,9 +56,9 @@ UFuViewportWatermarkSettings::UFuViewportWatermarkSettings()
 	{
 		static const ConstructorHelpers::FObjectFinder<UFont> RobotoFont{TEXT("/Engine/EngineFonts/Roboto")};
 
-		TitleSettings.Font = FSlateFontInfo{RobotoFont.Object, 32, TEXT("Bold")};
-		CopyrightSettings.Font = FSlateFontInfo{RobotoFont.Object, 24, TEXT("Bold")};
-		SystemInfoSettings.Font = FSlateFontInfo{RobotoFont.Object, 24, TEXT("Bold")};
+		TitleSettings.Font = FSlateFontInfo{RobotoFont.Object, 32, FName{TEXTVIEW("Bold")}};
+		CopyrightSettings.Font = FSlateFontInfo{RobotoFont.Object, 24, FName{TEXTVIEW("Bold")}};
+		SystemInfoSettings.Font = FSlateFontInfo{RobotoFont.Object, 24, FName{TEXTVIEW("Bold")}};
 	}
 }
 

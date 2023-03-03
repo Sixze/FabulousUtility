@@ -6,6 +6,8 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTDecorator_HasTag)
+
 struct FFuHasTagMemory
 {
 	TWeakObjectPtr<UAbilitySystemComponent> AbilitySystem;
@@ -13,7 +15,7 @@ struct FFuHasTagMemory
 
 UFuBTDecorator_HasTag::UFuBTDecorator_HasTag()
 {
-	NodeName = TEXT("Fu Has Tag");
+	NodeName = TEXTVIEW("Fu Has Tag");
 
 	TargetKey.AddObjectFilter(this, GET_MEMBER_NAME_CHECKED(ThisClass, TargetKey), AActor::StaticClass());
 
@@ -38,43 +40,42 @@ uint16 UFuBTDecorator_HasTag::GetInstanceMemorySize() const
 
 FString UFuBTDecorator_HasTag::GetStaticDescription() const
 {
-	FString Description;
+	TStringBuilder<512> DescriptionBuilder;
 
 	const auto bAborts{FlowAbortMode != EBTFlowAbortMode::None};
 	const auto bInversed{bShowInverseConditionDesc && IsInversed()};
 
 	if (bAborts)
 	{
-		Description = FString::Printf(TEXT("( aborts %s%s )") LINE_TERMINATOR,
-		                              *UBehaviorTreeTypes::DescribeFlowAbortMode(FlowAbortMode).ToLower(),
-		                              bInversed ? TEXT(", inversed") : TEXT(""));
+		DescriptionBuilder << TEXTVIEW("( aborts ") << *UBehaviorTreeTypes::DescribeFlowAbortMode(FlowAbortMode).ToLower()
+			<< (bInversed ? TEXTVIEW(", inversed )") LINE_TERMINATOR : TEXTVIEW(" )") LINE_TERMINATOR);
 	}
 	else if (bInversed)
 	{
-		Description = TEXT("( inversed )");
+		DescriptionBuilder << TEXTVIEW("( inversed )") LINE_TERMINATOR;
 	}
 
 	if (Tags.IsEmpty())
 	{
-		Description += TEXT("Has Tag: ");
+		DescriptionBuilder << TEXTVIEW("Has Tag:");
 	}
 	else if (Tags.Num() == 1)
 	{
-		Description += TEXT("Has Tag: ") + Tags.First().ToString();
+		DescriptionBuilder << TEXTVIEW("Has Tag: ") << Tags.First().GetTagName();
 	}
 	else
 	{
-		Description += MatchMode == EFuTagMatchMode::AnyTag ? TEXT("Has Any Tag: ") : TEXT("Has All Tags: ");
+		DescriptionBuilder << (MatchMode == EFuTagMatchMode::AnyTag ? TEXTVIEW("Has Any Tag:") : TEXTVIEW("Has All Tags:"));
 
 		for (const auto& Tag : Tags)
 		{
-			Description += LINE_TERMINATOR + Tag.ToString();
+			DescriptionBuilder << LINE_TERMINATOR << Tag.GetTagName();
 		}
 	}
 
-	Description += LINE_TERMINATOR TEXT("Target: ") + TargetKey.SelectedKeyName.ToString();
+	DescriptionBuilder << LINE_TERMINATOR TEXTVIEW("Target: ") << TargetKey.SelectedKeyName;
 
-	return Description;
+	return FString{DescriptionBuilder};
 }
 
 void UFuBTDecorator_HasTag::OnBecomeRelevant(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory)

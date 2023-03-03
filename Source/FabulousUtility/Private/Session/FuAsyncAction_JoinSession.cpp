@@ -2,8 +2,9 @@
 
 #include "FuMacros.h"
 #include "OnlineSubsystemUtils.h"
-#include "TimerManager.h"
 #include "GameFramework/PlayerController.h"
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_JoinSession)
 
 UFuAsyncAction_JoinSession* UFuAsyncAction_JoinSession::FuJoinSession(APlayerController* Player,
                                                                       const FBlueprintSessionResult& SearchResult,

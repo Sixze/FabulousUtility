@@ -2,8 +2,9 @@
 
 #include "AbilitySystemGlobals.h"
 #include "FuMacros.h"
-#include "GameplayEffect.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_EffectStackListener)
 
 UFuAbilityAsync_EffectStackListener* UFuAbilityAsync_EffectStackListener::FuListenForEffectStackChangeOnActor(
 	const AActor* Actor, const TSubclassOf<UGameplayEffect> EffectClass)

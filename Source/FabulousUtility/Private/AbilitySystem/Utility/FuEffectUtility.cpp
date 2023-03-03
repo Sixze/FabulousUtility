@@ -3,6 +3,8 @@
 #include "FuMacros.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuEffectUtility)
+
 const FGameplayTagContainer& UFuEffectUtility::GetOwnedTags(const TSubclassOf<UGameplayEffect> EffectClass)
 {
 	if (FU_ENSURE(IsValid(EffectClass)))

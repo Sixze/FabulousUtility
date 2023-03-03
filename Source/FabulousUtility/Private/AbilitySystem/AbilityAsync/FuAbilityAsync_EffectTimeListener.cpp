@@ -5,6 +5,8 @@
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 #include "AbilitySystem/Utility/FuEffectUtility.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_EffectTimeListener)
+
 UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListenForEffectTimeChangeOnActor(
 	const AActor* Actor, const FGameplayTag EffectTag, const bool bWaitForTimeFromServer)
 {

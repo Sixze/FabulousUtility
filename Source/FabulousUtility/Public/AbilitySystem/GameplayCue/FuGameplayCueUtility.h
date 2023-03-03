@@ -1,6 +1,5 @@
 #pragma once
 
-#include "GameplayEffectTypes.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuGameplayCueUtility.generated.h"
 

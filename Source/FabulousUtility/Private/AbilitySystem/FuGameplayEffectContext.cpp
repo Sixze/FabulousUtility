@@ -2,6 +2,8 @@
 
 #include "FuMacros.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuGameplayEffectContext)
+
 UScriptStruct* FFuGameplayEffectContext::GetScriptStruct() const
 {
 	return StaticStruct();
@@ -9,7 +11,7 @@ UScriptStruct* FFuGameplayEffectContext::GetScriptStruct() const
 
 FString FFuGameplayEffectContext::ToString() const
 {
-	return FU_GET_TYPE_STRING(FFuGameplayEffectContext);
+	return FString{FU_GET_TYPE_STRING(FFuGameplayEffectContext)};
 }
 
 FGameplayEffectContext* FFuGameplayEffectContext::Duplicate() const

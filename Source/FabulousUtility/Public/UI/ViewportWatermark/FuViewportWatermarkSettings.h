@@ -17,7 +17,7 @@ struct FABULOUSUTILITY_API FFuViewportWatermarkTextSettings
 	TEnumAsByte<EVerticalAlignment> VerticalAlignment{VAlign_Center};
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility", Meta = (AllowPreserveRatio))
-	FVector2D Padding{50.0f, 50.0f};
+	FVector2f Padding{50.0f, 50.0f};
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
 	FSlateFontInfo Font;
@@ -26,7 +26,7 @@ struct FABULOUSUTILITY_API FFuViewportWatermarkTextSettings
 	FLinearColor ColorAndOpacity{0.8f, 0.8f, 0.8f, 0.2f};
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
-	FVector2D ShadowOffset{FVector2D::ZeroVector};
+	FVector2f ShadowOffset{FVector2f::ZeroVector};
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
 	FLinearColor ShadowColorAndOpacity{0.0f, 0.0f, 0.0f, 0.0f};

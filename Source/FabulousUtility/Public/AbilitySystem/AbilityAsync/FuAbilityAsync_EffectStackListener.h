@@ -4,8 +4,6 @@
 #include "AbilitySystem/AbilityTasks/FuAbilityTask_EffectStackListener.h"
 #include "FuAbilityAsync_EffectStackListener.generated.h"
 
-class UFuAbilitySystemComponent;
-
 UCLASS(DisplayName = "Fu Effect Stack Listener Ability Async")
 class FABULOUSUTILITY_API UFuAbilityAsync_EffectStackListener : public UAbilityAsync
 {

@@ -4,6 +4,9 @@
 #include "Engine/World.h"
 #include "GameFramework/PawnMovementComponent.h"
 
+// ReSharper disable once CppUnusedIncludeDirective
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuActorUtility)
+
 bool UFuActorUtility::IsActorLoadedFromLevel(const AActor* Actor)
 {
 	// https://forums.unrealengine.com/t/check-if-an-actor-was-placed-in-editor-or-spawned-at-runtime/373272/7

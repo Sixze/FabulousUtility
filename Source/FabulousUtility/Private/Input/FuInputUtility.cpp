@@ -3,6 +3,8 @@
 #include "FuMacros.h"
 #include "GameFramework/PlayerController.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuInputUtility)
+
 void UFuInputUtility::SetBlockInput(AActor* Actor, const bool bBlockInput)
 {
 	if (FU_ENSURE(IsValid(Actor)))

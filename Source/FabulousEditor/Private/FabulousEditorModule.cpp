@@ -2,6 +2,7 @@
 
 #include "FuEditorSettings.h"
 #include "Framework/Application/SlateApplication.h"
+#include "Modules/ModuleManager.h"
 
 IMPLEMENT_MODULE(FFabulousEditorModule, FabulousEditor)
 

@@ -5,6 +5,8 @@
 #include "AIController.h"
 #include "FuMacros.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTTask_WaitForTagChange)
+
 struct FFuTagListenerMemory
 {
 	TWeakObjectPtr<UAbilitySystemComponent> AbilitySystem;
@@ -12,7 +14,7 @@ struct FFuTagListenerMemory
 
 UFuBTTask_WaitForTagChange::UFuBTTask_WaitForTagChange()
 {
-	NodeName = TEXT("Fu Wait for Tag Change");
+	NodeName = TEXTVIEW("Fu Wait for Tag Change");
 	bIgnoreRestartSelf = false;
 
 	INIT_TASK_NODE_NOTIFY_FLAGS();
@@ -33,24 +35,35 @@ uint16 UFuBTTask_WaitForTagChange::GetInstanceMemorySize() const
 
 FString UFuBTTask_WaitForTagChange::GetStaticDescription() const
 {
+	TStringBuilder<256> DescriptionBuilder;
+
 	switch (WaitMode)
 	{
 		case EFuTagWaitMode::WaitForTagAdd:
-			return FString::Printf(TEXT("Wait for Tag Add: %s"), *Tag.ToString());
+			DescriptionBuilder << TEXTVIEW("Wait for Tag Add: ");
+			break;
 
 		case EFuTagWaitMode::WaitForTagRemove:
-			return FString::Printf(TEXT("Wait for Tag Remove: %s"), *Tag.ToString());
+			DescriptionBuilder << TEXTVIEW("Wait for Tag Remove: ");
+			break;
 
 		default:
 			FU_ENSURE(false);
 			return Super::GetStaticDescription();
 	}
+
+	if (Tag.IsValid())
+	{
+		DescriptionBuilder << Tag.GetTagName();
+	}
+
+	return FString{DescriptionBuilder};
 }
 
 #if WITH_EDITOR
 FName UFuBTTask_WaitForTagChange::GetNodeIconName() const
 {
-	return TEXT("BTEditor.Graph.BTNode.Task.Wait.Icon");
+	return FName{TEXTVIEW("BTEditor.Graph.BTNode.Task.Wait.Icon")};
 }
 #endif
 

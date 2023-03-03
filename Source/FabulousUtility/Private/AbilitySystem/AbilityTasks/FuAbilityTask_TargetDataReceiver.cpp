@@ -2,6 +2,8 @@
 
 #include "AbilitySystemComponent.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_TargetDataReceiver)
+
 UFuAbilityTask_TargetDataReceiver* UFuAbilityTask_TargetDataReceiver::FuReceiveTargetData(UGameplayAbility* OwningAbility,
                                                                                           const bool bReceiveOnce)
 {
@@ -32,7 +34,7 @@ void UFuAbilityTask_TargetDataReceiver::Activate()
 
 void UFuAbilityTask_TargetDataReceiver::OnDestroy(const bool bInOwnerFinished)
 {
-	if (IsValid(AbilitySystemComponent))
+	if (AbilitySystemComponent.IsValid())
 	{
 		AbilitySystemComponent->AbilityTargetDataSetDelegate(GetAbilitySpecHandle(), GetActivationPredictionKey()).RemoveAll(this);
 	}

@@ -4,9 +4,10 @@
 #include "FuMacros.h"
 #include "Engine/Engine.h"
 #include "Engine/GameViewportClient.h"
-#include "Widgets/SWindow.h"
 #include "Windows/WindowsHWrapper.h"
 #endif
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuOSUtility)
 
 void UFuOSUtility::FlashUnfocusedWindow()
 {

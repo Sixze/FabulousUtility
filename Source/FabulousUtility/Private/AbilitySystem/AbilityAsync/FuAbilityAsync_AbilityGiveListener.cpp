@@ -4,6 +4,8 @@
 #include "FuMacros.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AbilityGiveListener)
+
 UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuListenForAbilityGivenOnActor(
 	const AActor* Actor, const FGameplayTag AbilityTag)
 {

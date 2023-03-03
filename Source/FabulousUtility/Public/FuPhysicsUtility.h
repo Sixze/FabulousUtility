@@ -1,8 +1,13 @@
 #pragma once
 
-#include "Engine/CollisionProfile.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuPhysicsUtility.generated.h"
+
+enum ECollisionChannel;
+enum EObjectTypeQuery;
+struct FCollisionProfileName;
+struct FOverlapResult;
+struct FCollisionResponseParams;
 
 UCLASS()
 class FABULOUSUTILITY_API UFuPhysicsUtility : public UBlueprintFunctionLibrary

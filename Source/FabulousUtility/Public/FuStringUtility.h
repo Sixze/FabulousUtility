@@ -9,7 +9,7 @@ class FABULOUSUTILITY_API UFuStringUtility : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	static constexpr const TCHAR* BoolToString(bool bValue);
+	static constexpr FStringView BoolToString(bool bValue);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu String Utility",
 		DisplayName = "To Formatted String (Float)", Meta = (AdvancedDisplay = 1))
@@ -18,7 +18,7 @@ public:
 	                                      int32 MinFractionalDigits = 0, int32 MaxFractionalDigits = 3);
 };
 
-constexpr const TCHAR* UFuStringUtility::BoolToString(const bool bValue)
+constexpr FStringView UFuStringUtility::BoolToString(const bool bValue)
 {
-	return bValue ? TEXT("True") : TEXT("False");
+	return bValue ? TEXTVIEW("True") : TEXTVIEW("False");
 }

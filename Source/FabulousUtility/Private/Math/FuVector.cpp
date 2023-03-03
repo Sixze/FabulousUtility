@@ -1,5 +1,7 @@
 #include "Math/FuVector.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuVector)
+
 FVector UFuVector::SlerpAngleSkipNormalization(const FVector& From, const FVector& To, float Angle)
 {
 	// http://allenchou.net/2018/05/game-math-deriving-the-slerp-formula/
@@ -25,7 +27,7 @@ FVector UFuVector::RandomUnitVector()
 {
 	// http://stackoverflow.com/questions/5408276/python-uniform-spherical-distribution
 
-	const auto Phi{FMath::FRandRange(0.0f, TWO_PI)};
+	const auto Phi{FMath::FRandRange(0.0f, UE_TWO_PI)};
 
 	float SinPhi, CosPhi;
 	FMath::SinCos(&SinPhi, &CosPhi, Phi);

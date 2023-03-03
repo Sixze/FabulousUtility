@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Engine/GameInstance.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuUtility.generated.h"
 

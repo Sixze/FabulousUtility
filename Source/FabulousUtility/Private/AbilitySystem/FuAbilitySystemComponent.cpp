@@ -1,10 +1,10 @@
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 
-#include "AbilitySystemGlobals.h"
 #include "AbilitySystemInterface.h"
-#include "FuMacros.h"
 #include "AbilitySystem/FuGameplayAbility.h"
 #include "AbilitySystem/FuGameplayEffect.h"
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilitySystemComponent)
 
 bool UFuAbilitySystemComponent::TryGetFuAbilitySystem(const UObject* Object, ThisClass*& AbilitySystem, const bool bAllowFindComponent)
 {

@@ -3,6 +3,8 @@
 #include "Engine/Engine.h"
 #include "Engine/NetDriver.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuObject)
+
 void UFuObject::PostInitProperties()
 {
 	Super::PostInitProperties();

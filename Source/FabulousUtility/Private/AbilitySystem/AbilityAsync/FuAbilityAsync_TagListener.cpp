@@ -4,6 +4,8 @@
 #include "AbilitySystemGlobals.h"
 #include "FuMacros.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_TagListener)
+
 UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::FuListenForTagChangeOnActor(const AActor* Actor, const FGameplayTag Tag)
 {
 	return FuListenForTagChange(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor), Tag);

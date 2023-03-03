@@ -3,6 +3,9 @@
 #include "AbilitySystemComponent.h"
 #include "FuMacros.h"
 
+// ReSharper disable once CppUnusedIncludeDirective
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAttributeUtility)
+
 bool UFuAttributeUtility::TryGetAttributeValue(const UAbilitySystemComponent* AbilitySystem,
                                                const FGameplayAttribute& Attribute, float& Value)
 {
@@ -67,7 +70,7 @@ void UFuAttributeUtility::AdjustAttributeForMaxChange(UAbilitySystemComponent* A
 	}
 
 	const auto NewValue{
-		PreviousMaxValue > SMALL_NUMBER
+		PreviousMaxValue > UE_SMALL_NUMBER
 			? AbilitySystem->GetNumericAttributeBase(Attribute) * NewMaxValue / PreviousMaxValue
 			: NewMaxValue
 	};

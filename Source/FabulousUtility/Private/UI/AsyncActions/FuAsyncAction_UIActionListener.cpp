@@ -4,14 +4,22 @@
 #include "FuMacros.h"
 #include "Input/CommonUIActionRouterBase.h"
 
-UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::FuListenForUIAction(UCommonUserWidget* Widget,
-                                                                                      const FUIActionTag ActionTag,
-                                                                                      const FFuUIActionBindingArguments ActionArguments)
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_UIActionListener)
+
+UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::FuListenForUIAction(
+	UCommonUserWidget* Widget, const FUIActionTag ActionTag, const ECommonInputMode InputMode,
+	const TEnumAsByte<EInputEvent> KeyEvent, const bool bPersistent, const bool bConsumeInput,
+	const bool bDisplayInActionBar, const FText DisplayNameOverride)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->Widget1 = Widget;
-	Task->ActionArguments1 = ActionArguments;
+	Task->InputMode1 = InputMode;
+	Task->KeyEvent1 = KeyEvent;
+	Task->bPersistent1 = bPersistent;
+	Task->bConsumeInput1 = bConsumeInput;
+	Task->bDisplayInActionBar1 = bDisplayInActionBar;
+	Task->DisplayNameOverride1 = DisplayNameOverride;
 
 	if (FU_ENSURE(ActionTag.IsValid()))
 	{
@@ -21,14 +29,20 @@ UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::FuListenForUIA
 	return Task;
 }
 
-UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::FuListenForUIActions(UCommonUserWidget* Widget,
-                                                                                       const FGameplayTagContainer ActionTags,
-                                                                                       const FFuUIActionBindingArguments ActionArguments)
+UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::FuListenForUIActions(
+	UCommonUserWidget* Widget, const FGameplayTagContainer ActionTags, const ECommonInputMode InputMode,
+	const TEnumAsByte<EInputEvent> KeyEvent, const bool bPersistent, const bool bConsumeInput,
+	const bool bDisplayInActionBar, const FText DisplayNameOverride)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->Widget1 = Widget;
-	Task->ActionArguments1 = ActionArguments;
+	Task->InputMode1 = InputMode;
+	Task->KeyEvent1 = KeyEvent;
+	Task->bPersistent1 = bPersistent;
+	Task->bConsumeInput1 = bConsumeInput;
+	Task->bDisplayInActionBar1 = bDisplayInActionBar;
+	Task->DisplayNameOverride1 = DisplayNameOverride;
 
 	for (const auto& Tag : ActionTags)
 	{
@@ -63,12 +77,12 @@ void UFuAsyncAction_UIActionListener::Activate()
 	}
 
 	FBindUIActionArgs ActionArguments{ActionTags1[0], nullptr};
-	ActionArguments.InputMode = ActionArguments1.InputMode;
-	ActionArguments.KeyEvent = ActionArguments1.KeyEvent;
-	ActionArguments.bIsPersistent = ActionArguments1.bIsPersistent;
-	ActionArguments.bConsumeInput = ActionArguments1.bConsumeInput;
-	ActionArguments.bDisplayInActionBar = ActionArguments1.bDisplayInActionBar;
-	ActionArguments.OverrideDisplayName = ActionArguments1.DisplayNameOverride;
+	ActionArguments.InputMode = InputMode1;
+	ActionArguments.KeyEvent = KeyEvent1;
+	ActionArguments.bIsPersistent = bPersistent1;
+	ActionArguments.bConsumeInput = bConsumeInput1;
+	ActionArguments.bDisplayInActionBar = bDisplayInActionBar1;
+	ActionArguments.OverrideDisplayName = DisplayNameOverride1;
 
 	auto& WidgetActionHandles{const_cast<TArray<FUIActionBindingHandle>&>(Widget1->GetActionBindings())};
 

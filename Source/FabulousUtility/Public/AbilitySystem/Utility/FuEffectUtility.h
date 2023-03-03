@@ -1,10 +1,7 @@
 #pragma once
 
-#include "GameplayEffect.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuEffectUtility.generated.h"
-
-class UFuAbilitySystemComponent;
 
 UCLASS()
 class FABULOUSUTILITY_API UFuEffectUtility : public UBlueprintFunctionLibrary

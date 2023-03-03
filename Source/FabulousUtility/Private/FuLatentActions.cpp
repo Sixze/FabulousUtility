@@ -4,6 +4,9 @@
 #include "LatentActions.h"
 #include "Engine/World.h"
 
+// ReSharper disable once CppUnusedIncludeDirective
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuLatentActions)
+
 class FABULOUSUTILITY_API FFuDelayLatentAction : public FPendingLatentAction
 {
 protected:
@@ -67,7 +70,7 @@ void FFuDelayLatentAction::UpdateOperation(FLatentResponse& Response)
 		return;
 	}
 
-	if (Duration <= SMALL_NUMBER)
+	if (Duration <= UE_SMALL_NUMBER)
 	{
 		TimeRemaining = 0.0f;
 		LoopIndex = FMath::Max(0, LoopsCount);
@@ -98,7 +101,13 @@ void FFuDelayLatentAction::UpdateOperation(FLatentResponse& Response)
 #if WITH_EDITOR
 FString FFuDelayLatentAction::GetDescription() const
 {
-	return FString::Printf(TEXT("Time Remaining: %.2f, Loop Index: %d."), TimeRemaining, LoopIndex);
+	TStringBuilder<128> DescriptionBuilder;
+
+	DescriptionBuilder << TEXTVIEW("Time Remaining: ");
+	DescriptionBuilder.Appendf(TEXT("%.2f"), TimeRemaining);
+	DescriptionBuilder << TEXTVIEW(", Loop Index: ") << LoopIndex;
+
+	return FString{DescriptionBuilder};
 }
 #endif
 

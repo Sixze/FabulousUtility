@@ -2,6 +2,8 @@
 
 #include "AbilitySystem/FuGameplayAbility.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityUtility)
+
 bool UFuAbilityUtility::TryCommitAbility(UGameplayAbility* Ability, const bool bCancelOnFailure)
 {
 	if (!IsValid(Ability))

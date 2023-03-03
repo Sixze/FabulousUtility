@@ -2,20 +2,23 @@
 
 #include "HAL/Platform.h"
 
-#define FU_STRINGIFY_IMPLEMENTATION(Value) TEXT(#Value)
+#define FU_STRINGIFY_IMPLEMENTATION(Value) #Value
 
 #define FU_STRINGIFY(Value) FU_STRINGIFY_IMPLEMENTATION(Value)
 
 #define FU_GET_TYPE_STRING(Type) \
-	((void) sizeof UEAsserts_Private::GetMemberNameCheckedJunk(static_cast<Type*>(nullptr)), TEXT(#Type))
+	((void) sizeof UEAsserts_Private::GetMemberNameCheckedJunk(static_cast<Type*>(nullptr)), TEXTVIEW(#Type))
 
 #define FU_GET_ENUM_VALUE_STRING(Enum, EnumValue) \
-	((void) sizeof UEAsserts_Private::GetMemberNameCheckedJunk(Enum::EnumValue), TEXT(#EnumValue))
+	((void) sizeof UEAsserts_Private::GetMemberNameCheckedJunk(Enum::EnumValue), TEXTVIEW(#EnumValue))
+
+// A lightweight version of the ensure() macro that doesn't generate a C++ call stack and doesn't send a
+// crash report, because it doesn't happen instantly and causes the editor to freeze, which can be annoying.
 
 #if DO_ENSURE && !USING_CODE_ANALYSIS
 
 #define FU_ENSURE_IMPLEMENTATION(Expression, bEnsureAlways, Format, Capture, ...) \
-	(LIKELY(Expression) || ([Capture]() FORCENOINLINE UE_DEBUG_SECTION \
+	(LIKELY(Expression) || ([Capture]() UE_DEBUG_SECTION \
 	{ \
 		static auto bExecuted{false}; \
 		\
@@ -23,14 +26,14 @@
 		{ \
 			bExecuted = true; \
 			\
-			UE_LOG(LogOutputDevice, Warning, TEXT("Ensure failed: ") TEXT(#Expression) TEXT(", File: ") __FILE__ TEXT(", Line: ") FU_STRINGIFY(__LINE__) TEXT(".")); \
+			UE_LOG(LogOutputDevice, Warning, TEXT("Ensure failed: ") TEXT(#Expression) TEXT(", File: ") __FILE__ TEXT(", Line: ") TEXT(FU_STRINGIFY(__LINE__)) TEXT(".")); \
 			UE_LOG(LogOutputDevice, Warning, Format, ##__VA_ARGS__); \
 			\
 			PrintScriptCallstack(); \
 			\
 			if (FPlatformMisc::IsDebuggerPresent()) \
 			{ \
-				PLATFORM_BREAK(); \
+				PLATFORM_BREAK_IF_DESIRED(); \
 			} \
 			else \
 			{ \

@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Modules/ModuleManager.h"
+#include "Modules/ModuleInterface.h"
 
 class FABULOUSEDITOR_API FFabulousEditorModule : public IModuleInterface
 {

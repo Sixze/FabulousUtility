@@ -5,6 +5,9 @@
 #include "AIController.h"
 #include "FuMacros.h"
 
+// ReSharper disable once CppUnusedIncludeDirective
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTTask_ActivateAbility)
+
 struct FFuActivateAbilityMemory
 {
 	TWeakObjectPtr<UAbilitySystemComponent> AbilitySystem;
@@ -16,7 +19,7 @@ struct FFuActivateAbilityMemory
 
 UFuBTTask_ActivateAbility::UFuBTTask_ActivateAbility()
 {
-	NodeName = TEXT("Fu Activate Ability");
+	NodeName = TEXTVIEW("Fu Activate Ability");
 	bIgnoreRestartSelf = true;
 
 	INIT_TASK_NODE_NOTIFY_FLAGS();
@@ -29,22 +32,29 @@ uint16 UFuBTTask_ActivateAbility::GetInstanceMemorySize() const
 
 FString UFuBTTask_ActivateAbility::GetStaticDescription() const
 {
-	FString Description;
+	TStringBuilder<256> DescriptionBuilder;
 
 	if (bWaitForAbilityEnd)
 	{
-		Description = bCancelAbilityOnAbort
-			              ? TEXT("( wait for end, cancel on abort )") LINE_TERMINATOR
-			              : TEXT("( wait for end )") LINE_TERMINATOR;
+		DescriptionBuilder << (bCancelAbilityOnAbort
+			                       ? TEXTVIEW("( wait for end, cancel on abort )") LINE_TERMINATOR
+			                       : TEXTVIEW("( wait for end )") LINE_TERMINATOR);
 	}
 
-	return Description + FString::Printf(TEXT("Activate Ability: %s"), *AbilityTag.ToString());
+	DescriptionBuilder << TEXTVIEW("Activate Ability:");
+
+	if (AbilityTag.IsValid())
+	{
+		DescriptionBuilder << AbilityTag.GetTagName();
+	}
+
+	return FString{DescriptionBuilder};
 }
 
 #if WITH_EDITOR
 FName UFuBTTask_ActivateAbility::GetNodeIconName() const
 {
-	return TEXT("BTEditor.Graph.BTNode.Task.RunEQSQuery.Icon");
+	return FName{TEXTVIEW("BTEditor.Graph.BTNode.Task.RunEQSQuery.Icon")};
 }
 #endif
 

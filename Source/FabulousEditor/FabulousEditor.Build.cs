@@ -5,7 +5,10 @@ public class FabulousEditor : ModuleRules
 	public FabulousEditor(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_1;
 
-		PrivateDependencyModuleNames.AddRange(new[] {"Core", "CoreUObject", "Engine", "Slate", "DeveloperSettings"});
+		bEnableNonInlinedGenCppWarnings = true;
+
+		PrivateDependencyModuleNames.AddRange(new[] {"Core", "CoreUObject", "Slate", "DeveloperSettings"});
 	}
 }

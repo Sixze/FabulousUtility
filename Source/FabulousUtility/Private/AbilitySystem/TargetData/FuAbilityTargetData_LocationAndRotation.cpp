@@ -1,5 +1,7 @@
 #include "AbilitySystem/TargetData/FuAbilityTargetData_LocationAndRotation.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTargetData_LocationAndRotation)
+
 bool FFuAbilityTargetData_LocationAndRotation::HasOrigin() const
 {
 	return true;
@@ -17,7 +19,7 @@ UScriptStruct* FFuAbilityTargetData_LocationAndRotation::GetScriptStruct() const
 
 FString FFuAbilityTargetData_LocationAndRotation::ToString() const
 {
-	return FU_GET_TYPE_STRING(FFuAbilityTargetData_LocationAndRotation);
+	return FString{FU_GET_TYPE_STRING(FFuAbilityTargetData_LocationAndRotation)};
 }
 
 bool FFuAbilityTargetData_LocationAndRotation::NetSerialize(FArchive& Archive, UPackageMap* Map, bool& bSuccess)

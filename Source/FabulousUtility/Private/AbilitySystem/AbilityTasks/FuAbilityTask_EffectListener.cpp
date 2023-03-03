@@ -3,6 +3,8 @@
 #include "FuMacros.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_EffectListener)
+
 UFuAbilityTask_EffectListener* UFuAbilityTask_EffectListener::FuWaitForEffectChangeByTag(UGameplayAbility* OwningAbility,
                                                                                          const FGameplayTag EffectTag)
 {

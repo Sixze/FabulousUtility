@@ -2,6 +2,9 @@
 
 #include "AbilitySystemComponent.h"
 #include "FuMacros.h"
+#include "GameFramework/Pawn.h"
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_InputActionListener)
 
 UFuAbilityTask_InputActionListener* UFuAbilityTask_InputActionListener::FuWaitForInputAction(
 	UGameplayAbility* OwningAbility, UInputAction* InputAction)

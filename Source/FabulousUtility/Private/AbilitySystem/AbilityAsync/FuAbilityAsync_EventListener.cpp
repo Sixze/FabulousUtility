@@ -4,6 +4,8 @@
 #include "AbilitySystemGlobals.h"
 #include "FuMacros.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_EventListener)
+
 UFuAbilityAsync_EventListener* UFuAbilityAsync_EventListener::FuListenForEventOnActor(const AActor* Actor, const FGameplayTag EventTag)
 {
 	return FuListenForEvent(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor), EventTag);

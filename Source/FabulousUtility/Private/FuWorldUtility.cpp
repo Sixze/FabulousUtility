@@ -3,23 +3,26 @@
 #include "FuMacros.h"
 #include "Engine/World.h"
 
-constexpr const TCHAR* UFuWorldUtility::WorldTypeToString(const EWorldType::Type WorldType)
+// ReSharper disable once CppUnusedIncludeDirective
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuWorldUtility)
+
+constexpr FStringView UFuWorldUtility::WorldTypeToString(const EWorldType::Type WorldType)
 {
 	if (WorldType < EWorldType::None || WorldType > EWorldType::Inactive)
 	{
-		return TEXT("Unknown World Type");
+		return TEXTVIEW("Unknown World Type");
 	}
 
-	static const TCHAR* Strings[]
+	static constexpr FStringView Strings[]
 	{
-		FU_GET_ENUM_VALUE_STRING(EWorldType, None),
-		FU_GET_ENUM_VALUE_STRING(EWorldType, Game),
-		FU_GET_ENUM_VALUE_STRING(EWorldType, Editor),
-		FU_GET_ENUM_VALUE_STRING(EWorldType, PIE),
-		FU_GET_ENUM_VALUE_STRING(EWorldType, EditorPreview),
-		FU_GET_ENUM_VALUE_STRING(EWorldType, GamePreview),
-		FU_GET_ENUM_VALUE_STRING(EWorldType, GameRPC),
-		FU_GET_ENUM_VALUE_STRING(EWorldType, Inactive)
+		TEXTVIEW("None"),
+		TEXTVIEW("Game"),
+		TEXTVIEW("Editor"),
+		TEXTVIEW("PIE"),
+		TEXTVIEW("Editor Preview"),
+		TEXTVIEW("Game Preview"),
+		TEXTVIEW("Game RPC"),
+		TEXTVIEW("Inactive")
 	};
 
 	return Strings[WorldType];

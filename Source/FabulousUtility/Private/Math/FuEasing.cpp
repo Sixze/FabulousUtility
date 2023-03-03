@@ -1,18 +1,20 @@
 #include "Math/FuEasing.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuEasing)
+
 float UFuEasing::SineEaseIn(const float Value)
 {
-	return FMath::Sin(Value * HALF_PI - HALF_PI) + 1.0f;
+	return FMath::Sin(Value * UE_HALF_PI - UE_HALF_PI) + 1.0f;
 }
 
 float UFuEasing::SineEaseOut(const float Value)
 {
-	return FMath::Sin(Value * HALF_PI);
+	return FMath::Sin(Value * UE_HALF_PI);
 }
 
 float UFuEasing::SineEaseInOut(const float Value)
 {
-	return (1.0f - FMath::Cos(Value * PI)) * 0.5f;
+	return (1.0f - FMath::Cos(Value * UE_PI)) * 0.5f;
 }
 
 float UFuEasing::QuadraticEaseIn(const float Value)
@@ -146,14 +148,14 @@ float UFuEasing::CircularEaseInOut(const float Value)
 
 float UFuEasing::BackEaseIn(const float Value)
 {
-	return Value * Value * Value - Value * FMath::Sin(Value * PI);
+	return Value * Value * Value - Value * FMath::Sin(Value * UE_PI);
 }
 
 float UFuEasing::BackEaseOut(const float Value)
 {
 	const auto X{1.0f - Value};
 
-	return X * FMath::Sin(X * PI) - X * X * X + 1.0f;
+	return X * FMath::Sin(X * UE_PI) - X * X * X + 1.0f;
 }
 
 float UFuEasing::BackEaseInOut(const float Value)
@@ -162,29 +164,29 @@ float UFuEasing::BackEaseInOut(const float Value)
 	{
 		const auto X{Value * 2.0f};
 
-		return (X * X * X - X * FMath::Sin(X * PI)) * 0.5f;
+		return (X * X * X - X * FMath::Sin(X * UE_PI)) * 0.5f;
 	}
 
 	const auto X{2.0f - Value * 2.0f};
 
-	return (X * FMath::Sin(X * PI) - X * X * X + 1.0f) * 0.5f + 0.5f;
+	return (X * FMath::Sin(X * UE_PI) - X * X * X + 1.0f) * 0.5f + 0.5f;
 }
 
 float UFuEasing::ElasticEaseIn(const float Value)
 {
-	return FMath::Sin(Value * 13.0f * HALF_PI) * FMath::Pow(2.0f, Value * 10.0f - 10.0f);
+	return FMath::Sin(Value * 13.0f * UE_HALF_PI) * FMath::Pow(2.0f, Value * 10.0f - 10.0f);
 }
 
 float UFuEasing::ElasticEaseOut(const float Value)
 {
-	return FMath::Sin((1.0f - Value) * 13.0f * HALF_PI) * FMath::Pow(2.0f, -Value * 10.0f) + 1.0f;
+	return FMath::Sin((1.0f - Value) * 13.0f * UE_HALF_PI) * FMath::Pow(2.0f, -Value * 10.0f) + 1.0f;
 }
 
 float UFuEasing::ElasticEaseInOut(const float Value)
 {
 	return Value < 0.5f
-		       ? FMath::Sin(Value * 26.0f * HALF_PI) * FMath::Pow(2.0f, Value * 20.0f - 10.0f) * 0.5f
-		       : FMath::Sin(-Value * 26.0f * HALF_PI) * FMath::Pow(2.0f, 10.0f - Value * 20.0f) * 0.5f + 1.0f;
+		       ? FMath::Sin(Value * 26.0f * UE_HALF_PI) * FMath::Pow(2.0f, Value * 20.0f - 10.0f) * 0.5f
+		       : FMath::Sin(-Value * 26.0f * UE_HALF_PI) * FMath::Pow(2.0f, 10.0f - Value * 20.0f) * 0.5f + 1.0f;
 }
 
 float UFuEasing::BounceEaseIn(const float Value)

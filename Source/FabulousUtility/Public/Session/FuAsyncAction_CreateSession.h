@@ -1,7 +1,6 @@
 #pragma once
 
 #include "FindSessionsCallbackProxy.h"
-#include "Engine/EngineTypes.h"
 #include "FuAsyncAction_CreateSession.generated.h"
 
 UCLASS(DisplayName = "Fu Create Session Async Action")

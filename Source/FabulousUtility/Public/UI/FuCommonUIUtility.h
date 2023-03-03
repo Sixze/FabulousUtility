@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetTree.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuCommonUIUtility.generated.h"

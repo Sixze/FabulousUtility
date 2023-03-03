@@ -5,6 +5,8 @@
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 #include "AbilitySystem/Utility/FuEffectUtility.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AbilityCooldownListener)
+
 UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByAbilityTagOnActor(
 	const AActor* Actor, const FGameplayTag AbilityTag, const bool bWaitForTimeFromServer)
 {

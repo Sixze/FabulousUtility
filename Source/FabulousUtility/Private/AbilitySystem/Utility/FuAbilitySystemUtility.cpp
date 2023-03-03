@@ -3,6 +3,8 @@
 #include "AbilitySystemInterface.h"
 #include "FuGameplayTagUtility.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilitySystemUtility)
+
 bool UFuAbilitySystemUtility::TryGetAbilitySystem(const UObject* Object, UAbilitySystemComponent*& AbilitySystem,
                                                   const bool bAllowFindComponent)
 {

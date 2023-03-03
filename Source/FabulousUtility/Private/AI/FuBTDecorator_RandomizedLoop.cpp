@@ -1,7 +1,8 @@
 ﻿#include "AI/FuBTDecorator_RandomizedLoop.h"
 
-#include "BehaviorTree/BTCompositeNode.h"
 #include "BehaviorTree/Composites/BTComposite_SimpleParallel.h"
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTDecorator_RandomizedLoop)
 
 struct FFuRandomizedLoopMemory
 {
@@ -10,7 +11,7 @@ struct FFuRandomizedLoopMemory
 
 UFuBTDecorator_RandomizedLoop::UFuBTDecorator_RandomizedLoop()
 {
-	NodeName = TEXT("Fu Randomized Loop");
+	NodeName = TEXTVIEW("Fu Randomized Loop");
 
 	bAllowAbortNone = false;
 	bAllowAbortLowerPri = false;
@@ -42,7 +43,11 @@ void UFuBTDecorator_RandomizedLoop::DescribeRuntimeValues(const UBehaviorTreeCom
 
 	const auto& Memory{*CastInstanceNodeMemory<FFuRandomizedLoopMemory>(NodeMemory)};
 
-	Values.Add(FString::Format(TEXT("Loops remaining: {0}"), {Memory.RemainingLoopsCount}));
+	TStringBuilder<32> RuntimeValuesBuilder;
+
+	RuntimeValuesBuilder << TEXTVIEW("Loops remaining: ") << Memory.RemainingLoopsCount;
+
+	Values.Add(FString{RuntimeValuesBuilder});
 }
 
 uint16 UFuBTDecorator_RandomizedLoop::GetInstanceMemorySize() const
@@ -52,7 +57,11 @@ uint16 UFuBTDecorator_RandomizedLoop::GetInstanceMemorySize() const
 
 FString UFuBTDecorator_RandomizedLoop::GetStaticDescription() const
 {
-	return FString::Format(TEXT("Randomized Loop: {1}-{2} loops"), {*Super::GetStaticDescription(), MinLoopsCount, MaxLoopsCount});
+	TStringBuilder<64> DescriptionBuilder;
+
+	DescriptionBuilder << TEXTVIEW("Randomized Loop: ") << MinLoopsCount << TEXT('-') << MaxLoopsCount << TEXTVIEW(" loops");
+
+	return FString{DescriptionBuilder};
 }
 
 void UFuBTDecorator_RandomizedLoop::OnNodeActivation(FBehaviorTreeSearchData& SearchData)
@@ -83,6 +92,6 @@ void UFuBTDecorator_RandomizedLoop::OnNodeActivation(FBehaviorTreeSearchData& Se
 #if WITH_EDITOR
 FName UFuBTDecorator_RandomizedLoop::GetNodeIconName() const
 {
-	return TEXT("BTEditor.Graph.BTNode.Decorator.Loop.Icon");
+	return FName{TEXTVIEW("BTEditor.Graph.BTNode.Decorator.Loop.Icon")};
 }
 #endif
