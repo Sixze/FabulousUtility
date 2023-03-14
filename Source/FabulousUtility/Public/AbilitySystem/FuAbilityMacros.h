@@ -4,7 +4,7 @@
 #include "FuMacros.h"
 
 #define FU_ATTRIBUTE_ACCESSORS(AttributeName) \
-	static const FGameplayAttribute& AttributeName##Attribute() \
+	static const FGameplayAttribute& Get##AttributeName##Attribute() \
 	{ \
 		static const FGameplayAttribute Attribute{FindFieldChecked<FProperty>(StaticClass(), GET_MEMBER_NAME_CHECKED(ThisClass, AttributeName))}; \
 		return Attribute; \
@@ -25,7 +25,7 @@
 		auto* AbilitySystem{GetOwningAbilitySystemComponent()}; \
 		if (FU_ENSURE(IsValid(AbilitySystem))) \
 		{ \
-			AbilitySystem->SetNumericAttributeBase(##AttributeName##Attribute(), New##AttributeName); \
+			AbilitySystem->SetNumericAttributeBase(Get##AttributeName##Attribute(), New##AttributeName); \
 		}; \
 	} \
 	\
@@ -36,11 +36,11 @@
 	}
 
 #define FU_ATTRIBUTE_ON_REPLICATED(AttributeName, PreviousValue) \
-	GetOwningAbilitySystemComponentChecked()->SetBaseAttributeValueFromReplication(AttributeName##Attribute(), AttributeName, PreviousValue);
+	GetOwningAbilitySystemComponentChecked()->SetBaseAttributeValueFromReplication(Get##AttributeName##Attribute(), AttributeName, PreviousValue);
 
 #define FU_ATTRIBUTE_CAPTURE_DEFINITION(AttributeSet, AttributeName, AttributeCaptureSource, bSnapshot) \
 	static const FGameplayEffectAttributeCaptureDefinition& AttributeName##Definition() \
 	{ \
-		static const FGameplayEffectAttributeCaptureDefinition Definition{AttributeSet::##AttributeName##Attribute(), EGameplayEffectAttributeCaptureSource::AttributeCaptureSource, bSnapshot}; \
+		static const FGameplayEffectAttributeCaptureDefinition Definition{AttributeSet::Get##AttributeName##Attribute(), EGameplayEffectAttributeCaptureSource::AttributeCaptureSource, bSnapshot}; \
 		return Definition; \
 	}

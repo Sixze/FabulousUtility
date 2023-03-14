@@ -6,14 +6,9 @@
 // ReSharper disable once CppUnusedIncludeDirective
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuWorldUtility)
 
-constexpr FStringView UFuWorldUtility::WorldTypeToString(const EWorldType::Type WorldType)
+namespace FuWorldUtilityConstants
 {
-	if (WorldType < EWorldType::None || WorldType > EWorldType::Inactive)
-	{
-		return TEXTVIEW("Unknown World Type");
-	}
-
-	static constexpr FStringView Strings[]
+	inline static constexpr FStringView WorldTypeStrings[]
 	{
 		TEXTVIEW("None"),
 		TEXTVIEW("Game"),
@@ -24,8 +19,13 @@ constexpr FStringView UFuWorldUtility::WorldTypeToString(const EWorldType::Type 
 		TEXTVIEW("Game RPC"),
 		TEXTVIEW("Inactive")
 	};
+}
 
-	return Strings[WorldType];
+constexpr FStringView UFuWorldUtility::WorldTypeToString(const EWorldType::Type WorldType)
+{
+	return WorldType >= EWorldType::None && WorldType <= EWorldType::Inactive
+		       ? FuWorldUtilityConstants::WorldTypeStrings[WorldType]
+		       : TEXTVIEW("Unknown World Type");
 }
 
 float UFuWorldUtility::GetWorldGravityZ(const UObject* WorldContext)

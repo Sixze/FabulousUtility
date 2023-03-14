@@ -238,7 +238,7 @@ bool UFuEffectUtility::TryGetEffectTimeRemainingAndDurationByTag(const UFuAbilit
 	{
 		TimeRemaining = -1.0f;
 		Duration = -1.0f;
-		return nullptr;
+		return false;
 	}
 
 	return GetActiveEffectTimeRemainingAndDurationByTag(AbilitySystem, EffectTag, TimeRemaining, Duration) != nullptr;

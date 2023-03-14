@@ -111,7 +111,7 @@ bool AFuAbilityTargetActor_GroundPlacement::PerformGroundPlacement(FVector& Resu
 
 	// Sphere sweep.
 
-	static const FName SphereSweepTagName{__FUNCTION__ TEXTVIEW(" (Sphere Sweep)")};
+	static const FName SphereSweepTagName{FString::Printf(TEXT("%hs (Sphere Sweep)"), __FUNCTION__)};
 
 	FHitResult SphereSweepHit;
 	GetWorld()->SweepSingleByProfile(SphereSweepHit, {TraceStart.X, TraceStart.Y, TraceStart.Z + SphereSweepRadius},
@@ -138,7 +138,7 @@ bool AFuAbilityTargetActor_GroundPlacement::PerformGroundPlacement(FVector& Resu
 
 	// Slope trace.
 
-	static const FName SlopeTraceTagName{__FUNCTION__ TEXTVIEW(" (Slope Trace)")};
+	static const FName SlopeTraceTagName{FString::Printf(TEXT("%hs (Slope Trace)"), __FUNCTION__)};
 
 	FHitResult SlopeTraceHit;
 	GetWorld()->LineTraceSingleByProfile(SlopeTraceHit,
@@ -156,7 +156,7 @@ bool AFuAbilityTargetActor_GroundPlacement::PerformGroundPlacement(FVector& Resu
 
 	// Visibility trace.
 
-	static const FName VisibilityTraceTagName{__FUNCTION__ TEXTVIEW(" (Visibility Trace)")};
+	static const FName VisibilityTraceTagName{FString::Printf(TEXT("%hs (Visibility Trace)"), __FUNCTION__)};
 
 	FHitResult VisibilityTraceHit;
 	GetWorld()->LineTraceSingleByProfile(VisibilityTraceHit,

@@ -120,8 +120,8 @@ void UFuBTTask_WaitForTagChange::AbilitySystem_OnTagChanged(const FGameplayTag T
                                                             const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree) const
 {
 	// ReSharper disable CppRedundantParentheses
-	if ((WaitMode == EFuTagWaitMode::WaitForTagAdd && Count > 0 ||
-	     WaitMode == EFuTagWaitMode::WaitForTagRemove && Count <= 0) &&
+	if (((WaitMode == EFuTagWaitMode::WaitForTagAdd && Count > 0) ||
+	     (WaitMode == EFuTagWaitMode::WaitForTagRemove && Count <= 0)) &&
 	    // ReSharper restore CppRedundantParentheses
 	    FU_ENSURE(BehaviorTree.IsValid()))
 	{
