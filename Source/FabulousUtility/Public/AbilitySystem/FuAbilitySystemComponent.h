@@ -50,13 +50,14 @@ public:
 	virtual void NotifyAbilityFailed(FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability,
 	                                 const FGameplayTagContainer& FailureTags) override;
 
-protected:
 	virtual bool ShouldDoServerAbilityRPCBatch() const override;
 
+protected:
 	virtual void OnGiveAbility(FGameplayAbilitySpec& AbilitySpecification) override;
 
 	virtual void OnRemoveAbility(FGameplayAbilitySpec& AbilitySpecification) override;
 
+public:
 	virtual bool AreAbilityTagsBlocked(const FGameplayTagContainer& Tags) const override;
 
 	virtual void AbilityLocalInputPressed(int32 InputId) override;
