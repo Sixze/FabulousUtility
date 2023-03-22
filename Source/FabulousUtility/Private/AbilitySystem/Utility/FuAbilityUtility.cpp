@@ -1,8 +1,31 @@
 #include "AbilitySystem/Utility/FuAbilityUtility.h"
 
+#include "FuGameplayTagUtility.h"
 #include "AbilitySystem/FuGameplayAbility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityUtility)
+
+FGameplayTag UFuAbilityUtility::GetFirstDescendantAbilityTag(const UGameplayAbility* Ability, const FGameplayTag& ParentTag)
+{
+	if (!FU_ENSURE(IsValid(Ability)) || !FU_ENSURE(ParentTag.IsValid()))
+	{
+		return FGameplayTag::EmptyTag;
+	}
+
+	const auto Tag{UFuGameplayTagUtility::GetFirstDescendantTag(Ability->AbilityTags, ParentTag)};
+	if (Tag.IsValid())
+	{
+		return Tag;
+	}
+
+	const auto* AbilitySpecification{IsValid(Ability) ? Ability->GetCurrentAbilitySpec() : nullptr};
+	if (!FU_ENSURE(AbilitySpecification != nullptr))
+	{
+		return FGameplayTag::EmptyTag;
+	}
+
+	return UFuGameplayTagUtility::GetFirstDescendantTag(AbilitySpecification->DynamicAbilityTags, ParentTag);
+}
 
 bool UFuAbilityUtility::TryCommitAbility(UGameplayAbility* Ability, const bool bCancelOnFailure)
 {
