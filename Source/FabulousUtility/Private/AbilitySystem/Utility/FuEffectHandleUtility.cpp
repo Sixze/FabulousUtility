@@ -20,7 +20,7 @@ bool UFuEffectHandleUtility::SwitchIsActive(const FActiveGameplayEffectHandle Ef
 
 void UFuEffectHandleUtility::RemoveActiveEffect(FActiveGameplayEffectHandle EffectHandle, const int32 StacksToRemove)
 {
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(EffectHandle.GetOwningAbilitySystemComponent())};
+	auto* AbilitySystem{EffectHandle.GetOwningAbilitySystemComponent()};
 	if (IsValid(AbilitySystem))
 	{
 		AbilitySystem->RemoveActiveGameplayEffect(EffectHandle, StacksToRemove);
@@ -31,7 +31,7 @@ void UFuEffectHandleUtility::RemoveActiveEffects(const TArray<FActiveGameplayEff
 {
 	for (auto EffectHandle : EffectHandles)
 	{
-		auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(EffectHandle.GetOwningAbilitySystemComponent())};
+		auto* AbilitySystem{EffectHandle.GetOwningAbilitySystemComponent()};
 		if (IsValid(AbilitySystem))
 		{
 			AbilitySystem->RemoveActiveGameplayEffect(EffectHandle, StacksToRemove);
