@@ -27,6 +27,30 @@ FGameplayTag UFuAbilityUtility::GetFirstDescendantAbilityTag(const UGameplayAbil
 	return UFuGameplayTagUtility::GetFirstDescendantTag(AbilitySpecification->DynamicAbilityTags, ParentTag);
 }
 
+FGameplayTag UFuAbilityUtility::GetFirstDescendantAbilityTagByHandle(UAbilitySystemComponent* AbilitySystem,
+                                                                     const FGameplayAbilitySpecHandle AbilityHandle,
+                                                                     const FGameplayTag& ParentTag)
+{
+	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(AbilityHandle.IsValid()) || !FU_ENSURE(ParentTag.IsValid()))
+	{
+		return FGameplayTag::EmptyTag;
+	}
+
+	const auto* AbilitySpecification{AbilitySystem->FindAbilitySpecFromHandle(AbilityHandle)};
+	if (!FU_ENSURE(AbilitySpecification != nullptr))
+	{
+		return FGameplayTag::EmptyTag;
+	}
+
+	const auto Tag{UFuGameplayTagUtility::GetFirstDescendantTag(AbilitySpecification->DynamicAbilityTags, ParentTag)};
+	if (Tag.IsValid())
+	{
+		return Tag;
+	}
+
+	return UFuGameplayTagUtility::GetFirstDescendantTag(AbilitySpecification->Ability->AbilityTags, ParentTag);
+}
+
 bool UFuAbilityUtility::TryCommitAbility(UGameplayAbility* Ability, const bool bCancelOnFailure)
 {
 	if (!IsValid(Ability))

@@ -34,9 +34,14 @@ public:
 		Meta = (DefaultToSelf = "Ability", ExpandBoolAsExecs = "ReturnValue"))
 	static bool SwitchIsInputPressed(const UGameplayAbility* Ability);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability System Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility",
 		Meta = (DefaultToSelf = "Ability", AutoCreateRefTerm = "ParentTag"))
 	static FGameplayTag GetFirstDescendantAbilityTag(const UGameplayAbility* Ability, const FGameplayTag& ParentTag);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility", Meta = ( AutoCreateRefTerm = "ParentTag"))
+	static FGameplayTag GetFirstDescendantAbilityTagByHandle(UAbilitySystemComponent* AbilitySystem,
+	                                                         FGameplayAbilitySpecHandle AbilityHandle,
+	                                                         const FGameplayTag& ParentTag);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility", Meta = (DefaultToSelf = "Ability"))
 	static FActiveGameplayEffectHandle GetEffectHandleFromGrantedAbility(const UGameplayAbility* Ability);
