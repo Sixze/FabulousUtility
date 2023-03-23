@@ -1,21 +1,19 @@
 #include "AbilitySystem/AbilityAsync/FuAbilityAsync_EffectStackListener.h"
 
+#include "AbilitySystemComponent.h"
 #include "AbilitySystemGlobals.h"
 #include "FuMacros.h"
-#include "AbilitySystem/FuAbilitySystemComponent.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_EffectStackListener)
 
 UFuAbilityAsync_EffectStackListener* UFuAbilityAsync_EffectStackListener::FuListenForEffectStackChangeOnActor(
 	const AActor* Actor, const TSubclassOf<UGameplayEffect> EffectClass)
 {
-	return FuListenForEffectStackChange(
-		Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor)),
-		EffectClass);
+	return FuListenForEffectStackChange(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor), EffectClass);
 }
 
 UFuAbilityAsync_EffectStackListener* UFuAbilityAsync_EffectStackListener::FuListenForEffectStackChange(
-	UFuAbilitySystemComponent* AbilitySystem, const TSubclassOf<UGameplayEffect> EffectClass)
+	UAbilitySystemComponent* AbilitySystem, const TSubclassOf<UGameplayEffect> EffectClass)
 {
 	auto* Task{NewObject<ThisClass>()};
 
@@ -29,9 +27,9 @@ void UFuAbilityAsync_EffectStackListener::Activate()
 {
 	Super::Activate();
 
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(GetAbilitySystemComponent())};
+	auto* AbilitySystem{GetAbilitySystemComponent()};
 
-	if (!IsValid(GetAbilitySystemComponent()) || !FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(IsValid(EffectClass1)) ||
+	if (!IsValid(AbilitySystem) || !FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(IsValid(EffectClass1)) ||
 	    !FU_ENSURE(EffectClass1.GetDefaultObject()->StackingType != EGameplayEffectStackingType::None))
 	{
 		EndAction();
@@ -45,9 +43,11 @@ void UFuAbilityAsync_EffectStackListener::Activate()
 	auto bAnyEffectValid{false};
 
 	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
-	FScopedActiveGameplayEffectLock EffectScopeLock{AbilitySystem->GetActiveEffects()};
+	FScopedActiveGameplayEffectLock EffectScopeLock{
+		const_cast<FActiveGameplayEffectsContainer&>(AbilitySystem->GetActiveGameplayEffects())
+	};
 
-	for (const auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
+	for (const auto& ActiveEffect : &AbilitySystem->GetActiveGameplayEffects())
 	{
 		if (ActiveEffect.Spec.Def->GetClass() != EffectClass1)
 		{
@@ -73,13 +73,13 @@ void UFuAbilityAsync_EffectStackListener::Activate()
 
 void UFuAbilityAsync_EffectStackListener::EndAction()
 {
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(GetAbilitySystemComponent())};
+	auto* AbilitySystem{GetAbilitySystemComponent()};
 	if (IsValid(AbilitySystem))
 	{
 		AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.RemoveAll(this);
 		AbilitySystem->OnAnyGameplayEffectRemovedDelegate().RemoveAll(this);
 
-		for (auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
+		for (auto& ActiveEffect : const_cast<FActiveGameplayEffectsContainer*>(&AbilitySystem->GetActiveGameplayEffects()))
 		{
 			ActiveEffect.EventSet.OnStackChanged.RemoveAll(this);
 		}

@@ -1,7 +1,7 @@
 #include "AbilitySystem/Utility/FuEffectHandleUtility.h"
 
+#include "AbilitySystemComponent.h"
 #include "FuMacros.h"
-#include "AbilitySystem/FuAbilitySystemComponent.h"
 #include "Engine/World.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuEffectHandleUtility)
@@ -43,13 +43,13 @@ void UFuEffectHandleUtility::RecalculateEffectModifiers(FActiveGameplayEffectHan
 {
 	// https://github.com/tranek/GASDocumentation#concepts-ge-definition
 
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(EffectHandle.GetOwningAbilitySystemComponent())};
+	const auto* AbilitySystem{EffectHandle.GetOwningAbilitySystemComponent()};
 	if (!FU_ENSURE(IsValid(AbilitySystem)))
 	{
 		return;
 	}
 
-	auto& ActiveEffects{AbilitySystem->GetActiveEffects()};
+	auto& ActiveEffects{const_cast<FActiveGameplayEffectsContainer&>(AbilitySystem->GetActiveGameplayEffects())};
 
 	const auto* ActiveEffect{ActiveEffects.GetActiveGameplayEffect(EffectHandle)};
 	if (ActiveEffect != nullptr)
@@ -88,13 +88,13 @@ void UFuEffectHandleUtility::SetEffectDuration(FActiveGameplayEffectHandle Effec
 {
 	// https://github.com/tranek/GASDocumentation#concepts-ge-duration
 
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(EffectHandle.GetOwningAbilitySystemComponent())};
+	auto* AbilitySystem{EffectHandle.GetOwningAbilitySystemComponent()};
 	if (!FU_ENSURE(IsValid(AbilitySystem)))
 	{
 		return;
 	}
 
-	auto& ActiveEffects{AbilitySystem->GetActiveEffects()};
+	auto& ActiveEffects{const_cast<FActiveGameplayEffectsContainer&>(AbilitySystem->GetActiveGameplayEffects())};
 	auto* ActiveEffect{ActiveEffects.GetActiveGameplayEffect(EffectHandle)};
 
 	if (ActiveEffect == nullptr ||
@@ -124,13 +124,13 @@ void UFuEffectHandleUtility::SetEffectDuration(FActiveGameplayEffectHandle Effec
 
 void UFuEffectHandleUtility::SetEffectTimeRemaining(FActiveGameplayEffectHandle EffectHandle, float TimeRemaining)
 {
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(EffectHandle.GetOwningAbilitySystemComponent())};
+	auto* AbilitySystem{EffectHandle.GetOwningAbilitySystemComponent()};
 	if (!FU_ENSURE(IsValid(AbilitySystem)))
 	{
 		return;
 	}
 
-	auto& ActiveEffects{AbilitySystem->GetActiveEffects()};
+	auto& ActiveEffects{const_cast<FActiveGameplayEffectsContainer&>(AbilitySystem->GetActiveGameplayEffects())};
 	auto* ActiveEffect{ActiveEffects.GetActiveGameplayEffect(EffectHandle)};
 
 	if (ActiveEffect == nullptr ||
@@ -172,13 +172,13 @@ void UFuEffectHandleUtility::SetEffectTimeRemaining(FActiveGameplayEffectHandle 
 
 void UFuEffectHandleUtility::IncreaseEffectTimeRemaining(FActiveGameplayEffectHandle EffectHandle, const float AdditionalTimeRemaining)
 {
-	const auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(EffectHandle.GetOwningAbilitySystemComponent())};
+	const auto* AbilitySystem{EffectHandle.GetOwningAbilitySystemComponent()};
 	if (!FU_ENSURE(IsValid(AbilitySystem)))
 	{
 		return;
 	}
 
-	auto& ActiveEffects{AbilitySystem->GetActiveEffects()};
+	const auto& ActiveEffects{AbilitySystem->GetActiveGameplayEffects()};
 	auto* ActiveEffect{ActiveEffects.GetActiveGameplayEffect(EffectHandle)};
 
 	if (ActiveEffect != nullptr)

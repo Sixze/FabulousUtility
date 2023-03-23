@@ -121,7 +121,7 @@ void UFuAbilityAsync_AbilityCooldownListener::Activate()
 		             .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged);
 	}
 
-	for (auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
+	for (auto& ActiveEffect : const_cast<FActiveGameplayEffectsContainer*>(&AbilitySystem->GetActiveGameplayEffects()))
 	{
 		if (ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasAny(EffectTags.GetExplicitGameplayTags()) ||
 		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(EffectTags.GetExplicitGameplayTags()))
@@ -152,7 +152,7 @@ void UFuAbilityAsync_AbilityCooldownListener::EndAction()
 			AbilitySystem->RegisterGameplayTagEvent(EffectTag, EGameplayTagEventType::NewOrRemoved).RemoveAll(this);
 		}
 
-		for (auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
+		for (auto& ActiveEffect : const_cast<FActiveGameplayEffectsContainer*>(&AbilitySystem->GetActiveGameplayEffects()))
 		{
 			ActiveEffect.EventSet.OnTimeChanged.RemoveAll(this);
 		}
@@ -180,7 +180,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(
 
 	EffectTags.UpdateTagCount(*CooldownTags, bAddedOrRemoved ? 1 : -1);
 
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(GetAbilitySystemComponent())};
+	auto* AbilitySystem{GetAbilitySystemComponent()};
 
 	for (const auto& CooldownTag : *CooldownTags)
 	{
@@ -211,7 +211,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(
 
 	// Re-register effect time change events.
 
-	for (auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
+	for (auto& ActiveEffect : const_cast<FActiveGameplayEffectsContainer*>(&AbilitySystem->GetActiveGameplayEffects()))
 	{
 		ActiveEffect.EventSet.OnTimeChanged.RemoveAll(this);
 
@@ -230,7 +230,7 @@ void UFuAbilityAsync_AbilityCooldownListener::RefreshEffectTimeRemainingAndDurat
 		return;
 	}
 
-	const auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(GetAbilitySystemComponent())};
+	const auto* AbilitySystem{GetAbilitySystemComponent()};
 
 	float TimeRemaining, Duration;
 

@@ -63,10 +63,6 @@ public:
 	virtual void AbilityLocalInputPressed(int32 InputId) override;
 
 public:
-	const FActiveGameplayEffectsContainer& GetActiveEffects() const;
-
-	FActiveGameplayEffectsContainer& GetActiveEffects();
-
 	void InputTagPressed(const FGameplayTag& InputTag);
 
 	void InputTagReleased(const FGameplayTag& InputTag);
@@ -81,13 +77,3 @@ private:
 
 	void AbilitySystem_OnAnyTagChanged(FGameplayTag Tag, int32 Count);
 };
-
-inline const FActiveGameplayEffectsContainer& UFuAbilitySystemComponent::GetActiveEffects() const
-{
-	return ActiveGameplayEffects;
-}
-
-inline FActiveGameplayEffectsContainer& UFuAbilitySystemComponent::GetActiveEffects()
-{
-	return ActiveGameplayEffects;
-}

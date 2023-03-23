@@ -23,7 +23,7 @@ public:
 	                                                                                TSubclassOf<UGameplayEffect> EffectClass);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_EffectStackListener* FuListenForEffectStackChange(UFuAbilitySystemComponent* AbilitySystem,
+	static UFuAbilityAsync_EffectStackListener* FuListenForEffectStackChange(UAbilitySystemComponent* AbilitySystem,
 	                                                                         TSubclassOf<UGameplayEffect> EffectClass);
 
 public:

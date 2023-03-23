@@ -1,7 +1,7 @@
 #include "AbilitySystem/AbilityTasks/FuAbilityTask_EffectListener.h"
 
+#include "AbilitySystemComponent.h"
 #include "FuMacros.h"
-#include "AbilitySystem/FuAbilitySystemComponent.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_EffectListener)
 
@@ -38,16 +38,16 @@ void UFuAbilityTask_EffectListener::Activate()
 {
 	Super::Activate();
 
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(AbilitySystemComponent)};
-
-	if (!FU_ENSURE(IsValid(AbilitySystem)) || EffectTags1.IsEmpty())
+	if (EffectTags1.IsEmpty())
 	{
 		EndTask();
 		return;
 	}
 
-	AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectAdded);
-	AbilitySystem->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectRemoved);
+	AbilitySystemComponent->OnActiveGameplayEffectAddedDelegateToSelf
+	                      .AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectAdded);
+
+	AbilitySystemComponent->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectRemoved);
 
 	if (!ShouldBroadcastAbilityTaskDelegates())
 	{
@@ -55,9 +55,11 @@ void UFuAbilityTask_EffectListener::Activate()
 	}
 
 	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
-	FScopedActiveGameplayEffectLock EffectScopeLock{AbilitySystem->GetActiveEffects()};
+	FScopedActiveGameplayEffectLock EffectScopeLock{
+		const_cast<FActiveGameplayEffectsContainer&>(AbilitySystemComponent->GetActiveGameplayEffects())
+	};
 
-	for (const auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
+	for (const auto& ActiveEffect : &AbilitySystemComponent->GetActiveGameplayEffects())
 	{
 		if (ActiveEffect.Spec.CapturedSourceTags.GetSpecTags().HasAny(EffectTags1))
 		{
@@ -68,11 +70,10 @@ void UFuAbilityTask_EffectListener::Activate()
 
 void UFuAbilityTask_EffectListener::OnDestroy(const bool bInOwnerFinished)
 {
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(AbilitySystemComponent)};
-	if (IsValid(AbilitySystem))
+	if (AbilitySystemComponent.IsValid())
 	{
-		AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.RemoveAll(this);
-		AbilitySystem->OnAnyGameplayEffectRemovedDelegate().RemoveAll(this);
+		AbilitySystemComponent->OnActiveGameplayEffectAddedDelegateToSelf.RemoveAll(this);
+		AbilitySystemComponent->OnAnyGameplayEffectRemovedDelegate().RemoveAll(this);
 	}
 
 	Super::OnDestroy(bInOwnerFinished);

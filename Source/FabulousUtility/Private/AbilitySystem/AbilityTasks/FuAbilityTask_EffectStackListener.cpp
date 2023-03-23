@@ -1,7 +1,7 @@
 #include "AbilitySystem/AbilityTasks//FuAbilityTask_EffectStackListener.h"
 
+#include "AbilitySystemComponent.h"
 #include "FuMacros.h"
-#include "AbilitySystem/FuAbilitySystemComponent.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_EffectStackListener)
 
@@ -19,25 +19,26 @@ void UFuAbilityTask_EffectStackListener::Activate()
 {
 	Super::Activate();
 
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(AbilitySystemComponent)};
-
-	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(IsValid(EffectClass1)) ||
-	    !FU_ENSURE(EffectClass1.GetDefaultObject()->StackingType != EGameplayEffectStackingType::None))
+	if (!FU_ENSURE(IsValid(EffectClass1)) || !FU_ENSURE(EffectClass1.GetDefaultObject()->StackingType != EGameplayEffectStackingType::None))
 	{
 		EndTask();
 		return;
 	}
 
-	AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectAdded);
-	AbilitySystem->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectRemoved);
+	AbilitySystemComponent->OnActiveGameplayEffectAddedDelegateToSelf
+	                      .AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectAdded);
+
+	AbilitySystemComponent->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectRemoved);
 
 	const auto bDelegatesBroadcastAllowed{ShouldBroadcastAbilityTaskDelegates()};
 	auto bAnyEffectValid{false};
 
 	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
-	FScopedActiveGameplayEffectLock EffectScopeLock{AbilitySystem->GetActiveEffects()};
+	FScopedActiveGameplayEffectLock EffectScopeLock{
+		const_cast<FActiveGameplayEffectsContainer&>(AbilitySystemComponent->GetActiveGameplayEffects())
+	};
 
-	for (const auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
+	for (const auto& ActiveEffect : &AbilitySystemComponent->GetActiveGameplayEffects())
 	{
 		if (ActiveEffect.Spec.Def->GetClass() != EffectClass1)
 		{
@@ -46,8 +47,8 @@ void UFuAbilityTask_EffectStackListener::Activate()
 
 		bAnyEffectValid = true;
 
-		AbilitySystem->OnGameplayEffectStackChangeDelegate(ActiveEffect.Handle)
-		             ->AddUObject(this, &ThisClass::AbilitySystem_OnEffectStackChanged);
+		AbilitySystemComponent->OnGameplayEffectStackChangeDelegate(ActiveEffect.Handle)
+		                      ->AddUObject(this, &ThisClass::AbilitySystem_OnEffectStackChanged);
 
 		if (bDelegatesBroadcastAllowed)
 		{
@@ -63,13 +64,12 @@ void UFuAbilityTask_EffectStackListener::Activate()
 
 void UFuAbilityTask_EffectStackListener::OnDestroy(const bool bInOwnerFinished)
 {
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(AbilitySystemComponent)};
-	if (IsValid(AbilitySystem))
+	if (AbilitySystemComponent.IsValid())
 	{
-		AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.RemoveAll(this);
-		AbilitySystem->OnAnyGameplayEffectRemovedDelegate().RemoveAll(this);
+		AbilitySystemComponent->OnActiveGameplayEffectAddedDelegateToSelf.RemoveAll(this);
+		AbilitySystemComponent->OnAnyGameplayEffectRemovedDelegate().RemoveAll(this);
 
-		for (auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
+		for (auto& ActiveEffect : const_cast<FActiveGameplayEffectsContainer*>(&AbilitySystemComponent->GetActiveGameplayEffects()))
 		{
 			ActiveEffect.EventSet.OnStackChanged.RemoveAll(this);
 		}

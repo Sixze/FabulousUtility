@@ -64,9 +64,9 @@ void UFuAbilityAsync_EffectTimeListener::Activate()
 {
 	Super::Activate();
 
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(GetAbilitySystemComponent())};
+	auto* AbilitySystem{GetAbilitySystemComponent()};
 
-	if (!IsValid(GetAbilitySystemComponent()) || !FU_ENSURE(IsValid(AbilitySystem)) || EffectTags1.IsEmpty())
+	if (!IsValid(AbilitySystem) || !FU_ENSURE(IsValid(AbilitySystem)) || EffectTags1.IsEmpty())
 	{
 		EndAction();
 		return;
@@ -81,7 +81,7 @@ void UFuAbilityAsync_EffectTimeListener::Activate()
 		             .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged);
 	}
 
-	for (auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
+	for (auto& ActiveEffect : const_cast<FActiveGameplayEffectsContainer*>(&AbilitySystem->GetActiveGameplayEffects()))
 	{
 		if (ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasAny(EffectTags1) ||
 		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(EffectTags1))
@@ -98,7 +98,7 @@ void UFuAbilityAsync_EffectTimeListener::Activate()
 
 void UFuAbilityAsync_EffectTimeListener::EndAction()
 {
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(GetAbilitySystemComponent())};
+	auto* AbilitySystem{GetAbilitySystemComponent()};
 	if (IsValid(AbilitySystem))
 	{
 		AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.RemoveAll(this);
@@ -109,7 +109,7 @@ void UFuAbilityAsync_EffectTimeListener::EndAction()
 			AbilitySystem->RegisterGameplayTagEvent(EffectTag, EGameplayTagEventType::NewOrRemoved).RemoveAll(this);
 		}
 
-		for (auto& ActiveEffect : &AbilitySystem->GetActiveEffects())
+		for (auto& ActiveEffect : const_cast<FActiveGameplayEffectsContainer*>(&AbilitySystem->GetActiveGameplayEffects()))
 		{
 			ActiveEffect.EventSet.OnTimeChanged.RemoveAll(this);
 		}
@@ -125,7 +125,7 @@ void UFuAbilityAsync_EffectTimeListener::RefreshEffectTimeRemainingAndDurationFo
 		return;
 	}
 
-	const auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(GetAbilitySystemComponent())};
+	const auto* AbilitySystem{GetAbilitySystemComponent()};
 
 	float TimeRemaining, Duration;
 
@@ -214,7 +214,7 @@ void UFuAbilityAsync_EffectTimeListener::AbilitySystem_OnTagChanged(const FGamep
 void UFuAbilityAsync_EffectTimeListener::ActiveEffect_OnTimeChanged(const FActiveGameplayEffectHandle EffectHandle,
                                                                     const float StartTime, const float Duration) const
 {
-	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(GetAbilitySystemComponent())};
+	const auto* AbilitySystem{GetAbilitySystemComponent()};
 
 	auto* ActiveEffect{AbilitySystem->GetActiveGameplayEffect(EffectHandle)};
 	if (ActiveEffect == nullptr)
@@ -223,7 +223,8 @@ void UFuAbilityAsync_EffectTimeListener::ActiveEffect_OnTimeChanged(const FActiv
 	}
 
 	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
-	FScopedActiveGameplayEffectLock EffectScopeLock{AbilitySystem->GetActiveEffects()};
+	FScopedActiveGameplayEffectLock EffectScopeLock{
+		const_cast<FActiveGameplayEffectsContainer&>(AbilitySystem->GetActiveGameplayEffects())};
 
 	for (const auto& EffectTag : EffectTags1)
 	{
