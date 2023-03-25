@@ -62,6 +62,8 @@ public:
 
 	virtual void AbilityLocalInputPressed(int32 InputId) override;
 
+	virtual void AbilityLocalInputReleased(int32 InputId) override;
+
 public:
 	void InputTagPressed(const FGameplayTag& InputTag);
 
