@@ -58,4 +58,8 @@ void UFuAbilityTask_TargetDataReceiver::AbilitySystem_OnAbilityTargetDataSet(con
 	{
 		EndTask();
 	}
+	else
+	{
+		SetWaitingOnRemotePlayerData();
+	}
 }

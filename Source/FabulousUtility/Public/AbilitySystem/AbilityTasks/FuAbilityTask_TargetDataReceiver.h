@@ -3,8 +3,6 @@
 #include "FuAbilityTask_TargetDataSender.h"
 #include "FuAbilityTask_TargetDataReceiver.generated.h"
 
-// In most cases, you probably won't need to use UFuAbilityTask_TargetDataReceiver because
-// UFuAbilityTask_TargetDataSender also handles receiving target data on the server.
 UCLASS(DisplayName = "Fu Target Data Receiver Ability Task")
 class FABULOUSUTILITY_API UFuAbilityTask_TargetDataReceiver : public UAbilityTask
 {
@@ -19,6 +17,9 @@ public:
 	FFuTargetDataSenderDelegate OnTargetDataReceived;
 
 public:
+	// In most cases, you probably don't need to use UFuAbilityTask_TargetDataReceiver because
+	// UFuAbilityTask_TargetDataSender also handles receiving target data on the server. Also,
+	// this task works only on the server and does nothing in the standalone game or on clients.
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_TargetDataReceiver* FuReceiveTargetData(UGameplayAbility* OwningAbility, bool bReceiveOnce = false);
