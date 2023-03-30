@@ -6,11 +6,11 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_DestroySession)
 
-UFuAsyncAction_DestroySession* UFuAsyncAction_DestroySession::FuDestroySession(APlayerController* Player)
+UFuAsyncAction_DestroySession* UFuAsyncAction_DestroySession::FuDestroySession(APlayerController* InPlayer)
 {
 	auto* Task{NewObject<UFuAsyncAction_DestroySession>()};
 
-	Task->Player1 = Player;
+	Task->Player = InPlayer;
 
 	return Task;
 }
@@ -19,14 +19,14 @@ void UFuAsyncAction_DestroySession::Activate()
 {
 	Super::Activate();
 
-	if (!FU_ENSURE(Player1.IsValid()))
+	if (!FU_ENSURE(Player.IsValid()))
 	{
 		OnFailure.Broadcast();
 		SetReadyToDestroy();
 		return;
 	}
 
-	const auto Session{Online::GetSessionInterface(Player1->GetWorld())};
+	const auto Session{Online::GetSessionInterface(Player->GetWorld())};
 
 	if (!FU_ENSURE(Session.IsValid()) || Session->GetNamedSession(NAME_GameSession) == nullptr)
 	{

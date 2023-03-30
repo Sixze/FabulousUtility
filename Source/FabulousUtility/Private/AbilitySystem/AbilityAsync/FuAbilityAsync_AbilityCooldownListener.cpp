@@ -8,74 +8,74 @@
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AbilityCooldownListener)
 
 UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByAbilityTagOnActor(
-	const AActor* Actor, const FGameplayTag AbilityTag, const bool bWaitForTimeFromServer)
+	const AActor* Actor, const FGameplayTag InAbilityTag, const bool bInWaitForTimeFromServer)
 {
 	return FuListenForAbilityCooldownByAbilityTag(
 		Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor)),
-		AbilityTag, bWaitForTimeFromServer);
+		InAbilityTag, bInWaitForTimeFromServer);
 }
 
 UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByAbilityTagsOnActor(
-	const AActor* Actor, const FGameplayTagContainer AbilityTags, const bool bWaitForTimeFromServer)
+	const AActor* Actor, const FGameplayTagContainer InAbilityTags, const bool bInWaitForTimeFromServer)
 {
 	return FuListenForAbilityCooldownByAbilityTags(
 		Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor)),
-		AbilityTags, bWaitForTimeFromServer);
+		InAbilityTags, bInWaitForTimeFromServer);
 }
 
 UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByInputIdOnActor(
-	const AActor* Actor, const int32 InputId, const bool bWaitForTimeFromServer)
+	const AActor* Actor, const int32 InInputId, const bool bInWaitForTimeFromServer)
 {
 	return FuListenForAbilityCooldownByInputId(
 		Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor)),
-		InputId, bWaitForTimeFromServer);
+		InInputId, bInWaitForTimeFromServer);
 }
 
 UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByAbilityTag(
-	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag AbilityTag, const bool bWaitForTimeFromServer)
+	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag InAbilityTag, const bool bInWaitForTimeFromServer)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
-	if (FU_ENSURE(AbilityTag.IsValid()))
+	if (FU_ENSURE(InAbilityTag.IsValid()))
 	{
-		Task->AbilityTags1.AddTag(AbilityTag);
+		Task->AbilityTags.AddTag(InAbilityTag);
 	}
 
-	Task->bWaitForTimeFromServer1 = bWaitForTimeFromServer;
+	Task->bWaitForTimeFromServer = bInWaitForTimeFromServer;
 
 	return Task;
 }
 
 UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByAbilityTags(
-	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer AbilityTags, const bool bWaitForTimeFromServer)
+	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer InAbilityTags, const bool bInWaitForTimeFromServer)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
-	for (const auto& Tag : AbilityTags)
+	for (const auto& Tag : InAbilityTags)
 	{
 		if (FU_ENSURE(Tag.IsValid()))
 		{
-			Task->AbilityTags1.AddTag(Tag);
+			Task->AbilityTags.AddTag(Tag);
 		}
 	}
 
-	Task->bWaitForTimeFromServer1 = bWaitForTimeFromServer;
+	Task->bWaitForTimeFromServer = bInWaitForTimeFromServer;
 
 	return Task;
 }
 
 UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByInputId(
-	UFuAbilitySystemComponent* AbilitySystem, const int32 InputId, const bool bWaitForTimeFromServer)
+	UFuAbilitySystemComponent* AbilitySystem, const int32 InInputId, const bool bInWaitForTimeFromServer)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->SetAbilitySystemComponent(AbilitySystem);
-	Task->InputId1 = InputId;
-	Task->bWaitForTimeFromServer1 = bWaitForTimeFromServer;
+	Task->InputId = InInputId;
+	Task->bWaitForTimeFromServer = bInWaitForTimeFromServer;
 
 	return Task;
 }
@@ -88,7 +88,7 @@ void UFuAbilityAsync_AbilityCooldownListener::Activate()
 
 	if (!IsValid(GetAbilitySystemComponent()) || !FU_ENSURE(IsValid(AbilitySystem)) ||
 	    // ReSharper disable once CppRedundantParentheses
-	    (AbilityTags1.IsEmpty() && !FU_ENSURE(InputId1 >= 0)))
+	    (AbilityTags.IsEmpty() && !FU_ENSURE(InputId >= 0)))
 	{
 		EndAction();
 		return;
@@ -103,9 +103,9 @@ void UFuAbilityAsync_AbilityCooldownListener::Activate()
 	for (const auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
 	{
 		// ReSharper disable once CppRedundantParentheses
-		if ((InputId1 >= 0 && AbilitySpecification.InputID == InputId1) ||
-		    AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags1) ||
-		    AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags1))
+		if ((InputId >= 0 && AbilitySpecification.InputID == InputId) ||
+		    AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||
+		    AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags))
 		{
 			const auto* CooldownTags{AbilitySpecification.Ability->GetCooldownTags()};
 			if (CooldownTags != nullptr)
@@ -164,9 +164,9 @@ void UFuAbilityAsync_AbilityCooldownListener::EndAction()
 void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(const FGameplayAbilitySpec& AbilitySpecification,
                                                                                 const bool bAddedOrRemoved)
 {
-	if ((InputId1 < 0 || AbilitySpecification.InputID != InputId1) &&
-	    !AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags1) &&
-	    !AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags1))
+	if ((InputId < 0 || AbilitySpecification.InputID != InputId) &&
+	    !AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) &&
+	    !AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags))
 	{
 		return;
 	}
@@ -254,7 +254,7 @@ void UFuAbilityAsync_AbilityCooldownListener::RefreshEffectTimeRemainingAndDurat
 	}
 	else if (IsValid(ActiveEffect->Spec.GetContext().GetAbilityInstance_NotReplicated()))
 	{
-		if (bWaitForTimeFromServer1)
+		if (bWaitForTimeFromServer)
 		{
 			// Waiting for time from the server.
 			OnEffectStated.Broadcast(EffectTag, TimeRemaining, Duration, true);
@@ -265,7 +265,7 @@ void UFuAbilityAsync_AbilityCooldownListener::RefreshEffectTimeRemainingAndDurat
 			OnEffectStated.Broadcast(EffectTag, TimeRemaining, Duration, false);
 		}
 	}
-	else if (bWaitForTimeFromServer1)
+	else if (bWaitForTimeFromServer)
 	{
 		// Time from the server.
 		OnEffectStated.Broadcast(EffectTag, TimeRemaining, Duration, false);

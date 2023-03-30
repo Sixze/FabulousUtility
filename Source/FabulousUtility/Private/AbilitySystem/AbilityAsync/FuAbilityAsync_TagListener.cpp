@@ -6,44 +6,44 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_TagListener)
 
-UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::FuListenForTagChangeOnActor(const AActor* Actor, const FGameplayTag Tag)
+UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::FuListenForTagChangeOnActor(const AActor* Actor, const FGameplayTag InTag)
 {
-	return FuListenForTagChange(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor), Tag);
+	return FuListenForTagChange(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor), InTag);
 }
 
 UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::FuListenForTagsChangeOnActor(const AActor* Actor,
-                                                                                       const FGameplayTagContainer Tags)
+                                                                                       const FGameplayTagContainer InTags)
 {
-	return FuListenForTagsChange(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor), Tags);
+	return FuListenForTagsChange(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor), InTags);
 }
 
 UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::FuListenForTagChange(UAbilitySystemComponent* AbilitySystem,
-                                                                               const FGameplayTag Tag)
+                                                                               const FGameplayTag InTag)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
-	if (FU_ENSURE(Tag.IsValid()))
+	if (FU_ENSURE(InTag.IsValid()))
 	{
-		Task->Tags1.AddTag(Tag);
+		Task->Tags.AddTag(InTag);
 	}
 
 	return Task;
 }
 
 UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::FuListenForTagsChange(UAbilitySystemComponent* AbilitySystem,
-                                                                                const FGameplayTagContainer Tags)
+                                                                                const FGameplayTagContainer InTags)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
-	for (const auto& Tag : Tags)
+	for (const auto& Tag : InTags)
 	{
 		if (FU_ENSURE(Tag.IsValid()))
 		{
-			Task->Tags1.AddTag(Tag);
+			Task->Tags.AddTag(Tag);
 		}
 	}
 
@@ -56,13 +56,13 @@ void UFuAbilityAsync_TagListener::Activate()
 
 	auto* AbilitySystem{GetAbilitySystemComponent()};
 
-	if (!IsValid(AbilitySystem) || Tags1.IsEmpty())
+	if (!IsValid(AbilitySystem) || Tags.IsEmpty())
 	{
 		EndAction();
 		return;
 	}
 
-	for (const auto& Tag : Tags1)
+	for (const auto& Tag : Tags)
 	{
 		AbilitySystem->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved)
 		             .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged);
@@ -73,7 +73,7 @@ void UFuAbilityAsync_TagListener::Activate()
 		return;
 	}
 
-	for (const auto& Tag : Tags1)
+	for (const auto& Tag : Tags)
 	{
 		if (AbilitySystem->GetTagCount(Tag) > 0)
 		{
@@ -91,7 +91,7 @@ void UFuAbilityAsync_TagListener::EndAction()
 	auto* AbilitySystem{GetAbilitySystemComponent()};
 	if (IsValid(AbilitySystem))
 	{
-		for (const auto& Tag : Tags1)
+		for (const auto& Tag : Tags)
 		{
 			AbilitySystem->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved).RemoveAll(this);
 		}

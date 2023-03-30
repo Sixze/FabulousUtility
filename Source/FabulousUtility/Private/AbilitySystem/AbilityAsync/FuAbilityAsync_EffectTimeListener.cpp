@@ -8,23 +8,23 @@
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_EffectTimeListener)
 
 UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListenForEffectTimeChangeOnActor(
-	const AActor* Actor, const FGameplayTag EffectTag, const bool bWaitForTimeFromServer)
+	const AActor* Actor, const FGameplayTag InEffectTag, const bool bInWaitForTimeFromServer)
 {
 	return FuListenForEffectTimeChange(
 		Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor)),
-		EffectTag, bWaitForTimeFromServer);
+		InEffectTag, bInWaitForTimeFromServer);
 }
 
 UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListenForEffectsTimeChangeOnActor(
-	const AActor* Actor, const FGameplayTagContainer EffectTags, const bool bWaitForTimeFromServer)
+	const AActor* Actor, const FGameplayTagContainer InEffectTags, const bool bInWaitForTimeFromServer)
 {
 	return FuListenForEffectsTimeChange(
 		Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor)),
-		EffectTags, bWaitForTimeFromServer);
+		InEffectTags, bInWaitForTimeFromServer);
 }
 
 UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListenForEffectTimeChange(
-	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag EffectTag, const bool bWaitForTimeFromServer)
+	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag EffectTag, const bool bInWaitForTimeFromServer)
 {
 	auto* Task{NewObject<ThisClass>()};
 
@@ -32,30 +32,30 @@ UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListen
 
 	if (FU_ENSURE(EffectTag.IsValid()))
 	{
-		Task->EffectTags1.AddTag(EffectTag);
+		Task->EffectTags.AddTag(EffectTag);
 	}
 
-	Task->bWaitForTimeFromServer1 = bWaitForTimeFromServer;
+	Task->bWaitForTimeFromServer = bInWaitForTimeFromServer;
 
 	return Task;
 }
 
 UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListenForEffectsTimeChange(
-	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer EffectTags, const bool bWaitForTimeFromServer)
+	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer InEffectTags, const bool bInWaitForTimeFromServer)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
-	for (const auto& Tag : EffectTags)
+	for (const auto& Tag : InEffectTags)
 	{
 		if (FU_ENSURE(Tag.IsValid()))
 		{
-			Task->EffectTags1.AddTag(Tag);
+			Task->EffectTags.AddTag(Tag);
 		}
 	}
 
-	Task->bWaitForTimeFromServer1 = bWaitForTimeFromServer;
+	Task->bWaitForTimeFromServer = bInWaitForTimeFromServer;
 
 	return Task;
 }
@@ -66,7 +66,7 @@ void UFuAbilityAsync_EffectTimeListener::Activate()
 
 	auto* AbilitySystem{GetAbilitySystemComponent()};
 
-	if (!IsValid(AbilitySystem) || !FU_ENSURE(IsValid(AbilitySystem)) || EffectTags1.IsEmpty())
+	if (!IsValid(AbilitySystem) || !FU_ENSURE(IsValid(AbilitySystem)) || EffectTags.IsEmpty())
 	{
 		EndAction();
 		return;
@@ -75,7 +75,7 @@ void UFuAbilityAsync_EffectTimeListener::Activate()
 	AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectAdded);
 	AbilitySystem->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectRemoved);
 
-	for (const auto& EffectTag : EffectTags1)
+	for (const auto& EffectTag : EffectTags)
 	{
 		AbilitySystem->RegisterGameplayTagEvent(EffectTag, EGameplayTagEventType::NewOrRemoved)
 		             .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged);
@@ -83,14 +83,14 @@ void UFuAbilityAsync_EffectTimeListener::Activate()
 
 	for (auto& ActiveEffect : const_cast<FActiveGameplayEffectsContainer*>(&AbilitySystem->GetActiveGameplayEffects()))
 	{
-		if (ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasAny(EffectTags1) ||
-		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(EffectTags1))
+		if (ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasAny(EffectTags) ||
+		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(EffectTags))
 		{
 			ActiveEffect.EventSet.OnTimeChanged.AddUObject(this, &ThisClass::ActiveEffect_OnTimeChanged);
 		}
 	}
 
-	for (const auto& EffectTag : EffectTags1)
+	for (const auto& EffectTag : EffectTags)
 	{
 		RefreshEffectTimeRemainingAndDurationForTag(EffectTag);
 	}
@@ -104,7 +104,7 @@ void UFuAbilityAsync_EffectTimeListener::EndAction()
 		AbilitySystem->OnActiveGameplayEffectAddedDelegateToSelf.RemoveAll(this);
 		AbilitySystem->OnAnyGameplayEffectRemovedDelegate().RemoveAll(this);
 
-		for (const auto& EffectTag : EffectTags1)
+		for (const auto& EffectTag : EffectTags)
 		{
 			AbilitySystem->RegisterGameplayTagEvent(EffectTag, EGameplayTagEventType::NewOrRemoved).RemoveAll(this);
 		}
@@ -149,7 +149,7 @@ void UFuAbilityAsync_EffectTimeListener::RefreshEffectTimeRemainingAndDurationFo
 	}
 	else if (IsValid(ActiveEffect->Spec.GetContext().GetAbilityInstance_NotReplicated()))
 	{
-		if (bWaitForTimeFromServer1)
+		if (bWaitForTimeFromServer)
 		{
 			// Waiting for time from the server.
 			OnEffectStated.Broadcast(EffectTag, TimeRemaining, Duration, true);
@@ -160,7 +160,7 @@ void UFuAbilityAsync_EffectTimeListener::RefreshEffectTimeRemainingAndDurationFo
 			OnEffectStated.Broadcast(EffectTag, TimeRemaining, Duration, false);
 		}
 	}
-	else if (bWaitForTimeFromServer1)
+	else if (bWaitForTimeFromServer)
 	{
 		// Time from the server.
 		OnEffectStated.Broadcast(EffectTag, TimeRemaining, Duration, false);
@@ -174,7 +174,7 @@ void UFuAbilityAsync_EffectTimeListener::AbilitySystem_OnActiveGameplayEffectAdd
 {
 	auto bEffectTimeChangeEventRegistered{false};
 
-	for (const auto& EffectTag : EffectTags1)
+	for (const auto& EffectTag : EffectTags)
 	{
 		if (!EffectSpecification.Def->InheritableOwnedTagsContainer.CombinedTags.HasTag(EffectTag) &&
 		    !EffectSpecification.DynamicGrantedTags.HasTag(EffectTag))
@@ -224,9 +224,10 @@ void UFuAbilityAsync_EffectTimeListener::ActiveEffect_OnTimeChanged(const FActiv
 
 	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 	FScopedActiveGameplayEffectLock EffectScopeLock{
-		const_cast<FActiveGameplayEffectsContainer&>(AbilitySystem->GetActiveGameplayEffects())};
+		const_cast<FActiveGameplayEffectsContainer&>(AbilitySystem->GetActiveGameplayEffects())
+	};
 
-	for (const auto& EffectTag : EffectTags1)
+	for (const auto& EffectTag : EffectTags)
 	{
 		if (ActiveEffect->Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasTag(EffectTag) ||
 		    ActiveEffect->Spec.DynamicGrantedTags.HasTag(EffectTag))

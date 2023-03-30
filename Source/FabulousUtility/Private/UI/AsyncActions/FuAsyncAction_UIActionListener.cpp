@@ -7,49 +7,49 @@
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_UIActionListener)
 
 UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::FuListenForUIAction(
-	UCommonUserWidget* Widget, const FUIActionTag ActionTag, const ECommonInputMode InputMode,
-	const TEnumAsByte<EInputEvent> KeyEvent, const bool bPersistent, const bool bConsumeInput,
-	const bool bDisplayInActionBar, const FText DisplayNameOverride)
+	UCommonUserWidget* InWidget, const FUIActionTag InActionTag, const ECommonInputMode InInputMode,
+	const TEnumAsByte<EInputEvent> InKeyEvent, const bool bInPersistent, const bool bInConsumeInput,
+	const bool bInDisplayInActionBar, const FText InDisplayNameOverride)
 {
 	auto* Task{NewObject<ThisClass>()};
 
-	Task->Widget1 = Widget;
-	Task->InputMode1 = InputMode;
-	Task->KeyEvent1 = KeyEvent;
-	Task->bPersistent1 = bPersistent;
-	Task->bConsumeInput1 = bConsumeInput;
-	Task->bDisplayInActionBar1 = bDisplayInActionBar;
-	Task->DisplayNameOverride1 = DisplayNameOverride;
+	Task->Widget = InWidget;
+	Task->InputMode = InInputMode;
+	Task->KeyEvent = InKeyEvent;
+	Task->bPersistent = bInPersistent;
+	Task->bConsumeInput = bInConsumeInput;
+	Task->bDisplayInActionBar = bInDisplayInActionBar;
+	Task->DisplayNameOverride = InDisplayNameOverride;
 
-	if (FU_ENSURE(ActionTag.IsValid()))
+	if (FU_ENSURE(InActionTag.IsValid()))
 	{
-		Task->ActionTags1.AddUnique(ActionTag);
+		Task->ActionTags.AddUnique(InActionTag);
 	}
 
 	return Task;
 }
 
 UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::FuListenForUIActions(
-	UCommonUserWidget* Widget, const FGameplayTagContainer ActionTags, const ECommonInputMode InputMode,
-	const TEnumAsByte<EInputEvent> KeyEvent, const bool bPersistent, const bool bConsumeInput,
-	const bool bDisplayInActionBar, const FText DisplayNameOverride)
+	UCommonUserWidget* InWidget, const FGameplayTagContainer InActionTags, const ECommonInputMode InInputMode,
+	const TEnumAsByte<EInputEvent> InKeyEvent, const bool bInPersistent, const bool bInConsumeInput,
+	const bool bInDisplayInActionBar, const FText InDisplayNameOverride)
 {
 	auto* Task{NewObject<ThisClass>()};
 
-	Task->Widget1 = Widget;
-	Task->InputMode1 = InputMode;
-	Task->KeyEvent1 = KeyEvent;
-	Task->bPersistent1 = bPersistent;
-	Task->bConsumeInput1 = bConsumeInput;
-	Task->bDisplayInActionBar1 = bDisplayInActionBar;
-	Task->DisplayNameOverride1 = DisplayNameOverride;
+	Task->Widget = InWidget;
+	Task->InputMode = InInputMode;
+	Task->KeyEvent = InKeyEvent;
+	Task->bPersistent = bInPersistent;
+	Task->bConsumeInput = bInConsumeInput;
+	Task->bDisplayInActionBar = bInDisplayInActionBar;
+	Task->DisplayNameOverride = InDisplayNameOverride;
 
-	for (const auto& Tag : ActionTags)
+	for (const auto& Tag : InActionTags)
 	{
 		const auto ActionTag{FUIActionTag::TryConvert(Tag)};
 		if (FU_ENSURE(ActionTag.IsValid()))
 		{
-			Task->ActionTags1.AddUnique(ActionTag);
+			Task->ActionTags.AddUnique(ActionTag);
 		}
 	}
 
@@ -60,7 +60,7 @@ void UFuAsyncAction_UIActionListener::Activate()
 {
 	Super::Activate();
 
-	if (!FU_ENSURE(Widget1.IsValid()) || ActionTags1.IsEmpty())
+	if (!FU_ENSURE(Widget.IsValid()) || ActionTags.IsEmpty())
 	{
 		SetReadyToDestroy();
 		return;
@@ -69,24 +69,24 @@ void UFuAsyncAction_UIActionListener::Activate()
 	// Here, it is preferable to use the UCommonUserWidget::RegisterUIActionBinding() and UCommonUserWidget::RemoveActionBinding()
 	// functions to add and remove action bindings, but currently this is not possible because they are protected.
 
-	auto* ActionRouter{UCommonUIActionRouterBase::Get(*Widget1.Get())};
+	auto* ActionRouter{UCommonUIActionRouterBase::Get(*Widget.Get())};
 	if (!IsValid(ActionRouter))
 	{
 		SetReadyToDestroy();
 		return;
 	}
 
-	FBindUIActionArgs ActionArguments{ActionTags1[0], nullptr};
-	ActionArguments.InputMode = InputMode1;
-	ActionArguments.KeyEvent = KeyEvent1;
-	ActionArguments.bIsPersistent = bPersistent1;
-	ActionArguments.bConsumeInput = bConsumeInput1;
-	ActionArguments.bDisplayInActionBar = bDisplayInActionBar1;
-	ActionArguments.OverrideDisplayName = DisplayNameOverride1;
+	FBindUIActionArgs ActionArguments{ActionTags[0], nullptr};
+	ActionArguments.InputMode = InputMode;
+	ActionArguments.KeyEvent = KeyEvent;
+	ActionArguments.bIsPersistent = bPersistent;
+	ActionArguments.bConsumeInput = bConsumeInput;
+	ActionArguments.bDisplayInActionBar = bDisplayInActionBar;
+	ActionArguments.OverrideDisplayName = DisplayNameOverride;
 
-	auto& WidgetActionHandles{const_cast<TArray<FUIActionBindingHandle>&>(Widget1->GetActionBindings())};
+	auto& WidgetActionHandles{const_cast<TArray<FUIActionBindingHandle>&>(Widget->GetActionBindings())};
 
-	for (const auto& ActionTag : ActionTags1)
+	for (const auto& ActionTag : ActionTags)
 	{
 		ActionArguments.ActionTag = ActionTag;
 
@@ -95,7 +95,7 @@ void UFuAsyncAction_UIActionListener::Activate()
 		ActionArguments.OnHoldActionProgressed = FBindUIActionArgs::FOnHoldActionProgressed::CreateUObject(
 			this, &ThisClass::Widget_OnActionHeld, ActionTag);
 
-		const auto ActionHandle{ActionRouter->RegisterUIActionBinding(*Widget1.Get(), ActionArguments)};
+		const auto ActionHandle{ActionRouter->RegisterUIActionBinding(*Widget.Get(), ActionArguments)};
 		if (ActionHandle.IsValid())
 		{
 			ActionHandles.Add(ActionHandle);
@@ -106,10 +106,10 @@ void UFuAsyncAction_UIActionListener::Activate()
 
 void UFuAsyncAction_UIActionListener::Cancel()
 {
-	if (Widget1.IsValid())
+	if (Widget.IsValid())
 	{
-		auto* ActionRouter{UCommonUIActionRouterBase::Get(*Widget1.Get())};
-		auto& WidgetActionHandles{const_cast<TArray<FUIActionBindingHandle>&>(Widget1->GetActionBindings())};
+		auto* ActionRouter{UCommonUIActionRouterBase::Get(*Widget.Get())};
+		auto& WidgetActionHandles{const_cast<TArray<FUIActionBindingHandle>&>(Widget->GetActionBindings())};
 
 		for (const auto& ActionHandle : ActionHandles)
 		{
@@ -132,7 +132,7 @@ void UFuAsyncAction_UIActionListener::Cancel()
 
 bool UFuAsyncAction_UIActionListener::ShouldBroadcastDelegates() const
 {
-	return Widget1.IsValid();
+	return Widget.IsValid();
 }
 
 void UFuAsyncAction_UIActionListener::Widget_OnActionExecuted(const FUIActionTag ActionTag) const

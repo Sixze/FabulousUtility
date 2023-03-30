@@ -5,11 +5,11 @@
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_TargetDataReceiver)
 
 UFuAbilityTask_TargetDataReceiver* UFuAbilityTask_TargetDataReceiver::FuReceiveTargetData(UGameplayAbility* OwningAbility,
-                                                                                          const bool bReceiveOnce)
+                                                                                          const bool bInReceiveOnce)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
-	Task->bReceiveOnce1 = bReceiveOnce;
+	Task->bReceiveOnce = bInReceiveOnce;
 
 	return Task;
 }
@@ -54,7 +54,7 @@ void UFuAbilityTask_TargetDataReceiver::AbilitySystem_OnAbilityTargetDataSet(con
 		OnTargetDataReceived.Broadcast(TargetDataCopy);
 	}
 
-	if (bReceiveOnce1)
+	if (bReceiveOnce)
 	{
 		EndTask();
 	}

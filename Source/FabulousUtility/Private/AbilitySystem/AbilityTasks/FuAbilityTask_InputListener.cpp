@@ -5,11 +5,11 @@
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_InputListener)
 
 UFuAbilityTask_InputListener* UFuAbilityTask_InputListener::FuWaitForInput(UGameplayAbility* OwningAbility,
-                                                                           const bool bCheckInitialInputState)
+                                                                           const bool bInCheckInitialInputState)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
-	Task->bCheckInitialInputState1 = bCheckInitialInputState;
+	Task->bCheckInitialInputState = bInCheckInitialInputState;
 
 	return Task;
 }
@@ -26,7 +26,7 @@ void UFuAbilityTask_InputListener::Activate()
 	                                                       GetAbilitySpecHandle(), GetActivationPredictionKey())
 	                      .AddUObject(this, &ThisClass::AbilitySystem_OnInputReleased);
 
-	if (bCheckInitialInputState1 && IsLocallyControlled())
+	if (bCheckInitialInputState && IsLocallyControlled())
 	{
 		if (Ability->GetCurrentAbilitySpec()->InputPressed)
 		{

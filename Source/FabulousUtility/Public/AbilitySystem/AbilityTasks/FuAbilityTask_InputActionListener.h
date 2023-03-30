@@ -15,8 +15,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
 	TWeakObjectPtr<UEnhancedInputComponent> Input;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Input Actions")
-	TArray<TObjectPtr<UInputAction>> InputActions1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	TArray<TObjectPtr<UInputAction>> InputActions;
 
 	TArray<FInputBindingHandle> InputBindings;
 
@@ -50,13 +50,16 @@ public:
 	// Warning! This task only works locally, its events will never be called on the server!
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_InputActionListener* FuWaitForInputAction(UGameplayAbility* OwningAbility, UInputAction* InputAction);
+	static UFuAbilityTask_InputActionListener* FuWaitForInputAction(
+		UGameplayAbility* OwningAbility,
+		UPARAM(DisplayName = "Input Action") UInputAction* InInputAction);
 
 	// Warning! This task only works locally, its events will never be called on the server!
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_InputActionListener* FuWaitForInputActions(UGameplayAbility* OwningAbility,
-	                                                                 const TArray<UInputAction*>& InputActions);
+	static UFuAbilityTask_InputActionListener* FuWaitForInputActions(
+		UGameplayAbility* OwningAbility,
+		UPARAM(DisplayName = "Input Actions") const TArray<UInputAction*>& InInputActions);
 
 protected:
 	virtual void Activate() override;

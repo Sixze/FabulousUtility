@@ -9,14 +9,14 @@ class FABULOUSUTILITY_API UFuAsyncAction_JoinSession : public UOnlineBlueprintCa
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Player")
-	TWeakObjectPtr<APlayerController> Player1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	TWeakObjectPtr<APlayerController> Player;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Search Result")
-	FBlueprintSessionResult SearchResult1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	FBlueprintSessionResult SearchResult;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Travel on Success")
-	bool bTravelOnSuccess1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	bool bTravelOnSuccess;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Join Session Async Action")
@@ -26,9 +26,10 @@ public:
 	FEmptyOnlineDelegate OnFailure;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "Player"))
-	static UFuAsyncAction_JoinSession* FuJoinSession(APlayerController* Player, const FBlueprintSessionResult& SearchResult,
-	                                                 bool bTravelOnSuccess = true);
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InPlayer"))
+	static UFuAsyncAction_JoinSession* FuJoinSession(UPARAM(DisplayName = "Player") APlayerController* InPlayer,
+	                                                 UPARAM(DisplayName = "Search Result") const FBlueprintSessionResult& InSearchResult,
+	                                                 UPARAM(DisplayName = "Travel on Success") bool bInTravelOnSuccess = true);
 
 	virtual void Activate() override;
 

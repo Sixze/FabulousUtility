@@ -7,28 +7,28 @@
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_AttributeListener)
 
 UFuAbilityTask_AttributeListener* UFuAbilityTask_AttributeListener::FuWaitForAttributeChange(
-	UGameplayAbility* OwningAbility, const FGameplayAttribute Attribute)
+	UGameplayAbility* OwningAbility, const FGameplayAttribute InAttribute)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
-	if (FU_ENSURE(Attribute.IsValid()) && FU_ENSURE(!Attribute.IsSystemAttribute()))
+	if (FU_ENSURE(InAttribute.IsValid()) && FU_ENSURE(!InAttribute.IsSystemAttribute()))
 	{
-		Task->Attributes1.Add(Attribute);
+		Task->Attributes.Add(InAttribute);
 	}
 
 	return Task;
 }
 
 UFuAbilityTask_AttributeListener* UFuAbilityTask_AttributeListener::FuWaitForAttributesChange(
-	UGameplayAbility* OwningAbility, const TArray<FGameplayAttribute>& Attributes)
+	UGameplayAbility* OwningAbility, const TArray<FGameplayAttribute>& InAttributes)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
-	for (const auto& Attribute : Attributes)
+	for (const auto& Attribute : InAttributes)
 	{
 		if (FU_ENSURE(Attribute.IsValid()) && FU_ENSURE(!Attribute.IsSystemAttribute()))
 		{
-			Task->Attributes1.Add(Attribute);
+			Task->Attributes.Add(Attribute);
 		}
 	}
 
@@ -39,13 +39,13 @@ void UFuAbilityTask_AttributeListener::Activate()
 {
 	Super::Activate();
 
-	if (Attributes1.IsEmpty())
+	if (Attributes.IsEmpty())
 	{
 		EndTask();
 		return;
 	}
 
-	for (const auto& Attribute : Attributes1)
+	for (const auto& Attribute : Attributes)
 	{
 		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Attribute)
 		                      .AddUObject(this, &ThisClass::AbilitySystem_OnAttributeChanged);
@@ -58,7 +58,7 @@ void UFuAbilityTask_AttributeListener::Activate()
 
 	float Value;
 
-	for (const auto& Attribute : Attributes1)
+	for (const auto& Attribute : Attributes)
 	{
 		if (UFuAttributeUtility::TryGetAttributeValue(AbilitySystemComponent.Get(), Attribute, Value))
 		{
@@ -71,7 +71,7 @@ void UFuAbilityTask_AttributeListener::OnDestroy(const bool bInOwnerFinished)
 {
 	if (AbilitySystemComponent.IsValid())
 	{
-		for (const auto& Attribute : Attributes1)
+		for (const auto& Attribute : Attributes)
 		{
 			AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Attribute).RemoveAll(this);
 		}

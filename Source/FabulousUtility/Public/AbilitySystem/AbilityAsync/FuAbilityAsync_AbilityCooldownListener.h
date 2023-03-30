@@ -11,14 +11,14 @@ class FABULOUSUTILITY_API UFuAbilityAsync_AbilityCooldownListener : public UAbil
 protected:
 	FGameplayTagCountContainer EffectTags;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Ability Tags")
-	FGameplayTagContainer AbilityTags1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	FGameplayTagContainer AbilityTags;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Input Id")
-	int32 InputId1{-1};
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	int32 InputId{-1};
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Wait For Time From Server")
-	bool bWaitForTimeFromServer1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	bool bWaitForTimeFromServer;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Ability Cooldown Listener Ability Async")
@@ -30,27 +30,39 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownByAbilityTagOnActor(
-		const AActor* Actor, FGameplayTag AbilityTag, bool bWaitForTimeFromServer = true);
+		const AActor* Actor,
+		UPARAM(DisplayName = "Ability Tag") FGameplayTag InAbilityTag,
+		UPARAM(DisplayName = "Wait For Time From Server") bool bInWaitForTimeFromServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownByAbilityTagsOnActor(
-		const AActor* Actor, FGameplayTagContainer AbilityTags, bool bWaitForTimeFromServer = true);
+		const AActor* Actor,
+		UPARAM(DisplayName = "Ability Tags") FGameplayTagContainer InAbilityTags,
+		UPARAM(DisplayName = "Wait For Time From Server") bool bInWaitForTimeFromServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownByInputIdOnActor(
-		const AActor* Actor, int32 InputId, bool bWaitForTimeFromServer = true);
+		const AActor* Actor,
+		UPARAM(DisplayName = "Input Id") int32 InInputId,
+		UPARAM(DisplayName = "Wait For Time From Server") bool bInWaitForTimeFromServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownByAbilityTag(
-		UFuAbilitySystemComponent* AbilitySystem, FGameplayTag AbilityTag, bool bWaitForTimeFromServer = true);
+		UFuAbilitySystemComponent* AbilitySystem,
+		UPARAM(DisplayName = "Ability Tag") FGameplayTag InAbilityTag,
+		UPARAM(DisplayName = "Wait For Time From Server") bool bInWaitForTimeFromServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownByAbilityTags(
-		UFuAbilitySystemComponent* AbilitySystem, FGameplayTagContainer AbilityTags, bool bWaitForTimeFromServer = true);
+		UFuAbilitySystemComponent* AbilitySystem,
+		UPARAM(DisplayName = "Ability Tags") FGameplayTagContainer InAbilityTags,
+		UPARAM(DisplayName = "Wait For Time From Server") bool bInWaitForTimeFromServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AbilityCooldownListener* FuListenForAbilityCooldownByInputId(
-		UFuAbilitySystemComponent* AbilitySystem, int32 InputId, bool bWaitForTimeFromServer = true);
+		UFuAbilitySystemComponent* AbilitySystem,
+		UPARAM(DisplayName = "Input Id") int32 InInputId,
+		UPARAM(DisplayName = "Wait For Time From Server") bool bInWaitForTimeFromServer = true);
 
 public:
 	virtual void Activate() override;

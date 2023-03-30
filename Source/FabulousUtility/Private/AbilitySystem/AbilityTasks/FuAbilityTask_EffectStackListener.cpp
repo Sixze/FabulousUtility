@@ -6,11 +6,11 @@
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_EffectStackListener)
 
 UFuAbilityTask_EffectStackListener* UFuAbilityTask_EffectStackListener::FuWaitForEffectStackChange(
-	UGameplayAbility* OwningAbility, const TSubclassOf<UGameplayEffect> EffectClass)
+	UGameplayAbility* OwningAbility, const TSubclassOf<UGameplayEffect> InEffectClass)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
-	Task->EffectClass1 = EffectClass;
+	Task->EffectClass = InEffectClass;
 
 	return Task;
 }
@@ -19,7 +19,7 @@ void UFuAbilityTask_EffectStackListener::Activate()
 {
 	Super::Activate();
 
-	if (!FU_ENSURE(IsValid(EffectClass1)) || !FU_ENSURE(EffectClass1.GetDefaultObject()->StackingType != EGameplayEffectStackingType::None))
+	if (!FU_ENSURE(IsValid(EffectClass)) || !FU_ENSURE(EffectClass.GetDefaultObject()->StackingType != EGameplayEffectStackingType::None))
 	{
 		EndTask();
 		return;
@@ -40,7 +40,7 @@ void UFuAbilityTask_EffectStackListener::Activate()
 
 	for (const auto& ActiveEffect : &AbilitySystemComponent->GetActiveGameplayEffects())
 	{
-		if (ActiveEffect.Spec.Def->GetClass() != EffectClass1)
+		if (ActiveEffect.Spec.Def->GetClass() != EffectClass)
 		{
 			continue;
 		}
@@ -82,7 +82,7 @@ void UFuAbilityTask_EffectStackListener::AbilitySystem_OnActiveGameplayEffectAdd
                                                                                    const FGameplayEffectSpec& EffectSpecification,
                                                                                    const FActiveGameplayEffectHandle EffectHandle) const
 {
-	if (EffectSpecification.Def->GetClass() == EffectClass1)
+	if (EffectSpecification.Def->GetClass() == EffectClass)
 	{
 		AbilitySystem->OnGameplayEffectStackChangeDelegate(EffectHandle)->AddUObject(this, &ThisClass::AbilitySystem_OnEffectStackChanged);
 
@@ -95,7 +95,7 @@ void UFuAbilityTask_EffectStackListener::AbilitySystem_OnActiveGameplayEffectAdd
 
 void UFuAbilityTask_EffectStackListener::AbilitySystem_OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const
 {
-	if (ActiveEffect.Spec.Def->GetClass() == EffectClass1)
+	if (ActiveEffect.Spec.Def->GetClass() == EffectClass)
 	{
 		const_cast<FActiveGameplayEffect&>(ActiveEffect).EventSet.OnStackChanged.RemoveAll(this);
 

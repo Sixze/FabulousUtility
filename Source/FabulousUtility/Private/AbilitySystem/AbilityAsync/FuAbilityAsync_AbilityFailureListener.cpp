@@ -7,38 +7,38 @@
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AbilityFailureListener)
 
 UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::FuListenForAbilityFailureOnActor(
-	const AActor* Actor, const FGameplayTag AbilityTag, const FGameplayTagContainer FailureTags)
+	const AActor* Actor, const FGameplayTag AbilityTag, const FGameplayTagContainer InFailureTags)
 {
 	return FuListenForAbilityFailure(
 		Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor)),
-		AbilityTag, FailureTags);
+		AbilityTag, InFailureTags);
 }
 
 UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::FuListenForAbilitiesFailureOnActor(
-	const AActor* Actor, const FGameplayTagContainer AbilityTags, const FGameplayTagContainer FailureTags)
+	const AActor* Actor, const FGameplayTagContainer InAbilityTags, const FGameplayTagContainer InFailureTags)
 {
 	return FuListenForAbilitiesFailure(
 		Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor)),
-		AbilityTags, FailureTags);
+		InAbilityTags, InFailureTags);
 }
 
 UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::FuListenForAbilityFailure(
-	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag AbilityTag, const FGameplayTagContainer FailureTags)
+	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag InAbilityTag, const FGameplayTagContainer InFailureTags)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
-	if (AbilityTag.IsValid())
+	if (InAbilityTag.IsValid())
 	{
-		Task->AbilityTags1.AddTag(AbilityTag);
+		Task->AbilityTags.AddTag(InAbilityTag);
 	}
 
-	for (const auto& Tag : FailureTags)
+	for (const auto& Tag : InFailureTags)
 	{
 		if (FU_ENSURE(Tag.IsValid()))
 		{
-			Task->FailureTags1.AddTag(Tag);
+			Task->FailureTags.AddTag(Tag);
 		}
 	}
 
@@ -46,25 +46,25 @@ UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::
 }
 
 UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::FuListenForAbilitiesFailure(
-	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer AbilityTags, const FGameplayTagContainer FailureTags)
+	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer InAbilityTags, const FGameplayTagContainer InFailureTags)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
-	for (const auto& Tag : AbilityTags)
+	for (const auto& Tag : InAbilityTags)
 	{
 		if (FU_ENSURE(Tag.IsValid()))
 		{
-			Task->AbilityTags1.AddTag(Tag);
+			Task->AbilityTags.AddTag(Tag);
 		}
 	}
 
-	for (const auto& Tag : FailureTags)
+	for (const auto& Tag : InFailureTags)
 	{
 		if (FU_ENSURE(Tag.IsValid()))
 		{
-			Task->FailureTags1.AddTag(Tag);
+			Task->FailureTags.AddTag(Tag);
 		}
 	}
 
@@ -100,14 +100,14 @@ void UFuAbilityAsync_AbilityFailureListener::EndAction()
 void UFuAbilityAsync_AbilityFailureListener::AbilitySystem_OnAbilityFailed(const FGameplayAbilitySpecHandle AbilityHandle,
                                                                            // ReSharper disable once CppParameterMayBeConstPtrOrRef
                                                                            UGameplayAbility* Ability,
-                                                                           const FGameplayTagContainer& FailureTags) const
+                                                                           const FGameplayTagContainer& ActivationFailureTags) const
 {
 	const auto* AbilitySpecification{GetAbilitySystemComponent()->FindAbilitySpecFromHandle(AbilityHandle)};
 
-	if (FailureTags.HasAny(FailureTags1) &&
-	    (Ability->AbilityTags.HasAny(AbilityTags1) ||
+	if (ActivationFailureTags.HasAny(FailureTags) &&
+	    (Ability->AbilityTags.HasAny(AbilityTags) ||
 	     // ReSharper disable once CppRedundantParentheses
-	     (AbilitySpecification != nullptr && AbilitySpecification->DynamicAbilityTags.HasAny(AbilityTags1))))
+	     (AbilitySpecification != nullptr && AbilitySpecification->DynamicAbilityTags.HasAny(AbilityTags))))
 	{
 		OnAbilityFailed.Broadcast(AbilityHandle, FailureTags);
 	}

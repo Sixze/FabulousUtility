@@ -11,8 +11,8 @@ class FABULOUSUTILITY_API UFuAbilityAsync_TagListener : public UAbilityAsync
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Tags")
-	FGameplayTagContainer Tags1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	FGameplayTagContainer Tags;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Tag Listener Ability Async")
@@ -23,16 +23,20 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_TagListener* FuListenForTagChangeOnActor(const AActor* Actor, FGameplayTag Tag);
+	static UFuAbilityAsync_TagListener* FuListenForTagChangeOnActor(const AActor* Actor,
+	                                                                UPARAM(DisplayName = "Tag") FGameplayTag InTag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_TagListener* FuListenForTagsChangeOnActor(const AActor* Actor, FGameplayTagContainer Tags);
+	static UFuAbilityAsync_TagListener* FuListenForTagsChangeOnActor(const AActor* Actor,
+	                                                                 UPARAM(DisplayName = "Tags") FGameplayTagContainer InTags);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_TagListener* FuListenForTagChange(UAbilitySystemComponent* AbilitySystem, FGameplayTag Tag);
+	static UFuAbilityAsync_TagListener* FuListenForTagChange(UAbilitySystemComponent* AbilitySystem,
+	                                                         UPARAM(DisplayName = "Tag") FGameplayTag InTag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_TagListener* FuListenForTagsChange(UAbilitySystemComponent* AbilitySystem, FGameplayTagContainer Tags);
+	static UFuAbilityAsync_TagListener* FuListenForTagsChange(UAbilitySystemComponent* AbilitySystem,
+	                                                          UPARAM(DisplayName = "Tags") FGameplayTagContainer InTags);
 
 public:
 	virtual void Activate() override;

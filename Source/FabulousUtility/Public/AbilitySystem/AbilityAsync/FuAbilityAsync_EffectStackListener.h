@@ -10,8 +10,8 @@ class FABULOUSUTILITY_API UFuAbilityAsync_EffectStackListener : public UAbilityA
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Effect Class")
-	TSubclassOf<UGameplayEffect> EffectClass1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	TSubclassOf<UGameplayEffect> EffectClass;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Effect Stack Listener Ability Async")
@@ -19,12 +19,14 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_EffectStackListener* FuListenForEffectStackChangeOnActor(const AActor* Actor,
-	                                                                                TSubclassOf<UGameplayEffect> EffectClass);
+	static UFuAbilityAsync_EffectStackListener* FuListenForEffectStackChangeOnActor(
+		const AActor* Actor,
+		UPARAM(DisplayName = "Effect Class") TSubclassOf<UGameplayEffect> InEffectClass);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_EffectStackListener* FuListenForEffectStackChange(UAbilitySystemComponent* AbilitySystem,
-	                                                                         TSubclassOf<UGameplayEffect> EffectClass);
+	static UFuAbilityAsync_EffectStackListener* FuListenForEffectStackChange(
+		UAbilitySystemComponent* AbilitySystem,
+		UPARAM(DisplayName = "Effect Class") TSubclassOf<UGameplayEffect> InEffectClass);
 
 public:
 	virtual void Activate() override;

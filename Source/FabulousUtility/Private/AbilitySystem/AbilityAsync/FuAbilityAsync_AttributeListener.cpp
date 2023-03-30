@@ -8,52 +8,52 @@
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AttributeListener)
 
 UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::FuListenForAttributeChangeOnActor(
-	const AActor* Actor, const FGameplayAttribute Attribute, const bool bSkipEqualValuesOnServer)
+	const AActor* Actor, const FGameplayAttribute InAttribute, const bool bInSkipEqualValuesOnServer)
 {
 	return FuListenForAttributeChange(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor),
-	                                  Attribute, bSkipEqualValuesOnServer);
+	                                  InAttribute, bInSkipEqualValuesOnServer);
 }
 
 UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::FuListenForAttributesChangeOnActor(
-	const AActor* Actor, const TArray<FGameplayAttribute>& Attributes, const bool bSkipEqualValuesOnServer)
+	const AActor* Actor, const TArray<FGameplayAttribute>& InAttributes, const bool bInSkipEqualValuesOnServer)
 {
 	return FuListenForAttributesChange(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor),
-	                                   Attributes, bSkipEqualValuesOnServer);
+	                                   InAttributes, bInSkipEqualValuesOnServer);
 }
 
 UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::FuListenForAttributeChange(
-	UAbilitySystemComponent* AbilitySystem, const FGameplayAttribute Attribute, const bool bSkipEqualValuesOnServer)
+	UAbilitySystemComponent* AbilitySystem, const FGameplayAttribute InAttribute, const bool bInSkipEqualValuesOnServer)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
-	if (FU_ENSURE(Attribute.IsValid()) && FU_ENSURE(!Attribute.IsSystemAttribute()))
+	if (FU_ENSURE(InAttribute.IsValid()) && FU_ENSURE(!InAttribute.IsSystemAttribute()))
 	{
-		Task->Attributes1.Add(Attribute);
+		Task->Attributes.Add(InAttribute);
 	}
 
-	Task->bSkipEqualValuesOnServer1 = bSkipEqualValuesOnServer;
+	Task->bSkipEqualValuesOnServer = bInSkipEqualValuesOnServer;
 
 	return Task;
 }
 
 UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::FuListenForAttributesChange(
-	UAbilitySystemComponent* AbilitySystem, const TArray<FGameplayAttribute>& Attributes, const bool bSkipEqualValuesOnServer)
+	UAbilitySystemComponent* AbilitySystem, const TArray<FGameplayAttribute>& InAttributes, const bool bInSkipEqualValuesOnServer)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
-	for (const auto& Attribute : Attributes)
+	for (const auto& Attribute : InAttributes)
 	{
 		if (FU_ENSURE(Attribute.IsValid()) && FU_ENSURE(!Attribute.IsSystemAttribute()))
 		{
-			Task->Attributes1.Add(Attribute);
+			Task->Attributes.Add(Attribute);
 		}
 	}
 
-	Task->bSkipEqualValuesOnServer1 = bSkipEqualValuesOnServer;
+	Task->bSkipEqualValuesOnServer = bInSkipEqualValuesOnServer;
 
 	return Task;
 }
@@ -64,13 +64,13 @@ void UFuAbilityAsync_AttributeListener::Activate()
 
 	auto* AbilitySystem{GetAbilitySystemComponent()};
 
-	if (!IsValid(AbilitySystem) || Attributes1.IsEmpty())
+	if (!IsValid(AbilitySystem) || Attributes.IsEmpty())
 	{
 		EndAction();
 		return;
 	}
 
-	for (const auto& Attribute : Attributes1)
+	for (const auto& Attribute : Attributes)
 	{
 		AbilitySystem->GetGameplayAttributeValueChangeDelegate(Attribute).AddUObject(this, &ThisClass::AbilitySystem_OnAttributeChanged);
 	}
@@ -82,7 +82,7 @@ void UFuAbilityAsync_AttributeListener::Activate()
 
 	float Value;
 
-	for (const auto& Attribute : Attributes1)
+	for (const auto& Attribute : Attributes)
 	{
 		if (UFuAttributeUtility::TryGetAttributeValue(AbilitySystem, Attribute, Value))
 		{
@@ -96,7 +96,7 @@ void UFuAbilityAsync_AttributeListener::EndAction()
 	auto* AbilitySystem{GetAbilitySystemComponent()};
 	if (IsValid(AbilitySystem))
 	{
-		for (const auto& Attribute : Attributes1)
+		for (const auto& Attribute : Attributes)
 		{
 			AbilitySystem->GetGameplayAttributeValueChangeDelegate(Attribute).RemoveAll(this);
 		}
@@ -107,7 +107,7 @@ void UFuAbilityAsync_AttributeListener::EndAction()
 
 void UFuAbilityAsync_AttributeListener::AbilitySystem_OnAttributeChanged(const FOnAttributeChangeData& ChangeData) const
 {
-	if (ShouldBroadcastDelegates() && (ChangeData.NewValue != ChangeData.OldValue || !bSkipEqualValuesOnServer1 ||
+	if (ShouldBroadcastDelegates() && (ChangeData.NewValue != ChangeData.OldValue || !bSkipEqualValuesOnServer ||
 	                                   GetAbilitySystemComponent()->GetOwnerRole() <= ROLE_AutonomousProxy))
 	{
 		OnAttributeChanged.Broadcast(ChangeData.Attribute, ChangeData.NewValue, ChangeData.OldValue);

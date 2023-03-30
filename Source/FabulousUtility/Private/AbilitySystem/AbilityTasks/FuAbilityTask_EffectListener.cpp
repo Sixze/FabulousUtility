@@ -6,28 +6,28 @@
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_EffectListener)
 
 UFuAbilityTask_EffectListener* UFuAbilityTask_EffectListener::FuWaitForEffectChangeByTag(UGameplayAbility* OwningAbility,
-                                                                                         const FGameplayTag EffectTag)
+                                                                                         const FGameplayTag InEffectTag)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
-	if (FU_ENSURE(EffectTag.IsValid()))
+	if (FU_ENSURE(InEffectTag.IsValid()))
 	{
-		Task->EffectTags1.AddTag(EffectTag);
+		Task->EffectTags.AddTag(InEffectTag);
 	}
 
 	return Task;
 }
 
 UFuAbilityTask_EffectListener* UFuAbilityTask_EffectListener::FuWaitForEffectChangeByTags(UGameplayAbility* OwningAbility,
-                                                                                          const FGameplayTagContainer EffectTags)
+                                                                                          const FGameplayTagContainer InEffectTags)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
-	for (const auto& Tag : EffectTags)
+	for (const auto& Tag : InEffectTags)
 	{
 		if (FU_ENSURE(Tag.IsValid()))
 		{
-			Task->EffectTags1.AddTag(Tag);
+			Task->EffectTags.AddTag(Tag);
 		}
 	}
 
@@ -38,7 +38,7 @@ void UFuAbilityTask_EffectListener::Activate()
 {
 	Super::Activate();
 
-	if (EffectTags1.IsEmpty())
+	if (EffectTags.IsEmpty())
 	{
 		EndTask();
 		return;
@@ -61,7 +61,7 @@ void UFuAbilityTask_EffectListener::Activate()
 
 	for (const auto& ActiveEffect : &AbilitySystemComponent->GetActiveGameplayEffects())
 	{
-		if (ActiveEffect.Spec.CapturedSourceTags.GetSpecTags().HasAny(EffectTags1))
+		if (ActiveEffect.Spec.CapturedSourceTags.GetSpecTags().HasAny(EffectTags))
 		{
 			OnEffectAdded.Broadcast(ActiveEffect.Handle);
 		}
@@ -83,7 +83,7 @@ void UFuAbilityTask_EffectListener::AbilitySystem_OnActiveGameplayEffectAdded(UA
                                                                               const FGameplayEffectSpec& EffectSpecification,
                                                                               const FActiveGameplayEffectHandle EffectHandle) const
 {
-	if (ShouldBroadcastAbilityTaskDelegates() && EffectSpecification.CapturedSourceTags.GetSpecTags().HasAny(EffectTags1))
+	if (ShouldBroadcastAbilityTaskDelegates() && EffectSpecification.CapturedSourceTags.GetSpecTags().HasAny(EffectTags))
 	{
 		OnEffectAdded.Broadcast(EffectHandle);
 	}
@@ -91,7 +91,7 @@ void UFuAbilityTask_EffectListener::AbilitySystem_OnActiveGameplayEffectAdded(UA
 
 void UFuAbilityTask_EffectListener::AbilitySystem_OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const
 {
-	if (ShouldBroadcastAbilityTaskDelegates() && ActiveEffect.Spec.CapturedSourceTags.GetSpecTags().HasAny(EffectTags1))
+	if (ShouldBroadcastAbilityTaskDelegates() && ActiveEffect.Spec.CapturedSourceTags.GetSpecTags().HasAny(EffectTags))
 	{
 		OnEffectRemoved.Broadcast(ActiveEffect.Handle);
 	}

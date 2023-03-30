@@ -12,11 +12,11 @@ class FABULOUSUTILITY_API UFuAbilityAsync_AttributeListener : public UAbilityAsy
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Attributes")
-	TArray<FGameplayAttribute> Attributes1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	TArray<FGameplayAttribute> Attributes;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Skip Equal Values on Server")
-	bool bSkipEqualValuesOnServer1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	bool bSkipEqualValuesOnServer;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Attribute Listener Ability Async")
@@ -24,24 +24,28 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AttributeListener* FuListenForAttributeChangeOnActor(const AActor* Actor,
-	                                                                            FGameplayAttribute Attribute,
-	                                                                            bool bSkipEqualValuesOnServer = true);
+	static UFuAbilityAsync_AttributeListener* FuListenForAttributeChangeOnActor(
+		const AActor* Actor,
+		UPARAM(DisplayName = "Attribute") FGameplayAttribute InAttribute,
+		UPARAM(DisplayName = "Skip Equal Values on Server") bool bInSkipEqualValuesOnServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AttributeListener* FuListenForAttributesChangeOnActor(const AActor* Actor,
-	                                                                             const TArray<FGameplayAttribute>& Attributes,
-	                                                                             bool bSkipEqualValuesOnServer = true);
+	static UFuAbilityAsync_AttributeListener* FuListenForAttributesChangeOnActor(
+		const AActor* Actor,
+		UPARAM(DisplayName = "Attributes") const TArray<FGameplayAttribute>& InAttributes,
+		UPARAM(DisplayName = "Skip Equal Values on Server") bool bInSkipEqualValuesOnServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AttributeListener* FuListenForAttributeChange(UAbilitySystemComponent* AbilitySystem,
-	                                                                     FGameplayAttribute Attribute,
-	                                                                     bool bSkipEqualValuesOnServer = true);
+	static UFuAbilityAsync_AttributeListener* FuListenForAttributeChange(
+		UAbilitySystemComponent* AbilitySystem,
+		UPARAM(DisplayName = "Attribute") FGameplayAttribute InAttribute,
+		UPARAM(DisplayName = "Skip Equal Values on Server") bool bInSkipEqualValuesOnServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AttributeListener* FuListenForAttributesChange(UAbilitySystemComponent* AbilitySystem,
-	                                                                      const TArray<FGameplayAttribute>& Attributes,
-	                                                                      bool bSkipEqualValuesOnServer = true);
+	static UFuAbilityAsync_AttributeListener* FuListenForAttributesChange(
+		UAbilitySystemComponent* AbilitySystem,
+		UPARAM(DisplayName = "Attributes") const TArray<FGameplayAttribute>& InAttributes,
+		UPARAM(DisplayName = "Skip Equal Values on Server") bool bInSkipEqualValuesOnServer = true);
 
 public:
 	virtual void Activate() override;

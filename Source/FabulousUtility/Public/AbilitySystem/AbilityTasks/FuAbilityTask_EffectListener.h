@@ -11,8 +11,8 @@ class FABULOUSUTILITY_API UFuAbilityTask_EffectListener : public UAbilityTask
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Effect Tags")
-	FGameplayTagContainer EffectTags1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	FGameplayTagContainer EffectTags;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Effect Listener Ability Task")
@@ -24,11 +24,15 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_EffectListener* FuWaitForEffectChangeByTag(UGameplayAbility* OwningAbility, FGameplayTag EffectTag);
+	static UFuAbilityTask_EffectListener* FuWaitForEffectChangeByTag(
+		UGameplayAbility* OwningAbility,
+		UPARAM(DisplayName = "Effect Tag") FGameplayTag InEffectTag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_EffectListener* FuWaitForEffectChangeByTags(UGameplayAbility* OwningAbility, FGameplayTagContainer EffectTags);
+	static UFuAbilityTask_EffectListener* FuWaitForEffectChangeByTags(
+		UGameplayAbility* OwningAbility,
+		UPARAM(DisplayName = "Effect Tags") FGameplayTagContainer InEffectTags);
 
 protected:
 	virtual void Activate() override;

@@ -12,11 +12,11 @@ class FABULOUSUTILITY_API UFuAbilityAsync_AbilityFailureListener : public UAbili
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Ability Tags")
-	FGameplayTagContainer AbilityTags1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	FGameplayTagContainer AbilityTags;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Failure Tags")
-	FGameplayTagContainer FailureTags1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	FGameplayTagContainer FailureTags;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Ability Failure Listener Ability Async")
@@ -24,24 +24,28 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AbilityFailureListener* FuListenForAbilityFailureOnActor(const AActor* Actor,
-	                                                                                FGameplayTag AbilityTag,
-	                                                                                FGameplayTagContainer FailureTags);
+	static UFuAbilityAsync_AbilityFailureListener* FuListenForAbilityFailureOnActor(
+		const AActor* Actor,
+		UPARAM(DisplayName = "Ability Tag") FGameplayTag InAbilityTag,
+		UPARAM(DisplayName = "Failure Tags") FGameplayTagContainer InFailureTags);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AbilityFailureListener* FuListenForAbilitiesFailureOnActor(const AActor* Actor,
-	                                                                                  FGameplayTagContainer AbilityTags,
-	                                                                                  FGameplayTagContainer FailureTags);
+	static UFuAbilityAsync_AbilityFailureListener* FuListenForAbilitiesFailureOnActor(
+		const AActor* Actor,
+		UPARAM(DisplayName = "Ability Tags") FGameplayTagContainer InAbilityTags,
+		UPARAM(DisplayName = "Failure Tags") FGameplayTagContainer InFailureTags);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AbilityFailureListener* FuListenForAbilityFailure(UFuAbilitySystemComponent* AbilitySystem,
-	                                                                         FGameplayTag AbilityTag,
-	                                                                         FGameplayTagContainer FailureTags);
+	static UFuAbilityAsync_AbilityFailureListener* FuListenForAbilityFailure(
+		UFuAbilitySystemComponent* AbilitySystem,
+		UPARAM(DisplayName = "Ability Tag") FGameplayTag InAbilityTag,
+		UPARAM(DisplayName = "Failure Tags") FGameplayTagContainer InFailureTags);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AbilityFailureListener* FuListenForAbilitiesFailure(UFuAbilitySystemComponent* AbilitySystem,
-	                                                                           FGameplayTagContainer AbilityTags,
-	                                                                           FGameplayTagContainer FailureTags);
+	static UFuAbilityAsync_AbilityFailureListener* FuListenForAbilitiesFailure(
+		UFuAbilitySystemComponent* AbilitySystem,
+		UPARAM(DisplayName = "Ability Tags") FGameplayTagContainer InAbilityTags,
+		UPARAM(DisplayName = "Failure Tags") FGameplayTagContainer InFailureTags);
 
 public:
 	virtual void Activate() override;
@@ -50,5 +54,5 @@ public:
 
 private:
 	void AbilitySystem_OnAbilityFailed(FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability,
-	                                   const FGameplayTagContainer& FailureTags) const;
+	                                   const FGameplayTagContainer& ActivationFailureTags) const;
 };

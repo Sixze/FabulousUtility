@@ -12,8 +12,8 @@ class FABULOUSUTILITY_API UFuAbilityTask_EffectStackListener : public UAbilityTa
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Effect Class")
-	TSubclassOf<UGameplayEffect> EffectClass1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	TSubclassOf<UGameplayEffect> EffectClass;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Effect Stack Listener Ability Task")
@@ -22,8 +22,9 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_EffectStackListener* FuWaitForEffectStackChange(UGameplayAbility* OwningAbility,
-	                                                                      TSubclassOf<UGameplayEffect> EffectClass);
+	static UFuAbilityTask_EffectStackListener* FuWaitForEffectStackChange(
+		UGameplayAbility* OwningAbility,
+		UPARAM(DisplayName = "Effect Class") TSubclassOf<UGameplayEffect> InEffectClass);
 
 protected:
 	virtual void Activate() override;

@@ -7,32 +7,32 @@
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_InputActionListener)
 
 UFuAbilityTask_InputActionListener* UFuAbilityTask_InputActionListener::FuWaitForInputAction(
-	UGameplayAbility* OwningAbility, UInputAction* InputAction)
+	UGameplayAbility* OwningAbility, UInputAction* InInputAction)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
 	Task->Input = Cast<UEnhancedInputComponent>(Task->AbilitySystemComponent->GetAvatarActor_Direct()->InputComponent);
 
-	if (FU_ENSURE(IsValid(InputAction)))
+	if (FU_ENSURE(IsValid(InInputAction)))
 	{
-		Task->InputActions1.AddUnique(InputAction);
+		Task->InputActions.AddUnique(InInputAction);
 	}
 
 	return Task;
 }
 
 UFuAbilityTask_InputActionListener* UFuAbilityTask_InputActionListener::FuWaitForInputActions(
-	UGameplayAbility* OwningAbility, const TArray<UInputAction*>& InputActions)
+	UGameplayAbility* OwningAbility, const TArray<UInputAction*>& InInputActions)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
 	Task->Input = Cast<UEnhancedInputComponent>(Task->AbilitySystemComponent->GetAvatarActor_Direct()->InputComponent);
 
-	for (const auto& InputAction : InputActions)
+	for (const auto& InputAction : InInputActions)
 	{
 		if (FU_ENSURE(IsValid(InputAction)))
 		{
-			Task->InputActions1.AddUnique(InputAction);
+			Task->InputActions.AddUnique(InputAction);
 		}
 	}
 
@@ -43,7 +43,7 @@ void UFuAbilityTask_InputActionListener::Activate()
 {
 	Super::Activate();
 
-	if (InputActions1.IsEmpty())
+	if (InputActions.IsEmpty())
 	{
 		EndTask();
 		return;
@@ -75,7 +75,7 @@ void UFuAbilityTask_InputActionListener::BindActions()
 {
 	if (Input.IsValid())
 	{
-		for (const auto InputAction : InputActions1)
+		for (const auto InputAction : InputActions)
 		{
 			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Triggered, this, &ThisClass::Input_OnActionTriggered));
 			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Started, this, &ThisClass::Input_OnActionStarted));

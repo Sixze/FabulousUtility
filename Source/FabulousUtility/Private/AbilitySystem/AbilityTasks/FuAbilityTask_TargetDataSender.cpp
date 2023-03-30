@@ -5,11 +5,11 @@
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_TargetDataSender)
 
 UFuAbilityTask_TargetDataSender* UFuAbilityTask_TargetDataSender::FuSendTargetData(UGameplayAbility* OwningAbility,
-                                                                                   const FGameplayAbilityTargetDataHandle& TargetData)
+                                                                                   const FGameplayAbilityTargetDataHandle& InTargetData)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
-	Task->TargetData1 = TargetData;
+	Task->TargetData = InTargetData;
 
 	return Task;
 }
@@ -37,13 +37,13 @@ void UFuAbilityTask_TargetDataSender::Activate()
 
 	if (IsPredictingClient())
 	{
-		AbilitySystemComponent->CallServerSetReplicatedTargetData(GetAbilitySpecHandle(), GetActivationPredictionKey(), TargetData1,
+		AbilitySystemComponent->CallServerSetReplicatedTargetData(GetAbilitySpecHandle(), GetActivationPredictionKey(), TargetData,
 		                                                          {}, AbilitySystemComponent->ScopedPredictionKey);
 	}
 
 	if (ShouldBroadcastAbilityTaskDelegates())
 	{
-		OnTargetDataReceived.Broadcast(TargetData1);
+		OnTargetDataReceived.Broadcast(TargetData);
 	}
 
 	EndTask();
@@ -59,10 +59,10 @@ void UFuAbilityTask_TargetDataSender::OnDestroy(const bool bInOwnerFinished)
 	Super::OnDestroy(bInOwnerFinished);
 }
 
-void UFuAbilityTask_TargetDataSender::AbilitySystem_OnAbilityTargetDataSet(const FGameplayAbilityTargetDataHandle& TargetData,
+void UFuAbilityTask_TargetDataSender::AbilitySystem_OnAbilityTargetDataSet(const FGameplayAbilityTargetDataHandle& NewTargetData,
                                                                            FGameplayTag ActivationTag)
 {
-	const auto TargetDataCopy{TargetData};
+	const auto TargetDataCopy{NewTargetData};
 
 	AbilitySystemComponent->ConsumeClientReplicatedTargetData(GetAbilitySpecHandle(), GetActivationPredictionKey());
 

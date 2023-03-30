@@ -11,8 +11,8 @@ class FABULOUSUTILITY_API UFuAbilityTask_InputListener : public UAbilityTask
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Check Initial Input State")
-	bool bCheckInitialInputState1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	bool bCheckInitialInputState;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Listener Ability Async")
@@ -24,7 +24,8 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_InputListener* FuWaitForInput(UGameplayAbility* OwningAbility, bool bCheckInitialInputState);
+	static UFuAbilityTask_InputListener* FuWaitForInput(UGameplayAbility* OwningAbility,
+	                                                    UPARAM(DisplayName = "Check Initial Input State") bool bInCheckInitialInputState);
 
 protected:
 	virtual void Activate() override;

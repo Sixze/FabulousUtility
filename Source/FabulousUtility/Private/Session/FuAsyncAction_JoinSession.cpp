@@ -6,15 +6,15 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_JoinSession)
 
-UFuAsyncAction_JoinSession* UFuAsyncAction_JoinSession::FuJoinSession(APlayerController* Player,
-                                                                      const FBlueprintSessionResult& SearchResult,
-                                                                      const bool bTravelOnSuccess)
+UFuAsyncAction_JoinSession* UFuAsyncAction_JoinSession::FuJoinSession(APlayerController* InPlayer,
+                                                                      const FBlueprintSessionResult& InSearchResult,
+                                                                      const bool bInTravelOnSuccess)
 {
 	auto* Task{NewObject<UFuAsyncAction_JoinSession>()};
 
-	Task->Player1 = Player;
-	Task->SearchResult1 = SearchResult;
-	Task->bTravelOnSuccess1 = bTravelOnSuccess;
+	Task->Player = InPlayer;
+	Task->SearchResult = InSearchResult;
+	Task->bTravelOnSuccess = bInTravelOnSuccess;
 
 	return Task;
 }
@@ -23,14 +23,14 @@ void UFuAsyncAction_JoinSession::Activate()
 {
 	Super::Activate();
 
-	if (!FU_ENSURE(Player1.IsValid()) || !FU_ENSURE(IsValid(Player1->PlayerState)))
+	if (!FU_ENSURE(Player.IsValid()) || !FU_ENSURE(IsValid(Player->PlayerState)))
 	{
 		OnFailure.Broadcast();
 		SetReadyToDestroy();
 		return;
 	}
 
-	const auto Session{Online::GetSessionInterface(Player1->GetWorld())};
+	const auto Session{Online::GetSessionInterface(Player->GetWorld())};
 	if (!FU_ENSURE(Session.IsValid()))
 	{
 		OnFailure.Broadcast();
@@ -40,19 +40,19 @@ void UFuAsyncAction_JoinSession::Activate()
 
 	Session->AddOnJoinSessionCompleteDelegate_Handle(FOnJoinSessionCompleteDelegate::CreateUObject(this, &ThisClass::Session_OnJoined));
 
-	Session->JoinSession(*Player1->PlayerState->GetUniqueId().GetUniqueNetId(), NAME_GameSession, SearchResult1.OnlineResult);
+	Session->JoinSession(*Player->PlayerState->GetUniqueId().GetUniqueNetId(), NAME_GameSession, SearchResult.OnlineResult);
 }
 
 void UFuAsyncAction_JoinSession::Session_OnJoined(const FName SessionName, const EOnJoinSessionCompleteResult::Type Result)
 {
-	if (!Player1.IsValid())
+	if (!Player.IsValid())
 	{
 		OnFailure.Broadcast();
 		SetReadyToDestroy();
 		return;
 	}
 
-	const auto Session{Online::GetSessionInterface(Player1->GetWorld())};
+	const auto Session{Online::GetSessionInterface(Player->GetWorld())};
 	if (!Session.IsValid())
 	{
 		OnFailure.Broadcast();
@@ -77,9 +77,9 @@ void UFuAsyncAction_JoinSession::Session_OnJoined(const FName SessionName, const
 		return;
 	}
 
-	if (bTravelOnSuccess1)
+	if (bTravelOnSuccess)
 	{
-		Player1->ClientTravel(ConnectString, TRAVEL_Absolute);
+		Player->ClientTravel(ConnectString, TRAVEL_Absolute);
 	}
 
 	OnSuccess.Broadcast();

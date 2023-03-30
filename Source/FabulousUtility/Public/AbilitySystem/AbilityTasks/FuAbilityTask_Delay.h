@@ -11,15 +11,14 @@ class FABULOUSUTILITY_API UFuAbilityTask_Delay : public UAbilityTask
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient,
-		Meta = (ClampMin = 0, DisplayName = "Duration", ForceUnits = "s"))
-	float Duration1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, Meta = (ClampMin = 0, ForceUnits = "s"))
+	float Duration;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Loop Count")
-	int32 LoopsCount1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	int32 LoopsCount;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Skip First Delay")
-	bool bSkipFirstDelay1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	bool bSkipFirstDelay;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, Meta = (ClampMin = 0))
 	int32 LoopIndex{-1};
@@ -36,8 +35,10 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_Delay* FuWaitForDelay(UGameplayAbility* OwningAbility, float Duration = 0.2f,
-	                                            int32 LoopsCount = 0, bool bSkipFirstDelay = false);
+	static UFuAbilityTask_Delay* FuWaitForDelay(UGameplayAbility* OwningAbility,
+	                                            UPARAM(DisplayName = "Duration") float InDuration = 0.2f,
+	                                            UPARAM(DisplayName = "Loop Count") int32 InLoopsCount = 0,
+	                                            UPARAM(DisplayName = "Skip First Delay") bool bInSkipFirstDelay = false);
 
 protected:
 	virtual void Activate() override;

@@ -9,8 +9,8 @@ class FABULOUSUTILITY_API UFuAsyncAction_DestroySession : public UOnlineBlueprin
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Player")
-	TWeakObjectPtr<APlayerController> Player1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	TWeakObjectPtr<APlayerController> Player;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Destroy Session Async Action")
@@ -20,8 +20,8 @@ public:
 	FEmptyOnlineDelegate OnFailure;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "Player"))
-	static UFuAsyncAction_DestroySession* FuDestroySession(APlayerController* Player);
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InPlayer"))
+	static UFuAsyncAction_DestroySession* FuDestroySession(UPARAM(DisplayName = "Player") APlayerController* InPlayer);
 
 	virtual void Activate() override;
 

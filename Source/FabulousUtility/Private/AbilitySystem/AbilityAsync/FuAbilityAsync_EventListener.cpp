@@ -6,18 +6,18 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_EventListener)
 
-UFuAbilityAsync_EventListener* UFuAbilityAsync_EventListener::FuListenForEventOnActor(const AActor* Actor, const FGameplayTag EventTag)
+UFuAbilityAsync_EventListener* UFuAbilityAsync_EventListener::FuListenForEventOnActor(const AActor* Actor, const FGameplayTag InEventTag)
 {
-	return FuListenForEvent(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor), EventTag);
+	return FuListenForEvent(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor), InEventTag);
 }
 
 UFuAbilityAsync_EventListener* UFuAbilityAsync_EventListener::FuListenForEvent(UAbilitySystemComponent* AbilitySystem,
-                                                                               const FGameplayTag EventTag)
+                                                                               const FGameplayTag InEventTag)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->SetAbilitySystemComponent(AbilitySystem);
-	Task->EventTag1 = EventTag;
+	Task->EventTag = InEventTag;
 
 	return Task;
 }
@@ -28,13 +28,13 @@ void UFuAbilityAsync_EventListener::Activate()
 
 	auto* AbilitySystem{GetAbilitySystemComponent()};
 
-	if (!IsValid(AbilitySystem) || !FU_ENSURE(EventTag1.IsValid()))
+	if (!IsValid(AbilitySystem) || !FU_ENSURE(EventTag.IsValid()))
 	{
 		EndAction();
 		return;
 	}
 
-	AbilitySystem->GenericGameplayEventCallbacks.FindOrAdd(EventTag1).AddUObject(this, &ThisClass::AbilitySystem_OnEventReceived);
+	AbilitySystem->GenericGameplayEventCallbacks.FindOrAdd(EventTag).AddUObject(this, &ThisClass::AbilitySystem_OnEventReceived);
 }
 
 void UFuAbilityAsync_EventListener::EndAction()
@@ -42,7 +42,7 @@ void UFuAbilityAsync_EventListener::EndAction()
 	auto* AbilitySystem{GetAbilitySystemComponent()};
 	if (IsValid(AbilitySystem))
 	{
-		AbilitySystem->GenericGameplayEventCallbacks.FindOrAdd(EventTag1).RemoveAll(this);
+		AbilitySystem->GenericGameplayEventCallbacks.FindOrAdd(EventTag).RemoveAll(this);
 	}
 
 	Super::EndAction();

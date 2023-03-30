@@ -5,14 +5,13 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_AbilityActivator)
 
-UFuAbilityTask_AbilityActivator* UFuAbilityTask_AbilityActivator::FuActivateAbilityByHandle(UGameplayAbility* OwningAbility,
-                                                                                            const FGameplayAbilitySpecHandle AbilityHandle,
-                                                                                            const bool bCancelAbilityOnDestroy)
+UFuAbilityTask_AbilityActivator* UFuAbilityTask_AbilityActivator::FuActivateAbilityByHandle(
+	UGameplayAbility* OwningAbility, const FGameplayAbilitySpecHandle InAbilityHandle, const bool bInCancelAbilityOnDestroy)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
-	Task->AbilityHandle1 = AbilityHandle;
-	Task->bCancelAbilityOnDestroy1 = bCancelAbilityOnDestroy;
+	Task->AbilityHandle = InAbilityHandle;
+	Task->bCancelAbilityOnDestroy = bInCancelAbilityOnDestroy;
 
 	return Task;
 }
@@ -21,7 +20,7 @@ void UFuAbilityTask_AbilityActivator::Activate()
 {
 	Super::Activate();
 
-	if (!FU_ENSURE(AbilityHandle1.IsValid()))
+	if (!FU_ENSURE(AbilityHandle.IsValid()))
 	{
 		EndTask();
 		return;
@@ -33,7 +32,7 @@ void UFuAbilityTask_AbilityActivator::Activate()
 	const auto AbilityEndedHandle{
 		AbilitySystemComponent->OnAbilityEnded.AddLambda([this, &bAbilityEnded, &bAbilityCanceled](const FAbilityEndedData& EndedData)
 		{
-			if (EndedData.AbilitySpecHandle == AbilityHandle1)
+			if (EndedData.AbilitySpecHandle == AbilityHandle)
 			{
 				bAbilityEnded = true;
 				bAbilityCanceled = EndedData.bWasCancelled;
@@ -41,7 +40,7 @@ void UFuAbilityTask_AbilityActivator::Activate()
 		})
 	};
 
-	const auto bAbilityActivated{AbilitySystemComponent->TryActivateAbility(AbilityHandle1)};
+	const auto bAbilityActivated{AbilitySystemComponent->TryActivateAbility(AbilityHandle)};
 
 	AbilitySystemComponent->OnAbilityEnded.Remove(AbilityEndedHandle);
 
@@ -90,9 +89,9 @@ void UFuAbilityTask_AbilityActivator::OnDestroy(const bool bInOwnerFinished)
 	{
 		AbilitySystemComponent->OnAbilityEnded.RemoveAll(this);
 
-		if (bCancelAbilityOnDestroy1)
+		if (bCancelAbilityOnDestroy)
 		{
-			AbilitySystemComponent->CancelAbilityHandle(AbilityHandle1);
+			AbilitySystemComponent->CancelAbilityHandle(AbilityHandle);
 		}
 	}
 
@@ -101,7 +100,7 @@ void UFuAbilityTask_AbilityActivator::OnDestroy(const bool bInOwnerFinished)
 
 void UFuAbilityTask_AbilityActivator::AbilitySystem_OnAbilityEnded(const FAbilityEndedData& EndedData)
 {
-	if (EndedData.AbilitySpecHandle != AbilityHandle1)
+	if (EndedData.AbilitySpecHandle != AbilityHandle)
 	{
 		return;
 	}

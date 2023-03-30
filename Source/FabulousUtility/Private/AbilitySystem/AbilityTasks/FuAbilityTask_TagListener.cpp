@@ -5,28 +5,28 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_TagListener)
 
-UFuAbilityTask_TagListener* UFuAbilityTask_TagListener::FuWaitForTagChange(UGameplayAbility* OwningAbility, const FGameplayTag Tag)
+UFuAbilityTask_TagListener* UFuAbilityTask_TagListener::FuWaitForTagChange(UGameplayAbility* OwningAbility, const FGameplayTag InTag)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
-	if (FU_ENSURE(Tag.IsValid()))
+	if (FU_ENSURE(InTag.IsValid()))
 	{
-		Task->Tags1.AddTag(Tag);
+		Task->Tags.AddTag(InTag);
 	}
 
 	return Task;
 }
 
 UFuAbilityTask_TagListener* UFuAbilityTask_TagListener::FuWaitForTagsChange(UGameplayAbility* OwningAbility,
-                                                                            const FGameplayTagContainer Tags)
+                                                                            const FGameplayTagContainer InTags)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
-	for (const auto& Tag : Tags)
+	for (const auto& Tag : InTags)
 	{
 		if (FU_ENSURE(Tag.IsValid()))
 		{
-			Task->Tags1.AddTag(Tag);
+			Task->Tags.AddTag(Tag);
 		}
 	}
 
@@ -37,13 +37,13 @@ void UFuAbilityTask_TagListener::Activate()
 {
 	Super::Activate();
 
-	if (Tags1.IsEmpty())
+	if (Tags.IsEmpty())
 	{
 		EndTask();
 		return;
 	}
 
-	for (const auto& Tag : Tags1)
+	for (const auto& Tag : Tags)
 	{
 		AbilitySystemComponent->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved)
 		                      .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged);
@@ -54,7 +54,7 @@ void UFuAbilityTask_TagListener::Activate()
 		return;
 	}
 
-	for (const auto& Tag : Tags1)
+	for (const auto& Tag : Tags)
 	{
 		if (AbilitySystemComponent->GetTagCount(Tag) > 0)
 		{
@@ -71,7 +71,7 @@ void UFuAbilityTask_TagListener::OnDestroy(const bool bInOwnerFinished)
 {
 	if (AbilitySystemComponent.IsValid())
 	{
-		for (const auto& Tag : Tags1)
+		for (const auto& Tag : Tags)
 		{
 			AbilitySystemComponent->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved).RemoveAll(this);
 		}

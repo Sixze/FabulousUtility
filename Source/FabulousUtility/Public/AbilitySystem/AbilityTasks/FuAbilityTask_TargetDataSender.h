@@ -11,8 +11,8 @@ class FABULOUSUTILITY_API UFuAbilityTask_TargetDataSender : public UAbilityTask
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Target Data")
-	FGameplayAbilityTargetDataHandle TargetData1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	FGameplayAbilityTargetDataHandle TargetData;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Target Data Sender Ability Task")
@@ -21,8 +21,9 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_TargetDataSender* FuSendTargetData(UGameplayAbility* OwningAbility,
-	                                                         const FGameplayAbilityTargetDataHandle& TargetData);
+	static UFuAbilityTask_TargetDataSender* FuSendTargetData(
+		UGameplayAbility* OwningAbility,
+		UPARAM(DisplayName = "Target Data") const FGameplayAbilityTargetDataHandle& InTargetData);
 
 protected:
 	virtual void Activate() override;
@@ -31,5 +32,5 @@ protected:
 
 private:
 	UFUNCTION()
-	void AbilitySystem_OnAbilityTargetDataSet(const FGameplayAbilityTargetDataHandle& TargetData, FGameplayTag ActivationTag);
+	void AbilitySystem_OnAbilityTargetDataSet(const FGameplayAbilityTargetDataHandle& NewTargetData, FGameplayTag ActivationTag);
 };

@@ -10,8 +10,8 @@ class FABULOUSUTILITY_API UFuAbilityTask_AttributeListener : public UAbilityTask
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Attributes")
-	TArray<FGameplayAttribute> Attributes1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	TArray<FGameplayAttribute> Attributes;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Attribute Listener Ability Task")
@@ -20,12 +20,15 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_AttributeListener* FuWaitForAttributeChange(UGameplayAbility* OwningAbility, FGameplayAttribute Attribute);
+	static UFuAbilityTask_AttributeListener* FuWaitForAttributeChange(
+		UGameplayAbility* OwningAbility,
+		UPARAM(DisplayName = "Attribute") FGameplayAttribute InAttribute);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_AttributeListener* FuWaitForAttributesChange(UGameplayAbility* OwningAbility,
-	                                                                   const TArray<FGameplayAttribute>& Attributes);
+	static UFuAbilityTask_AttributeListener* FuWaitForAttributesChange(
+		UGameplayAbility* OwningAbility,
+		UPARAM(DisplayName = "Attributes") const TArray<FGameplayAttribute>& InAttributes);
 
 protected:
 	virtual void Activate() override;

@@ -11,8 +11,8 @@ class FABULOUSUTILITY_API UFuAbilityAsync_EventListener : public UAbilityAsync
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Event Tag")
-	FGameplayTag EventTag1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	FGameplayTag EventTag;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Event Listener Ability Async")
@@ -20,10 +20,12 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_EventListener* FuListenForEventOnActor(const AActor* Actor, FGameplayTag EventTag);
+	static UFuAbilityAsync_EventListener* FuListenForEventOnActor(const AActor* Actor,
+	                                                              UPARAM(DisplayName = "Event Tag") FGameplayTag InEventTag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_EventListener* FuListenForEvent(UAbilitySystemComponent* AbilitySystem, FGameplayTag EventTag);
+	static UFuAbilityAsync_EventListener* FuListenForEvent(UAbilitySystemComponent* AbilitySystem,
+	                                                       UPARAM(DisplayName = "Event Tag") FGameplayTag InEventTag);
 
 public:
 	virtual void Activate() override;

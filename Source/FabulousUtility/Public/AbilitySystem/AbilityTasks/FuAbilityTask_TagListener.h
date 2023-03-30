@@ -10,8 +10,8 @@ class FABULOUSUTILITY_API UFuAbilityTask_TagListener : public UAbilityTask
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Tags")
-	FGameplayTagContainer Tags1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	FGameplayTagContainer Tags;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Tag Listener Ability Task")
@@ -23,11 +23,13 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_TagListener* FuWaitForTagChange(UGameplayAbility* OwningAbility, FGameplayTag Tag);
+	static UFuAbilityTask_TagListener* FuWaitForTagChange(UGameplayAbility* OwningAbility,
+	                                                      UPARAM(DisplayName = "Tag") FGameplayTag InTag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_TagListener* FuWaitForTagsChange(UGameplayAbility* OwningAbility, FGameplayTagContainer Tags);
+	static UFuAbilityTask_TagListener* FuWaitForTagsChange(UGameplayAbility* OwningAbility,
+	                                                       UPARAM(DisplayName = "Tags") FGameplayTagContainer InTags);
 
 protected:
 	virtual void Activate() override;

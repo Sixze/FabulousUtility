@@ -9,14 +9,14 @@ class FABULOUSUTILITY_API UFuAsyncAction_CreateSession : public UOnlineBlueprint
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Player")
-	TWeakObjectPtr<APlayerController> Player1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	TWeakObjectPtr<APlayerController> Player;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Public Connections")
-	int32 PublicConnections1{1};
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	int32 PublicConnections;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, DisplayName = "Use Lan")
-	bool bLanOnly1;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	bool bLanOnly;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Create Session Async Action")
@@ -26,8 +26,10 @@ public:
 	FEmptyOnlineDelegate OnFailure;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "Player"))
-	static UFuAsyncAction_CreateSession* FuCreateSession(APlayerController* Player, int32 PublicConnections, bool bLanOnly);
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InPlayer"))
+	static UFuAsyncAction_CreateSession* FuCreateSession(UPARAM(DisplayName = "Player") APlayerController* InPlayer,
+	                                                     UPARAM(DisplayName = "Public Connections") int32 InPublicConnections,
+	                                                     UPARAM(DisplayName = "Lan Only") bool bInLanOnly);
 
 	virtual void Activate() override;
 
