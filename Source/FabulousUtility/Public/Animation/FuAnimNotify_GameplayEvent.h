@@ -10,6 +10,11 @@ class FABULOUSUTILITY_API UFuAnimNotify_GameplayEvent : public UAnimNotify
 	GENERATED_BODY()
 
 protected:
+#if WITH_EDITORONLY_DATA
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
+	FName NotifyName;
+#endif
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
 	FGameplayTag EventTag;
 

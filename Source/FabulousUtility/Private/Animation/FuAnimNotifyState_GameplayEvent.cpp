@@ -18,6 +18,13 @@ UFuAnimNotifyState_GameplayEvent::UFuAnimNotifyState_GameplayEvent()
 
 FString UFuAnimNotifyState_GameplayEvent::GetNotifyName_Implementation() const
 {
+#if WITH_EDITOR
+	if (!NotifyName.IsNone())
+	{
+		return NotifyName.ToString();
+	}
+#endif
+
 	TStringBuilder<256> NotifyNameBuilder;
 
 	NotifyNameBuilder << TEXTVIEW("Fu Gameplay Event: ") << BeginEventTag.GetTagName() << TEXTVIEW(" - ") << EndEventTag.GetTagName();
