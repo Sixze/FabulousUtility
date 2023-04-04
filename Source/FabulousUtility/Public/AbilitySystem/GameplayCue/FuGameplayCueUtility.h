@@ -9,7 +9,7 @@ class FABULOUSUTILITY_API UFuGameplayCueUtility : public UBlueprintFunctionLibra
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Gameplay Cue Utility")
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Gameplay Cue Utility", Meta = (ReturnDisplayName = "Actors"))
 	static TArray<AActor*> GetActors(const FGameplayCueParameters& Parameters);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Gameplay Cue Utility",

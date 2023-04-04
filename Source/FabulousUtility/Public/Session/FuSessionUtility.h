@@ -9,7 +9,8 @@ class FABULOUSUTILITY_API UFuSessionUtility : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session Utility", Meta = (DefaultToSelf = "Player"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session Utility",
+		Meta = (DefaultToSelf = "Player", ReturnDisplayName = "Success"))
 	static bool TravelToGameSession(APlayerController* Player);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session Utility",

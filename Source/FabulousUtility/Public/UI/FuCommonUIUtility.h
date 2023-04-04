@@ -12,14 +12,14 @@ class FABULOUSUTILITY_API UFuCommonUIUtility : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Common UI Utility")
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Common UI Utility", Meta = (ReturnDisplayName = "Input Type"))
 	static ECommonInputType GetInputTypeForKey(const FKey& Key);
 
 	template <typename UserWidgetType = UUserWidget>
 	static UserWidgetType* FindRootUserWidget(const UWidget* Widget);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Common UI Utility",
-		Meta = (DefaultToSelf = "Widget", DeterminesOutputType = "UserWidgetClass"))
+		Meta = (DefaultToSelf = "Widget", DeterminesOutputType = "UserWidgetClass", ReturnDisplayName = "Root Widget"))
 	static UUserWidget* FindRootUserWidgetOfClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Common UI Utility",

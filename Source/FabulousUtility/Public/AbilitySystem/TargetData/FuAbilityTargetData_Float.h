@@ -37,10 +37,11 @@ class FABULOUSUTILITY_API UFuFloatTargetDataUtility : public UBlueprintFunctionL
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Float Target Data Utility", Meta = (AutoCreateRefTerm = "TargetData"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Float Target Data Utility",
+		Meta = (AutoCreateRefTerm = "TargetData", ReturnDisplayName = "Target Data Handle"))
 	static FGameplayAbilityTargetDataHandle MakeFloatTargetDataHandle(const FFuAbilityTargetData_Float& TargetData);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Float Target Data Utility")
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Float Target Data Utility", Meta = (ReturnDisplayName = "Target Data"))
 	static FFuAbilityTargetData_Float GetFloatTargetData(const FGameplayAbilityTargetDataHandle& TargetDataHandle, int32 Index);
 };
 

@@ -11,10 +11,10 @@ class FABULOUSUTILITY_API UFuEffectContextUtility : public UBlueprintFunctionLib
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Context Utility")
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Context Utility", Meta = (ReturnDisplayName = "Effect Context Handle"))
 	static FGameplayEffectContextHandle DuplicateEffectContext(const FGameplayEffectContextHandle& EffectContextHandle);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Context Utility")
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Context Utility", Meta = (ReturnDisplayName = "Target Data Handle"))
 	static FGameplayAbilityTargetDataHandle GetTargetDataHandle(const FGameplayEffectContextHandle& EffectContextHandle);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Context Utility")

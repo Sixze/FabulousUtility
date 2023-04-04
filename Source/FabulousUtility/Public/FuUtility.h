@@ -10,7 +10,7 @@ class FABULOUSUTILITY_API UFuUtility : public UBlueprintFunctionLibrary
 
 public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Utility",
-		Meta = (WorldContext = "WorldContext", DeterminesOutputType = "GameInstanceClass"))
+		Meta = (WorldContext = "WorldContext", DeterminesOutputType = "GameInstanceClass", ReturnDisplayName = "Game Instance"))
 	static UGameInstance* GetGameInstanceCasted(const UObject* WorldContext, TSubclassOf<UGameInstance> GameInstanceClass);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Utility", Meta = (WorldContext = "WorldContext",

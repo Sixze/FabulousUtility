@@ -12,7 +12,8 @@ class FABULOUSUTILITY_API UFuPawnUtility : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Pawn Utility", Meta = (DefaultToSelf = "Pawn"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Pawn Utility",
+		Meta = (DefaultToSelf = "Pawn", ReturnDisplayName = "Player Controller"))
 	static APlayerController* GetPlayerControllerFromPawn(const APawn* Pawn);
 };
 

@@ -9,7 +9,7 @@ class FABULOUSUTILITY_API UFuEffectHandleUtility : public UBlueprintFunctionLibr
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Handle Utility")
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Handle Utility", Meta = (ReturnDisplayName = "Value"))
 	static bool IsActive(FActiveGameplayEffectHandle EffectHandle);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Handle Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))

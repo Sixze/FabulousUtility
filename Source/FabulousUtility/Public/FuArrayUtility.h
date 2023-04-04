@@ -19,7 +19,8 @@ public:
 	template <typename ValueType>
 	static void ShuffleFirstElements(TArray<ValueType>& Array, int32 FirstElementsCount);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Array Utility", Meta = (AutoCreateRefTerm = "Array"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Array Utility",
+		Meta = (AutoCreateRefTerm = "Array", ReturnDisplayName = "Random Index"))
 	static int32 GetWeightedRandomIndex(const TArray<float>& Array);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", Meta = (AutoCreateRefTerm = "Array"))
@@ -31,12 +32,14 @@ public:
 	// Internal blueprint only functions.
 
 private:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Array Utility", CustomThunk, Meta = (ArrayParm = "Array"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Array Utility",
+		CustomThunk, Meta = (ArrayParm = "Array", ReturnDisplayName = "Value"))
 	static bool IsEmpty(const TArray<UObject*>& Array);
 
 	DECLARE_FUNCTION(execIsEmpty);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Array Utility", CustomThunk, Meta = (ArrayParm = "Array"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Array Utility",
+		CustomThunk, Meta = (ArrayParm = "Array", ReturnDisplayName = "Value"))
 	static bool IsNotEmpty(const TArray<UObject*>& Array);
 
 	DECLARE_FUNCTION(execIsNotEmpty);

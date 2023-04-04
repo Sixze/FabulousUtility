@@ -9,36 +9,38 @@ class FABULOUSUTILITY_API UFuVector : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector", Meta = (AutoCreateRefTerm = "Direction"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector", Meta = (AutoCreateRefTerm = "Direction", ReturnDisplayName = "Angle"))
 	static double DirectionToAngle(const FVector2D& Direction);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector", Meta = (AutoCreateRefTerm = "Direction"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector", Meta = (AutoCreateRefTerm = "Direction", ReturnDisplayName = "Angle"))
 	static double DirectionToAngleXY(const FVector& Direction);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector", Meta = (AutoCreateRefTerm = "From, To"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector", Meta = (AutoCreateRefTerm = "From, To", ReturnDisplayName = "Angle"))
 	static double AngleBetween(const FVector& From, const FVector& To);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector", Meta = (AutoCreateRefTerm = "From, To"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector", Meta = (AutoCreateRefTerm = "From, To", ReturnDisplayName = "Angle"))
 	static double AngleBetweenXY(const FVector& From, const FVector& To);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector", Meta = (AutoCreateRefTerm = "From, To"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector", Meta = (AutoCreateRefTerm = "From, To", ReturnDisplayName = "Angle"))
 	static double AngleBetweenSignedXY(const FVector& From, const FVector& To);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector",
-		DisplayName = "Angle Between (Skip Normalization)", Meta = (AutoCreateRefTerm = "From, To"))
+		DisplayName = "Angle Between (Skip Normalization)", Meta = (AutoCreateRefTerm = "From, To", ReturnDisplayName = "Angle"))
 	static double AngleBetweenSkipNormalization(const FVector& From, const FVector& To);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector",
-		DisplayName = "Slerp Angle (Skip Normalization)", Meta = (AutoCreateRefTerm = "From, To"))
-	static FVector SlerpAngleSkipNormalization(const FVector& From, const FVector& To, float Angle);
+		DisplayName = "Slerp (Skip Normalization)", Meta = (AutoCreateRefTerm = "From, To", ReturnDisplayName = "Direction"))
+	static FVector SlerpSkipNormalization(const FVector& From, const FVector& To, float Angle);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector")
-	static FVector RandomUnitVector();
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector", Meta = (ReturnDisplayName = "Direction"))
+	static FVector RandomDirection();
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector", Meta = (AutoCreateRefTerm = "SegmentStart, SegmentEnd, Point"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector",
+		Meta = (AutoCreateRefTerm = "SegmentStart, SegmentEnd, Point", ReturnDisplayName = "Point"))
 	static FVector ClosestPointOnSegmentXY(const FVector& SegmentStart, const FVector& SegmentEnd, const FVector& Point);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector", Meta = (AutoCreateRefTerm = "SegmentStart, SegmentEnd, Point"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector",
+		Meta = (AutoCreateRefTerm = "SegmentStart, SegmentEnd, Point", ReturnDisplayName = "Distance"))
 	static double DistanceToSegmentXY(const FVector& SegmentStart, const FVector& SegmentEnd, const FVector& Point);
 };
 

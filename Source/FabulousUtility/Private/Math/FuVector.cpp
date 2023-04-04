@@ -2,7 +2,7 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuVector)
 
-FVector UFuVector::SlerpAngleSkipNormalization(const FVector& From, const FVector& To, float Angle)
+FVector UFuVector::SlerpSkipNormalization(const FVector& From, const FVector& To, float Angle)
 {
 	// http://allenchou.net/2018/05/game-math-deriving-the-slerp-formula/
 
@@ -23,7 +23,7 @@ FVector UFuVector::SlerpAngleSkipNormalization(const FVector& From, const FVecto
 	return From * Cos + FromPerpendicular * Sin;
 }
 
-FVector UFuVector::RandomUnitVector()
+FVector UFuVector::RandomDirection()
 {
 	// http://stackoverflow.com/questions/5408276/python-uniform-spherical-distribution
 

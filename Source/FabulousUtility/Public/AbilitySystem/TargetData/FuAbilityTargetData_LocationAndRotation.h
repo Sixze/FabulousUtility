@@ -46,11 +46,12 @@ class FABULOUSUTILITY_API UFuLocationAndRotationTargetDataUtility : public UBlue
 
 public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Location and Rotation Target Data Utility",
-		Meta = (AutoCreateRefTerm = "TargetData"))
+		Meta = (AutoCreateRefTerm = "TargetData", ReturnDisplayName = "Target Data Handle"))
 	static FGameplayAbilityTargetDataHandle MakeLocationAndRotationTargetDataHandle(
 		const FFuAbilityTargetData_LocationAndRotation& TargetData);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Location and Rotation Target Data Utility")
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Location and Rotation Target Data Utility",
+		Meta = (ReturnDisplayName = "Target Data"))
 	static FFuAbilityTargetData_LocationAndRotation GetLocationAndRotationTargetData(
 		const FGameplayAbilityTargetDataHandle& TargetDataHandle, int32 Index);
 };

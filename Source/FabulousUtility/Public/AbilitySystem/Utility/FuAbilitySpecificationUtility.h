@@ -10,13 +10,13 @@ class FABULOUSUTILITY_API UFuAbilitySpecificationUtility : public UBlueprintFunc
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Specification Utility")
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Specification Utility", Meta = (ReturnDisplayName = "Ability Handle"))
 	static FGameplayAbilitySpecHandle GetAbilityHandle(const FGameplayAbilitySpec& AbilitySpecification);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Specification Utility")
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Specification Utility", Meta = (ReturnDisplayName = "Ability Class"))
 	static TSubclassOf<UGameplayAbility> GetAbilityClass(const FGameplayAbilitySpec& AbilitySpecification);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Specification Utility")
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Specification Utility", Meta = (ReturnDisplayName = "Input Id"))
 	static uint8 GetInputId(const FGameplayAbilitySpec& AbilitySpecification);
 };
 

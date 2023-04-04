@@ -9,19 +9,19 @@ class FABULOUSUTILITY_API UFuQuaternion : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Quaternion")
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Quaternion", Meta = (ReturnDisplayName = "Delta"))
 	static FQuat DeltaQuaternion(const FQuat& From, const FQuat& To);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Quaternion")
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Quaternion", Meta = (ReturnDisplayName = "World"))
 	static FQuat TransformRelativeToWorldQuaternion(const FQuat& Relative, const FQuat& Parent);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Quaternion")
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Quaternion", Meta = (ReturnDisplayName = "Relative"))
 	static FQuat TransformWorldToRelativeQuaternion(const FQuat& World, const FQuat& Parent);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Quaternion")
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Quaternion", Meta = (ReturnDisplayName = "Quaternion"))
 	static FQuat AddWorldDeltaQuaternion(const FQuat& Quaternion, const FQuat& WorldDelta);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Quaternion")
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Quaternion", Meta = (ReturnDisplayName = "Quaternion"))
 	static FQuat AddRelativeDeltaQuaternion(const FQuat& Quaternion, const FQuat& RelativeDelta);
 };
 
