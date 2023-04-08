@@ -2,7 +2,6 @@
 
 #include "GameplayTagsManager.h"
 
-// ReSharper disable once CppUnusedIncludeDirective
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuGameplayTagUtility)
 
 FName UFuGameplayTagUtility::GetSimpleTagName(const FGameplayTag& Tag)

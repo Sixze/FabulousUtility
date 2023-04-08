@@ -89,10 +89,8 @@ EBTNodeResult::Type UFuBTTask_WaitForTagChange::ExecuteTask(UBehaviorTreeCompone
 
 	const auto TagCount{Memory.AbilitySystem->GetTagCount(Tag)};
 
-	// ReSharper disable CppRedundantParentheses
 	if ((WaitMode == EFuTagWaitMode::WaitForTagAdd && TagCount > 0) ||
 	    (WaitMode == EFuTagWaitMode::WaitForTagRemove && TagCount <= 0))
-	// ReSharper restore CppRedundantParentheses
 	{
 		return EBTNodeResult::Succeeded;
 	}
@@ -119,10 +117,8 @@ void UFuBTTask_WaitForTagChange::OnTaskFinished(UBehaviorTreeComponent& Behavior
 void UFuBTTask_WaitForTagChange::AbilitySystem_OnTagChanged(const FGameplayTag ThisTag, const int32 Count,
                                                             const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree) const
 {
-	// ReSharper disable CppRedundantParentheses
 	if (((WaitMode == EFuTagWaitMode::WaitForTagAdd && Count > 0) ||
 	     (WaitMode == EFuTagWaitMode::WaitForTagRemove && Count <= 0)) &&
-	    // ReSharper restore CppRedundantParentheses
 	    FU_ENSURE(BehaviorTree.IsValid()))
 	{
 		FinishLatentTask(*BehaviorTree, EBTNodeResult::Succeeded);

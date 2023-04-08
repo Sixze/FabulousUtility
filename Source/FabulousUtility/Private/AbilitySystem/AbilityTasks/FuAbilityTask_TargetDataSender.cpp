@@ -29,7 +29,6 @@ void UFuAbilityTask_TargetDataSender::Activate()
 		return;
 	}
 
-	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 	FScopedPredictionWindow PredictionWindow{
 		AbilitySystemComponent.Get(),
 		!Ability->GetCurrentActorInfo()->IsNetAuthority() && !AbilitySystemComponent->ScopedPredictionKey.IsValidForMorePrediction()

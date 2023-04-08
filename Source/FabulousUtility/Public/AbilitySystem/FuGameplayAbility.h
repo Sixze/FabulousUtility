@@ -53,7 +53,7 @@ protected:
 	UFUNCTION(BlueprintNativeEvent, Category = "Fu Gameplay Ability", DisplayName = "Check Cost")
 	bool CheckCostBlueprint(const FGameplayAbilityActorInfo& ActorInfo, FGameplayAbilitySpecHandle AbilityHandle) const;
 
-	UFUNCTION(BlueprintNativeEvent, Category = "Fu Gameplay Ability", DisplayName = "Apply Cost")
+	UFUNCTION(BlueprintNativeEvent, Category = "Fu Gameplay Ability", DisplayName = "Apply Cost", Meta = (ForceAsFunction))
 	void ApplyCostBlueprint(const FGameplayAbilityActorInfo& ActorInfo, FGameplayAbilitySpecHandle AbilityHandle,
 	                        FGameplayAbilityActivationInfo ActivationInfo) const;
 

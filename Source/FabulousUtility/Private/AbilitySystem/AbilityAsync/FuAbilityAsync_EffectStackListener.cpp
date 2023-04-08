@@ -42,7 +42,6 @@ void UFuAbilityAsync_EffectStackListener::Activate()
 	const auto bDelegatesBroadcastAllowed{ShouldBroadcastDelegates()};
 	auto bAnyEffectValid{false};
 
-	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 	FScopedActiveGameplayEffectLock EffectScopeLock{
 		const_cast<FActiveGameplayEffectsContainer&>(AbilitySystem->GetActiveGameplayEffects())
 	};

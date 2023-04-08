@@ -94,7 +94,6 @@ void UFuAbilitySystemComponent::OnRemoveAbility(FGameplayAbilitySpec& AbilitySpe
 bool UFuAbilitySystemComponent::AreAbilityTagsBlocked(const FGameplayTagContainer& Tags) const
 {
 	return Super::AreAbilityTagsBlocked(Tags) ||
-	       // ReSharper disable once CppRedundantParentheses
 	       (BlockedAbilityWithoutTags.GetExplicitGameplayTags().IsValid() &&
 	        !Tags.HasAny(BlockedAbilityWithoutTags.GetExplicitGameplayTags()));
 }

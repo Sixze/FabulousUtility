@@ -45,7 +45,6 @@ void UFuAnimNotifyState_GameplayEvent::NotifyBegin(USkeletalMeshComponent* Mesh,
 		auto EventData{UFuEventDataUtility::MakeEventDataFromAbilitySystems(AbilitySystem, AbilitySystem)};
 		EventData.OptionalObject = Animation;
 
-		// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 		FScopedPredictionWindow PredictionWindow{AbilitySystem, true};
 
 		AbilitySystem->HandleGameplayEvent(BeginEventTag, &EventData);
@@ -65,7 +64,6 @@ void UFuAnimNotifyState_GameplayEvent::NotifyEnd(USkeletalMeshComponent* Mesh, U
 		auto EventData{UFuEventDataUtility::MakeEventDataFromAbilitySystems(AbilitySystem, AbilitySystem)};
 		EventData.OptionalObject = Animation;
 
-		// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 		FScopedPredictionWindow PredictionWindow{AbilitySystem, true};
 
 		AbilitySystem->HandleGameplayEvent(EndEventTag, &EventData);

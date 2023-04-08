@@ -222,7 +222,6 @@ void UFuAbilityAsync_EffectTimeListener::ActiveEffect_OnTimeChanged(const FActiv
 		return;
 	}
 
-	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 	FScopedActiveGameplayEffectLock EffectScopeLock{
 		const_cast<FActiveGameplayEffectsContainer&>(AbilitySystem->GetActiveGameplayEffects())
 	};

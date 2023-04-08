@@ -73,10 +73,8 @@ void UFuBTDecorator_RandomizedLoop::OnNodeActivation(FBehaviorTreeSearchData& Se
 
 	auto& Memory{*GetNodeMemory<FFuRandomizedLoopMemory>(SearchData)};
 
-	// ReSharper disable CppRedundantParentheses
 	if ((bParentIsSpecialNode && ParentMemory.CurrentChild == BTSpecialChild::NotInitialized) ||
 	    (!bParentIsSpecialNode && ParentMemory.CurrentChild != ChildIndex))
-	// ReSharper restore CppRedundantParentheses
 	{
 		Memory.RemainingLoopsCount = FMath::RandRange(MinLoopsCount, MaxLoopsCount);
 	}

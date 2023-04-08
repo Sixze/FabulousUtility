@@ -97,8 +97,8 @@ void UFuAbilityAsync_AbilityFailureListener::EndAction()
 	Super::EndAction();
 }
 
+// ReSharper disable once CppParameterMayBeConstPtrOrRef
 void UFuAbilityAsync_AbilityFailureListener::AbilitySystem_OnAbilityFailed(const FGameplayAbilitySpecHandle AbilityHandle,
-                                                                           // ReSharper disable once CppParameterMayBeConstPtrOrRef
                                                                            UGameplayAbility* Ability,
                                                                            const FGameplayTagContainer& ActivationFailureTags) const
 {
@@ -106,7 +106,6 @@ void UFuAbilityAsync_AbilityFailureListener::AbilitySystem_OnAbilityFailed(const
 
 	if (ActivationFailureTags.HasAny(FailureTags) &&
 	    (Ability->AbilityTags.HasAny(AbilityTags) ||
-	     // ReSharper disable once CppRedundantParentheses
 	     (AbilitySpecification != nullptr && AbilitySpecification->DynamicAbilityTags.HasAny(AbilityTags))))
 	{
 		OnAbilityFailed.Broadcast(AbilityHandle, FailureTags);

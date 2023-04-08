@@ -73,7 +73,6 @@ EBTNodeResult::Type UFuBTTask_SendGameplayEvent::ExecuteTask(UBehaviorTreeCompon
 	const auto EventData{UFuEventDataUtility::MakeEventDataFromAvatarAndAbilitySystem(Pawn, TargetAbilitySystem)};
 
 	{
-		// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 		FScopedPredictionWindow PredictionWindow{TargetAbilitySystem, true};
 
 		TargetAbilitySystem->HandleGameplayEvent(EventTag, &EventData);

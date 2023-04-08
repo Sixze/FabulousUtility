@@ -87,7 +87,6 @@ void UFuAbilityAsync_AbilityCooldownListener::Activate()
 	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(GetAbilitySystemComponent())};
 
 	if (!IsValid(GetAbilitySystemComponent()) || !FU_ENSURE(IsValid(AbilitySystem)) ||
-	    // ReSharper disable once CppRedundantParentheses
 	    (AbilityTags.IsEmpty() && !FU_ENSURE(InputId >= 0)))
 	{
 		EndAction();
@@ -102,7 +101,6 @@ void UFuAbilityAsync_AbilityCooldownListener::Activate()
 
 	for (const auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
 	{
-		// ReSharper disable once CppRedundantParentheses
 		if ((InputId >= 0 && AbilitySpecification.InputID == InputId) ||
 		    AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||
 		    AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags))

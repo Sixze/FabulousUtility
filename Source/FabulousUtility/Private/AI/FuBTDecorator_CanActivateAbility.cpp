@@ -117,7 +117,6 @@ void UFuBTDecorator_CanActivateAbility::TickNode(UBehaviorTreeComponent& Behavio
 
 	const auto bExecutingBranch{BehaviorTree.IsExecutingBranch(GetMyNode(), GetChildIndex())};
 
-	// ReSharper disable CppRedundantParentheses
 	const auto bAbortAllowed{
 		(bExecutingBranch && ((FlowAbortMode == EBTFlowAbortMode::Self || FlowAbortMode == EBTFlowAbortMode::Both) &&
 		                      CalculateRawConditionValue(BehaviorTree, NodeMemory) == IsInversed())) ||
@@ -125,7 +124,6 @@ void UFuBTDecorator_CanActivateAbility::TickNode(UBehaviorTreeComponent& Behavio
 		                       CalculateRawConditionValue(BehaviorTree, NodeMemory) != IsInversed()))
 
 	};
-	// ReSharper restore CppRedundantParentheses
 
 	if (bAbortAllowed)
 	{

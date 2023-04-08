@@ -5,7 +5,6 @@
 #include "AIController.h"
 #include "FuMacros.h"
 
-// ReSharper disable once CppUnusedIncludeDirective
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTTask_ActivateAbility)
 
 struct FFuActivateAbilityMemory
@@ -91,7 +90,6 @@ EBTNodeResult::Type UFuBTTask_ActivateAbility::ExecuteTask(UBehaviorTreeComponen
 	};
 
 	{
-		// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 		FScopedAbilityListLock AbilityScopeLock{*Memory.AbilitySystem};
 
 		for (const auto& AbilitySpecification : Memory.AbilitySystem->GetActivatableAbilities())

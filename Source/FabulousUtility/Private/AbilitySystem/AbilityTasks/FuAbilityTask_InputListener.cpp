@@ -74,7 +74,6 @@ void UFuAbilityTask_InputListener::OnDestroy(const bool bInOwnerFinished)
 // ReSharper disable once CppMemberFunctionMayBeConst
 void UFuAbilityTask_InputListener::AbilitySystem_OnInputPressed()
 {
-	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 	FScopedPredictionWindow PredictionWindow(AbilitySystemComponent.Get(), IsPredictingClient());
 
 	if (IsPredictingClient())
@@ -103,7 +102,6 @@ void UFuAbilityTask_InputListener::AbilitySystem_OnInputPressed()
 // ReSharper disable once CppMemberFunctionMayBeConst
 void UFuAbilityTask_InputListener::AbilitySystem_OnInputReleased()
 {
-	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 	FScopedPredictionWindow PredictionWindow(AbilitySystemComponent.Get(), IsPredictingClient());
 
 	if (IsPredictingClient())
