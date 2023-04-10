@@ -1,8 +1,13 @@
 #pragma once
 
-#include "EnhancedInputComponent.h"
+#include "InputActionValue.h"
 #include "Abilities/Tasks/AbilityTask.h"
 #include "FuAbilityTask_InputActionListener.generated.h"
+
+struct FInputBindingHandle;
+struct FInputActionInstance;
+class UEnhancedInputComponent;
+class UInputAction;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuInputActionListenerDelegate, const UInputAction*, InputAction, FInputActionValue, Value);
 

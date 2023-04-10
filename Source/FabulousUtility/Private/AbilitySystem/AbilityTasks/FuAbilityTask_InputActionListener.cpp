@@ -1,6 +1,7 @@
 #include "AbilitySystem/AbilityTasks/FuAbilityTask_InputActionListener.h"
 
 #include "AbilitySystemComponent.h"
+#include "EnhancedInputComponent.h"
 #include "FuMacros.h"
 #include "GameFramework/Pawn.h"
 

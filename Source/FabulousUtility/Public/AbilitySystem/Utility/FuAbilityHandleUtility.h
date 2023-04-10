@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Abilities/GameplayAbility.h"
+#include "GameplayAbilitySpecHandle.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuAbilityHandleUtility.generated.h"
 

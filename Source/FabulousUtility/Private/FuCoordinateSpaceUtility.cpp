@@ -1,7 +1,9 @@
 #include "FuCoordinateSpaceUtility.h"
 
 #include "SceneView.h"
+#include "Engine/GameViewportClient.h"
 #include "Engine/LocalPlayer.h"
+#include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
 #include "Slate/SGameLayerManager.h"
 

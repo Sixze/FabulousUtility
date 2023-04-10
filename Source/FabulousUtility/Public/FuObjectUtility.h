@@ -2,6 +2,7 @@
 
 #include "FuMacros.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "Misc/PackageName.h"
 #include "Templates/SubclassOf.h"
 #include "UObject/Interface.h"
 #include "FuObjectUtility.generated.h"

@@ -3,8 +3,8 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuPhysicsUtility.generated.h"
 
-enum ECollisionChannel;
-enum EObjectTypeQuery;
+enum ECollisionChannel : int;
+enum EObjectTypeQuery : int;
 struct FCollisionProfileName;
 struct FOverlapResult;
 struct FCollisionResponseParams;

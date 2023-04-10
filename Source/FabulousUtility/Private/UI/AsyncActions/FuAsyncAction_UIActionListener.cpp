@@ -3,6 +3,7 @@
 #include "CommonUserWidget.h"
 #include "FuMacros.h"
 #include "Input/CommonUIActionRouterBase.h"
+#include "Input/CommonUIInputTypes.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_UIActionListener)
 

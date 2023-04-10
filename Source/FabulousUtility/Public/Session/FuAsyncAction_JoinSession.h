@@ -3,6 +3,11 @@
 #include "FindSessionsCallbackProxy.h"
 #include "FuAsyncAction_JoinSession.generated.h"
 
+namespace EOnJoinSessionCompleteResult
+{
+	enum Type;
+}
+
 UCLASS(DisplayName = "Fu Join Session Async Action")
 class FABULOUSUTILITY_API UFuAsyncAction_JoinSession : public UOnlineBlueprintCallProxyBase
 {

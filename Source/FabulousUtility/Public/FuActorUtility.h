@@ -1,8 +1,10 @@
 #pragma once
 
-#include "Components/ActorComponent.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "Templates/SubclassOf.h"
 #include "FuActorUtility.generated.h"
+
+class UActorComponent;
 
 UCLASS()
 class FABULOUSUTILITY_API UFuActorUtility : public UBlueprintFunctionLibrary

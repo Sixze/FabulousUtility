@@ -3,8 +3,8 @@
 #include "BehaviorTree/BTDecorator.h"
 #include "FuBTDecorator_ReceiveGameplayEvent.generated.h"
 
-struct FGameplayEventData;
 struct FFuReceiveGameplayEventMemory;
+struct FGameplayEventData;
 
 UCLASS(DisplayName = "Fu Receive Gameplay Event", HideCategories = ("Condition"), Meta = (ShowWorldContextPin))
 class FABULOUSUTILITY_API UFuBTDecorator_ReceiveGameplayEvent : public UBTDecorator

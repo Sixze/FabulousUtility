@@ -1,6 +1,6 @@
 #pragma once
 
-#include "FuAbilityTask_Delay.h"
+#include "Abilities/Tasks/AbilityTask.h"
 #include "FuAbilityTask_Tick.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuTickDelegate, float, DeltaTime);
