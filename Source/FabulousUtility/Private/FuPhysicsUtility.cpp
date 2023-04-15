@@ -30,6 +30,11 @@ void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext,
 	static TArray<FOverlapResult> Overlaps;
 	check(Overlaps.IsEmpty())
 
+	ON_SCOPE_EXIT
+	{
+		Overlaps.Reset();
+	};
+
 	World->OverlapMultiByChannel(Overlaps, Location, FQuat::Identity, CollisionChannel, FCollisionShape::MakeSphere(Radius),
 	                             {__FUNCTION__, false, IgnoredActor}, CollisionResponse);
 
@@ -60,8 +65,6 @@ void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext,
 
 		ActorHits->Add(Hit);
 	}
-
-	Overlaps.Reset();
 }
 
 bool UFuPhysicsUtility::IsComponentReachableFromLocation(UPrimitiveComponent* Component, const FVector& Location,
@@ -173,6 +176,11 @@ bool UFuPhysicsUtility::BoxOverlapActors(const UObject* WorldContext, const FVec
 	static TArray<FOverlapResult> Overlaps;
 	check(Overlaps.IsEmpty())
 
+	ON_SCOPE_EXIT
+	{
+		Overlaps.Reset();
+	};
+
 	World->OverlapMultiByObjectType(Overlaps, Location, Rotation.Quaternion(), ObjectQueryParameters,
 	                                FCollisionShape::MakeBox(Extent), QueryParameters);
 
@@ -187,8 +195,6 @@ bool UFuPhysicsUtility::BoxOverlapActors(const UObject* WorldContext, const FVec
 			Actors.Add(Actor);
 		}
 	}
-
-	Overlaps.Reset();
 
 	return !Actors.IsEmpty();
 }
@@ -217,6 +223,11 @@ bool UFuPhysicsUtility::BoxOverlapComponents(const UObject* WorldContext, const 
 	static TArray<FOverlapResult> Overlaps;
 	check(Overlaps.IsEmpty())
 
+	ON_SCOPE_EXIT
+	{
+		Overlaps.Reset();
+	};
+
 	World->OverlapMultiByObjectType(Overlaps, Location, Rotation.Quaternion(), ObjectQueryParameters,
 	                                FCollisionShape::MakeBox(Extent), QueryParameters);
 
@@ -229,8 +240,6 @@ bool UFuPhysicsUtility::BoxOverlapComponents(const UObject* WorldContext, const 
 			Components.Add(Overlap.Component.Get());
 		}
 	}
-
-	Overlaps.Reset();
 
 	return !Components.IsEmpty();
 }
@@ -260,6 +269,11 @@ bool UFuPhysicsUtility::ConeOverlapActorsSimple(const UObject* WorldContext, con
 	static TArray<FOverlapResult> Overlaps;
 	check(Overlaps.IsEmpty())
 
+	ON_SCOPE_EXIT
+	{
+		Overlaps.Reset();
+	};
+
 	World->OverlapMultiByObjectType(Overlaps, Location, Rotation.Quaternion(), ObjectQueryParameters,
 	                                FCollisionShape::MakeSphere(Radius), QueryParameters);
 
@@ -278,9 +292,6 @@ bool UFuPhysicsUtility::ConeOverlapActorsSimple(const UObject* WorldContext, con
 			Actors.Add(Actor);
 		}
 	}
-
-	Overlaps.Reset();
-
 	return !Actors.IsEmpty();
 }
 
@@ -309,6 +320,11 @@ bool UFuPhysicsUtility::ConeOverlapComponentsSimple(const UObject* WorldContext,
 	static TArray<FOverlapResult> Overlaps;
 	check(Overlaps.IsEmpty())
 
+	ON_SCOPE_EXIT
+	{
+		Overlaps.Reset();
+	};
+
 	World->OverlapMultiByObjectType(Overlaps, Location, Rotation.Quaternion(), ObjectQueryParameters,
 	                                FCollisionShape::MakeSphere(Radius), QueryParameters);
 
@@ -325,8 +341,6 @@ bool UFuPhysicsUtility::ConeOverlapComponentsSimple(const UObject* WorldContext,
 			Components.Add(Overlap.Component.Get());
 		}
 	}
-
-	Overlaps.Reset();
 
 	return !Components.IsEmpty();
 }

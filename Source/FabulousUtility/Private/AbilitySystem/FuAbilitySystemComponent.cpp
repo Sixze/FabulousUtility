@@ -3,6 +3,7 @@
 #include "AbilitySystemInterface.h"
 #include "AbilitySystem/FuGameplayAbility.h"
 #include "AbilitySystem/FuGameplayEffect.h"
+#include "Misc/ScopeExit.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilitySystemComponent)
 
@@ -119,6 +120,11 @@ void UFuAbilitySystemComponent::AbilityLocalInputPressed(const int32 InputId)
 	static TArray<FGameplayAbilitySpec*> AcceptedAbilitySpecifications;
 	check(AcceptedAbilitySpecifications.IsEmpty())
 
+	ON_SCOPE_EXIT
+	{
+		AcceptedAbilitySpecifications.Reset();
+	};
+
 	// Update the input state of all abilities BEFORE calling any callbacks to ensure that the input state will be always correct in all
 	// scenarios, such as when on input press, one ability directly activates another, that is also listening for the same input action.
 
@@ -155,8 +161,6 @@ void UFuAbilitySystemComponent::AbilityLocalInputPressed(const int32 InputId)
 			TryActivateAbility(AbilitySpecification->Handle);
 		}
 	}
-
-	AcceptedAbilitySpecifications.Reset();
 }
 
 void UFuAbilitySystemComponent::AbilityLocalInputReleased(const int32 InputId)
@@ -167,6 +171,11 @@ void UFuAbilitySystemComponent::AbilityLocalInputReleased(const int32 InputId)
 
 	static TArray<FGameplayAbilitySpec*> AcceptedAbilitySpecifications;
 	check(AcceptedAbilitySpecifications.IsEmpty())
+
+	ON_SCOPE_EXIT
+	{
+		AcceptedAbilitySpecifications.Reset();
+	};
 
 	for (auto& AbilitySpecification : GetActivatableAbilities())
 	{
@@ -193,8 +202,6 @@ void UFuAbilitySystemComponent::AbilityLocalInputReleased(const int32 InputId)
 			                      AbilitySpecification->ActivationInfo.GetActivationPredictionKey());
 		}
 	}
-
-	AcceptedAbilitySpecifications.Reset();
 }
 
 void UFuAbilitySystemComponent::InputTagPressed(const FGameplayTag& InputTag)
@@ -222,6 +229,11 @@ void UFuAbilitySystemComponent::InputTagPressed(const FGameplayTag& InputTag)
 
 	static TArray<FGameplayAbilitySpec*> AcceptedAbilitySpecifications;
 	check(AcceptedAbilitySpecifications.IsEmpty())
+
+	ON_SCOPE_EXIT
+	{
+		AcceptedAbilitySpecifications.Reset();
+	};
 
 	for (auto& AbilitySpecification : GetActivatableAbilities())
 	{
@@ -258,8 +270,6 @@ void UFuAbilitySystemComponent::InputTagPressed(const FGameplayTag& InputTag)
 			TryActivateAbility(AbilitySpecification->Handle);
 		}
 	}
-
-	AcceptedAbilitySpecifications.Reset();
 }
 
 void UFuAbilitySystemComponent::InputTagReleased(const FGameplayTag& InputTag)
@@ -275,6 +285,11 @@ void UFuAbilitySystemComponent::InputTagReleased(const FGameplayTag& InputTag)
 
 	static TArray<FGameplayAbilitySpec*> AcceptedAbilitySpecifications;
 	check(AcceptedAbilitySpecifications.IsEmpty())
+
+	ON_SCOPE_EXIT
+	{
+		AcceptedAbilitySpecifications.Reset();
+	};
 
 	for (auto& AbilitySpecification : GetActivatableAbilities())
 	{
@@ -303,8 +318,6 @@ void UFuAbilitySystemComponent::InputTagReleased(const FGameplayTag& InputTag)
 			                      AbilitySpecification->ActivationInfo.GetActivationPredictionKey());
 		}
 	}
-
-	AcceptedAbilitySpecifications.Reset();
 }
 
 void UFuAbilitySystemComponent::BlockAbilitiesWithoutTags(const FGameplayTagContainer& Tags)
