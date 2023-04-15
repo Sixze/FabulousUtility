@@ -12,7 +12,7 @@ enum class EFuTagWaitMode : uint8
 
 namespace FuTagListenerWaitMode
 {
-	constexpr bool IsValid(const EFuTagWaitMode WaitMode)
+	FABULOUSUTILITY_API constexpr bool IsValid(const EFuTagWaitMode WaitMode)
 	{
 		return WaitMode >= EFuTagWaitMode::WaitForTagAdd && WaitMode <= EFuTagWaitMode::WaitForTagRemove;
 	}
