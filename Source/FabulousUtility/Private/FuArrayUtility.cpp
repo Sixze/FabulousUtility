@@ -1,5 +1,6 @@
 #include "FuArrayUtility.h"
 
+#include "FuMacros.h"
 #include "Net/Core/PushModel/PushModel.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuArrayUtility)
@@ -36,18 +37,24 @@ int32 UFuArrayUtility::GetWeightedRandomIndex(const TArray<float>& Array)
 
 void UFuArrayUtility::SortByPredicateObject(TArray<UObject*>& Objects, const FFuSortByPredicatObjectDelegate& Predicate)
 {
-	Objects.Sort([&Predicate](const UObject& A, const UObject& B)
+	if (FU_ENSURE(Predicate.IsBound()))
 	{
-		return Predicate.Execute(&A, &B);
-	});
+		Objects.Sort([&Predicate](const UObject& A, const UObject& B)
+		{
+			return Predicate.Execute(&A, &B);
+		});
+	}
 }
 
 void UFuArrayUtility::SortByPredicateActor(TArray<AActor*>& Actors, const FFuSortByPredicateActorDelegate& Predicate)
 {
-	Actors.Sort([&Predicate](const AActor& A, const AActor& B)
+	if (FU_ENSURE(Predicate.IsBound()))
 	{
-		return Predicate.Execute(&A, &B);
-	});
+		Actors.Sort([&Predicate](const AActor& A, const AActor& B)
+		{
+			return Predicate.Execute(&A, &B);
+		});
+	}
 }
 
 DEFINE_FUNCTION(UFuArrayUtility::execIsEmpty)
