@@ -20,12 +20,12 @@
 		{
 			"Name": "FabulousUtility",
 			"Type": "Runtime",
-			"LoadingPhase": "PreDefault"
+			"LoadingPhase": "Default"
 		},
 		{
 			"Name": "FabulousEditor",
 			"Type": "Editor",
-			"LoadingPhase": "PostEngineInit"
+			"LoadingPhase": "PreDefault"
 		}
 	],
 	"Plugins": [
