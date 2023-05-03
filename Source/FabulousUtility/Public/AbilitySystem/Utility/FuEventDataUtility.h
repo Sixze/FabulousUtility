@@ -4,6 +4,7 @@
 #include "FuEventDataUtility.generated.h"
 
 struct FGameplayEffectModCallbackData;
+class UAbilitySystemComponent;
 
 UCLASS()
 class FABULOUSUTILITY_API UFuEventDataUtility : public UBlueprintFunctionLibrary
