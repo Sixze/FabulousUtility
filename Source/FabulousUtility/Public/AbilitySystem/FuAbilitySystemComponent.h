@@ -43,7 +43,7 @@ protected:
 
 public:
 	virtual FActiveGameplayEffectHandle ApplyGameplayEffectSpecToSelf(const FGameplayEffectSpec& EffectSpecification,
-	                                                                  FPredictionKey PredictionKey) override;
+	                                                                  FPredictionKey PredictionKey = FPredictionKey()) override;
 
 	virtual void NotifyAbilityActivated(FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability) override;
 
