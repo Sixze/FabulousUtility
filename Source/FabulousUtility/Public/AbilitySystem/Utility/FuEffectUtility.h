@@ -3,6 +3,13 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuEffectUtility.generated.h"
 
+struct FActiveGameplayEffect;
+struct FGameplayTag;
+struct FGameplayEffectQuery;
+struct FGameplayTagContainer;
+class UGameplayEffect;
+class UAbilitySystemComponent;
+
 UCLASS()
 class FABULOUSUTILITY_API UFuEffectUtility : public UBlueprintFunctionLibrary
 {

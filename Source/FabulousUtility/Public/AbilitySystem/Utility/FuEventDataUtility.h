@@ -1,9 +1,11 @@
 #pragma once
 
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "Abilities/GameplayAbilityTypes.h"
 #include "FuEventDataUtility.generated.h"
 
 struct FGameplayEffectModCallbackData;
+struct FGameplayAbilityActorInfo;
 class UAbilitySystemComponent;
 
 UCLASS()

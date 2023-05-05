@@ -3,6 +3,8 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuAttributeUtility.generated.h"
 
+struct FGameplayAttribute;
+class UAbilitySystemComponent;
 class UGameplayAbility;
 
 UCLASS()
