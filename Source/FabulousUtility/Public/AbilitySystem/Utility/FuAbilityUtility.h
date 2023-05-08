@@ -1,8 +1,8 @@
 #pragma once
 
-#include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
 #include "FuMacros.h"
+#include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuAbilityUtility.generated.h"
 
 UCLASS()
