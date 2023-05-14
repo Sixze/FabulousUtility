@@ -1,5 +1,6 @@
 #include "UI/FuSlateUtility.h"
 
+#include "Components/Viewport.h"
 #include "Engine/Engine.h"
 #include "Engine/GameViewportClient.h"
 #include "Engine/UserInterfaceSettings.h"
@@ -34,9 +35,9 @@ float UFuSlateUtility::GetViewportDpiScale(FVector2D ViewportSize)
 		const auto* World{GEngine->GetWorld()};
 		const auto* Viewport{IsValid(World) ? World->GetGameViewport() : GEngine->GameViewport.Get()};
 
-		if (IsValid(Viewport))
+		if (IsValid(Viewport) && Viewport->Viewport != nullptr)
 		{
-			Viewport->GetViewportSize(ViewportSize);
+			ViewportSize = Viewport->Viewport->GetSizeXY();
 
 			const auto ViewportDpiScaleInverse{1.0f / Viewport->GetDPIScale()};
 

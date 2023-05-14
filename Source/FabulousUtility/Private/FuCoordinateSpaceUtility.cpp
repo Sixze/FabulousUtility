@@ -1,6 +1,7 @@
 #include "FuCoordinateSpaceUtility.h"
 
 #include "SceneView.h"
+#include "Components/Viewport.h"
 #include "Engine/GameViewportClient.h"
 #include "Engine/LocalPlayer.h"
 #include "Engine/World.h"
@@ -109,8 +110,12 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocation(const 
 		return false;
 	}
 
-	FVector2D ViewportSize;
-	Viewport->GetViewportSize(ViewportSize);
+	const auto ViewportSize{Viewport->Viewport != nullptr ? Viewport->Viewport->GetSizeXY() : FVector2D::ZeroVector};
+	if (ViewportSize.IsNearlyZero())
+	{
+		ViewportWidgetLocation = FVector2D::ZeroVector;
+		return false;
+	}
 
 	ViewportWidgetLocation = LayerManager->GetViewportWidgetHostGeometry().GetLocalSize() *
 	                         ViewportLocation.RoundToVector() / ViewportSize;
