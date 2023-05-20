@@ -13,6 +13,8 @@
 bool UFuCoordinateSpaceUtility::TryTransformWorldToClipLocation(const APlayerController* Player,
                                                                 const FVector& WorldLocation, FVector4& ClipLocation)
 {
+	// Based on APlayerController::ProjectWorldLocationToScreenWithDistance() and FSceneView::ProjectWorldToScreen().
+
 	const auto* LocalPlayer{IsValid(Player) ? Player->GetLocalPlayer() : nullptr};
 	const auto* ViewportClient{IsValid(LocalPlayer) ? LocalPlayer->ViewportClient.Get() : nullptr};
 
@@ -38,6 +40,8 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToClipLocation(const APlayerCon
 bool UFuCoordinateSpaceUtility::TryTransformWorldToScreenLocation(const APlayerController* Player,
                                                                   const FVector& WorldLocation, FVector2D& ScreenLocation)
 {
+	// Based on SceneView::ProjectWorldToScreen().
+
 	FVector4 ClipLocation;
 	if (!TryTransformWorldToClipLocation(Player, WorldLocation, ClipLocation))
 	{
@@ -51,13 +55,15 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToScreenLocation(const APlayerC
 			: 1.0f / FMath::Abs(ClipLocation.W)
 	};
 
-	ScreenLocation = {ClipLocation.X * Scale * 0.5f + 0.5f, 1.0f - ClipLocation.Y * Scale * 0.5f - 0.5f};
+	ScreenLocation = {ClipLocation.X * Scale, ClipLocation.Y * Scale};
 	return true;
 }
 
 bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocation(const APlayerController* Player,
                                                                     const FVector& WorldLocation, FVector2D& ViewportLocation)
 {
+	// Based on APlayerController::ProjectWorldLocationToScreenWithDistance() and FSceneView::ProjectWorldToScreen().
+
 	const auto* LocalPlayer{IsValid(Player) ? Player->GetLocalPlayer() : nullptr};
 	const auto* ViewportClient{IsValid(LocalPlayer) ? LocalPlayer->ViewportClient.Get() : nullptr};
 
@@ -83,17 +89,22 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocation(const APlaye
 			: 1.0f / FMath::Abs(ClipLocation.W)
 	};
 
-	const FVector2D ScreenLocation{ClipLocation.X * Scale * 0.5f + 0.5f, 1.0f - ClipLocation.Y * Scale * 0.5f - 0.5f};
-
+	const FVector2D ScreenLocation{ClipLocation.X * Scale, ClipLocation.Y * Scale};
 	const auto& ViewRect{ProjectionData.GetConstrainedViewRect()};
 
-	ViewportLocation = {ScreenLocation.X * ViewRect.Width() + ViewRect.Min.X, ScreenLocation.Y * ViewRect.Height() + ViewRect.Min.Y};
+	ViewportLocation = {
+		(ScreenLocation.X * 0.5f + 0.5f) * ViewRect.Width() + ViewRect.Min.X,
+		(1.0f - ScreenLocation.Y * 0.5f - 0.5f) * ViewRect.Height() + ViewRect.Min.Y
+	};
+
 	return true;
 }
 
 bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocation(const APlayerController* Player, const FVector& WorldLocation,
                                                                           FVector2D& ViewportWidgetLocation)
 {
+	// Based on USlateBlueprintLibrary::ScreenToWidgetAbsolute().
+
 	FVector2D ViewportLocation;
 	if (!TryTransformWorldToViewportLocation(Player, WorldLocation, ViewportLocation))
 	{
@@ -101,29 +112,30 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocation(const 
 		return false;
 	}
 
-	const auto* Viewport{Player->GetWorld()->GetGameViewport()};
-	const auto LayerManager{IsValid(Viewport) ? Viewport->GetGameLayerManager() : nullptr};
+	const auto* ViewportClient{Player->GetLocalPlayer()->ViewportClient.Get()};
 
+	const auto ViewportSize{ViewportClient->Viewport->GetSizeXY()};
+	if (ViewportSize.X == 0 || ViewportSize.Y == 0)
+	{
+		ViewportWidgetLocation = FVector2D::ZeroVector;
+		return false;
+	}
+
+	const auto LayerManager{ViewportClient->GetGameLayerManager()};
 	if (!LayerManager.IsValid())
 	{
 		ViewportWidgetLocation = FVector2D::ZeroVector;
 		return false;
 	}
 
-	const auto ViewportSize{Viewport->Viewport != nullptr ? Viewport->Viewport->GetSizeXY() : FVector2D::ZeroVector};
-	if (ViewportSize.IsNearlyZero())
-	{
-		ViewportWidgetLocation = FVector2D::ZeroVector;
-		return false;
-	}
-
-	ViewportWidgetLocation = LayerManager->GetViewportWidgetHostGeometry().GetLocalSize() *
-	                         ViewportLocation.RoundToVector() / ViewportSize;
+	ViewportWidgetLocation = LayerManager->GetViewportWidgetHostGeometry().GetLocalSize() * ViewportLocation / ViewportSize;
 	return true;
 }
 
 bool UFuCoordinateSpaceUtility::TryGetViewportWidgetSize(const UObject* WorldContext, FVector2D& ViewportWidgetSize)
 {
+	// Based on UWidgetLayoutLibrary::GetViewportWidgetGeometry().
+
 	const auto* World{WorldContext->GetWorld()};
 	const auto* Viewport{IsValid(World) ? World->GetGameViewport() : nullptr};
 	const auto LayerManager{IsValid(Viewport) ? Viewport->GetGameLayerManager() : nullptr};
