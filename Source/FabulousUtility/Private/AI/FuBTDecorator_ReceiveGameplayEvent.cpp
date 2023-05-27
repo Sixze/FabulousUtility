@@ -19,6 +19,7 @@ UFuBTDecorator_ReceiveGameplayEvent::UFuBTDecorator_ReceiveGameplayEvent()
 {
 	NodeName = TEXTVIEW("Fu Receive Gameplay Event");
 
+	TargetKey.AllowNoneAsValue(true);
 	TargetKey.AddObjectFilter(this, GET_MEMBER_NAME_CHECKED(ThisClass, TargetKey), AActor::StaticClass());
 
 	INIT_DECORATOR_NODE_NOTIFY_FLAGS();
@@ -78,7 +79,7 @@ void UFuBTDecorator_ReceiveGameplayEvent::OnBecomeRelevant(UBehaviorTreeComponen
 	Super::OnBecomeRelevant(BehaviorTree, NodeMemory);
 
 	auto* Blackboard{BehaviorTree.GetBlackboardComponent()};
-	if (FU_ENSURE(IsValid(Blackboard)))
+	if (TargetKey.IsSet() && FU_ENSURE(IsValid(Blackboard)))
 	{
 		Blackboard->RegisterObserver(TargetKey.GetSelectedKeyID(), this,
 		                             FOnBlackboardChangeNotification::CreateUObject(this, &ThisClass::Blackboard_OnTargetKeyChanged));
@@ -135,7 +136,7 @@ void UFuBTDecorator_ReceiveGameplayEvent::ReInitializeDecoratorMemory(UBehaviorT
 	}
 
 	Memory.AbilitySystem = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(TargetActor);
-	if (!FU_ENSURE(Memory.AbilitySystem.IsValid()))
+	if (!Memory.AbilitySystem.IsValid())
 	{
 		return;
 	}

@@ -17,6 +17,7 @@ UFuBTDecorator_HasTag::UFuBTDecorator_HasTag()
 {
 	NodeName = TEXTVIEW("Fu Has Tag");
 
+	TargetKey.AllowNoneAsValue(true);
 	TargetKey.AddObjectFilter(this, GET_MEMBER_NAME_CHECKED(ThisClass, TargetKey), AActor::StaticClass());
 
 	INIT_DECORATOR_NODE_NOTIFY_FLAGS();
@@ -83,7 +84,7 @@ void UFuBTDecorator_HasTag::OnBecomeRelevant(UBehaviorTreeComponent& BehaviorTre
 	Super::OnBecomeRelevant(BehaviorTree, NodeMemory);
 
 	auto* Blackboard{BehaviorTree.GetBlackboardComponent()};
-	if (FU_ENSURE(IsValid(Blackboard)))
+	if (TargetKey.IsSet() && FU_ENSURE(IsValid(Blackboard)))
 	{
 		Blackboard->RegisterObserver(TargetKey.GetSelectedKeyID(), this,
 		                             FOnBlackboardChangeNotification::CreateUObject(this, &ThisClass::Blackboard_OnTargetKeyChanged));
@@ -123,7 +124,7 @@ bool UFuBTDecorator_HasTag::CalculateRawConditionValue(UBehaviorTreeComponent& B
 				                Blackboard->GetValue<UBlackboardKeyType_Object>(TargetKey.GetSelectedKeyID())))
 			                : nullptr;
 
-		if (!FU_ENSURE(IsValid(AbilitySystem)))
+		if (!IsValid(AbilitySystem))
 		{
 			return false;
 		}
