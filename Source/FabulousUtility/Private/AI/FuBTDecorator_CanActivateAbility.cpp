@@ -5,6 +5,7 @@
 #include "FuMacros.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 
+// ReSharper disable once CppUnusedIncludeDirective
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTDecorator_CanActivateAbility)
 
 struct FFuCanActivateAbilityMemory
@@ -115,19 +116,21 @@ void UFuBTDecorator_CanActivateAbility::TickNode(UBehaviorTreeComponent& Behavio
 {
 	Super::TickNode(BehaviorTree, NodeMemory, DeltaTime);
 
-	const auto bExecutingBranch{BehaviorTree.IsExecutingBranch(GetMyNode(), GetChildIndex())};
-
-	const auto bAbortAllowed{
-		(bExecutingBranch && ((FlowAbortMode == EBTFlowAbortMode::Self || FlowAbortMode == EBTFlowAbortMode::Both) &&
-		                      CalculateRawConditionValue(BehaviorTree, NodeMemory) == IsInversed())) ||
-		(!bExecutingBranch && ((FlowAbortMode == EBTFlowAbortMode::LowerPriority || FlowAbortMode == EBTFlowAbortMode::Both) &&
-		                       CalculateRawConditionValue(BehaviorTree, NodeMemory) != IsInversed()))
-
-	};
-
-	if (bAbortAllowed)
+	if (BehaviorTree.IsExecutingBranch(GetMyNode(), GetChildIndex()))
 	{
-		BehaviorTree.RequestExecution(this);
+		if ((FlowAbortMode == EBTFlowAbortMode::Self || FlowAbortMode == EBTFlowAbortMode::Both) &&
+		    CalculateRawConditionValue(BehaviorTree, NodeMemory) == IsInversed())
+		{
+			BehaviorTree.RequestBranchDeactivation(*this);
+		}
+	}
+	else
+	{
+		if ((FlowAbortMode == EBTFlowAbortMode::LowerPriority || FlowAbortMode == EBTFlowAbortMode::Both) &&
+		    CalculateRawConditionValue(BehaviorTree, NodeMemory) != IsInversed())
+		{
+			BehaviorTree.RequestBranchActivation(*this, false);
+		}
 	}
 }
 

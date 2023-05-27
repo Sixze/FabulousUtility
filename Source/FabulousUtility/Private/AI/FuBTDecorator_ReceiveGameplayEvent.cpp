@@ -103,7 +103,7 @@ void UFuBTDecorator_ReceiveGameplayEvent::OnCeaseRelevant(UBehaviorTreeComponent
 
 bool UFuBTDecorator_ReceiveGameplayEvent::CalculateRawConditionValue(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory) const
 {
-	if (FlowAbortMode != EBTFlowAbortMode::LowerPriority)
+	if (FlowAbortMode == EBTFlowAbortMode::Self || bAllowEntryInNonSelfFlowAbortMode)
 	{
 		return true;
 	}
@@ -170,8 +170,8 @@ void UFuBTDecorator_ReceiveGameplayEvent::ClearDecoratorMemory(FFuReceiveGamepla
 	Memory.EventReceivedCounter = 0;
 }
 
-EBlackboardNotificationResult UFuBTDecorator_ReceiveGameplayEvent::Blackboard_OnTargetKeyChanged(const UBlackboardComponent& Blackboard,
-	const FBlackboard::FKey Key)
+EBlackboardNotificationResult UFuBTDecorator_ReceiveGameplayEvent::Blackboard_OnTargetKeyChanged(
+	const UBlackboardComponent& Blackboard, const FBlackboard::FKey Key)
 {
 	auto* BehaviorTree{Cast<UBehaviorTreeComponent>(Blackboard.GetBrainComponent())};
 	if (!FU_ENSURE(IsValid(BehaviorTree)))
@@ -181,8 +181,6 @@ EBlackboardNotificationResult UFuBTDecorator_ReceiveGameplayEvent::Blackboard_On
 
 	ReInitializeDecoratorMemory(*BehaviorTree, *CastInstanceNodeMemory<FFuReceiveGameplayEventMemory>(
 		                            BehaviorTree->GetNodeMemory(this, BehaviorTree->FindInstanceContainingNode(this))));
-
-	BehaviorTree->RequestExecution(this);
 
 	return EBlackboardNotificationResult::ContinueObserving;
 }
@@ -195,15 +193,28 @@ void UFuBTDecorator_ReceiveGameplayEvent::AbilitySystem_OnEventReceived(const FG
 		return;
 	}
 
-	if (FlowAbortMode == EBTFlowAbortMode::LowerPriority)
+	if (BehaviorTree->IsExecutingBranch(GetMyNode(), GetChildIndex()))
 	{
-		auto& Memory{
-			*CastInstanceNodeMemory<FFuReceiveGameplayEventMemory>(
-				BehaviorTree->GetNodeMemory(this, BehaviorTree->FindInstanceContainingNode(this)))
-		};
+		if (FlowAbortMode == EBTFlowAbortMode::Self || FlowAbortMode == EBTFlowAbortMode::Both)
+		{
+			BehaviorTree->RequestBranchDeactivation(*this);
+		}
 
-		Memory.EventReceivedCounter = 2;
+		return;
 	}
 
-	BehaviorTree->RequestExecution(this);
+	if (FlowAbortMode == EBTFlowAbortMode::LowerPriority || FlowAbortMode == EBTFlowAbortMode::Both)
+	{
+		if (!bAllowEntryInNonSelfFlowAbortMode)
+		{
+			auto& Memory{
+				*CastInstanceNodeMemory<FFuReceiveGameplayEventMemory>(
+					BehaviorTree->GetNodeMemory(this, BehaviorTree->FindInstanceContainingNode(this)))
+			};
+
+			Memory.EventReceivedCounter = 2;
+		}
+
+		BehaviorTree->RequestBranchActivation(*this, false);
+	}
 }

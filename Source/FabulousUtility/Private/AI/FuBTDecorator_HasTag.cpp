@@ -203,19 +203,37 @@ EBlackboardNotificationResult UFuBTDecorator_HasTag::Blackboard_OnTargetKeyChang
 		return EBlackboardNotificationResult::RemoveObserver;
 	}
 
-	ReInitializeDecoratorMemory(*BehaviorTree, *CastInstanceNodeMemory<FFuHasTagMemory>(
-		                            BehaviorTree->GetNodeMemory(this, BehaviorTree->FindInstanceContainingNode(this))));
+	auto* NodeMemory{BehaviorTree->GetNodeMemory(this, BehaviorTree->FindInstanceContainingNode(this))};
+	auto& Memory{*CastInstanceNodeMemory<FFuHasTagMemory>(NodeMemory)};
 
-	BehaviorTree->RequestExecution(this);
+	ReInitializeDecoratorMemory(*BehaviorTree, Memory);
+
+	if (CalculateRawConditionValue(*BehaviorTree, NodeMemory) == IsInversed())
+	{
+		BehaviorTree->RequestBranchDeactivation(*this);
+	}
+	else
+	{
+		BehaviorTree->RequestBranchActivation(*this, false);
+	}
 
 	return EBlackboardNotificationResult::ContinueObserving;
 }
 
 void UFuBTDecorator_HasTag::AbilitySystem_OnTagChanged(const FGameplayTag Tag, const int32 Count,
-                                                       const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree) const
+                                                       const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
 {
 	if (FU_ENSURE(BehaviorTree.IsValid()))
 	{
-		BehaviorTree->RequestExecution(this);
+		auto* NodeMemory{BehaviorTree->GetNodeMemory(this, BehaviorTree->FindInstanceContainingNode(this))};
+
+		if (CalculateRawConditionValue(*BehaviorTree, NodeMemory) == IsInversed())
+		{
+			BehaviorTree->RequestBranchDeactivation(*this);
+		}
+		else
+		{
+			BehaviorTree->RequestBranchActivation(*this, false);
+		}
 	}
 }
