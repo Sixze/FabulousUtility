@@ -1,8 +1,6 @@
 #include "AbilitySystem/AbilityAsync/FuAbilityAsync_AttributeListener.h"
 
-#include "AbilitySystemComponent.h"
-#include "AbilitySystemGlobals.h"
-#include "FuMacros.h"
+#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
 #include "AbilitySystem/Utility/FuAttributeUtility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AttributeListener)
@@ -10,14 +8,14 @@
 UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::FuListenForAttributeChangeOnActor(
 	const AActor* Actor, const FGameplayAttribute InAttribute, const bool bInSkipEqualValuesOnServer)
 {
-	return FuListenForAttributeChange(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor),
+	return FuListenForAttributeChange(UFuAbilitySystemUtility::GetAbilitySystem(Actor),
 	                                  InAttribute, bInSkipEqualValuesOnServer);
 }
 
 UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::FuListenForAttributesChangeOnActor(
 	const AActor* Actor, const TArray<FGameplayAttribute>& InAttributes, const bool bInSkipEqualValuesOnServer)
 {
-	return FuListenForAttributesChange(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor),
+	return FuListenForAttributesChange(UFuAbilitySystemUtility::GetAbilitySystem(Actor),
 	                                   InAttributes, bInSkipEqualValuesOnServer);
 }
 

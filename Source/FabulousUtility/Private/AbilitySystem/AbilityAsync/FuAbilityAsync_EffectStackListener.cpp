@@ -1,15 +1,13 @@
 #include "AbilitySystem/AbilityAsync/FuAbilityAsync_EffectStackListener.h"
 
-#include "AbilitySystemComponent.h"
-#include "AbilitySystemGlobals.h"
-#include "FuMacros.h"
+#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_EffectStackListener)
 
 UFuAbilityAsync_EffectStackListener* UFuAbilityAsync_EffectStackListener::FuListenForEffectStackChangeOnActor(
 	const AActor* Actor, const TSubclassOf<UGameplayEffect> InEffectClass)
 {
-	return FuListenForEffectStackChange(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor), InEffectClass);
+	return FuListenForEffectStackChange(UFuAbilitySystemUtility::GetAbilitySystem(Actor), InEffectClass);
 }
 
 UFuAbilityAsync_EffectStackListener* UFuAbilityAsync_EffectStackListener::FuListenForEffectStackChange(

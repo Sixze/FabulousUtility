@@ -1,9 +1,7 @@
 #include "AI/FuBTTask_WaitForTagChange.h"
 
-#include "AbilitySystemComponent.h"
-#include "AbilitySystemGlobals.h"
 #include "AIController.h"
-#include "FuMacros.h"
+#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTTask_WaitForTagChange)
 
@@ -80,7 +78,7 @@ EBTNodeResult::Type UFuBTTask_WaitForTagChange::ExecuteTask(UBehaviorTreeCompone
 
 	const auto* Controller{BehaviorTree.GetAIOwner()};
 	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn() : nullptr};
-	Memory.AbilitySystem = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn);
+	Memory.AbilitySystem = UFuAbilitySystemUtility::GetAbilitySystem(Pawn);
 
 	if (!FU_ENSURE(Memory.AbilitySystem.IsValid()))
 	{

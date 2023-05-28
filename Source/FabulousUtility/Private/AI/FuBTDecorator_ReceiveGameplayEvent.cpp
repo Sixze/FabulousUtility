@@ -1,8 +1,6 @@
 #include "AI/FuBTDecorator_ReceiveGameplayEvent.h"
 
-#include "AbilitySystemComponent.h"
-#include "AbilitySystemGlobals.h"
-#include "FuMacros.h"
+#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"
 
@@ -135,7 +133,7 @@ void UFuBTDecorator_ReceiveGameplayEvent::ReInitializeDecoratorMemory(UBehaviorT
 		return;
 	}
 
-	Memory.AbilitySystem = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(TargetActor);
+	Memory.AbilitySystem = UFuAbilitySystemUtility::GetAbilitySystem(TargetActor);
 	if (!Memory.AbilitySystem.IsValid())
 	{
 		return;

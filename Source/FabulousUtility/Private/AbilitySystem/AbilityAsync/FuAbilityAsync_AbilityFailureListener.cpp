@@ -7,19 +7,15 @@
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AbilityFailureListener)
 
 UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::FuListenForAbilityFailureOnActor(
-	const AActor* Actor, const FGameplayTag AbilityTag, const FGameplayTagContainer InFailureTags)
+	const AActor* Actor, const FGameplayTag InAbilityTag, const FGameplayTagContainer InFailureTags)
 {
-	return FuListenForAbilityFailure(
-		Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor)),
-		AbilityTag, InFailureTags);
+	return FuListenForAbilityFailure(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InAbilityTag, InFailureTags);
 }
 
 UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::FuListenForAbilitiesFailureOnActor(
 	const AActor* Actor, const FGameplayTagContainer InAbilityTags, const FGameplayTagContainer InFailureTags)
 {
-	return FuListenForAbilitiesFailure(
-		Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor)),
-		InAbilityTags, InFailureTags);
+	return FuListenForAbilitiesFailure(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InAbilityTags, InFailureTags);
 }
 
 UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::FuListenForAbilityFailure(

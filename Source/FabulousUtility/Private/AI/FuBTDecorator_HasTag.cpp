@@ -1,8 +1,6 @@
 #include "AI/FuBTDecorator_HasTag.h"
 
-#include "AbilitySystemComponent.h"
-#include "AbilitySystemGlobals.h"
-#include "FuMacros.h"
+#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"
 
@@ -120,8 +118,8 @@ bool UFuBTDecorator_HasTag::CalculateRawConditionValue(UBehaviorTreeComponent& B
 		const auto* Blackboard{BehaviorTree.GetBlackboardComponent()};
 
 		AbilitySystem = FU_ENSURE(IsValid(Blackboard))
-			                ? UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Cast<AActor>(
-				                Blackboard->GetValue<UBlackboardKeyType_Object>(TargetKey.GetSelectedKeyID())))
+			                ? UFuAbilitySystemUtility::GetAbilitySystem(
+				                Blackboard->GetValue<UBlackboardKeyType_Object>(TargetKey.GetSelectedKeyID()))
 			                : nullptr;
 
 		if (!IsValid(AbilitySystem))
@@ -160,7 +158,7 @@ void UFuBTDecorator_HasTag::ReInitializeDecoratorMemory(UBehaviorTreeComponent& 
 		return;
 	}
 
-	Memory.AbilitySystem = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(TargetActor);
+	Memory.AbilitySystem = UFuAbilitySystemUtility::GetAbilitySystem(TargetActor);
 	if (!FU_ENSURE(Memory.AbilitySystem.IsValid()))
 	{
 		return;

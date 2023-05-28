@@ -1,9 +1,8 @@
 #include "AI/FuBTDecorator_CanActivateAbility.h"
 
-#include "AbilitySystemGlobals.h"
 #include "AIController.h"
-#include "FuMacros.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
+#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
 
 // ReSharper disable once CppUnusedIncludeDirective
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTDecorator_CanActivateAbility)
@@ -73,7 +72,7 @@ void UFuBTDecorator_CanActivateAbility::OnBecomeRelevant(UBehaviorTreeComponent&
 
 	const auto* Controller{BehaviorTree.GetAIOwner()};
 	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn() : nullptr};
-	Memory.AbilitySystem = Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn));
+	Memory.AbilitySystem = UFuAbilitySystemComponent::GetFuAbilitySystem(Pawn);
 
 	if (!FU_ENSURE(Memory.AbilitySystem.IsValid()))
 	{
@@ -154,7 +153,7 @@ bool UFuBTDecorator_CanActivateAbility::CalculateRawConditionValue(UBehaviorTree
 
 	const auto* Controller{BehaviorTree.GetAIOwner()};
 	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn() : nullptr};
-	const auto* AbilitySystem{UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn)};
+	const auto* AbilitySystem{UFuAbilitySystemUtility::GetAbilitySystem(Pawn)};
 
 	if (!FU_ENSURE(IsValid(AbilitySystem)))
 	{
