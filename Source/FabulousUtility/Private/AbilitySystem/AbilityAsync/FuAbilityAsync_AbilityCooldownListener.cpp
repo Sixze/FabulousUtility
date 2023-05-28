@@ -1,6 +1,5 @@
 #include "AbilitySystem/AbilityAsync/FuAbilityAsync_AbilityCooldownListener.h"
 
-#include "AbilitySystemGlobals.h"
 #include "FuMacros.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 #include "AbilitySystem/Utility/FuEffectUtility.h"
@@ -10,25 +9,22 @@
 UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByAbilityTagOnActor(
 	const AActor* Actor, const FGameplayTag InAbilityTag, const bool bInWaitForTimeFromServer)
 {
-	return FuListenForAbilityCooldownByAbilityTag(
-		Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor)),
-		InAbilityTag, bInWaitForTimeFromServer);
+	return FuListenForAbilityCooldownByAbilityTag(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor),
+	                                              InAbilityTag, bInWaitForTimeFromServer);
 }
 
 UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByAbilityTagsOnActor(
 	const AActor* Actor, const FGameplayTagContainer InAbilityTags, const bool bInWaitForTimeFromServer)
 {
-	return FuListenForAbilityCooldownByAbilityTags(
-		Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor)),
-		InAbilityTags, bInWaitForTimeFromServer);
+	return FuListenForAbilityCooldownByAbilityTags(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor),
+	                                               InAbilityTags, bInWaitForTimeFromServer);
 }
 
 UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByInputIdOnActor(
 	const AActor* Actor, const int32 InInputId, const bool bInWaitForTimeFromServer)
 {
-	return FuListenForAbilityCooldownByInputId(
-		Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor)),
-		InInputId, bInWaitForTimeFromServer);
+	return FuListenForAbilityCooldownByInputId(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor),
+	                                           InInputId, bInWaitForTimeFromServer);
 }
 
 UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByAbilityTag(

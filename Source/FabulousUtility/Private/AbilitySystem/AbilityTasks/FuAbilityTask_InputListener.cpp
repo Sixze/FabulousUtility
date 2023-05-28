@@ -20,7 +20,7 @@ void UFuAbilityTask_InputListener::Activate()
 
 	AbilitySystemComponent->AbilityReplicatedEventDelegate(EAbilityGenericReplicatedEvent::InputPressed,
 	                                                       GetAbilitySpecHandle(), GetActivationPredictionKey())
-	                      .AddUObject(this, &UFuAbilityTask_InputListener::AbilitySystem_OnInputPressed);
+	                      .AddUObject(this, &ThisClass::AbilitySystem_OnInputPressed);
 
 	AbilitySystemComponent->AbilityReplicatedEventDelegate(EAbilityGenericReplicatedEvent::InputReleased,
 	                                                       GetAbilitySpecHandle(), GetActivationPredictionKey())

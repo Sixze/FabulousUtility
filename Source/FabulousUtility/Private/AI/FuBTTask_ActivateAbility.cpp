@@ -1,10 +1,9 @@
 #include "AI/FuBTTask_ActivateAbility.h"
 
-#include "AbilitySystemComponent.h"
-#include "AbilitySystemGlobals.h"
 #include "AIController.h"
-#include "FuMacros.h"
+#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
 
+// ReSharper disable once CppUnusedIncludeDirective
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTTask_ActivateAbility)
 
 struct FFuActivateAbilityMemory
@@ -72,7 +71,7 @@ EBTNodeResult::Type UFuBTTask_ActivateAbility::ExecuteTask(UBehaviorTreeComponen
 
 	const auto* Controller{BehaviorTree.GetAIOwner()};
 	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn() : nullptr};
-	Memory.AbilitySystem = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Pawn);
+	Memory.AbilitySystem = UFuAbilitySystemUtility::GetAbilitySystem(Pawn);
 
 	if (!FU_ENSURE(Memory.AbilitySystem.IsValid()))
 	{

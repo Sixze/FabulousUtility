@@ -19,8 +19,7 @@ public:
 	template <typename ValueType>
 	static void ShuffleFirstElements(TArray<ValueType>& Array, int32 FirstElementsCount);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Array Utility",
-		Meta = (AutoCreateRefTerm = "Array", ReturnDisplayName = "Random Index"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Array Utility", Meta = (ReturnDisplayName = "Random Index"))
 	static int32 GetWeightedRandomIndex(const TArray<float>& Array);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", Meta = (AutoCreateRefTerm = "Array"))

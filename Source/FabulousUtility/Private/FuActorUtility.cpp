@@ -2,6 +2,7 @@
 
 #include "FuMacros.h"
 #include "Engine/World.h"
+#include "GameFramework/Pawn.h"
 #include "GameFramework/PawnMovementComponent.h"
 
 // ReSharper disable once CppUnusedIncludeDirective

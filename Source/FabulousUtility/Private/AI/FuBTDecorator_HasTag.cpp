@@ -1,8 +1,6 @@
 #include "AI/FuBTDecorator_HasTag.h"
 
-#include "AbilitySystemComponent.h"
-#include "AbilitySystemGlobals.h"
-#include "FuMacros.h"
+#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"
 
@@ -17,6 +15,7 @@ UFuBTDecorator_HasTag::UFuBTDecorator_HasTag()
 {
 	NodeName = TEXTVIEW("Fu Has Tag");
 
+	TargetKey.AllowNoneAsValue(true);
 	TargetKey.AddObjectFilter(this, GET_MEMBER_NAME_CHECKED(ThisClass, TargetKey), AActor::StaticClass());
 
 	INIT_DECORATOR_NODE_NOTIFY_FLAGS();
@@ -83,7 +82,7 @@ void UFuBTDecorator_HasTag::OnBecomeRelevant(UBehaviorTreeComponent& BehaviorTre
 	Super::OnBecomeRelevant(BehaviorTree, NodeMemory);
 
 	auto* Blackboard{BehaviorTree.GetBlackboardComponent()};
-	if (FU_ENSURE(IsValid(Blackboard)))
+	if (TargetKey.IsSet() && FU_ENSURE(IsValid(Blackboard)))
 	{
 		Blackboard->RegisterObserver(TargetKey.GetSelectedKeyID(), this,
 		                             FOnBlackboardChangeNotification::CreateUObject(this, &ThisClass::Blackboard_OnTargetKeyChanged));
@@ -119,11 +118,11 @@ bool UFuBTDecorator_HasTag::CalculateRawConditionValue(UBehaviorTreeComponent& B
 		const auto* Blackboard{BehaviorTree.GetBlackboardComponent()};
 
 		AbilitySystem = FU_ENSURE(IsValid(Blackboard))
-			                ? UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Cast<AActor>(
-				                Blackboard->GetValue<UBlackboardKeyType_Object>(TargetKey.GetSelectedKeyID())))
+			                ? UFuAbilitySystemUtility::GetAbilitySystem(
+				                Blackboard->GetValue<UBlackboardKeyType_Object>(TargetKey.GetSelectedKeyID()))
 			                : nullptr;
 
-		if (!FU_ENSURE(IsValid(AbilitySystem)))
+		if (!IsValid(AbilitySystem))
 		{
 			return false;
 		}
@@ -159,7 +158,7 @@ void UFuBTDecorator_HasTag::ReInitializeDecoratorMemory(UBehaviorTreeComponent& 
 		return;
 	}
 
-	Memory.AbilitySystem = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(TargetActor);
+	Memory.AbilitySystem = UFuAbilitySystemUtility::GetAbilitySystem(TargetActor);
 	if (!FU_ENSURE(Memory.AbilitySystem.IsValid()))
 	{
 		return;
@@ -202,19 +201,37 @@ EBlackboardNotificationResult UFuBTDecorator_HasTag::Blackboard_OnTargetKeyChang
 		return EBlackboardNotificationResult::RemoveObserver;
 	}
 
-	ReInitializeDecoratorMemory(*BehaviorTree, *CastInstanceNodeMemory<FFuHasTagMemory>(
-		                            BehaviorTree->GetNodeMemory(this, BehaviorTree->FindInstanceContainingNode(this))));
+	auto* NodeMemory{BehaviorTree->GetNodeMemory(this, BehaviorTree->FindInstanceContainingNode(this))};
+	auto& Memory{*CastInstanceNodeMemory<FFuHasTagMemory>(NodeMemory)};
 
-	BehaviorTree->RequestExecution(this);
+	ReInitializeDecoratorMemory(*BehaviorTree, Memory);
+
+	if (CalculateRawConditionValue(*BehaviorTree, NodeMemory) == IsInversed())
+	{
+		BehaviorTree->RequestBranchDeactivation(*this);
+	}
+	else
+	{
+		BehaviorTree->RequestBranchActivation(*this, false);
+	}
 
 	return EBlackboardNotificationResult::ContinueObserving;
 }
 
 void UFuBTDecorator_HasTag::AbilitySystem_OnTagChanged(const FGameplayTag Tag, const int32 Count,
-                                                       const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree) const
+                                                       const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
 {
 	if (FU_ENSURE(BehaviorTree.IsValid()))
 	{
-		BehaviorTree->RequestExecution(this);
+		auto* NodeMemory{BehaviorTree->GetNodeMemory(this, BehaviorTree->FindInstanceContainingNode(this))};
+
+		if (CalculateRawConditionValue(*BehaviorTree, NodeMemory) == IsInversed())
+		{
+			BehaviorTree->RequestBranchDeactivation(*this);
+		}
+		else
+		{
+			BehaviorTree->RequestBranchActivation(*this, false);
+		}
 	}
 }

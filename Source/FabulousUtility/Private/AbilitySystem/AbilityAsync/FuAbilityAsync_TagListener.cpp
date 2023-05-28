@@ -1,20 +1,18 @@
 #include "AbilitySystem/AbilityAsync/FuAbilityAsync_TagListener.h"
 
-#include "AbilitySystemComponent.h"
-#include "AbilitySystemGlobals.h"
-#include "FuMacros.h"
+#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_TagListener)
 
 UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::FuListenForTagChangeOnActor(const AActor* Actor, const FGameplayTag InTag)
 {
-	return FuListenForTagChange(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor), InTag);
+	return FuListenForTagChange(UFuAbilitySystemUtility::GetAbilitySystem(Actor), InTag);
 }
 
 UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::FuListenForTagsChangeOnActor(const AActor* Actor,
                                                                                        const FGameplayTagContainer InTags)
 {
-	return FuListenForTagsChange(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor), InTags);
+	return FuListenForTagsChange(UFuAbilitySystemUtility::GetAbilitySystem(Actor), InTags);
 }
 
 UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::FuListenForTagChange(UAbilitySystemComponent* AbilitySystem,

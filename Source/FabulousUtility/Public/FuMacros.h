@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "HAL/Platform.h"
+#include "Misc/AssertionMacros.h"
 
 #define FU_STRINGIFY_IMPLEMENTATION(Value) #Value
 
@@ -17,35 +17,30 @@
 
 #if DO_ENSURE && !USING_CODE_ANALYSIS
 
-#define FU_ENSURE_IMPLEMENTATION(Expression, bEnsureAlways, Format, Capture, ...) \
-	(LIKELY(Expression) || ([Capture](const auto& FinalFormat) UE_DEBUG_SECTION \
-	{ \
-		static auto bExecuted{false}; \
-		\
-		if ((bEnsureAlways || !bExecuted) && FPlatformMisc::IsEnsureAllowed()) \
-		{ \
-			bExecuted = true; \
-			\
-			UE_LOG(LogOutputDevice, Warning, TEXT("Ensure failed: ") TEXT(#Expression) TEXT(", File: ") __FILE__ TEXT(", Line: ") TEXT(FU_STRINGIFY(__LINE__)) TEXT(".")); \
-			UE_LOG(LogOutputDevice, Warning, FinalFormat, ##__VA_ARGS__); \
-			\
-			PrintScriptCallstack(); \
-			\
-			if (FPlatformMisc::IsDebuggerPresent()) \
-			{ \
-				PLATFORM_BREAK_IF_DESIRED(); \
-			} \
-			else \
-			{ \
-				FPlatformMisc::PromptForRemoteDebugging(true); \
-			} \
-		} \
-	}(Format), false))
+namespace FuEnsure
+{
+	FABULOUSUTILITY_API bool UE_DEBUG_SECTION VARARGS Execute(bool& bExecuted, bool bEnsureAlways, const ANSICHAR* Expression,
+	                                                          const TCHAR* StaticMessage, const TCHAR* Format, ...);
+}
 
-#define FU_ENSURE(Expression) FU_ENSURE_IMPLEMENTATION(Expression, false, TEXT(""), )
-#define FU_ENSURE_MESSAGE(Expression, Format, ...) FU_ENSURE_IMPLEMENTATION(Expression, false, Format, &, ##__VA_ARGS__)
-#define FU_ENSURE_ALWAYS(Expression) FU_ENSURE_IMPLEMENTATION(Expression, true, TEXT(""), )
-#define FU_ENSURE_ALWAYS_MESSAGE(Expression, Format, ...) FU_ENSURE_IMPLEMENTATION(Expression, true, Format, &, ##__VA_ARGS__)
+#define FU_ENSURE_IMPLEMENTATION(Capture, bEnsureAlways, Expression, Format, ...) \
+	(LIKELY(Expression) || [Capture]() UE_DEBUG_SECTION \
+	{ \
+		static constexpr auto StaticMessage{TEXT("Ensure failed: " #Expression ", File: " __FILE__ ", Line: " FU_STRINGIFY(__LINE__) ".")}; \
+ 		static auto bExecuted{false}; \
+		\
+		if (FuEnsure::Execute(bExecuted, bEnsureAlways, #Expression, StaticMessage, Format, ##__VA_ARGS__)) \
+		{ \
+			PLATFORM_BREAK(); \
+		} \
+		\
+		return false; \
+	}())
+
+#define FU_ENSURE(Expression) FU_ENSURE_IMPLEMENTATION( , false, Expression, TEXT(""))
+#define FU_ENSURE_MESSAGE(Expression, Format, ...) FU_ENSURE_IMPLEMENTATION(&, false, Expression, Format, ##__VA_ARGS__)
+#define FU_ENSURE_ALWAYS(Expression) FU_ENSURE_IMPLEMENTATION( , true, Expression, TEXT(""))
+#define FU_ENSURE_ALWAYS_MESSAGE(Expression, Format, ...) FU_ENSURE_IMPLEMENTATION(&, true, Expression, Format, ##__VA_ARGS__)
 
 #else
 

@@ -1,6 +1,7 @@
 #include "Input/FuInputUtility.h"
 
 #include "FuMacros.h"
+#include "Components/InputComponent.h"
 #include "GameFramework/PlayerController.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuInputUtility)

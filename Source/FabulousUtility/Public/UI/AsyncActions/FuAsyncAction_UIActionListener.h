@@ -1,8 +1,9 @@
 #pragma once
 
-#include "UITag.h"
 #include "CommonInputModeTypes.h"
+#include "UITag.h"
 #include "Engine/CancellableAsyncAction.h"
+#include "Engine/EngineBaseTypes.h"
 #include "Input/UIActionBindingHandle.h"
 #include "FuAsyncAction_UIActionListener.generated.h"
 

@@ -1,6 +1,5 @@
 #include "AbilitySystem/AbilityAsync/FuAbilityAsync_EffectTimeListener.h"
 
-#include "AbilitySystemGlobals.h"
 #include "FuMacros.h"
 #include "AbilitySystem/FuAbilitySystemComponent.h"
 #include "AbilitySystem/Utility/FuEffectUtility.h"
@@ -10,17 +9,13 @@
 UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListenForEffectTimeChangeOnActor(
 	const AActor* Actor, const FGameplayTag InEffectTag, const bool bInWaitForTimeFromServer)
 {
-	return FuListenForEffectTimeChange(
-		Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor)),
-		InEffectTag, bInWaitForTimeFromServer);
+	return FuListenForEffectTimeChange(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InEffectTag, bInWaitForTimeFromServer);
 }
 
 UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListenForEffectsTimeChangeOnActor(
 	const AActor* Actor, const FGameplayTagContainer InEffectTags, const bool bInWaitForTimeFromServer)
 {
-	return FuListenForEffectsTimeChange(
-		Cast<UFuAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor)),
-		InEffectTags, bInWaitForTimeFromServer);
+	return FuListenForEffectsTimeChange(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InEffectTags, bInWaitForTimeFromServer);
 }
 
 UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListenForEffectTimeChange(

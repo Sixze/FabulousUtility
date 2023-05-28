@@ -7,7 +7,7 @@
 
 namespace FuWorldUtilityConstants
 {
-	inline static constexpr FStringView WorldTypeStrings[]
+	constexpr FStringView WorldTypeStrings[]
 	{
 		TEXTVIEW("None"),
 		TEXTVIEW("Game"),

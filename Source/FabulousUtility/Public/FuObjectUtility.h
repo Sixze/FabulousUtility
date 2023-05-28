@@ -2,6 +2,7 @@
 
 #include "FuMacros.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "Misc/PackageName.h"
 #include "Templates/SubclassOf.h"
 #include "UObject/Interface.h"
 #include "FuObjectUtility.generated.h"
@@ -16,8 +17,9 @@ public:
 		Meta = (DeterminesOutputType = "Class", ReturnDisplayName = "Default Object"))
 	static UObject* GetDefaultObject(TSubclassOf<UObject> Class);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Object Utility", Meta = (ReturnDisplayName = "Object Name"))
-	static FString GetObjectName(const TSoftObjectPtr<UObject> SoftObjectReference);
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Object Utility",
+		Meta = (AutoCreateRefTerm = "SoftObjectReference", ReturnDisplayName = "Object Name"))
+	static FString GetObjectName(const TSoftObjectPtr<UObject>& SoftObjectReference);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Object Utility",
 		Meta = (DeterminesOutputType = "Object", AutoCreateRefTerm = "Name", ReturnDisplayName = "Object"))
@@ -33,7 +35,7 @@ inline UObject* UFuObjectUtility::GetDefaultObject(const TSubclassOf<UObject> Cl
 	return FU_ENSURE(IsValid(Class)) ? Class.GetDefaultObject() : nullptr;
 }
 
-inline FString UFuObjectUtility::GetObjectName(const TSoftObjectPtr<UObject> SoftObjectReference)
+inline FString UFuObjectUtility::GetObjectName(const TSoftObjectPtr<UObject>& SoftObjectReference)
 {
 	return FPackageName::ObjectPathToObjectName(SoftObjectReference.ToString());
 }

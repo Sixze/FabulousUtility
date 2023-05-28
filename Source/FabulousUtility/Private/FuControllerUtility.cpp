@@ -3,6 +3,7 @@
 #include "FuMacros.h"
 #include "GameFramework/Pawn.h"
 
+// ReSharper disable once CppUnusedIncludeDirective
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuControllerUtility)
 
 AController* UFuControllerUtility::GetControllerFromActor(AActor* Actor)

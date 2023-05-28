@@ -3,8 +3,8 @@
 #include "BehaviorTree/BTDecorator.h"
 #include "FuBTDecorator_ReceiveGameplayEvent.generated.h"
 
-struct FGameplayEventData;
 struct FFuReceiveGameplayEventMemory;
+struct FGameplayEventData;
 
 UCLASS(DisplayName = "Fu Receive Gameplay Event", HideCategories = ("Condition"), Meta = (ShowWorldContextPin))
 class FABULOUSUTILITY_API UFuBTDecorator_ReceiveGameplayEvent : public UBTDecorator
@@ -17,6 +17,11 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
 	FGameplayTagContainer EventTags;
+
+	// If set to true and FlowAbortMode is set to LowerPriority or Self, then the execution
+	// flow will only be able to pass through this node upon receiving a gameplay event.
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
+	bool bAllowEntryInNonSelfFlowAbortMode{true};
 
 public:
 	UFuBTDecorator_ReceiveGameplayEvent();

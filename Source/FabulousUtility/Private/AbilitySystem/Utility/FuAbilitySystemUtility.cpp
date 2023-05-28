@@ -5,6 +5,27 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilitySystemUtility)
 
+UAbilitySystemComponent* UFuAbilitySystemUtility::GetAbilitySystem(const UObject* Object, const bool bAllowFindComponent)
+{
+	const auto* Accessor{Cast<IAbilitySystemInterface>(Object)};
+	if (Accessor != nullptr)
+	{
+		auto* AbilitySystem{Accessor->GetAbilitySystemComponent()};
+		if (IsValid(AbilitySystem))
+		{
+			return AbilitySystem;
+		}
+	}
+
+	const auto* Actor{Cast<AActor>(Object)};
+	if (bAllowFindComponent && IsValid(Actor))
+	{
+		return Actor->FindComponentByClass<UAbilitySystemComponent>();
+	}
+
+	return nullptr;
+}
+
 bool UFuAbilitySystemUtility::TryGetAbilitySystem(const UObject* Object, UAbilitySystemComponent*& AbilitySystem,
                                                   const bool bAllowFindComponent)
 {

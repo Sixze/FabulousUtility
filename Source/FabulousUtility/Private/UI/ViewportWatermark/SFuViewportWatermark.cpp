@@ -80,7 +80,7 @@ void SFuViewportWatermark::Construct(const FArguments& Arguments)
 		+ SConstraintCanvas::Slot()
 		  .Anchors(FAnchors{0.5f, 0.0f, 0.5f, 1.0f})
 		  .Offset(FMargin{0.0f, 0.0f, static_cast<float>(UserInterfaceSettings->DesignScreenSize.X), 0.0f})
-		  .Alignment(FVector2D{0.5f, 0.5f})
+		  .Alignment(FVector2f{0.5f, 0.5f})
 		[
 			Overlay
 		]

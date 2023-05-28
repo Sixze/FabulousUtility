@@ -1,8 +1,6 @@
 #include "AI/FuBTDecorator_ReceiveGameplayEvent.h"
 
-#include "AbilitySystemComponent.h"
-#include "AbilitySystemGlobals.h"
-#include "FuMacros.h"
+#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"
 
@@ -19,6 +17,7 @@ UFuBTDecorator_ReceiveGameplayEvent::UFuBTDecorator_ReceiveGameplayEvent()
 {
 	NodeName = TEXTVIEW("Fu Receive Gameplay Event");
 
+	TargetKey.AllowNoneAsValue(true);
 	TargetKey.AddObjectFilter(this, GET_MEMBER_NAME_CHECKED(ThisClass, TargetKey), AActor::StaticClass());
 
 	INIT_DECORATOR_NODE_NOTIFY_FLAGS();
@@ -78,7 +77,7 @@ void UFuBTDecorator_ReceiveGameplayEvent::OnBecomeRelevant(UBehaviorTreeComponen
 	Super::OnBecomeRelevant(BehaviorTree, NodeMemory);
 
 	auto* Blackboard{BehaviorTree.GetBlackboardComponent()};
-	if (FU_ENSURE(IsValid(Blackboard)))
+	if (TargetKey.IsSet() && FU_ENSURE(IsValid(Blackboard)))
 	{
 		Blackboard->RegisterObserver(TargetKey.GetSelectedKeyID(), this,
 		                             FOnBlackboardChangeNotification::CreateUObject(this, &ThisClass::Blackboard_OnTargetKeyChanged));
@@ -102,7 +101,7 @@ void UFuBTDecorator_ReceiveGameplayEvent::OnCeaseRelevant(UBehaviorTreeComponent
 
 bool UFuBTDecorator_ReceiveGameplayEvent::CalculateRawConditionValue(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory) const
 {
-	if (FlowAbortMode != EBTFlowAbortMode::LowerPriority)
+	if (FlowAbortMode == EBTFlowAbortMode::Self || bAllowEntryInNonSelfFlowAbortMode)
 	{
 		return true;
 	}
@@ -134,8 +133,8 @@ void UFuBTDecorator_ReceiveGameplayEvent::ReInitializeDecoratorMemory(UBehaviorT
 		return;
 	}
 
-	Memory.AbilitySystem = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(TargetActor);
-	if (!FU_ENSURE(Memory.AbilitySystem.IsValid()))
+	Memory.AbilitySystem = UFuAbilitySystemUtility::GetAbilitySystem(TargetActor);
+	if (!Memory.AbilitySystem.IsValid())
 	{
 		return;
 	}
@@ -169,8 +168,8 @@ void UFuBTDecorator_ReceiveGameplayEvent::ClearDecoratorMemory(FFuReceiveGamepla
 	Memory.EventReceivedCounter = 0;
 }
 
-EBlackboardNotificationResult UFuBTDecorator_ReceiveGameplayEvent::Blackboard_OnTargetKeyChanged(const UBlackboardComponent& Blackboard,
-	const FBlackboard::FKey Key)
+EBlackboardNotificationResult UFuBTDecorator_ReceiveGameplayEvent::Blackboard_OnTargetKeyChanged(
+	const UBlackboardComponent& Blackboard, const FBlackboard::FKey Key)
 {
 	auto* BehaviorTree{Cast<UBehaviorTreeComponent>(Blackboard.GetBrainComponent())};
 	if (!FU_ENSURE(IsValid(BehaviorTree)))
@@ -180,8 +179,6 @@ EBlackboardNotificationResult UFuBTDecorator_ReceiveGameplayEvent::Blackboard_On
 
 	ReInitializeDecoratorMemory(*BehaviorTree, *CastInstanceNodeMemory<FFuReceiveGameplayEventMemory>(
 		                            BehaviorTree->GetNodeMemory(this, BehaviorTree->FindInstanceContainingNode(this))));
-
-	BehaviorTree->RequestExecution(this);
 
 	return EBlackboardNotificationResult::ContinueObserving;
 }
@@ -194,15 +191,28 @@ void UFuBTDecorator_ReceiveGameplayEvent::AbilitySystem_OnEventReceived(const FG
 		return;
 	}
 
-	if (FlowAbortMode == EBTFlowAbortMode::LowerPriority)
+	if (BehaviorTree->IsExecutingBranch(GetMyNode(), GetChildIndex()))
 	{
-		auto& Memory{
-			*CastInstanceNodeMemory<FFuReceiveGameplayEventMemory>(
-				BehaviorTree->GetNodeMemory(this, BehaviorTree->FindInstanceContainingNode(this)))
-		};
+		if (FlowAbortMode == EBTFlowAbortMode::Self || FlowAbortMode == EBTFlowAbortMode::Both)
+		{
+			BehaviorTree->RequestBranchDeactivation(*this);
+		}
 
-		Memory.EventReceivedCounter = 2;
+		return;
 	}
 
-	BehaviorTree->RequestExecution(this);
+	if (FlowAbortMode == EBTFlowAbortMode::LowerPriority || FlowAbortMode == EBTFlowAbortMode::Both)
+	{
+		if (!bAllowEntryInNonSelfFlowAbortMode)
+		{
+			auto& Memory{
+				*CastInstanceNodeMemory<FFuReceiveGameplayEventMemory>(
+					BehaviorTree->GetNodeMemory(this, BehaviorTree->FindInstanceContainingNode(this)))
+			};
+
+			Memory.EventReceivedCounter = 2;
+		}
+
+		BehaviorTree->RequestBranchActivation(*this, false);
+	}
 }
