@@ -4,8 +4,6 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuCommonUIUtility.generated.h"
 
-enum class ECommonInputType : uint8;
-
 UCLASS(DisplayName = "Fu Common UI Utility")
 class FABULOUSUTILITY_API UFuCommonUIUtility : public UBlueprintFunctionLibrary
 {
