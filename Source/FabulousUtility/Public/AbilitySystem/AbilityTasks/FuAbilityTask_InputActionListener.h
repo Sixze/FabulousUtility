@@ -28,27 +28,27 @@ protected:
 public:
 	// Triggering occurred after one or more processing ticks.
 	// ETriggerState (None -> Triggered, Ongoing -> Triggered, Triggered -> Triggered).
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Action Listener Ability Async")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Action Listener Ability Task")
 	FFuInputActionListenerDelegate OnActionTriggered;
 
 	// An event has occurred that has begun Trigger evaluation. Triggered may also occur this frame.
 	// ETriggerState (None -> Ongoing, None -> Triggered).
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Action Listener Ability Async")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Action Listener Ability Task")
 	FFuInputActionListenerDelegate OnActionStarted;
 
 	// Triggering is still being processed.
 	// ETriggerState (Ongoing -> Ongoing).
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu InputAction Listener Ability Async")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu InputAction Listener Ability Task")
 	FFuInputActionListenerDelegate OnActionOngoing;
 
 	// Triggering has been canceled.
 	// ETriggerState (Ongoing -> None).
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Action Listener Ability Async")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Action Listener Ability Task")
 	FFuInputActionListenerDelegate OnActionCanceled;
 
 	// The trigger state has transitioned from Triggered to None this frame, i.e. Triggering has finished.
 	// ETriggerState (Triggered -> None).
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Action Listener Ability Async")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Action Listener Ability Task")
 	FFuInputActionListenerDelegate OnActionCompleted;
 
 public:

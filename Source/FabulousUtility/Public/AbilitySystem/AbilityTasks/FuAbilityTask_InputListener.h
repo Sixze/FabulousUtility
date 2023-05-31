@@ -15,10 +15,10 @@ protected:
 	bool bCheckInitialInputState;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Listener Ability Async")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Listener Ability Task")
 	FFuInputListenerDelegate OnInputPressed;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Listener Ability Async")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Listener Ability Task")
 	FFuInputListenerDelegate OnInputReleased;
 
 public:
