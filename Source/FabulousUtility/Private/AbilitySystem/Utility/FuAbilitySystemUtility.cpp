@@ -72,7 +72,8 @@ FGameplayTag UFuAbilitySystemUtility::GetFirstOwnedDescendantTag(const UAbilityS
 
 FGameplayAbilitySpecHandle UFuAbilitySystemUtility::GiveAbilityWithDynamicTags(UAbilitySystemComponent* AbilitySystem,
                                                                                const TSubclassOf<UGameplayAbility> AbilityClass,
-                                                                               const int32 Level, const FGameplayTagContainer& Tags)
+                                                                               const int32 Level, const FGameplayTagContainer& Tags,
+                                                                               UObject* SourceObject)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)))
 	{
@@ -93,7 +94,25 @@ FGameplayAbilitySpecHandle UFuAbilitySystemUtility::GiveAbilityWithDynamicTags(U
 		}
 	}
 
+	AbilitySpecification.SourceObject = SourceObject;
+
 	return AbilitySystem->GiveAbility(AbilitySpecification);
+}
+
+FActiveGameplayEffectHandle UFuAbilitySystemUtility::ApplyEffectWithSetByCallerMagnitudes(
+	UAbilitySystemComponent* AbilitySystem, const TSubclassOf<UGameplayEffect> EffectClass,
+	const TMap<FGameplayTag, float>& SetByCallerMagnitudes)
+{
+	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(IsValid(EffectClass)))
+	{
+		return {};
+	}
+
+	FGameplayEffectSpec EffectSpecification{EffectClass.GetDefaultObject(), AbilitySystem->MakeEffectContext(), 1.0f};
+
+	EffectSpecification.SetByCallerTagMagnitudes = SetByCallerMagnitudes;
+
+	return AbilitySystem->ApplyGameplayEffectSpecToSelf(EffectSpecification);
 }
 
 bool UFuAbilitySystemUtility::AddLooseTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag, const bool bReplicate)

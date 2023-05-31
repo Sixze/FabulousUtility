@@ -31,7 +31,14 @@ public:
 		Meta = (AutoCreateRefTerm = "Tags", ReturnDisplayName = "Ability Handle"))
 	static FGameplayAbilitySpecHandle GiveAbilityWithDynamicTags(UAbilitySystemComponent* AbilitySystem,
 	                                                             TSubclassOf<UGameplayAbility> AbilityClass,
-	                                                             int32 Level, const FGameplayTagContainer& Tags);
+	                                                             int32 Level, const FGameplayTagContainer& Tags,
+	                                                             UObject* SourceObject = nullptr);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility",
+		Meta = (AutoCreateRefTerm = "SetByCallerMagnitudes", ReturnDisplayName = "Effect Handle"))
+	static FActiveGameplayEffectHandle ApplyEffectWithSetByCallerMagnitudes(UAbilitySystemComponent* AbilitySystem,
+	                                                                        TSubclassOf<UGameplayEffect> EffectClass,
+	                                                                        const TMap<FGameplayTag, float>& SetByCallerMagnitudes);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility",
 		Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Success"))
