@@ -50,10 +50,10 @@ void UFuGameplayCueUtility::AddLocalGameplayCueToActor(AActor* Actor, const FGam
 	}
 	else
 	{
-		auto* GameplayCueManager{UAbilitySystemGlobals::Get().GetGameplayCueManager()};
+		auto* CueManager{UAbilitySystemGlobals::Get().GetGameplayCueManager()};
 
-		GameplayCueManager->HandleGameplayCue(Actor, GameplayCueTag, EGameplayCueEvent::OnActive, Parameters);
-		GameplayCueManager->HandleGameplayCue(Actor, GameplayCueTag, EGameplayCueEvent::WhileActive, Parameters);
+		CueManager->HandleGameplayCue(Actor, GameplayCueTag, EGameplayCueEvent::OnActive, Parameters);
+		CueManager->HandleGameplayCue(Actor, GameplayCueTag, EGameplayCueEvent::WhileActive, Parameters);
 	}
 }
 
@@ -97,10 +97,10 @@ void UFuGameplayCueUtility::AddLocalGameplayCuesToActor(AActor* Actor, const FGa
 	}
 	else
 	{
-		auto* GameplayCueManager{UAbilitySystemGlobals::Get().GetGameplayCueManager()};
+		auto* CueManager{UAbilitySystemGlobals::Get().GetGameplayCueManager()};
 
-		GameplayCueManager->HandleGameplayCues(Actor, GameplayCueTags, EGameplayCueEvent::OnActive, Parameters);
-		GameplayCueManager->HandleGameplayCues(Actor, GameplayCueTags, EGameplayCueEvent::WhileActive, Parameters);
+		CueManager->HandleGameplayCues(Actor, GameplayCueTags, EGameplayCueEvent::OnActive, Parameters);
+		CueManager->HandleGameplayCues(Actor, GameplayCueTags, EGameplayCueEvent::WhileActive, Parameters);
 	}
 }
 
@@ -129,18 +129,19 @@ void UFuGameplayCueUtility::ExecuteLocalGameplayCue(UAbilitySystemComponent* Abi
 		return;
 	}
 
-	const auto* ResultParameters{&Parameters};
+	auto* CueManager{UAbilitySystemGlobals::Get().GetGameplayCueManager()};
 
-	if (!ResultParameters->EffectContext.IsValid())
+	if (!Parameters.EffectContext.IsValid())
 	{
 		auto ParametersCopy{Parameters};
-		ResultParameters = &ParametersCopy;
-
 		UAbilitySystemGlobals::Get().InitGameplayCueParameters(ParametersCopy, AbilitySystem->MakeEffectContext());
-	}
 
-	UAbilitySystemGlobals::Get().GetGameplayCueManager()->HandleGameplayCue(Avatar, GameplayCueTag,
-	                                                                        EGameplayCueEvent::Executed, *ResultParameters);
+		CueManager->HandleGameplayCue(Avatar, GameplayCueTag, EGameplayCueEvent::Executed, ParametersCopy);
+	}
+	else
+	{
+		CueManager->HandleGameplayCue(Avatar, GameplayCueTag, EGameplayCueEvent::Executed, Parameters);
+	}
 }
 
 void UFuGameplayCueUtility::AddLocalGameplayCue(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& GameplayCueTag,
@@ -153,25 +154,23 @@ void UFuGameplayCueUtility::AddLocalGameplayCue(UAbilitySystemComponent* Ability
 		return;
 	}
 
-	const auto* ResultParameters{&Parameters};
-
-	if (!ResultParameters->EffectContext.IsValid())
-	{
-		auto ParametersCopy{Parameters};
-		ResultParameters = &ParametersCopy;
-
-		UAbilitySystemGlobals::Get().InitGameplayCueParameters(ParametersCopy, AbilitySystem->MakeEffectContext());
-	}
-
 	AbilitySystem->AddLooseGameplayTag(GameplayCueTag);
 
-	auto* GameplayCueManager{UAbilitySystemGlobals::Get().GetGameplayCueManager()};
+	auto* CueManager{UAbilitySystemGlobals::Get().GetGameplayCueManager()};
 
-	GameplayCueManager->HandleGameplayCue(Avatar, GameplayCueTag,
-	                                      EGameplayCueEvent::OnActive, *ResultParameters);
+	if (!Parameters.EffectContext.IsValid())
+	{
+		auto ParametersCopy{Parameters};
+		UAbilitySystemGlobals::Get().InitGameplayCueParameters(ParametersCopy, AbilitySystem->MakeEffectContext());
 
-	GameplayCueManager->HandleGameplayCue(Avatar, GameplayCueTag,
-	                                      EGameplayCueEvent::WhileActive, *ResultParameters);
+		CueManager->HandleGameplayCue(Avatar, GameplayCueTag, EGameplayCueEvent::OnActive, ParametersCopy);
+		CueManager->HandleGameplayCue(Avatar, GameplayCueTag, EGameplayCueEvent::WhileActive, ParametersCopy);
+	}
+	else
+	{
+		CueManager->HandleGameplayCue(Avatar, GameplayCueTag, EGameplayCueEvent::OnActive, Parameters);
+		CueManager->HandleGameplayCue(Avatar, GameplayCueTag, EGameplayCueEvent::WhileActive, Parameters);
+	}
 }
 
 void UFuGameplayCueUtility::RemoveLocalGameplayCue(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& GameplayCueTag,
@@ -184,20 +183,21 @@ void UFuGameplayCueUtility::RemoveLocalGameplayCue(UAbilitySystemComponent* Abil
 		return;
 	}
 
-	const auto* ResultParameters{&Parameters};
-
-	if (!ResultParameters->EffectContext.IsValid())
-	{
-		auto ParametersCopy{Parameters};
-		ResultParameters = &ParametersCopy;
-
-		UAbilitySystemGlobals::Get().InitGameplayCueParameters(ParametersCopy, AbilitySystem->MakeEffectContext());
-	}
-
 	AbilitySystem->RemoveLooseGameplayTag(GameplayCueTag);
 
-	UAbilitySystemGlobals::Get().GetGameplayCueManager()->HandleGameplayCue(Avatar, GameplayCueTag,
-	                                                                        EGameplayCueEvent::Removed, *ResultParameters);
+	auto* CueManager{UAbilitySystemGlobals::Get().GetGameplayCueManager()};
+
+	if (!Parameters.EffectContext.IsValid())
+	{
+		auto ParametersCopy{Parameters};
+		UAbilitySystemGlobals::Get().InitGameplayCueParameters(ParametersCopy, AbilitySystem->MakeEffectContext());
+
+		CueManager->HandleGameplayCue(Avatar, GameplayCueTag, EGameplayCueEvent::Removed, ParametersCopy);
+	}
+	else
+	{
+		CueManager->HandleGameplayCue(Avatar, GameplayCueTag, EGameplayCueEvent::Removed, Parameters);
+	}
 }
 
 void UFuGameplayCueUtility::ExecuteLocalGameplayCues(UAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer& GameplayCueTags,
@@ -210,18 +210,19 @@ void UFuGameplayCueUtility::ExecuteLocalGameplayCues(UAbilitySystemComponent* Ab
 		return;
 	}
 
-	const auto* ResultParameters{&Parameters};
+	auto* CueManager{UAbilitySystemGlobals::Get().GetGameplayCueManager()};
 
-	if (!ResultParameters->EffectContext.IsValid())
+	if (!Parameters.EffectContext.IsValid())
 	{
 		auto ParametersCopy{Parameters};
-		ResultParameters = &ParametersCopy;
-
 		UAbilitySystemGlobals::Get().InitGameplayCueParameters(ParametersCopy, AbilitySystem->MakeEffectContext());
-	}
 
-	UAbilitySystemGlobals::Get().GetGameplayCueManager()->HandleGameplayCues(Avatar, GameplayCueTags,
-	                                                                         EGameplayCueEvent::Executed, *ResultParameters);
+		CueManager->HandleGameplayCues(Avatar, GameplayCueTags, EGameplayCueEvent::Executed, ParametersCopy);
+	}
+	else
+	{
+		CueManager->HandleGameplayCues(Avatar, GameplayCueTags, EGameplayCueEvent::Executed, Parameters);
+	}
 }
 
 void UFuGameplayCueUtility::AddLocalGameplayCues(UAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer& GameplayCueTags,
@@ -234,25 +235,23 @@ void UFuGameplayCueUtility::AddLocalGameplayCues(UAbilitySystemComponent* Abilit
 		return;
 	}
 
-	const auto* ResultParameters{&Parameters};
-
-	if (!ResultParameters->EffectContext.IsValid())
-	{
-		auto ParametersCopy{Parameters};
-		ResultParameters = &ParametersCopy;
-
-		UAbilitySystemGlobals::Get().InitGameplayCueParameters(ParametersCopy, AbilitySystem->MakeEffectContext());
-	}
-
 	AbilitySystem->AddLooseGameplayTags(GameplayCueTags);
 
-	auto* GameplayCueManager{UAbilitySystemGlobals::Get().GetGameplayCueManager()};
+	auto* CueManager{UAbilitySystemGlobals::Get().GetGameplayCueManager()};
 
-	GameplayCueManager->HandleGameplayCues(Avatar, GameplayCueTags,
-	                                       EGameplayCueEvent::OnActive, *ResultParameters);
+	if (!Parameters.EffectContext.IsValid())
+	{
+		auto ParametersCopy{Parameters};
+		UAbilitySystemGlobals::Get().InitGameplayCueParameters(ParametersCopy, AbilitySystem->MakeEffectContext());
 
-	GameplayCueManager->HandleGameplayCues(Avatar, GameplayCueTags,
-	                                       EGameplayCueEvent::WhileActive, *ResultParameters);
+		CueManager->HandleGameplayCues(Avatar, GameplayCueTags, EGameplayCueEvent::OnActive, ParametersCopy);
+		CueManager->HandleGameplayCues(Avatar, GameplayCueTags, EGameplayCueEvent::WhileActive, ParametersCopy);
+	}
+	else
+	{
+		CueManager->HandleGameplayCues(Avatar, GameplayCueTags, EGameplayCueEvent::OnActive, Parameters);
+		CueManager->HandleGameplayCues(Avatar, GameplayCueTags, EGameplayCueEvent::WhileActive, Parameters);
+	}
 }
 
 void UFuGameplayCueUtility::RemoveLocalGameplayCues(UAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer& GameplayCueTags,
@@ -265,18 +264,19 @@ void UFuGameplayCueUtility::RemoveLocalGameplayCues(UAbilitySystemComponent* Abi
 		return;
 	}
 
-	const auto* ResultParameters{&Parameters};
-
-	if (!ResultParameters->EffectContext.IsValid())
-	{
-		auto ParametersCopy{Parameters};
-		ResultParameters = &ParametersCopy;
-
-		UAbilitySystemGlobals::Get().InitGameplayCueParameters(ParametersCopy, AbilitySystem->MakeEffectContext());
-	}
-
 	AbilitySystem->RemoveLooseGameplayTags(GameplayCueTags);
 
-	UAbilitySystemGlobals::Get().GetGameplayCueManager()->HandleGameplayCues(Avatar, GameplayCueTags,
-	                                                                         EGameplayCueEvent::Removed, *ResultParameters);
+	auto* CueManager{UAbilitySystemGlobals::Get().GetGameplayCueManager()};
+
+	if (!Parameters.EffectContext.IsValid())
+	{
+		auto ParametersCopy{Parameters};
+		UAbilitySystemGlobals::Get().InitGameplayCueParameters(ParametersCopy, AbilitySystem->MakeEffectContext());
+
+		CueManager->HandleGameplayCues(Avatar, GameplayCueTags, EGameplayCueEvent::Removed, ParametersCopy);
+	}
+	else
+	{
+		CueManager->HandleGameplayCues(Avatar, GameplayCueTags, EGameplayCueEvent::Removed, Parameters);
+	}
 }
