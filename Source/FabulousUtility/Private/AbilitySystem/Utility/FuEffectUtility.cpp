@@ -31,6 +31,9 @@ int32 UFuEffectUtility::GetEffectStackCountByClass(const UAbilitySystemComponent
 
 	for (const auto& ActiveEffect : &AbilitySystem->GetActiveGameplayEffects())
 	{
+		// The backing gameplay effect class must be exactly the same. This is required for
+		// compatibility with the UAbilitySystemComponent::GetGameplayEffectCount() function.
+
 		if (ActiveEffect.Spec.Def->GetClass() == EffectClass)
 		{
 			MaxCount = FMath::Max(MaxCount, ActiveEffect.Spec.StackCount);

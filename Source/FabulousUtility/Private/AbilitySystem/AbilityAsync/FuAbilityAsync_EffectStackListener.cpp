@@ -46,6 +46,9 @@ void UFuAbilityAsync_EffectStackListener::Activate()
 
 	for (const auto& ActiveEffect : &AbilitySystem->GetActiveGameplayEffects())
 	{
+		// The backing gameplay effect class must be exactly the same. This is required for
+		// compatibility with the UAbilitySystemComponent::GetGameplayEffectCount() function.
+
 		if (ActiveEffect.Spec.Def->GetClass() != EffectClass)
 		{
 			continue;
@@ -89,6 +92,9 @@ void UFuAbilityAsync_EffectStackListener::AbilitySystem_OnActiveGameplayEffectAd
                                                                                     const FGameplayEffectSpec& EffectSpecification,
                                                                                     const FActiveGameplayEffectHandle EffectHandle) const
 {
+	// The backing gameplay effect class must be exactly the same. This is required for
+	// compatibility with the UAbilitySystemComponent::GetGameplayEffectCount() function.
+
 	if (ShouldBroadcastDelegates() && EffectSpecification.Def->GetClass() == EffectClass)
 	{
 		AbilitySystem->OnGameplayEffectStackChangeDelegate(EffectHandle)->AddUObject(this, &ThisClass::AbilitySystem_OnEffectStackChanged);
@@ -99,6 +105,9 @@ void UFuAbilityAsync_EffectStackListener::AbilitySystem_OnActiveGameplayEffectAd
 
 void UFuAbilityAsync_EffectStackListener::AbilitySystem_OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const
 {
+	// The backing gameplay effect class must be exactly the same. This is required for
+	// compatibility with the UAbilitySystemComponent::GetGameplayEffectCount() function.
+
 	if (ActiveEffect.Spec.Def->GetClass() == EffectClass)
 	{
 		const_cast<FActiveGameplayEffect&>(ActiveEffect).EventSet.OnStackChanged.RemoveAll(this);
