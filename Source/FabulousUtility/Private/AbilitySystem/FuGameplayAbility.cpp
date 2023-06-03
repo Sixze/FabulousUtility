@@ -12,6 +12,9 @@ UFuGameplayAbility::UFuGameplayAbility()
 
 	// https://github.com/tranek/GASDocumentation#concepts-ga-definition-remotecancel
 	bServerRespectsRemoteAbilityCancellation = false;
+
+	static const auto CheckCostBlueprintFunctionName{GET_FUNCTION_NAME_CHECKED(ThisClass, CheckCostBlueprint)};
+	bCheckCostBlueprintImplemented = GetClass()->IsFunctionImplementedInScript(CheckCostBlueprintFunctionName);
 }
 
 void UFuGameplayAbility::SetShouldBlockOtherAbilities(const bool bShouldBlockAbilities)
@@ -43,10 +46,15 @@ void UFuGameplayAbility::SetShouldBlockOtherAbilities(const bool bShouldBlockAbi
 bool UFuGameplayAbility::CheckCost(const FGameplayAbilitySpecHandle AbilityHandle, const FGameplayAbilityActorInfo* ActorInfo,
                                    FGameplayTagContainer* FailureTags) const
 {
-	if (!CheckCostBlueprint(*ActorInfo, AbilityHandle))
+	if (!Super::CheckCost(AbilityHandle, ActorInfo, FailureTags))
+	{
+		return false;
+	}
+
+	if (bCheckCostBlueprintImplemented && !CheckCostBlueprint(*ActorInfo, AbilityHandle))
 	{
 		const auto& CostFailureTag{UAbilitySystemGlobals::Get().ActivateFailCostTag};
-		if (FailureTags && CostFailureTag.IsValid())
+		if (FailureTags != nullptr && CostFailureTag.IsValid())
 		{
 			FailureTags->AddTag(CostFailureTag);
 		}
@@ -54,15 +62,15 @@ bool UFuGameplayAbility::CheckCost(const FGameplayAbilitySpecHandle AbilityHandl
 		return false;
 	}
 
-	return Super::CheckCost(AbilityHandle, ActorInfo, FailureTags);
+	return true;
 }
 
 void UFuGameplayAbility::ApplyCost(const FGameplayAbilitySpecHandle AbilityHandle, const FGameplayAbilityActorInfo* ActorInfo,
                                    const FGameplayAbilityActivationInfo ActivationInfo) const
 {
-	ApplyCostBlueprint(*ActorInfo, AbilityHandle, ActivationInfo);
-
 	Super::ApplyCost(AbilityHandle, ActorInfo, ActivationInfo);
+
+	ApplyCostBlueprint(*ActorInfo, AbilityHandle, ActivationInfo);
 }
 
 void UFuGameplayAbility::OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& AbilitySpecification)
@@ -117,16 +125,6 @@ void UFuGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle AbilityHand
 
 	Super::EndAbility(AbilityHandle, ActorInfo, ActivationInfo, bReplicateEndAbility, bCanceled);
 }
-
-bool UFuGameplayAbility::CheckCostBlueprint_Implementation(const FGameplayAbilityActorInfo& ActorInfo,
-                                                           const FGameplayAbilitySpecHandle AbilityHandle) const
-{
-	return true;
-}
-
-void UFuGameplayAbility::ApplyCostBlueprint_Implementation(const FGameplayAbilityActorInfo& ActorInfo,
-                                                           const FGameplayAbilitySpecHandle AbilityHandle,
-                                                           const FGameplayAbilityActivationInfo ActivationInfo) const {}
 
 // ReSharper disable once CppUE4BlueprintCallableFunctionMayBeConst
 bool UFuGameplayAbility::TryBatchRpcActivateAbility(const FGameplayAbilitySpecHandle AbilityHandle, const bool bEndAbilityImmediately)

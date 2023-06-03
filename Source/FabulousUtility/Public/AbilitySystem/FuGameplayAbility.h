@@ -27,6 +27,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Ability", Instanced)
 	TObjectPtr<UObject> UserData;
 
+	bool bCheckCostBlueprintImplemented{false};
+
 public:
 	UFuGameplayAbility();
 
@@ -41,8 +43,8 @@ public:
 	virtual void OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& AbilitySpecification) override;
 
 protected:
-	virtual void PreActivate(const FGameplayAbilitySpecHandle AbilityHandle, const FGameplayAbilityActorInfo* ActorInfo,
-	                         const FGameplayAbilityActivationInfo ActivationInfo,
+	virtual void PreActivate(FGameplayAbilitySpecHandle AbilityHandle, const FGameplayAbilityActorInfo* ActorInfo,
+	                         FGameplayAbilityActivationInfo ActivationInfo,
 	                         FOnGameplayAbilityEnded::FDelegate* OnGameplayAbilityEndedDelegate,
 	                         const FGameplayEventData* TriggerEventData) override;
 
@@ -50,12 +52,12 @@ protected:
 	                        FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bCanceled) override;
 
 protected:
-	UFUNCTION(BlueprintNativeEvent, Category = "Fu Gameplay Ability", DisplayName = "Check Cost")
+	UFUNCTION(BlueprintImplementableEvent, Category = "Fu Gameplay Ability", DisplayName = "Check Cost")
 	bool CheckCostBlueprint(const FGameplayAbilityActorInfo& ActorInfo, FGameplayAbilitySpecHandle AbilityHandle) const;
 
-	UFUNCTION(BlueprintNativeEvent, Category = "Fu Gameplay Ability", DisplayName = "Apply Cost", Meta = (ForceAsFunction))
+	UFUNCTION(BlueprintImplementableEvent, Category = "Fu Gameplay Ability", DisplayName = "Apply Cost", Meta = (ForceAsFunction))
 	void ApplyCostBlueprint(const FGameplayAbilityActorInfo& ActorInfo, FGameplayAbilitySpecHandle AbilityHandle,
-	                        FGameplayAbilityActivationInfo ActivationInfo) const;
+	                        const FGameplayAbilityActivationInfo& ActivationInfo) const;
 
 public:
 	bool IsActivationByInputAllowed() const;
