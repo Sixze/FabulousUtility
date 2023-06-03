@@ -18,6 +18,12 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Specification Utility", Meta = (ReturnDisplayName = "Input Id"))
 	static uint8 GetInputId(const FGameplayAbilitySpec& AbilitySpecification);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Specification Utility", Meta = (ReturnDisplayName = "Value"))
+	static bool IsActive(const FGameplayAbilitySpec& AbilitySpecification);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Specification Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
+	static bool SwitchIsActive(const FGameplayAbilitySpec& AbilitySpecification);
 };
 
 inline FGameplayAbilitySpecHandle UFuAbilitySpecificationUtility::GetAbilityHandle(const FGameplayAbilitySpec& AbilitySpecification)
@@ -33,4 +39,14 @@ inline TSubclassOf<UGameplayAbility> UFuAbilitySpecificationUtility::GetAbilityC
 inline uint8 UFuAbilitySpecificationUtility::GetInputId(const FGameplayAbilitySpec& AbilitySpecification)
 {
 	return static_cast<uint8>(AbilitySpecification.InputID);
+}
+
+inline bool UFuAbilitySpecificationUtility::IsActive(const FGameplayAbilitySpec& AbilitySpecification)
+{
+	return AbilitySpecification.IsActive();
+}
+
+inline bool UFuAbilitySpecificationUtility::SwitchIsActive(const FGameplayAbilitySpec& AbilitySpecification)
+{
+	return AbilitySpecification.IsActive();
 }

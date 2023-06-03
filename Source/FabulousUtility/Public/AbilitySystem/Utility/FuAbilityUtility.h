@@ -22,11 +22,11 @@ public:
 		Meta = (DefaultToSelf = "Ability", ExpandBoolAsExecs = "ReturnValue"))
 	static bool SwitchIsActive(const UGameplayAbility* Ability);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Specification Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility",
 		Meta = (DefaultToSelf = "Ability", ReturnDisplayName = "Ability Handle"))
 	static FGameplayAbilitySpecHandle GetAbilityHandle(const UGameplayAbility* Ability);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Specification Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility",
 		Meta = (DefaultToSelf = "Ability", ReturnDisplayName = "Input Id"))
 	static uint8 GetInputId(const UGameplayAbility* Ability);
 
