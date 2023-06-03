@@ -5,26 +5,26 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AbilityGiveListener)
 
-UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuListenForAbilityGivenOnActor(
+UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuListenForAbilityGiveOnActor(
 	const AActor* Actor, const FGameplayTag InAbilityTag)
 {
-	return FuListenForAbilityGiven(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InAbilityTag);
+	return FuListenForAbilityGive(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InAbilityTag);
 }
 
-UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuListenForAbilitiesGivenOnActor(
+UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuListenForAbilitiesGiveOnActor(
 	const AActor* Actor, const FGameplayTagContainer InAbilityTags)
 {
-	return FuListenForAbilitiesGiven(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InAbilityTags);
+	return FuListenForAbilitiesGive(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InAbilityTags);
 }
 
-UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuListenForAbilityGiven(
+UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuListenForAbilityGive(
 	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag InAbilityTag)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
-	if (FU_ENSURE(InAbilityTag.IsValid()))
+	if (InAbilityTag.IsValid())
 	{
 		Task->AbilityTags.AddTag(InAbilityTag);
 	}
@@ -32,7 +32,7 @@ UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuList
 	return Task;
 }
 
-UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuListenForAbilitiesGiven(
+UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuListenForAbilitiesGive(
 	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer InAbilityTags)
 {
 	auto* Task{NewObject<ThisClass>()};
@@ -56,7 +56,7 @@ void UFuAbilityAsync_AbilityGiveListener::Activate()
 
 	auto* AbilitySystem{Cast<UFuAbilitySystemComponent>(GetAbilitySystemComponent())};
 
-	if (!IsValid(GetAbilitySystemComponent()) || !FU_ENSURE(IsValid(AbilitySystem)) || AbilityTags.IsEmpty())
+	if (!IsValid(GetAbilitySystemComponent()) || !FU_ENSURE(IsValid(AbilitySystem)))
 	{
 		EndAction();
 		return;
@@ -72,7 +72,8 @@ void UFuAbilityAsync_AbilityGiveListener::Activate()
 
 	for (const auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
 	{
-		if (AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||
+		if (AbilityTags.IsEmpty() ||
+		    AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||
 		    AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags))
 		{
 			OnAbilityGiven.Broadcast(AbilitySpecification.Handle);
@@ -95,7 +96,8 @@ void UFuAbilityAsync_AbilityGiveListener::EndAction()
 void UFuAbilityAsync_AbilityGiveListener::AbilitySystem_OnAbilityGiven(const FGameplayAbilitySpec& AbilitySpecification) const
 {
 	if (ShouldBroadcastDelegates() &&
-	    (AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||
+	    (AbilityTags.IsEmpty() ||
+	     AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||
 	     AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags)))
 	{
 		OnAbilityGiven.Broadcast(AbilitySpecification.Handle);
@@ -105,7 +107,8 @@ void UFuAbilityAsync_AbilityGiveListener::AbilitySystem_OnAbilityGiven(const FGa
 void UFuAbilityAsync_AbilityGiveListener::AbilitySystem_OnAbilityRemoved(const FGameplayAbilitySpec& AbilitySpecification) const
 {
 	if (ShouldBroadcastDelegates() &&
-	    (AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||
+	    (AbilityTags.IsEmpty() ||
+	     AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||
 	     AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags)))
 	{
 		OnAbilityRemoved.Broadcast(AbilitySpecification.Handle);

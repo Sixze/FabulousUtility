@@ -108,9 +108,9 @@ void UFuAbilitySystemComponent::OnGiveAbility(FGameplayAbilitySpec& AbilitySpeci
 
 void UFuAbilitySystemComponent::OnRemoveAbility(FGameplayAbilitySpec& AbilitySpecification)
 {
-	Super::OnRemoveAbility(AbilitySpecification);
-
 	OnAbilityRemoved.Broadcast(AbilitySpecification);
+
+	Super::OnRemoveAbility(AbilitySpecification);
 }
 
 bool UFuAbilitySystemComponent::AreAbilityTagsBlocked(const FGameplayTagContainer& Tags) const
