@@ -4,7 +4,6 @@
 #include "OnlineSubsystemUtils.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/PlayerState.h"
-#include "Interfaces/OnlineSessionInterface.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_JoinSession)
 

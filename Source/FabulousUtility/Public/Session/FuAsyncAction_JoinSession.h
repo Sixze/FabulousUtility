@@ -1,12 +1,8 @@
 #pragma once
 
 #include "FindSessionsCallbackProxy.h"
+#include "Interfaces/OnlineSessionInterface.h"
 #include "FuAsyncAction_JoinSession.generated.h"
-
-namespace EOnJoinSessionCompleteResult
-{
-	enum Type;
-}
 
 UCLASS(DisplayName = "Fu Join Session Async Action")
 class FABULOUSUTILITY_API UFuAsyncAction_JoinSession : public UOnlineBlueprintCallProxyBase
