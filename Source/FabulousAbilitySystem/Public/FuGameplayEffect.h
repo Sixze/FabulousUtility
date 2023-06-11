@@ -4,7 +4,7 @@
 #include "FuGameplayEffect.generated.h"
 
 UCLASS(AutoExpandCategories = ("Settings|Fu Gameplay Effect", "State|Fu Gameplay Effect"))
-class FABULOUSUTILITY_API UFuGameplayEffect : public UGameplayEffect
+class FABULOUSABILITYSYSTEM_API UFuGameplayEffect : public UGameplayEffect
 {
 	GENERATED_BODY()
 

@@ -1,4 +1,4 @@
-#include "AbilitySystem/FuGameplayEffectContext.h"
+#include "FuGameplayEffectContext.h"
 
 #include "FuMacros.h"
 

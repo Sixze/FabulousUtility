@@ -6,7 +6,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuDelayDelegate, int32, LoopIndex);
 
 UCLASS(DisplayName = "Fu Delay Ability Task")
-class FABULOUSUTILITY_API UFuAbilityTask_Delay : public UAbilityTask
+class FABULOUSABILITYSYSTEM_API UFuAbilityTask_Delay : public UAbilityTask
 {
 	GENERATED_BODY()
 

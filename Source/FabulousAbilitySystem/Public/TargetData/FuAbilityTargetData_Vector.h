@@ -6,7 +6,7 @@
 #include "FuAbilityTargetData_Vector.generated.h"
 
 USTRUCT(BlueprintType, DisplayName = "Fu Vector Target Data")
-struct FABULOUSUTILITY_API FFuAbilityTargetData_Vector : public FGameplayAbilityTargetData
+struct FABULOUSABILITYSYSTEM_API FFuAbilityTargetData_Vector : public FGameplayAbilityTargetData
 {
 	GENERATED_BODY()
 
@@ -36,7 +36,7 @@ struct TStructOpsTypeTraits<FFuAbilityTargetData_Vector> : public TStructOpsType
 };
 
 UCLASS()
-class FABULOUSUTILITY_API UFuVectorTargetDataUtility : public UBlueprintFunctionLibrary
+class FABULOUSABILITYSYSTEM_API UFuVectorTargetDataUtility : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

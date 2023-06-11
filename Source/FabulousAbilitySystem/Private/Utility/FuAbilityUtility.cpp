@@ -1,7 +1,7 @@
-#include "AbilitySystem/Utility/FuAbilityUtility.h"
+#include "Utility/FuAbilityUtility.h"
 
+#include "FuGameplayAbility.h"
 #include "FuGameplayTagUtility.h"
-#include "AbilitySystem/FuGameplayAbility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityUtility)
 

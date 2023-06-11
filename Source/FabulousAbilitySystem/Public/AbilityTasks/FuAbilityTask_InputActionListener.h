@@ -12,7 +12,7 @@ class UInputAction;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuInputActionListenerDelegate, const UInputAction*, InputAction, FInputActionValue, Value);
 
 UCLASS(DisplayName = "Fu Input Action Listener Ability Task")
-class FABULOUSUTILITY_API UFuAbilityTask_InputActionListener : public UAbilityTask
+class FABULOUSABILITYSYSTEM_API UFuAbilityTask_InputActionListener : public UAbilityTask
 {
 	GENERATED_BODY()
 

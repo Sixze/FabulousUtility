@@ -1,4 +1,4 @@
-#include "AbilitySystem/AbilityTasks/FuAbilityTask_Tick.h"
+#include "AbilityTasks/FuAbilityTask_Tick.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_Tick)
 

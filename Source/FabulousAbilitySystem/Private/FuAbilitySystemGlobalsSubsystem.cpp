@@ -1,4 +1,4 @@
-#include "AbilitySystem/FuAbilitySystemGlobalsSubsystem.h"
+#include "FuAbilitySystemGlobalsSubsystem.h"
 
 #include "AbilitySystemGlobals.h"
 

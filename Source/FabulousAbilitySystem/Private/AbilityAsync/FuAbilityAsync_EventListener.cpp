@@ -1,6 +1,6 @@
-#include "AbilitySystem/AbilityAsync/FuAbilityAsync_EventListener.h"
+#include "AbilityAsync/FuAbilityAsync_EventListener.h"
 
-#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
+#include "Utility/FuAbilitySystemUtility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_EventListener)
 

@@ -6,7 +6,7 @@
 #include "FuAbilitySystemUtility.generated.h"
 
 UCLASS()
-class FABULOUSUTILITY_API UFuAbilitySystemUtility : public UBlueprintFunctionLibrary
+class FABULOUSABILITYSYSTEM_API UFuAbilitySystemUtility : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

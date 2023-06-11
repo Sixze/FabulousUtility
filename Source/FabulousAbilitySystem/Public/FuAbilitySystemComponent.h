@@ -11,7 +11,7 @@ using FFuAbilityFailedDelegate = TMulticastDelegate<void(FGameplayAbilitySpecHan
                                                          const FGameplayTagContainer& FailureTags)>;
 
 UCLASS()
-class FABULOUSUTILITY_API UFuAbilitySystemComponent : public UAbilitySystemComponent
+class FABULOUSABILITYSYSTEM_API UFuAbilitySystemComponent : public UAbilitySystemComponent
 {
 	GENERATED_BODY()
 

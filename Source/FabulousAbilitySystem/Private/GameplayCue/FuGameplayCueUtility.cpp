@@ -1,8 +1,8 @@
-#include "AbilitySystem/GameplayCue/FuGameplayCueUtility.h"
+#include "GameplayCue/FuGameplayCueUtility.h"
 
 #include "AbilitySystemGlobals.h"
 #include "GameplayCueManager.h"
-#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
+#include "Utility/FuAbilitySystemUtility.h"
 
 // ReSharper disable once CppUnusedIncludeDirective
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuGameplayCueUtility)

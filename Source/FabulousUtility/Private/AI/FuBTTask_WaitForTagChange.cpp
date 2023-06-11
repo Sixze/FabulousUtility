@@ -1,7 +1,7 @@
 #include "AI/FuBTTask_WaitForTagChange.h"
 
 #include "AIController.h"
-#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
+#include "Utility/FuAbilitySystemUtility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTTask_WaitForTagChange)
 

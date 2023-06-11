@@ -6,7 +6,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuEventListenerDelegate, const FGameplayEventData&, Payload);
 
 UCLASS(DisplayName = "Fu Event Listener Ability Async")
-class FABULOUSUTILITY_API UFuAbilityAsync_EventListener : public UAbilityAsync
+class FABULOUSABILITYSYSTEM_API UFuAbilityAsync_EventListener : public UAbilityAsync
 {
 	GENERATED_BODY()
 

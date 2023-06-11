@@ -6,7 +6,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFuOneFrameDelayDelegate);
 
 UCLASS(DisplayName = "Fu One Frame Delay Ability Task")
-class FABULOUSUTILITY_API UFuAbilityTask_OneFrameDelay : public UAbilityTask
+class FABULOUSABILITYSYSTEM_API UFuAbilityTask_OneFrameDelay : public UAbilityTask
 {
 	GENERATED_BODY()
 

@@ -1,6 +1,6 @@
-#include "AbilitySystem/FuAbilitySystemGlobals.h"
+#include "FuAbilitySystemGlobals.h"
 
-#include "AbilitySystem/FuGameplayEffectContext.h"
+#include "FuGameplayEffectContext.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilitySystemGlobals)
 

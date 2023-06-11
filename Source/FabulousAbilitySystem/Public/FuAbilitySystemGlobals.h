@@ -4,7 +4,7 @@
 #include "FuAbilitySystemGlobals.generated.h"
 
 UCLASS()
-class FABULOUSUTILITY_API UFuAbilitySystemGlobals : public UAbilitySystemGlobals
+class FABULOUSABILITYSYSTEM_API UFuAbilitySystemGlobals : public UAbilitySystemGlobals
 {
 	GENERATED_BODY()
 

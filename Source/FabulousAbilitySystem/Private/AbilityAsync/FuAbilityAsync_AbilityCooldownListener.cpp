@@ -1,8 +1,8 @@
-#include "AbilitySystem/AbilityAsync/FuAbilityAsync_AbilityCooldownListener.h"
+#include "AbilityAsync/FuAbilityAsync_AbilityCooldownListener.h"
 
+#include "FuAbilitySystemComponent.h"
 #include "FuMacros.h"
-#include "AbilitySystem/FuAbilitySystemComponent.h"
-#include "AbilitySystem/Utility/FuEffectUtility.h"
+#include "Utility/FuEffectUtility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AbilityCooldownListener)
 

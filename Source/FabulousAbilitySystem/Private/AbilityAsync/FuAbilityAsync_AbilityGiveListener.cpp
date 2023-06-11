@@ -1,7 +1,7 @@
-#include "AbilitySystem/AbilityAsync/FuAbilityAsync_AbilityGiveListener.h"
+#include "AbilityAsync/FuAbilityAsync_AbilityGiveListener.h"
 
+#include "FuAbilitySystemComponent.h"
 #include "FuMacros.h"
-#include "AbilitySystem/FuAbilitySystemComponent.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AbilityGiveListener)
 

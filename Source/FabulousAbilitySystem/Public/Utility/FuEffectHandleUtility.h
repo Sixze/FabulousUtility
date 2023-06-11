@@ -4,7 +4,7 @@
 #include "FuEffectHandleUtility.generated.h"
 
 UCLASS()
-class FABULOUSUTILITY_API UFuEffectHandleUtility : public UBlueprintFunctionLibrary
+class FABULOUSABILITYSYSTEM_API UFuEffectHandleUtility : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

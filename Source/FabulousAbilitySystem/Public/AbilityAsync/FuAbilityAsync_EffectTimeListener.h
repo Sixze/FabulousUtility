@@ -7,7 +7,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FFuEffectTimeListenerDelegate, con
                                               float, TimeRemaining, float, Duration, bool, bWaitingForTimeFromServer);
 
 UCLASS(DisplayName = "Fu Effect Time Listener Ability Async")
-class FABULOUSUTILITY_API UFuAbilityAsync_EffectTimeListener : public UAbilityAsync
+class FABULOUSABILITYSYSTEM_API UFuAbilityAsync_EffectTimeListener : public UAbilityAsync
 {
 	GENERATED_BODY()
 

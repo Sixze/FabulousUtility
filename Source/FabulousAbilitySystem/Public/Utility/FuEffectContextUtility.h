@@ -1,12 +1,12 @@
 #pragma once
 
+#include "FuGameplayEffectContext.h"
 #include "FuMacros.h"
-#include "AbilitySystem/FuGameplayEffectContext.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuEffectContextUtility.generated.h"
 
 UCLASS()
-class FABULOUSUTILITY_API UFuEffectContextUtility : public UBlueprintFunctionLibrary
+class FABULOUSABILITYSYSTEM_API UFuEffectContextUtility : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

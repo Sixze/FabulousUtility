@@ -1,4 +1,4 @@
-#include "AbilitySystem/TargetData/FuAbilityTargetData_LocationAndRotation.h"
+#include "TargetData/FuAbilityTargetData_LocationAndRotation.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTargetData_LocationAndRotation)
 

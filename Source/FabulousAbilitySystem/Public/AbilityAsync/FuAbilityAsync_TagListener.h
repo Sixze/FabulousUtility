@@ -6,7 +6,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuTagListenerDelegate, const FGameplayTag&, Tag);
 
 UCLASS(DisplayName = "Fu Tag Listener Ability Async")
-class FABULOUSUTILITY_API UFuAbilityAsync_TagListener : public UAbilityAsync
+class FABULOUSABILITYSYSTEM_API UFuAbilityAsync_TagListener : public UAbilityAsync
 {
 	GENERATED_BODY()
 

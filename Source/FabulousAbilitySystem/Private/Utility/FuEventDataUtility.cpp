@@ -1,7 +1,7 @@
-#include "AbilitySystem/Utility/FuEventDataUtility.h"
+#include "Utility/FuEventDataUtility.h"
 
 #include "GameplayEffectExtension.h"
-#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
+#include "Utility/FuAbilitySystemUtility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuEventDataUtility)
 

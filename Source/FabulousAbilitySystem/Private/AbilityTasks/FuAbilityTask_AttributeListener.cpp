@@ -1,8 +1,8 @@
-#include "AbilitySystem/AbilityTasks/FuAbilityTask_AttributeListener.h"
+#include "AbilityTasks/FuAbilityTask_AttributeListener.h"
 
 #include "AbilitySystemComponent.h"
 #include "FuMacros.h"
-#include "AbilitySystem/Utility/FuAttributeUtility.h"
+#include "Utility/FuAttributeUtility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_AttributeListener)
 

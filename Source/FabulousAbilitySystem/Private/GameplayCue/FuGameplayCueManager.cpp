@@ -1,4 +1,4 @@
-#include "AbilitySystem/GameplayCue/FuGameplayCueManager.h"
+#include "GameplayCue/FuGameplayCueManager.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuGameplayCueManager)
 

@@ -6,7 +6,7 @@
 #include "FuAbilityTargetData_Float.generated.h"
 
 USTRUCT(BlueprintType, DisplayName = "Fu Float Target Data")
-struct FABULOUSUTILITY_API FFuAbilityTargetData_Float : public FGameplayAbilityTargetData
+struct FABULOUSABILITYSYSTEM_API FFuAbilityTargetData_Float : public FGameplayAbilityTargetData
 {
 	GENERATED_BODY()
 
@@ -32,7 +32,7 @@ struct TStructOpsTypeTraits<FFuAbilityTargetData_Float> : public TStructOpsTypeT
 };
 
 UCLASS()
-class FABULOUSUTILITY_API UFuFloatTargetDataUtility : public UBlueprintFunctionLibrary
+class FABULOUSABILITYSYSTEM_API UFuFloatTargetDataUtility : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

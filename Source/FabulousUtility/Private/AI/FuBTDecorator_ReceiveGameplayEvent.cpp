@@ -1,8 +1,8 @@
 #include "AI/FuBTDecorator_ReceiveGameplayEvent.h"
 
-#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"
+#include "Utility/FuAbilitySystemUtility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTDecorator_ReceiveGameplayEvent)
 

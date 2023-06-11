@@ -4,7 +4,7 @@
 #include "FuGameplayCueManager.generated.h"
 
 UCLASS()
-class FABULOUSUTILITY_API UFuGameplayCueManager : public UGameplayCueManager
+class FABULOUSABILITYSYSTEM_API UFuGameplayCueManager : public UGameplayCueManager
 {
 	GENERATED_BODY()
 

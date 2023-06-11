@@ -1,8 +1,8 @@
-#include "AbilitySystem/AbilityAsync/FuAbilityAsync_AbilityFailureListener.h"
+#include "AbilityAsync/FuAbilityAsync_AbilityFailureListener.h"
 
 #include "AbilitySystemGlobals.h"
+#include "FuAbilitySystemComponent.h"
 #include "FuMacros.h"
-#include "AbilitySystem/FuAbilitySystemComponent.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AbilityFailureListener)
 

@@ -1,8 +1,8 @@
-#include "AbilitySystem/FuAbilitySystemComponent.h"
+#include "FuAbilitySystemComponent.h"
 
 #include "AbilitySystemInterface.h"
-#include "AbilitySystem/FuGameplayAbility.h"
-#include "AbilitySystem/FuGameplayEffect.h"
+#include "FuGameplayAbility.h"
+#include "FuGameplayEffect.h"
 #include "Misc/ScopeExit.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilitySystemComponent)

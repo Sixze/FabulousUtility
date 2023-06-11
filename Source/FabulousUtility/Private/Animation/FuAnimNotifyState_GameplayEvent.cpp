@@ -1,9 +1,9 @@
 #include "Animation/FuAnimNotifyState_GameplayEvent.h"
 
-#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
-#include "AbilitySystem/Utility/FuEventDataUtility.h"
 #include "Animation/AnimSequenceBase.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Utility/FuAbilitySystemUtility.h"
+#include "Utility/FuEventDataUtility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAnimNotifyState_GameplayEvent)
 

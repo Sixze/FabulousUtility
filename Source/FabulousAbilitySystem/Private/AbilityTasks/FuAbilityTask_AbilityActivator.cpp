@@ -1,4 +1,4 @@
-#include "AbilitySystem/AbilityTasks/FuAbilityTask_AbilityActivator.h"
+#include "AbilityTasks/FuAbilityTask_AbilityActivator.h"
 
 #include "AbilitySystemComponent.h"
 #include "FuMacros.h"

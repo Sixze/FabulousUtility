@@ -5,7 +5,7 @@
 #include "FuAbilityTargetActor_GroundPlacement.generated.h"
 
 UCLASS(DisplayName = "Fu Ground Placement Ability Target Actor")
-class FABULOUSUTILITY_API AFuAbilityTargetActor_GroundPlacement : public AGameplayAbilityTargetActor
+class FABULOUSABILITYSYSTEM_API AFuAbilityTargetActor_GroundPlacement : public AGameplayAbilityTargetActor
 {
 	GENERATED_BODY()
 

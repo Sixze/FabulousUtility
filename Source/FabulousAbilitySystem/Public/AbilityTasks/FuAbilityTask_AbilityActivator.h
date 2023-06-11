@@ -6,7 +6,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFuAbilityActivatorDelegate);
 
 UCLASS(DisplayName = "Fu Ability Activator Ability Task")
-class FABULOUSUTILITY_API UFuAbilityTask_AbilityActivator : public UAbilityTask
+class FABULOUSABILITYSYSTEM_API UFuAbilityTask_AbilityActivator : public UAbilityTask
 {
 	GENERATED_BODY()
 

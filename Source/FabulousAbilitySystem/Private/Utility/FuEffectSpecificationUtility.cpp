@@ -1,4 +1,4 @@
-#include "AbilitySystem/Utility/FuEffectSpecificationUtility.h"
+#include "Utility/FuEffectSpecificationUtility.h"
 
 #include "FuMacros.h"
 #include "GameplayEffect.h"

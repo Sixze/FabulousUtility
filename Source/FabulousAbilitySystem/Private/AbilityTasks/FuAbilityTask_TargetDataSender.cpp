@@ -1,4 +1,4 @@
-#include "AbilitySystem/AbilityTasks/FuAbilityTask_TargetDataSender.h"
+#include "AbilityTasks/FuAbilityTask_TargetDataSender.h"
 
 #include "AbilitySystemComponent.h"
 

@@ -1,6 +1,6 @@
-#include "AbilitySystem/AbilityAsync/FuAbilityAsync_TagListener.h"
+#include "AbilityAsync/FuAbilityAsync_TagListener.h"
 
-#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
+#include "Utility/FuAbilitySystemUtility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_TagListener)
 

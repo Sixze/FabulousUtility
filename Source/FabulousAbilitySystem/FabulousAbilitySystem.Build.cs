@@ -9,6 +9,10 @@ public class FabulousAbilitySystem : ModuleRules
 
 		bEnableNonInlinedGenCppWarnings = true;
 
-		PrivateDependencyModuleNames.AddRange(new[] {"Core", "CoreUObject", "Engine"});
+		PrivateDependencyModuleNames.AddRange(new[]
+		{
+			"Core", "CoreUObject", "Engine", "EnhancedInput", "NetCore", "GameplayTags",
+			"GameplayTasks", "GameplayAbilities", "NavigationSystem", "FabulousUtility"
+		});
 	}
 }

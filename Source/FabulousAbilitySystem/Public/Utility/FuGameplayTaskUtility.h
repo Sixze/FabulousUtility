@@ -6,7 +6,7 @@
 class UGameplayTask;
 
 UCLASS()
-class FABULOUSUTILITY_API UFuGameplayTaskUtility : public UBlueprintFunctionLibrary
+class FABULOUSABILITYSYSTEM_API UFuGameplayTaskUtility : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

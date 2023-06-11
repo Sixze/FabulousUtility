@@ -6,7 +6,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuEffectListenerDelegate, FActiveGameplayEffectHandle, EffectHandle);
 
 UCLASS(DisplayName = "Fu Effect Listener Ability Task")
-class FABULOUSUTILITY_API UFuAbilityTask_EffectListener : public UAbilityTask
+class FABULOUSABILITYSYSTEM_API UFuAbilityTask_EffectListener : public UAbilityTask
 {
 	GENERATED_BODY()
 

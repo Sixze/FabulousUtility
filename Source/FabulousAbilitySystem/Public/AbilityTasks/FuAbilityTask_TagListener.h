@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Abilities/Tasks/AbilityTask.h"
-#include "AbilitySystem/AbilityAsync/FuAbilityAsync_TagListener.h"
+#include "AbilityAsync/FuAbilityAsync_TagListener.h"
 #include "FuAbilityTask_TagListener.generated.h"
 
 UCLASS(DisplayName = "Fu Tag Listener Ability Task")
-class FABULOUSUTILITY_API UFuAbilityTask_TagListener : public UAbilityTask
+class FABULOUSABILITYSYSTEM_API UFuAbilityTask_TagListener : public UAbilityTask
 {
 	GENERATED_BODY()
 

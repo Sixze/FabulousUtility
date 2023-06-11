@@ -4,7 +4,7 @@
 #include "FuGameplayEffectContext.generated.h"
 
 USTRUCT()
-struct FABULOUSUTILITY_API FFuGameplayEffectContext : public FGameplayEffectContext
+struct FABULOUSABILITYSYSTEM_API FFuGameplayEffectContext : public FGameplayEffectContext
 {
 	GENERATED_BODY()
 

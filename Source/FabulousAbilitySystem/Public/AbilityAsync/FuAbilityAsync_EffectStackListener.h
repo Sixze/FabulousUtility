@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Abilities/Async/AbilityAsync.h"
-#include "AbilitySystem/AbilityTasks/FuAbilityTask_EffectStackListener.h"
+#include "AbilityTasks/FuAbilityTask_EffectStackListener.h"
 #include "FuAbilityAsync_EffectStackListener.generated.h"
 
 UCLASS(DisplayName = "Fu Effect Stack Listener Ability Async")
-class FABULOUSUTILITY_API UFuAbilityAsync_EffectStackListener : public UAbilityAsync
+class FABULOUSABILITYSYSTEM_API UFuAbilityAsync_EffectStackListener : public UAbilityAsync
 {
 	GENERATED_BODY()
 

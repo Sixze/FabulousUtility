@@ -6,7 +6,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuTickDelegate, float, DeltaTime);
 
 UCLASS(DisplayName = "Fu Tick Ability Task")
-class FABULOUSUTILITY_API UFuAbilityTask_Tick : public UAbilityTask
+class FABULOUSABILITYSYSTEM_API UFuAbilityTask_Tick : public UAbilityTask
 {
 	GENERATED_BODY()
 

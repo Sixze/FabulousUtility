@@ -1,4 +1,4 @@
-#include "AbilitySystem/Utility/FuEffectHandleUtility.h"
+#include "Utility/FuEffectHandleUtility.h"
 
 #include "AbilitySystemComponent.h"
 #include "FuMacros.h"

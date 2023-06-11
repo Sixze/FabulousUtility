@@ -6,7 +6,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFuInputListenerDelegate);
 
 UCLASS(DisplayName = "Fu Input Listener Ability Task")
-class FABULOUSUTILITY_API UFuAbilityTask_InputListener : public UAbilityTask
+class FABULOUSABILITYSYSTEM_API UFuAbilityTask_InputListener : public UAbilityTask
 {
 	GENERATED_BODY()
 

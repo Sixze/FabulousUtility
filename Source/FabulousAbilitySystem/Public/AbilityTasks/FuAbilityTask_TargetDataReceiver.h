@@ -4,7 +4,7 @@
 #include "FuAbilityTask_TargetDataReceiver.generated.h"
 
 UCLASS(DisplayName = "Fu Target Data Receiver Ability Task")
-class FABULOUSUTILITY_API UFuAbilityTask_TargetDataReceiver : public UAbilityTask
+class FABULOUSABILITYSYSTEM_API UFuAbilityTask_TargetDataReceiver : public UAbilityTask
 {
 	GENERATED_BODY()
 

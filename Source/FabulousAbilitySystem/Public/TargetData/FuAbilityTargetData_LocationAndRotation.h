@@ -6,7 +6,7 @@
 #include "FuAbilityTargetData_LocationAndRotation.generated.h"
 
 USTRUCT(BlueprintType, DisplayName = "Fu Location and Rotation Target Data")
-struct FABULOUSUTILITY_API FFuAbilityTargetData_LocationAndRotation : public FGameplayAbilityTargetData
+struct FABULOUSABILITYSYSTEM_API FFuAbilityTargetData_LocationAndRotation : public FGameplayAbilityTargetData
 {
 	GENERATED_BODY()
 
@@ -40,7 +40,7 @@ struct TStructOpsTypeTraits<FFuAbilityTargetData_LocationAndRotation> :
 };
 
 UCLASS()
-class FABULOUSUTILITY_API UFuLocationAndRotationTargetDataUtility : public UBlueprintFunctionLibrary
+class FABULOUSABILITYSYSTEM_API UFuLocationAndRotationTargetDataUtility : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

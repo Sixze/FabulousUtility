@@ -1,7 +1,7 @@
 #include "AI/FuBTTask_ActivateAbility.h"
 
 #include "AIController.h"
-#include "AbilitySystem/Utility/FuAbilitySystemUtility.h"
+#include "Utility/FuAbilitySystemUtility.h"
 
 // ReSharper disable once CppUnusedIncludeDirective
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTTask_ActivateAbility)

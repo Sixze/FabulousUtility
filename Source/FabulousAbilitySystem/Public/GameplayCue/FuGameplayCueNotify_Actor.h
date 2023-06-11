@@ -4,7 +4,7 @@
 #include "FuGameplayCueNotify_Actor.generated.h"
 
 UCLASS()
-class FABULOUSUTILITY_API AFuGameplayCueNotify_Actor : public AGameplayCueNotify_Actor
+class FABULOUSABILITYSYSTEM_API AFuGameplayCueNotify_Actor : public AGameplayCueNotify_Actor
 {
 	GENERATED_BODY()
 

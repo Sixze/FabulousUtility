@@ -4,7 +4,7 @@
 #include "FuGameplayCueUtility.generated.h"
 
 UCLASS()
-class FABULOUSUTILITY_API UFuGameplayCueUtility : public UBlueprintFunctionLibrary
+class FABULOUSABILITYSYSTEM_API UFuGameplayCueUtility : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

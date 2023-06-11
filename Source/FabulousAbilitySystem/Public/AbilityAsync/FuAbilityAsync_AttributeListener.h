@@ -7,7 +7,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FFuAttributeListenerDelegate, con
                                                float, NewValue, float, PreviousValue);
 
 UCLASS(DisplayName = "Fu Attribute Listener Ability Async")
-class FABULOUSUTILITY_API UFuAbilityAsync_AttributeListener : public UAbilityAsync
+class FABULOUSABILITYSYSTEM_API UFuAbilityAsync_AttributeListener : public UAbilityAsync
 {
 	GENERATED_BODY()
 

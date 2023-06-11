@@ -1,4 +1,4 @@
-﻿#include "AbilitySystem/TargetData/FuAbilityTargetData_Float.h"
+﻿#include "TargetData/FuAbilityTargetData_Float.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTargetData_Float)
 

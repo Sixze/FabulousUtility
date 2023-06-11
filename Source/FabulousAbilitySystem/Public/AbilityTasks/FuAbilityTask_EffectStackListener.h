@@ -7,7 +7,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FFuEffectStackListenerDelegate, F
                                                int32, NewCount, int32, PreviousCount);
 
 UCLASS(DisplayName = "Fu Effect Stack Listener Ability Task")
-class FABULOUSUTILITY_API UFuAbilityTask_EffectStackListener : public UAbilityTask
+class FABULOUSABILITYSYSTEM_API UFuAbilityTask_EffectStackListener : public UAbilityTask
 {
 	GENERATED_BODY()
 

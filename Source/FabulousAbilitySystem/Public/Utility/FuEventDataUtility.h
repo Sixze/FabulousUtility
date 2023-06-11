@@ -6,7 +6,7 @@
 struct FGameplayEffectModCallbackData;
 
 UCLASS()
-class FABULOUSUTILITY_API UFuEventDataUtility : public UBlueprintFunctionLibrary
+class FABULOUSABILITYSYSTEM_API UFuEventDataUtility : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

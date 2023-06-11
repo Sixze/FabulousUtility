@@ -1,8 +1,8 @@
-#include "AbilitySystem/AbilityAsync/FuAbilityAsync_EffectTimeListener.h"
+#include "AbilityAsync/FuAbilityAsync_EffectTimeListener.h"
 
+#include "FuAbilitySystemComponent.h"
 #include "FuMacros.h"
-#include "AbilitySystem/FuAbilitySystemComponent.h"
-#include "AbilitySystem/Utility/FuEffectUtility.h"
+#include "Utility/FuEffectUtility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_EffectTimeListener)
 

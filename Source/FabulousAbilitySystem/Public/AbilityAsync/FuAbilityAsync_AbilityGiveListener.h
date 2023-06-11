@@ -6,7 +6,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuAbilityGiveListenerDelegate, FGameplayAbilitySpecHandle, AbilityHandle);
 
 UCLASS(DisplayName = "Fu Ability Give Listener Ability Async")
-class FABULOUSUTILITY_API UFuAbilityAsync_AbilityGiveListener : public UAbilityAsync
+class FABULOUSABILITYSYSTEM_API UFuAbilityAsync_AbilityGiveListener : public UAbilityAsync
 {
 	GENERATED_BODY()
 

@@ -4,7 +4,7 @@
 #include "FuAbilityAsync_AbilityCooldownListener.generated.h"
 
 UCLASS(DisplayName = "Fu Ability Cooldown Listener Ability Async")
-class FABULOUSUTILITY_API UFuAbilityAsync_AbilityCooldownListener : public UAbilityAsync
+class FABULOUSABILITYSYSTEM_API UFuAbilityAsync_AbilityCooldownListener : public UAbilityAsync
 {
 	GENERATED_BODY()
 

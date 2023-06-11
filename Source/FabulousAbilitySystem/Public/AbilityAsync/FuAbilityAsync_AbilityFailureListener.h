@@ -7,7 +7,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuAbilityFailureListenerDelegate, 
                                              const FGameplayTagContainer&, FailureTags);
 
 UCLASS(DisplayName = "Fu Ability Failure Listener Ability Async")
-class FABULOUSUTILITY_API UFuAbilityAsync_AbilityFailureListener : public UAbilityAsync
+class FABULOUSABILITYSYSTEM_API UFuAbilityAsync_AbilityFailureListener : public UAbilityAsync
 {
 	GENERATED_BODY()
 
