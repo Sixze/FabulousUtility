@@ -23,6 +23,11 @@
 			"LoadingPhase": "Default"
 		},
 		{
+			"Name": "FabulousAbilitySystem",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
 			"Name": "FabulousEditor",
 			"Type": "Editor",
 			"LoadingPhase": "PreDefault"
