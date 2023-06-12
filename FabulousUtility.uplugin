@@ -28,6 +28,11 @@
 			"LoadingPhase": "Default"
 		},
 		{
+			"Name": "FabulousAI",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
 			"Name": "FabulousEditor",
 			"Type": "Editor",
 			"LoadingPhase": "PreDefault"
