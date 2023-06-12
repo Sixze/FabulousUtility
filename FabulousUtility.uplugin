@@ -28,6 +28,11 @@
 			"LoadingPhase": "Default"
 		},
 		{
+			"Name": "FabulousAnimation",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
 			"Name": "FabulousAI",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
