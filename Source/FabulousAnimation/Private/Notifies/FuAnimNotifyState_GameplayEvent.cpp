@@ -1,4 +1,4 @@
-#include "Animation/FuAnimNotifyState_GameplayEvent.h"
+#include "Notifies/FuAnimNotifyState_GameplayEvent.h"
 
 #include "Animation/AnimSequenceBase.h"
 #include "Components/SkeletalMeshComponent.h"

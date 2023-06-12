@@ -1,4 +1,4 @@
-#include "Animation/FuAnimationUtility.h"
+#include "FuAnimationUtility.h"
 
 #include "FuMacros.h"
 #include "Animation/AnimSequenceBase.h"

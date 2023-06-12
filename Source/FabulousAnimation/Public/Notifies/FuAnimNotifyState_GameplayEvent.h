@@ -5,7 +5,7 @@
 #include "FuAnimNotifyState_GameplayEvent.generated.h"
 
 UCLASS(DisplayName = "Fu Gameplay Event Animation Notify State")
-class FABULOUSUTILITY_API UFuAnimNotifyState_GameplayEvent : public UAnimNotifyState
+class FABULOUSANIMATION_API UFuAnimNotifyState_GameplayEvent : public UAnimNotifyState
 {
 	GENERATED_BODY()
 

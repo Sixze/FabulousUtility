@@ -6,7 +6,7 @@
 class UAnimSequenceBase;
 
 UCLASS()
-class FABULOUSUTILITY_API UFuAnimationUtility : public UBlueprintFunctionLibrary
+class FABULOUSANIMATION_API UFuAnimationUtility : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 
