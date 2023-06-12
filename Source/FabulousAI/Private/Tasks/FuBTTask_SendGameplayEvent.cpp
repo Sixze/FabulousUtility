@@ -1,4 +1,4 @@
-#include "AI/FuBTTask_SendGameplayEvent.h"
+#include "Tasks/FuBTTask_SendGameplayEvent.h"
 
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"

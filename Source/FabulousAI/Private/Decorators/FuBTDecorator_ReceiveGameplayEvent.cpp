@@ -1,4 +1,4 @@
-#include "AI/FuBTDecorator_ReceiveGameplayEvent.h"
+#include "Decorators/FuBTDecorator_ReceiveGameplayEvent.h"
 
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"

@@ -1,4 +1,4 @@
-#include "AI/FuBTDecorator_HasTag.h"
+#include "Decorators/FuBTDecorator_HasTag.h"
 
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"

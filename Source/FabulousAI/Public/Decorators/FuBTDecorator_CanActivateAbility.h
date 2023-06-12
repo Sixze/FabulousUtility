@@ -6,7 +6,7 @@
 struct FGameplayAbilitySpec;
 
 UCLASS(DisplayName = "Fu Can Activate Ability", Meta = (ShowWorldContextPin))
-class FABULOUSUTILITY_API UFuBTDecorator_CanActivateAbility : public UBTDecorator
+class FABULOUSAI_API UFuBTDecorator_CanActivateAbility : public UBTDecorator
 {
 	GENERATED_BODY()
 

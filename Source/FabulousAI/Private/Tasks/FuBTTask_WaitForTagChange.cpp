@@ -1,4 +1,4 @@
-#include "AI/FuBTTask_WaitForTagChange.h"
+#include "Tasks/FuBTTask_WaitForTagChange.h"
 
 #include "AIController.h"
 #include "Utility/FuAbilitySystemUtility.h"

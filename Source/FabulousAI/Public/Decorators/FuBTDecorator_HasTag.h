@@ -13,7 +13,7 @@ enum class EFuTagMatchMode : uint8
 };
 
 UCLASS(DisplayName = "Fu Has Tag", Meta = (ShowWorldContextPin))
-class FABULOUSUTILITY_API UFuBTDecorator_HasTag : public UBTDecorator
+class FABULOUSAI_API UFuBTDecorator_HasTag : public UBTDecorator
 {
 	GENERATED_BODY()
 

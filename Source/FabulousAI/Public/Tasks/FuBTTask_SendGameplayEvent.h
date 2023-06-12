@@ -4,7 +4,7 @@
 #include "FuBTTask_SendGameplayEvent.generated.h"
 
 UCLASS(DisplayName = "Fu Send Gameplay Event", Meta = (ShowWorldContextPin))
-class FABULOUSUTILITY_API UFuBTTask_SendGameplayEvent : public UBTTaskNode
+class FABULOUSAI_API UFuBTTask_SendGameplayEvent : public UBTTaskNode
 {
 	GENERATED_BODY()
 

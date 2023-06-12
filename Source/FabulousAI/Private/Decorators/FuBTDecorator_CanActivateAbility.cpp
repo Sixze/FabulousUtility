@@ -1,4 +1,4 @@
-#include "AI/FuBTDecorator_CanActivateAbility.h"
+#include "Decorators/FuBTDecorator_CanActivateAbility.h"
 
 #include "AIController.h"
 #include "FuAbilitySystemComponent.h"

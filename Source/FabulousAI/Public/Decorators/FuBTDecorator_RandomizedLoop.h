@@ -6,7 +6,7 @@
 // Randomized loop decorator node.
 // A decorator node that bases its condition on whether its loop counter has been exceeded.
 UCLASS(DisplayName = "Fu Randomized Loop", HideCategories = ("Condition"), Meta = (ShowWorldContextPin))
-class FABULOUSUTILITY_API UFuBTDecorator_RandomizedLoop : public UBTDecorator
+class FABULOUSAI_API UFuBTDecorator_RandomizedLoop : public UBTDecorator
 {
 	GENERATED_BODY()
 

@@ -12,14 +12,14 @@ enum class EFuTagWaitMode : uint8
 
 namespace FuTagListenerWaitMode
 {
-	FABULOUSUTILITY_API constexpr bool IsValid(const EFuTagWaitMode WaitMode)
+	FABULOUSAI_API constexpr bool IsValid(const EFuTagWaitMode WaitMode)
 	{
 		return WaitMode >= EFuTagWaitMode::WaitForTagAdd && WaitMode <= EFuTagWaitMode::WaitForTagRemove;
 	}
 }
 
 UCLASS(DisplayName = "Fu Wait for Tag Change", Meta = (ShowWorldContextPin))
-class FABULOUSUTILITY_API UFuBTTask_WaitForTagChange : public UBTTaskNode
+class FABULOUSAI_API UFuBTTask_WaitForTagChange : public UBTTaskNode
 {
 	GENERATED_BODY()
 

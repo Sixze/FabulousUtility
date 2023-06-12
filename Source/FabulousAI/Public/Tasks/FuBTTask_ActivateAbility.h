@@ -6,7 +6,7 @@
 struct FAbilityEndedData;
 
 UCLASS(DisplayName = "Fu Activate Ability", Meta = (ShowWorldContextPin))
-class FABULOUSUTILITY_API UFuBTTask_ActivateAbility : public UBTTaskNode
+class FABULOUSAI_API UFuBTTask_ActivateAbility : public UBTTaskNode
 {
 	GENERATED_BODY()
 

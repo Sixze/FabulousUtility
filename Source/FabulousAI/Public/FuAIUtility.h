@@ -4,7 +4,7 @@
 #include "FuAIUtility.generated.h"
 
 UCLASS(DisplayName = "Fu AI Utility")
-class FABULOUSUTILITY_API UFuAIUtility : public UBlueprintFunctionLibrary
+class FABULOUSAI_API UFuAIUtility : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

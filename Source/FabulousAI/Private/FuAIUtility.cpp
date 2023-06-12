@@ -1,4 +1,4 @@
-﻿#include "AI/FuAIUtility.h"
+﻿#include "FuAIUtility.h"
 
 #include "NavigationSystem.h"
 
