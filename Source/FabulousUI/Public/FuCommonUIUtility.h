@@ -5,7 +5,7 @@
 #include "FuCommonUIUtility.generated.h"
 
 UCLASS(DisplayName = "Fu Common UI Utility")
-class FABULOUSUTILITY_API UFuCommonUIUtility : public UBlueprintFunctionLibrary
+class FABULOUSUI_API UFuCommonUIUtility : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

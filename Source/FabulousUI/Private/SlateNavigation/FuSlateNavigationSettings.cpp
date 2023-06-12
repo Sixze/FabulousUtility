@@ -1,4 +1,4 @@
-#include "UI/SlateNavigation/FuSlateNavigationSettings.h"
+#include "SlateNavigation/FuSlateNavigationSettings.h"
 
 #include "Types/SlateEnums.h"
 

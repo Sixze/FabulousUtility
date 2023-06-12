@@ -7,7 +7,7 @@
 enum class EUINavigation : uint8;
 
 UCLASS(Config = "Engine", DefaultConfig)
-class FABULOUSUTILITY_API UFuSlateNavigationSettings : public UDeveloperSettings
+class FABULOUSUI_API UFuSlateNavigationSettings : public UDeveloperSettings
 {
 	GENERATED_BODY()
 

@@ -6,7 +6,7 @@
 #include "FuViewportWatermarkSettings.generated.h"
 
 USTRUCT(BlueprintType)
-struct FABULOUSUTILITY_API FFuViewportWatermarkTextSettings
+struct FABULOUSUI_API FFuViewportWatermarkTextSettings
 {
 	GENERATED_USTRUCT_BODY()
 
@@ -33,7 +33,7 @@ struct FABULOUSUTILITY_API FFuViewportWatermarkTextSettings
 };
 
 UCLASS(Config = "Engine", DefaultConfig)
-class FABULOUSUTILITY_API UFuViewportWatermarkSettings : public UDeveloperSettings
+class FABULOUSUI_API UFuViewportWatermarkSettings : public UDeveloperSettings
 {
 	GENERATED_BODY()
 

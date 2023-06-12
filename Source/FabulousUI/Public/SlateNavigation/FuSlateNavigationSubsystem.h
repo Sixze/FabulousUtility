@@ -4,7 +4,7 @@
 #include "FuSlateNavigationSubsystem.generated.h"
 
 UCLASS()
-class FABULOUSUTILITY_API UFuSlateNavigationSubsystem : public UGameInstanceSubsystem
+class FABULOUSUI_API UFuSlateNavigationSubsystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 

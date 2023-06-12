@@ -1,10 +1,10 @@
-#include "UI/SlateNavigation/FuSlateNavigationSubsystem.h"
+#include "SlateNavigation/FuSlateNavigationSubsystem.h"
 
 #if !UE_SERVER
 
 #include "Framework/Application/NavigationConfig.h"
 #include "Framework/Application/SlateApplication.h"
-#include "UI/SlateNavigation/FuSlateNavigationSettings.h"
+#include "SlateNavigation/FuSlateNavigationSettings.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuSlateNavigationSubsystem)
 

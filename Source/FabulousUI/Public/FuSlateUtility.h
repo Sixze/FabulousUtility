@@ -4,7 +4,7 @@
 #include "FuSlateUtility.generated.h"
 
 UCLASS()
-class FABULOUSUTILITY_API UFuSlateUtility : public UBlueprintFunctionLibrary
+class FABULOUSUI_API UFuSlateUtility : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

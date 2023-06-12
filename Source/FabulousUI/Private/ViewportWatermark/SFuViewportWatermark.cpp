@@ -1,7 +1,7 @@
-#include "UI/ViewportWatermark/SFuViewportWatermark.h"
+#include "ViewportWatermark/SFuViewportWatermark.h"
 
 #include "Engine/UserInterfaceSettings.h"
-#include "UI/ViewportWatermark/FuViewportWatermarkSettings.h"
+#include "ViewportWatermark/FuViewportWatermarkSettings.h"
 #include "Widgets/SOverlay.h"
 #include "Widgets/Layout/SConstraintCanvas.h"
 #include "Widgets/Text/STextBlock.h"

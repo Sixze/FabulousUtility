@@ -2,7 +2,7 @@
 
 #include "Widgets/SCompoundWidget.h"
 
-class FABULOUSUTILITY_API SFuViewportWatermark : public SCompoundWidget
+class FABULOUSUI_API SFuViewportWatermark : public SCompoundWidget
 {
 public:
 	SLATE_BEGIN_ARGS(SFuViewportWatermark)

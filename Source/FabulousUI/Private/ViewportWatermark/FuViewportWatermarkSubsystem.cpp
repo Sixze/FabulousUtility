@@ -1,10 +1,10 @@
-#include "UI/ViewportWatermark/FuViewportWatermarkSubsystem.h"
+#include "ViewportWatermark/FuViewportWatermarkSubsystem.h"
 
 #if !UE_SERVER
 
 #include "Engine/GameViewportClient.h"
-#include "UI/ViewportWatermark/FuViewportWatermarkSettings.h"
-#include "UI/ViewportWatermark/SFuViewportWatermark.h"
+#include "ViewportWatermark/FuViewportWatermarkSettings.h"
+#include "ViewportWatermark/SFuViewportWatermark.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuViewportWatermarkSubsystem)
 

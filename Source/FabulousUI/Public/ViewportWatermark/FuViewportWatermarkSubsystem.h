@@ -4,7 +4,7 @@
 #include "FuViewportWatermarkSubsystem.generated.h"
 
 UCLASS()
-class FABULOUSUTILITY_API UFuViewportWatermarkSubsystem : public UGameInstanceSubsystem
+class FABULOUSUI_API UFuViewportWatermarkSubsystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 
