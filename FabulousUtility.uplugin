@@ -38,6 +38,11 @@
 			"LoadingPhase": "Default"
 		},
 		{
+			"Name": "FabulousUI",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
 			"Name": "FabulousEditor",
 			"Type": "Editor",
 			"LoadingPhase": "PreDefault"
