@@ -1,7 +1,7 @@
 #include "FuCoordinateSpaceUtility.h"
 
 #include "SceneView.h"
-#include "Components/Viewport.h"
+#include "UnrealClient.h"
 #include "Engine/GameViewportClient.h"
 #include "Engine/LocalPlayer.h"
 #include "Engine/World.h"

@@ -89,7 +89,7 @@ void UFuAbilityTask_AbilityActivator::OnDestroy(const bool bInOwnerFinished)
 	{
 		AbilitySystemComponent->OnAbilityEnded.RemoveAll(this);
 
-		if (bCancelAbilityOnDestroy)
+		if (bCancelAbilityOnDestroy && AbilityHandle.IsValid())
 		{
 			AbilitySystemComponent->CancelAbilityHandle(AbilityHandle);
 		}
@@ -116,6 +116,8 @@ void UFuAbilityTask_AbilityActivator::AbilitySystem_OnAbilityEnded(const FAbilit
 			OnAbilityEnded.Broadcast();
 		}
 	}
+
+	AbilityHandle = {};
 
 	EndTask();
 }
