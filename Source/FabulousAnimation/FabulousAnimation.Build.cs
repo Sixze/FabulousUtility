@@ -1,8 +1,8 @@
 using UnrealBuildTool;
 
-public class FabulousUtility : ModuleRules
+public class FabulousAnimation : ModuleRules
 {
-	public FabulousUtility(ReadOnlyTargetRules Target) : base(Target)
+	public FabulousAnimation(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_2;
@@ -11,7 +11,7 @@ public class FabulousUtility : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new[]
 		{
-			"Core", "CoreUObject", "Engine", "EngineSettings", "NetCore", "SlateCore", "GameplayTags"
+			"Core", "CoreUObject", "Engine", "GameplayTags", "GameplayAbilities", "FabulousUtility", "FabulousAbilitySystem"
 		});
 	}
 }
