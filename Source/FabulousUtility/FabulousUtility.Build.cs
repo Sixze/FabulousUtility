@@ -11,8 +11,7 @@ public class FabulousUtility : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new[]
 		{
-			"Core", "CoreUObject", "Engine", "EngineSettings", "NetCore",
-			"SlateCore", "OnlineSubsystem", "OnlineSubsystemUtils", "GameplayTags"
+			"Core", "CoreUObject", "Engine", "EngineSettings", "NetCore", "SlateCore", "GameplayTags"
 		});
 	}
 }

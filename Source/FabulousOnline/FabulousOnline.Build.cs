@@ -9,6 +9,9 @@ public class FabulousOnline : ModuleRules
 
 		bEnableNonInlinedGenCppWarnings = true;
 
-		PrivateDependencyModuleNames.AddRange(new[] {"Core", "CoreUObject", "Engine"});
+		PrivateDependencyModuleNames.AddRange(new[]
+		{
+			"Core", "CoreUObject", "Engine", "OnlineSubsystem", "OnlineSubsystemUtils", "FabulousUtility"
+		});
 	}
 }

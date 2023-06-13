@@ -4,7 +4,7 @@
 #include "FuSessionUtility.generated.h"
 
 UCLASS()
-class FABULOUSUTILITY_API UFuSessionUtility : public UBlueprintFunctionLibrary
+class FABULOUSONLINE_API UFuSessionUtility : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

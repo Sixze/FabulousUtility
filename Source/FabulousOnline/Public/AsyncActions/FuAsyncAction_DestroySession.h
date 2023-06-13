@@ -4,7 +4,7 @@
 #include "FuAsyncAction_DestroySession.generated.h"
 
 UCLASS(DisplayName = "Fu Destroy Session Async Action")
-class FABULOUSUTILITY_API UFuAsyncAction_DestroySession : public UOnlineBlueprintCallProxyBase
+class FABULOUSONLINE_API UFuAsyncAction_DestroySession : public UOnlineBlueprintCallProxyBase
 {
 	GENERATED_BODY()
 

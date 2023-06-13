@@ -1,4 +1,4 @@
-#include "Session/FuAsyncAction_JoinSession.h"
+#include "AsyncActions/FuAsyncAction_JoinSession.h"
 
 #include "FuMacros.h"
 #include "OnlineSubsystemUtils.h"

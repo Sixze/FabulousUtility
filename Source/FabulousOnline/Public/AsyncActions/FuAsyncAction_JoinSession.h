@@ -5,7 +5,7 @@
 #include "FuAsyncAction_JoinSession.generated.h"
 
 UCLASS(DisplayName = "Fu Join Session Async Action")
-class FABULOUSUTILITY_API UFuAsyncAction_JoinSession : public UOnlineBlueprintCallProxyBase
+class FABULOUSONLINE_API UFuAsyncAction_JoinSession : public UOnlineBlueprintCallProxyBase
 {
 	GENERATED_BODY()
 
