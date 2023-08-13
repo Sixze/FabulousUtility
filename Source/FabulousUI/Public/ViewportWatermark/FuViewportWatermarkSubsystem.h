@@ -14,6 +14,8 @@ public:
 
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
+	virtual void Deinitialize() override;
+
 private:
 	void GameViewport_OnViewportCreated() const;
 #endif

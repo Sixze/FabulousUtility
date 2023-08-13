@@ -32,6 +32,13 @@ void UFuViewportWatermarkSubsystem::Initialize(FSubsystemCollectionBase& Collect
 	}
 }
 
+void UFuViewportWatermarkSubsystem::Deinitialize()
+{
+	UGameViewportClient::OnViewportCreated().RemoveAll(this);
+
+	Super::Deinitialize();
+}
+
 void UFuViewportWatermarkSubsystem::GameViewport_OnViewportCreated() const
 {
 	auto* Viewport{GetGameInstance()->GetGameViewportClient()};
