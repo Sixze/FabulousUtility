@@ -43,6 +43,10 @@ public:
 	static FGameplayTag GetFirstDescendantAbilityTag(const UGameplayAbility* Ability, const FGameplayTag& ParentTag);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility",
+		Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Value"))
+	static bool HasAbilityTag(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle, const FGameplayTag& Tag);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility",
 		Meta = (AutoCreateRefTerm = "ParentTag", ReturnDisplayName = "Descendant Tag"))
 	static FGameplayTag GetFirstDescendantAbilityTagByHandle(UAbilitySystemComponent* AbilitySystem,
 	                                                         FGameplayAbilitySpecHandle AbilityHandle,
