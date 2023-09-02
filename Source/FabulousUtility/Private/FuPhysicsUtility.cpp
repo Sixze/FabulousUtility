@@ -14,6 +14,8 @@ void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext,
 {
 	// Based on UGameplayStatics::ApplyRadialDamageWithFalloff().
 
+	ReachableActors.Reset();
+
 	auto* World{WorldContext->GetWorld()};
 	if (!FU_ENSURE(IsValid(World)))
 	{
@@ -27,20 +29,12 @@ void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext,
 		return;
 	}
 
-	static TArray<FOverlapResult> Overlaps;
-	check(Overlaps.IsEmpty())
-
-	ON_SCOPE_EXIT
-	{
-		Overlaps.Reset();
-	};
+	TArray<FOverlapResult> Overlaps;
 
 	World->OverlapMultiByChannel(Overlaps, Location, FQuat::Identity, CollisionChannel, FCollisionShape::MakeSphere(Radius),
 	                             {__FUNCTION__, false, IgnoredActor}, CollisionResponse);
 
 	FHitResult Hit;
-
-	ReachableActors.Reset();
 
 	for (const auto& Overlap : Overlaps)
 	{
@@ -156,6 +150,8 @@ bool UFuPhysicsUtility::BoxOverlapActors(const UObject* WorldContext, const FVec
                                          const FVector& Extent, const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes,
                                          const TArray<AActor*>& IgnoreActors, TArray<AActor*>& Actors)
 {
+	Actors.Reset();
+
 	const auto* World{WorldContext->GetWorld()};
 	if (!FU_ENSURE(IsValid(World)))
 	{
@@ -173,18 +169,10 @@ bool UFuPhysicsUtility::BoxOverlapActors(const UObject* WorldContext, const FVec
 	FCollisionQueryParams QueryParameters{__FUNCTION__, false};
 	QueryParameters.AddIgnoredActors(IgnoreActors);
 
-	static TArray<FOverlapResult> Overlaps;
-	check(Overlaps.IsEmpty())
-
-	ON_SCOPE_EXIT
-	{
-		Overlaps.Reset();
-	};
+	TArray<FOverlapResult> Overlaps;
 
 	World->OverlapMultiByObjectType(Overlaps, Location, Rotation.Quaternion(), ObjectQueryParameters,
 	                                FCollisionShape::MakeBox(Extent), QueryParameters);
-
-	Actors.Reset();
 
 	for (const auto& Overlap : Overlaps)
 	{
@@ -203,6 +191,8 @@ bool UFuPhysicsUtility::BoxOverlapComponents(const UObject* WorldContext, const 
                                              const FVector& Extent, const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes,
                                              const TArray<AActor*>& IgnoreActors, TArray<UPrimitiveComponent*>& Components)
 {
+	Components.Reset();
+
 	const auto* World{WorldContext->GetWorld()};
 	if (!FU_ENSURE(IsValid(World)))
 	{
@@ -220,18 +210,10 @@ bool UFuPhysicsUtility::BoxOverlapComponents(const UObject* WorldContext, const 
 	FCollisionQueryParams QueryParameters{__FUNCTION__, false};
 	QueryParameters.AddIgnoredActors(IgnoreActors);
 
-	static TArray<FOverlapResult> Overlaps;
-	check(Overlaps.IsEmpty())
-
-	ON_SCOPE_EXIT
-	{
-		Overlaps.Reset();
-	};
+	TArray<FOverlapResult> Overlaps;
 
 	World->OverlapMultiByObjectType(Overlaps, Location, Rotation.Quaternion(), ObjectQueryParameters,
 	                                FCollisionShape::MakeBox(Extent), QueryParameters);
-
-	Components.Reset();
 
 	for (const auto& Overlap : Overlaps)
 	{
@@ -249,6 +231,8 @@ bool UFuPhysicsUtility::ConeOverlapActorsSimple(const UObject* WorldContext, con
                                                 const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes,
                                                 const TArray<AActor*>& IgnoreActors, TArray<AActor*>& Actors)
 {
+	Actors.Reset();
+
 	const auto* World{WorldContext->GetWorld()};
 	if (!FU_ENSURE(IsValid(World)))
 	{
@@ -266,21 +250,13 @@ bool UFuPhysicsUtility::ConeOverlapActorsSimple(const UObject* WorldContext, con
 	FCollisionQueryParams QueryParameters{__FUNCTION__, false};
 	QueryParameters.AddIgnoredActors(IgnoreActors);
 
-	static TArray<FOverlapResult> Overlaps;
-	check(Overlaps.IsEmpty())
-
-	ON_SCOPE_EXIT
-	{
-		Overlaps.Reset();
-	};
+	TArray<FOverlapResult> Overlaps;
 
 	World->OverlapMultiByObjectType(Overlaps, Location, Rotation.Quaternion(), ObjectQueryParameters,
 	                                FCollisionShape::MakeSphere(Radius), QueryParameters);
 
 	const auto Direction{Rotation.Vector()};
 	const auto AngleCos{FMath::Cos(FMath::DegreesToRadians(FMath::Clamp(Angle, 0.0f, 180.0f)))};
-
-	Actors.Reset();
 
 	for (const auto& Overlap : Overlaps)
 	{
@@ -300,6 +276,8 @@ bool UFuPhysicsUtility::ConeOverlapComponentsSimple(const UObject* WorldContext,
                                                     const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes,
                                                     const TArray<AActor*>& IgnoreActors, TArray<UPrimitiveComponent*>& Components)
 {
+	Components.Reset();
+
 	const auto* World{WorldContext->GetWorld()};
 	if (!FU_ENSURE(IsValid(World)))
 	{
@@ -317,21 +295,13 @@ bool UFuPhysicsUtility::ConeOverlapComponentsSimple(const UObject* WorldContext,
 	FCollisionQueryParams QueryParameters{__FUNCTION__, false};
 	QueryParameters.AddIgnoredActors(IgnoreActors);
 
-	static TArray<FOverlapResult> Overlaps;
-	check(Overlaps.IsEmpty())
-
-	ON_SCOPE_EXIT
-	{
-		Overlaps.Reset();
-	};
+	TArray<FOverlapResult> Overlaps;
 
 	World->OverlapMultiByObjectType(Overlaps, Location, Rotation.Quaternion(), ObjectQueryParameters,
 	                                FCollisionShape::MakeSphere(Radius), QueryParameters);
 
 	const auto Direction{Rotation.Vector()};
 	const auto AngleCos{FMath::Cos(FMath::DegreesToRadians(FMath::Clamp(Angle, 0.0f, 180.0f)))};
-
-	Components.Reset();
 
 	for (const auto& Overlap : Overlaps)
 	{

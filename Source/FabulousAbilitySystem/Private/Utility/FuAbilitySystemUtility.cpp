@@ -58,16 +58,10 @@ FGameplayTag UFuAbilitySystemUtility::GetFirstOwnedDescendantTag(const UAbilityS
 		return FGameplayTag::EmptyTag;
 	}
 
-	static FGameplayTagContainer Tags;
-	check(Tags.IsEmpty())
-
+	FGameplayTagContainer Tags;
 	AbilitySystem->GetOwnedGameplayTags(Tags);
 
-	const auto Tag{UFuGameplayTagUtility::GetFirstDescendantTag(Tags, ParentTag)};
-
-	Tags.Reset();
-
-	return Tag;
+	return UFuGameplayTagUtility::GetFirstDescendantTag(Tags, ParentTag);
 }
 
 FGameplayAbilitySpecHandle UFuAbilitySystemUtility::GiveAbilityWithDynamicTags(UAbilitySystemComponent* AbilitySystem,

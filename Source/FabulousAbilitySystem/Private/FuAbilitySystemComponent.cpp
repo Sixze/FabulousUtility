@@ -138,13 +138,7 @@ void UFuAbilitySystemComponent::AbilityLocalInputPressed(const int32 InputId)
 
 	ABILITYLIST_SCOPE_LOCK();
 
-	static TArray<FGameplayAbilitySpec*> AcceptedAbilitySpecifications;
-	check(AcceptedAbilitySpecifications.IsEmpty())
-
-	ON_SCOPE_EXIT
-	{
-		AcceptedAbilitySpecifications.Reset();
-	};
+	TArray<FGameplayAbilitySpec*> AcceptedAbilitySpecifications;
 
 	// Update the input state of all abilities BEFORE calling any callbacks to ensure that the input state will be always correct in all
 	// scenarios, such as when on input press, one ability directly activates another, that is also listening for the same input action.
@@ -190,13 +184,7 @@ void UFuAbilitySystemComponent::AbilityLocalInputReleased(const int32 InputId)
 
 	ABILITYLIST_SCOPE_LOCK();
 
-	static TArray<FGameplayAbilitySpec*> AcceptedAbilitySpecifications;
-	check(AcceptedAbilitySpecifications.IsEmpty())
-
-	ON_SCOPE_EXIT
-	{
-		AcceptedAbilitySpecifications.Reset();
-	};
+	TArray<FGameplayAbilitySpec*> AcceptedAbilitySpecifications;
 
 	for (auto& AbilitySpecification : GetActivatableAbilities())
 	{
@@ -248,13 +236,7 @@ void UFuAbilitySystemComponent::InputTagPressed(const FGameplayTag& InputTag)
 
 	ABILITYLIST_SCOPE_LOCK();
 
-	static TArray<FGameplayAbilitySpec*> AcceptedAbilitySpecifications;
-	check(AcceptedAbilitySpecifications.IsEmpty())
-
-	ON_SCOPE_EXIT
-	{
-		AcceptedAbilitySpecifications.Reset();
-	};
+	TArray<FGameplayAbilitySpec*> AcceptedAbilitySpecifications;
 
 	for (auto& AbilitySpecification : GetActivatableAbilities())
 	{
@@ -304,13 +286,7 @@ void UFuAbilitySystemComponent::InputTagReleased(const FGameplayTag& InputTag)
 
 	ABILITYLIST_SCOPE_LOCK();
 
-	static TArray<FGameplayAbilitySpec*> AcceptedAbilitySpecifications;
-	check(AcceptedAbilitySpecifications.IsEmpty())
-
-	ON_SCOPE_EXIT
-	{
-		AcceptedAbilitySpecifications.Reset();
-	};
+	TArray<FGameplayAbilitySpec*> AcceptedAbilitySpecifications;
 
 	for (auto& AbilitySpecification : GetActivatableAbilities())
 	{
