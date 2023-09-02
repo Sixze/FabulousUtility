@@ -19,6 +19,9 @@ public:
 	template <typename ValueType>
 	static void ShuffleFirstElements(TArray<ValueType>& Array, int32 FirstElementsCount);
 
+	template <typename ValueType, typename PredicateType>
+	static int32 GetWeightedRandomIndexByPredicate(const TArray<ValueType>& Array, const PredicateType& WeightPredicate);
+
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Array Utility", Meta = (ReturnDisplayName = "Random Index"))
 	static int32 GetWeightedRandomIndex(const TArray<float>& Array);
 
@@ -101,6 +104,37 @@ void UFuArrayUtility::ShuffleFirstElements(TArray<ValueType>& Array, const int32
 			Array.SwapMemory(i, NewIndex);
 		}
 	}
+}
+
+template <typename ValueType, typename PredicateType>
+int32 UFuArrayUtility::GetWeightedRandomIndexByPredicate(const TArray<ValueType>& Array, const PredicateType& WeightPredicate)
+{
+	if (Array.IsEmpty())
+	{
+		return -1;
+	}
+
+	auto TotalWeight{0.0f};
+
+	for (const ValueType& ArrayItem : Array)
+	{
+		TotalWeight += Invoke(WeightPredicate, ArrayItem);
+	}
+
+	const auto RandomWeight{FMath::FRand() * TotalWeight};
+	auto ActualWeight{0.0f};
+
+	for (auto i{0}; i < Array.Num(); i++)
+	{
+		ActualWeight += Invoke(WeightPredicate, Array[i]);
+
+		if (RandomWeight <= ActualWeight)
+		{
+			return i;
+		}
+	}
+
+	return -1;
 }
 
 inline bool UFuArrayUtility::IsEmpty(const TArray<UObject*>& Array)
