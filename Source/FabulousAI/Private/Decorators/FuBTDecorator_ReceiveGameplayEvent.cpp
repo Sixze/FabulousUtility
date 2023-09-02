@@ -55,7 +55,7 @@ FString UFuBTDecorator_ReceiveGameplayEvent::GetStaticDescription() const
 	}
 	else if (EventTags.Num() == 1)
 	{
-		DescriptionBuilder << TEXT("Receive Gameplay Event: ") << EventTags.First().GetTagName();
+		DescriptionBuilder << TEXTVIEW("Receive Gameplay Event: ") << EventTags.First().GetTagName();
 	}
 	else
 	{

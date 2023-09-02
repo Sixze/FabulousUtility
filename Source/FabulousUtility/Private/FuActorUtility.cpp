@@ -64,7 +64,7 @@ bool UFuActorUtility::IsEncroachingBlockingGeometry(const UObject* WorldContext,
 	auto* World{WorldContext->GetWorld()};
 
 	return FU_ENSURE(IsValid(World)) && FU_ENSURE(IsValid(ActorClass)) &&
-	       World->EncroachingBlockingGeometry(ActorClass->GetDefaultObject<AActor>(), Location, Rotation);
+	       World->EncroachingBlockingGeometry(ActorClass.GetDefaultObject(), Location, Rotation);
 }
 
 bool UFuActorUtility::IsEncroachingBlockingGeometryWithAdjustment(const UObject* WorldContext, const TSubclassOf<AActor> ActorClass,
@@ -74,5 +74,5 @@ bool UFuActorUtility::IsEncroachingBlockingGeometryWithAdjustment(const UObject*
 	auto* World{WorldContext->GetWorld()};
 
 	return FU_ENSURE(IsValid(World)) && FU_ENSURE(IsValid(ActorClass)) &&
-	       World->EncroachingBlockingGeometry(ActorClass->GetDefaultObject<AActor>(), Location, Rotation, &ProposedAdjustment);
+	       World->EncroachingBlockingGeometry(ActorClass.GetDefaultObject(), Location, Rotation, &ProposedAdjustment);
 }

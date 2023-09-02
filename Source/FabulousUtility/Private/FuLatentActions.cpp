@@ -23,7 +23,7 @@ protected:
 	EFuDelayOutputExecs& Output;
 
 public:
-	FFuDelayLatentAction(const FLatentActionInfo& LatentInfo, const float Duration, const int32 LoopsCount,
+	FFuDelayLatentAction(const FLatentActionInfo& LatentInfo, float Duration, int32 LoopsCount,
 	                     bool bSkipFirstDelay, int32& LoopIndex, EFuDelayOutputExecs& Output);
 
 	virtual void UpdateOperation(FLatentResponse& Response) override;

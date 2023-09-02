@@ -23,5 +23,5 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Gameplay Tag Utility",
 		Meta = (AutoCreateRefTerm = "ParentTag", ReturnDisplayName = "Descendant Tag"))
-	static FGameplayTag GetFirstDescendantTag(const FGameplayTagContainer& Tags, const FGameplayTag& ParentTag);
+	static const FGameplayTag& GetFirstDescendantTag(const FGameplayTagContainer& Tags, const FGameplayTag& ParentTag);
 };

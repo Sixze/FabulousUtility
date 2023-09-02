@@ -17,8 +17,8 @@ class FABULOUSUTILITY_API UFuPhysicsUtility : public UBlueprintFunctionLibrary
 public:
 	static void FindReachableActorsInRadius(const UObject* WorldContext, const FVector& Location,
 	                                        float Radius, const FCollisionProfileName& CollisionProfile,
+	                                        TFunctionRef<bool(const FOverlapResult& Overlap)> FilterPredicate,
 	                                        TMap<AActor*, TArray<FHitResult>>& ReachableActors,
-	                                        TFunctionRef<bool(const FOverlapResult& Overlap)> Predicate,
 	                                        const AActor* IgnoredActor = nullptr);
 
 	static bool IsComponentReachableFromLocation(UPrimitiveComponent* Component, const FVector& Location,

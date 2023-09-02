@@ -112,7 +112,7 @@ void UFuBTTask_WaitForTagChange::OnTaskFinished(UBehaviorTreeComponent& Behavior
 	Super::OnTaskFinished(BehaviorTree, NodeMemory, Result);
 }
 
-void UFuBTTask_WaitForTagChange::AbilitySystem_OnTagChanged(const FGameplayTag ThisTag, const int32 Count,
+void UFuBTTask_WaitForTagChange::AbilitySystem_OnTagChanged(const FGameplayTag OtherTag, const int32 Count,
                                                             const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree) const
 {
 	if (((WaitMode == EFuTagWaitMode::WaitForTagAdd && Count > 0) ||

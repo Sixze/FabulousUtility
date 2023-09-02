@@ -28,7 +28,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", Meta = (AutoCreateRefTerm = "Array"))
 	static void SortByPredicateActor(UPARAM(ref) TArray<AActor*>& Actors, const FFuSortByPredicateActorDelegate& Predicate);
 
-	// Internal blueprint only functions.
+	// Internal blueprint-only functions.
 
 private:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Array Utility",

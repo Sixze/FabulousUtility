@@ -9,20 +9,20 @@
 
 TArray<AActor*> UFuGameplayCueUtility::GetActors(const FGameplayCueParameters& Parameters)
 {
-	TArray<AActor*> ResultActors;
+	TArray<AActor*> Actors;
 
 	const auto* EffectContext{Parameters.EffectContext.Get()};
 	if (EffectContext == nullptr)
 	{
-		return ResultActors;
+		return Actors;
 	}
 
 	for (const auto& Actor : EffectContext->GetActors())
 	{
-		ResultActors.Add(Actor.Get());
+		Actors.Add(Actor.Get());
 	}
 
-	return ResultActors;
+	return Actors;
 }
 
 void UFuGameplayCueUtility::ExecuteLocalGameplayCueOnActor(AActor* Actor, const FGameplayTag& GameplayCueTag,

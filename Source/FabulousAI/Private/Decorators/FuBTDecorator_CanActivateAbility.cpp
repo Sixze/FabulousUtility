@@ -44,7 +44,7 @@ FString UFuBTDecorator_CanActivateAbility::GetStaticDescription() const
 	}
 	else if (AbilityTags.Num() == 1)
 	{
-		DescriptionBuilder << TEXT("Can Activate Ability: ") << AbilityTags.First().GetTagName();
+		DescriptionBuilder << TEXTVIEW("Can Activate Ability: ") << AbilityTags.First().GetTagName();
 	}
 	else
 	{

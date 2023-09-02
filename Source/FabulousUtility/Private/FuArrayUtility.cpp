@@ -12,21 +12,21 @@ int32 UFuArrayUtility::GetWeightedRandomIndex(const TArray<float>& Array)
 		return -1;
 	}
 
-	auto Weights{0.0f};
+	auto TotalWeight{0.0f};
 
 	for (const auto Weight : Array)
 	{
-		Weights += Weight;
+		TotalWeight += Weight;
 	}
 
-	const auto Random{FMath::FRand() * Weights};
-	Weights = 0.0f;
+	const auto RandomWeight{FMath::FRand() * TotalWeight};
+	auto ActualWeight{0.0f};
 
 	for (auto i{0}; i < Array.Num(); i++)
 	{
-		Weights += Array[i];
+		ActualWeight += Array[i];
 
-		if (Random <= Weights)
+		if (RandomWeight <= ActualWeight)
 		{
 			return i;
 		}
