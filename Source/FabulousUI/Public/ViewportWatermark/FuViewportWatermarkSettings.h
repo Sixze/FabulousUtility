@@ -48,7 +48,7 @@ public:
 	bool bShowTitle{true};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Title",
-		Config, Meta = (MultiLine = "true", EditCondition = "bShowTitle"))
+		Config, Meta = (MultiLine = true, EditCondition = "bShowTitle"))
 	FText TitleText;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Title", Config, Meta = (EditCondition = "bShowTitle"))
@@ -58,13 +58,13 @@ public:
 	bool bShowCopyright{true};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Copyright",
-		Config, Meta = (MultiLine = "true", EditCondition = "bShowCopyright"))
+		Config, Meta = (MultiLine = true, EditCondition = "bShowCopyright"))
 	FText CopyrightText;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Copyright", Config, Meta = (EditCondition = "bShowCopyright"))
 	bool bAddEngineVersionToCopyright{true};
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Copyright", Transient, Meta = (MultiLine = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Copyright", Transient, Meta = (MultiLine = true))
 	FText EngineVersionText;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Copyright", Config, Meta = (EditCondition = "bShowCopyright"))
@@ -73,7 +73,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "System Info", Config)
 	bool bShowSystemInfo{true};
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "System Info", Transient, Meta = (MultiLine = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "System Info", Transient, Meta = (MultiLine = true))
 	FText SystemInfoText;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "System Info", Config, Meta = (EditCondition = "bShowSystemInfo"))

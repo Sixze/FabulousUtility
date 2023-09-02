@@ -15,7 +15,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Actor Utility", Meta = (DefaultToSelf = "Actor", ReturnDisplayName = "Value"))
 	static bool IsActorLoadedFromLevel(const AActor* Actor);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Actor Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Actor Utility",
 		Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
 	static bool SwitchIsActorLoadedFromLevel(const AActor* Actor);
 

@@ -81,20 +81,20 @@ public:
 		Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Value"))
 	static bool CanActivateAbilityByTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility",
 		Meta = (ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "Tag"))
 	static bool SwitchCanActivateAbilityByTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility", Meta = (ReturnDisplayName = "Value"))
 	static bool CanActivateAbilityByClass(UAbilitySystemComponent* AbilitySystem, TSubclassOf<UGameplayAbility> AbilityClass);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
 	static bool SwitchCanActivateAbilityByClass(UAbilitySystemComponent* AbilitySystem, TSubclassOf<UGameplayAbility> AbilityClass);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility", Meta = (ReturnDisplayName = "Value"))
 	static bool CanActivateAbilityByHandle(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
 	static bool SwitchCanActivateAbilityByHandle(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
