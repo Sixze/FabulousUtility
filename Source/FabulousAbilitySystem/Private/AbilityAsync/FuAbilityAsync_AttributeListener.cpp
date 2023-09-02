@@ -28,7 +28,7 @@ UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::FuListenFo
 
 	if (FU_ENSURE(InAttribute.IsValid()) && FU_ENSURE(!InAttribute.IsSystemAttribute()))
 	{
-		Task->Attributes.Add(InAttribute);
+		Task->Attributes.Emplace(InAttribute);
 	}
 
 	Task->bSkipEqualValuesOnServer = bInSkipEqualValuesOnServer;
@@ -43,11 +43,13 @@ UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::FuListenFo
 
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
+	Task->Attributes.Reserve(InAttributes.Num());
+
 	for (const auto& Attribute : InAttributes)
 	{
 		if (FU_ENSURE(Attribute.IsValid()) && FU_ENSURE(!Attribute.IsSystemAttribute()))
 		{
-			Task->Attributes.Add(Attribute);
+			Task->Attributes.Emplace(Attribute);
 		}
 	}
 

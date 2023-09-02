@@ -149,7 +149,7 @@ void UFuAbilitySystemComponent::AbilityLocalInputPressed(const int32 InputId)
 		{
 			AbilitySpecification.InputPressed = true;
 
-			AcceptedAbilitySpecifications.Add(&AbilitySpecification);
+			AcceptedAbilitySpecifications.Emplace(&AbilitySpecification);
 		}
 	}
 
@@ -192,7 +192,7 @@ void UFuAbilitySystemComponent::AbilityLocalInputReleased(const int32 InputId)
 		{
 			AbilitySpecification.InputPressed = false;
 
-			AcceptedAbilitySpecifications.Add(&AbilitySpecification);
+			AcceptedAbilitySpecifications.Emplace(&AbilitySpecification);
 		}
 	}
 
@@ -246,7 +246,7 @@ void UFuAbilitySystemComponent::InputTagPressed(const FGameplayTag& InputTag)
 		{
 			AbilitySpecification.InputPressed = true;
 
-			AcceptedAbilitySpecifications.Add(&AbilitySpecification);
+			AcceptedAbilitySpecifications.Emplace(&AbilitySpecification);
 		}
 	}
 
@@ -296,7 +296,7 @@ void UFuAbilitySystemComponent::InputTagReleased(const FGameplayTag& InputTag)
 		{
 			AbilitySpecification.InputPressed = false;
 
-			AcceptedAbilitySpecifications.Add(&AbilitySpecification);
+			AcceptedAbilitySpecifications.Emplace(&AbilitySpecification);
 		}
 	}
 

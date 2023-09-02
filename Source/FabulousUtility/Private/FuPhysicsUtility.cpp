@@ -54,10 +54,10 @@ void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext,
 
 		if (ActorHits == nullptr)
 		{
-			ActorHits = &ReachableActors.Add(Actor);
+			ActorHits = &ReachableActors.Emplace(Actor);
 		}
 
-		ActorHits->Add(Hit);
+		ActorHits->Emplace(Hit);
 	}
 }
 
@@ -180,7 +180,7 @@ bool UFuPhysicsUtility::BoxOverlapActors(const UObject* WorldContext, const FVec
 
 		if (IsValid(Actor) && !Actors.Contains(Actor))
 		{
-			Actors.Add(Actor);
+			Actors.Emplace(Actor);
 		}
 	}
 
@@ -219,7 +219,7 @@ bool UFuPhysicsUtility::BoxOverlapComponents(const UObject* WorldContext, const 
 	{
 		if (Overlap.Component.IsValid())
 		{
-			Components.Add(Overlap.Component.Get());
+			Components.Emplace(Overlap.Component.Get());
 		}
 	}
 
@@ -265,7 +265,7 @@ bool UFuPhysicsUtility::ConeOverlapActorsSimple(const UObject* WorldContext, con
 		if (IsValid(Actor) && !Actors.Contains(Actor) &&
 		    (Direction | (Overlap.Component->GetComponentLocation() - Location).GetSafeNormal()) >= AngleCos)
 		{
-			Actors.Add(Actor);
+			Actors.Emplace(Actor);
 		}
 	}
 	return !Actors.IsEmpty();
@@ -308,7 +308,7 @@ bool UFuPhysicsUtility::ConeOverlapComponentsSimple(const UObject* WorldContext,
 		if (Overlap.Component.IsValid() &&
 		    (Direction | (Overlap.Component->GetComponentLocation() - Location).GetSafeNormal()) >= AngleCos)
 		{
-			Components.Add(Overlap.Component.Get());
+			Components.Emplace(Overlap.Component.Get());
 		}
 	}
 

@@ -98,7 +98,7 @@ EBTNodeResult::Type UFuBTTask_ActivateAbility::ExecuteTask(UBehaviorTreeComponen
 				continue;
 			}
 
-			Memory.ActiveAbilityHandles.Add(AbilitySpecification.Handle);
+			Memory.ActiveAbilityHandles.Emplace(AbilitySpecification.Handle);
 
 			if (!Memory.AbilitySystem->TryActivateAbility(AbilitySpecification.Handle))
 			{

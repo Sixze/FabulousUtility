@@ -47,7 +47,7 @@ void UFuBTDecorator_RandomizedLoop::DescribeRuntimeValues(const UBehaviorTreeCom
 
 	RuntimeValuesBuilder << TEXTVIEW("Loops remaining: ") << Memory.RemainingLoopsCount;
 
-	Values.Add(FString{RuntimeValuesBuilder});
+	Values.Emplace(FString{RuntimeValuesBuilder});
 }
 
 uint16 UFuBTDecorator_RandomizedLoop::GetInstanceMemorySize() const

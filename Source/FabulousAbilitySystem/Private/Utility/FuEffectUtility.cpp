@@ -64,6 +64,8 @@ bool UFuEffectUtility::HasActiveEffectByQuery(const UAbilitySystemComponent* Abi
 void UFuEffectUtility::GetActiveEffectsByQuery(const UAbilitySystemComponent* AbilitySystem,
                                                const FGameplayEffectQuery& EffectQuery, TArray<FActiveGameplayEffect>& ActiveEffects)
 {
+	ActiveEffects.Reset();
+
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(!EffectQuery.IsEmpty()))
 	{
 		return;
@@ -73,7 +75,7 @@ void UFuEffectUtility::GetActiveEffectsByQuery(const UAbilitySystemComponent* Ab
 	{
 		if (EffectQuery.Matches(ActiveEffect))
 		{
-			ActiveEffects.Add(ActiveEffect);
+			ActiveEffects.Emplace(ActiveEffect);
 		}
 	}
 }

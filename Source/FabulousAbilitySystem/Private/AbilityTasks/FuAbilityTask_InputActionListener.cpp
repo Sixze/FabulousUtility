@@ -28,6 +28,7 @@ UFuAbilityTask_InputActionListener* UFuAbilityTask_InputActionListener::FuWaitFo
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
 	Task->Input = Cast<UEnhancedInputComponent>(Task->AbilitySystemComponent->GetAvatarActor_Direct()->InputComponent);
+	Task->InputActions.Reserve(InInputActions.Num());
 
 	for (const auto& InputAction : InInputActions)
 	{
@@ -76,13 +77,15 @@ void UFuAbilityTask_InputActionListener::BindActions()
 {
 	if (Input.IsValid())
 	{
+		InputBindings.Reserve(InputActions.Num() * 5);
+
 		for (const auto InputAction : InputActions)
 		{
-			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Triggered, this, &ThisClass::Input_OnActionTriggered));
-			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Started, this, &ThisClass::Input_OnActionStarted));
-			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Ongoing, this, &ThisClass::Input_OnActionOngoing));
-			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Canceled, this, &ThisClass::Input_OnActionCanceled));
-			InputBindings.Add(Input->BindAction(InputAction, ETriggerEvent::Completed, this, &ThisClass::Input_OnActionCompleted));
+			InputBindings.Emplace(Input->BindAction(InputAction, ETriggerEvent::Triggered, this, &ThisClass::Input_OnActionTriggered));
+			InputBindings.Emplace(Input->BindAction(InputAction, ETriggerEvent::Started, this, &ThisClass::Input_OnActionStarted));
+			InputBindings.Emplace(Input->BindAction(InputAction, ETriggerEvent::Ongoing, this, &ThisClass::Input_OnActionOngoing));
+			InputBindings.Emplace(Input->BindAction(InputAction, ETriggerEvent::Canceled, this, &ThisClass::Input_OnActionCanceled));
+			InputBindings.Emplace(Input->BindAction(InputAction, ETriggerEvent::Completed, this, &ThisClass::Input_OnActionCompleted));
 		}
 	}
 }

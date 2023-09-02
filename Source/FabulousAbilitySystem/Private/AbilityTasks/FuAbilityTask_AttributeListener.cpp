@@ -13,7 +13,7 @@ UFuAbilityTask_AttributeListener* UFuAbilityTask_AttributeListener::FuWaitForAtt
 
 	if (FU_ENSURE(InAttribute.IsValid()) && FU_ENSURE(!InAttribute.IsSystemAttribute()))
 	{
-		Task->Attributes.Add(InAttribute);
+		Task->Attributes.Emplace(InAttribute);
 	}
 
 	return Task;
@@ -24,11 +24,13 @@ UFuAbilityTask_AttributeListener* UFuAbilityTask_AttributeListener::FuWaitForAtt
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
+	Task->Attributes.Reserve(InAttributes.Num());
+
 	for (const auto& Attribute : InAttributes)
 	{
 		if (FU_ENSURE(Attribute.IsValid()) && FU_ENSURE(!Attribute.IsSystemAttribute()))
 		{
-			Task->Attributes.Add(Attribute);
+			Task->Attributes.Emplace(Attribute);
 		}
 	}
 

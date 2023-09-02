@@ -89,7 +89,7 @@ void UFuBTDecorator_CanActivateAbility::OnBecomeRelevant(UBehaviorTreeComponent&
 		if (AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||
 		    AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags))
 		{
-			Memory.AbilityHandles.Add(AbilitySpecification.Handle);
+			Memory.AbilityHandles.Emplace(AbilitySpecification.Handle);
 		}
 	}
 }
@@ -184,7 +184,7 @@ void UFuBTDecorator_CanActivateAbility::AbilitySystem_OnAbilityGiven(const FGame
 				BehaviorTree->GetNodeMemory(this, BehaviorTree->FindInstanceContainingNode(this)))
 		};
 
-		Memory.AbilityHandles.Add(AbilitySpecification.Handle);
+		Memory.AbilityHandles.Emplace(AbilitySpecification.Handle);
 	}
 }
 

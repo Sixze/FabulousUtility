@@ -45,6 +45,8 @@ UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::FuListenForUIA
 	Task->bDisplayInActionBar = bInDisplayInActionBar;
 	Task->DisplayNameOverride = InDisplayNameOverride;
 
+	Task->ActionTags.Reserve(InActionTags.Num());
+
 	for (const auto& Tag : InActionTags)
 	{
 		const auto ActionTag{FUIActionTag::TryConvert(Tag)};
@@ -85,6 +87,8 @@ void UFuAsyncAction_UIActionListener::Activate()
 	ActionArguments.bDisplayInActionBar = bDisplayInActionBar;
 	ActionArguments.OverrideDisplayName = DisplayNameOverride;
 
+	ActionHandles.Reserve(ActionTags.Num());
+
 	auto& WidgetActionHandles{const_cast<TArray<FUIActionBindingHandle>&>(Widget->GetActionBindings())};
 
 	for (const auto& ActionTag : ActionTags)
@@ -99,8 +103,8 @@ void UFuAsyncAction_UIActionListener::Activate()
 		const auto ActionHandle{ActionRouter->RegisterUIActionBinding(*Widget.Get(), ActionArguments)};
 		if (ActionHandle.IsValid())
 		{
-			ActionHandles.Add(ActionHandle);
-			WidgetActionHandles.Add(ActionHandle);
+			ActionHandles.Emplace(ActionHandle);
+			WidgetActionHandles.Emplace(ActionHandle);
 		}
 	}
 }
@@ -114,7 +118,7 @@ void UFuAsyncAction_UIActionListener::Cancel()
 
 		for (const auto& ActionHandle : ActionHandles)
 		{
-			WidgetActionHandles.Remove(ActionHandle);
+			WidgetActionHandles.RemoveSwap(ActionHandle);
 
 			if (IsValid(ActionRouter))
 			{

@@ -16,9 +16,11 @@ TArray<AActor*> UFuGameplayCueUtility::GetActors(const FGameplayCueParameters& P
 		return Actors;
 	}
 
+	Actors.Reserve(EffectContext->GetActors().Num());
+
 	for (const auto& Actor : EffectContext->GetActors())
 	{
-		Actors.Add(Actor.Get());
+		Actors.Emplace(Actor.Get());
 	}
 
 	return Actors;
