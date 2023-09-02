@@ -4,7 +4,6 @@
 #include "Engine/Engine.h"
 #include "Engine/NetDriver.h"
 
-// ReSharper disable once CppUnusedIncludeDirective
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuObject)
 
 void UFuObject::PostInitProperties()

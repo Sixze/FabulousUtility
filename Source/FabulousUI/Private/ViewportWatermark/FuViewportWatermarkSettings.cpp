@@ -7,7 +7,6 @@
 #include "Launch/Resources/Version.h"
 #include "UObject/ConstructorHelpers.h"
 
-// ReSharper disable once CppUnusedIncludeDirective
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuViewportWatermarkSettings)
 
 #define LOCTEXT_NAMESPACE "FuViewportWatermarkSettings"

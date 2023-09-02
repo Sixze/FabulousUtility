@@ -5,7 +5,6 @@
 #include "GameFramework/Pawn.h"
 #include "GameFramework/PawnMovementComponent.h"
 
-// ReSharper disable once CppUnusedIncludeDirective
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuActorUtility)
 
 bool UFuActorUtility::IsActorLoadedFromLevel(const AActor* Actor)

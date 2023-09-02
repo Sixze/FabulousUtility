@@ -4,7 +4,6 @@
 #include "FuAbilitySystemComponent.h"
 #include "Utility/FuAbilitySystemUtility.h"
 
-// ReSharper disable once CppUnusedIncludeDirective
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTDecorator_CanActivateAbility)
 
 struct FFuCanActivateAbilityMemory
