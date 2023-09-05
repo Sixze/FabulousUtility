@@ -25,7 +25,7 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability System Utility",
 		Meta = (AutoCreateRefTerm = "ParentTag", ReturnDisplayName = "Descendant Tag"))
-	static FGameplayTag GetFirstOwnedDescendantTag(const UAbilitySystemComponent* AbilitySystem, const FGameplayTag& ParentTag);
+	static FGameplayTag FindFirstOwnedDescendantTag(const UAbilitySystemComponent* AbilitySystem, const FGameplayTag& ParentTag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability System Utility",
 		Meta = (AutoCreateRefTerm = "Tags", ReturnDisplayName = "Ability Handle"))

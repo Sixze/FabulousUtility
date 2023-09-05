@@ -22,8 +22,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Specification Utility", Meta = (ReturnDisplayName = "Value"))
 	static bool IsActive(const FGameplayAbilitySpec& AbilitySpecification);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Specification Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
-	static bool SwitchIsActive(const FGameplayAbilitySpec& AbilitySpecification);
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Specification Utility",
+		DisplayName = "Is Active (Expanded)", Meta = (ExpandBoolAsExecs = "ReturnValue"))
+	static bool IsActiveExpanded(const FGameplayAbilitySpec& AbilitySpecification);
 };
 
 inline FGameplayAbilitySpecHandle UFuAbilitySpecificationUtility::GetAbilityHandle(const FGameplayAbilitySpec& AbilitySpecification)
@@ -46,7 +47,7 @@ inline bool UFuAbilitySpecificationUtility::IsActive(const FGameplayAbilitySpec&
 	return AbilitySpecification.IsActive();
 }
 
-inline bool UFuAbilitySpecificationUtility::SwitchIsActive(const FGameplayAbilitySpec& AbilitySpecification)
+inline bool UFuAbilitySpecificationUtility::IsActiveExpanded(const FGameplayAbilitySpec& AbilitySpecification)
 {
 	return AbilitySpecification.IsActive();
 }

@@ -17,7 +17,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Attribute Utility",
 		Meta = (DefaultToSelf = "Ability", ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "Attribute"))
-	static bool TryGetAttributeValueOnAbility(const UGameplayAbility* Ability, const FGameplayAttribute& Attribute, float& Value);
+	static bool TryGetAttributeValueFromAbility(const UGameplayAbility* Ability, const FGameplayAttribute& Attribute, float& Value);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Attribute Utility",
 		Meta = (ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "Attribute, MaxAttribute"))
@@ -26,8 +26,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Attribute Utility",
 		Meta = (DefaultToSelf = "Ability", ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "Attribute, MaxAttribute"))
-	static bool TryGetAttributePercentOnAbility(const UGameplayAbility* Ability, const FGameplayAttribute& Attribute,
-	                                            const FGameplayAttribute& MaxAttribute, float& Percent);
+	static bool TryGetAttributePercentFromAbility(const UGameplayAbility* Ability, const FGameplayAttribute& Attribute,
+	                                              const FGameplayAttribute& MaxAttribute, float& Percent);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Attribute Utility",
 		Meta = (AutoCreateRefTerm = "Attribute, AttributeData, MaxAttributeData"))

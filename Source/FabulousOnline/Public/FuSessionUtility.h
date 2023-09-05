@@ -14,11 +14,11 @@ public:
 	static bool TravelToGameSession(APlayerController* Player);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session Utility",
-		Meta = (DefaultToSelf = "Player", ExpandBoolAsExecs = "ReturnValue"))
-	static bool TryTravelToGameSession(APlayerController* Player);
+		DisplayName = "Travel to Game Session (Expanded)", Meta = (DefaultToSelf = "Player", ExpandBoolAsExecs = "ReturnValue"))
+	static bool TravelToGameSessionExpanded(APlayerController* Player);
 };
 
-inline bool UFuSessionUtility::TryTravelToGameSession(APlayerController* Player)
+inline bool UFuSessionUtility::TravelToGameSessionExpanded(APlayerController* Player)
 {
 	return TravelToGameSession(Player);
 }

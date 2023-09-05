@@ -14,11 +14,11 @@ public:
 	static bool IsActorLocallyControlled(const AActor* Actor);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Networking Utility",
-		Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
-	static bool SwitchIsActorLocallyControlled(const AActor* Actor);
+		DisplayName = "Is Actor Locally Controlled (Expanded)", Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
+	static bool IsActorLocallyControlledExpanded(const AActor* Actor);
 };
 
-inline bool UFuNetworkingUtility::SwitchIsActorLocallyControlled(const AActor* Actor)
+inline bool UFuNetworkingUtility::IsActorLocallyControlledExpanded(const AActor* Actor)
 {
 	return IsActorLocallyControlled(Actor);
 }

@@ -12,5 +12,5 @@ class FABULOUSABILITYSYSTEM_API UFuGameplayTaskUtility : public UBlueprintFuncti
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Gameplay Task Utility")
-	static void TryEndTask(UGameplayTask* Task);
+	static void EndTaskSafe(UGameplayTask* Task);
 };

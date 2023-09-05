@@ -5,14 +5,14 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityUtility)
 
-FGameplayTag UFuAbilityUtility::GetFirstDescendantAbilityTag(const UGameplayAbility* Ability, const FGameplayTag& ParentTag)
+FGameplayTag UFuAbilityUtility::FindFirstDescendantAbilityTag(const UGameplayAbility* Ability, const FGameplayTag& ParentTag)
 {
 	if (!FU_ENSURE(IsValid(Ability)) || !FU_ENSURE(ParentTag.IsValid()))
 	{
 		return FGameplayTag::EmptyTag;
 	}
 
-	const auto Tag{UFuGameplayTagUtility::GetFirstDescendantTag(Ability->AbilityTags, ParentTag)};
+	const auto Tag{UFuGameplayTagUtility::FindFirstDescendantTag(Ability->AbilityTags, ParentTag)};
 	if (Tag.IsValid())
 	{
 		return Tag;
@@ -24,7 +24,7 @@ FGameplayTag UFuAbilityUtility::GetFirstDescendantAbilityTag(const UGameplayAbil
 		return FGameplayTag::EmptyTag;
 	}
 
-	return UFuGameplayTagUtility::GetFirstDescendantTag(AbilitySpecification->DynamicAbilityTags, ParentTag);
+	return UFuGameplayTagUtility::FindFirstDescendantTag(AbilitySpecification->DynamicAbilityTags, ParentTag);
 }
 
 bool UFuAbilityUtility::HasAbilityTag(UAbilitySystemComponent* AbilitySystem,
@@ -65,9 +65,9 @@ bool UFuAbilityUtility::TryGetSourceObjectCasted(UAbilitySystemComponent* Abilit
 	return true;
 }
 
-FGameplayTag UFuAbilityUtility::GetFirstDescendantAbilityTagByHandle(UAbilitySystemComponent* AbilitySystem,
-                                                                     const FGameplayAbilitySpecHandle AbilityHandle,
-                                                                     const FGameplayTag& ParentTag)
+FGameplayTag UFuAbilityUtility::FindFirstDescendantAbilityTagByHandle(UAbilitySystemComponent* AbilitySystem,
+                                                                      const FGameplayAbilitySpecHandle AbilityHandle,
+                                                                      const FGameplayTag& ParentTag)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(AbilityHandle.IsValid()) || !FU_ENSURE(ParentTag.IsValid()))
 	{
@@ -80,13 +80,13 @@ FGameplayTag UFuAbilityUtility::GetFirstDescendantAbilityTagByHandle(UAbilitySys
 		return FGameplayTag::EmptyTag;
 	}
 
-	const auto Tag{UFuGameplayTagUtility::GetFirstDescendantTag(AbilitySpecification->DynamicAbilityTags, ParentTag)};
+	const auto Tag{UFuGameplayTagUtility::FindFirstDescendantTag(AbilitySpecification->DynamicAbilityTags, ParentTag)};
 	if (Tag.IsValid())
 	{
 		return Tag;
 	}
 
-	return UFuGameplayTagUtility::GetFirstDescendantTag(AbilitySpecification->Ability->AbilityTags, ParentTag);
+	return UFuGameplayTagUtility::FindFirstDescendantTag(AbilitySpecification->Ability->AbilityTags, ParentTag);
 }
 
 bool UFuAbilityUtility::TryCommitAbility(UGameplayAbility* Ability, const bool bCancelOnFailure)
@@ -109,7 +109,7 @@ bool UFuAbilityUtility::TryCommitAbility(UGameplayAbility* Ability, const bool b
 	return false;
 }
 
-bool UFuAbilityUtility::HasAbilityWithTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag)
+bool UFuAbilityUtility::HasAbilitiesWithTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(Tag.IsValid()))
 	{
@@ -176,8 +176,8 @@ bool UFuAbilityUtility::CanActivateAbilityByHandle(UAbilitySystemComponent* Abil
 	       AbilitySpecification->Ability->CanActivateAbility(AbilityHandle, AbilitySystem->AbilityActorInfo.Get());
 }
 
-bool UFuAbilityUtility::TryBatchRpcActivateAbility(UAbilitySystemComponent* AbilitySystem, const FGameplayAbilitySpecHandle AbilityHandle,
-                                                   const bool bEndAbilityImmediately)
+bool UFuAbilityUtility::BatchRpcActivateAbility(UAbilitySystemComponent* AbilitySystem, const FGameplayAbilitySpecHandle AbilityHandle,
+                                                const bool bEndAbilityImmediately)
 {
 	// https://github.com/tranek/GASDocumentation#concepts-ga-batching
 

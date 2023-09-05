@@ -16,8 +16,8 @@ public:
 	static bool IsActorLoadedFromLevel(const AActor* Actor);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Actor Utility",
-		Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
-	static bool SwitchIsActorLoadedFromLevel(const AActor* Actor);
+		DisplayName = "Is Actor Loaded from Level (Expanded)", Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
+	static bool IsActorLoadedFromLevelExpanded(const AActor* Actor);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Actor Utility",
 		Meta = (DeterminesOutputType = "ComponentClass", DynamicOutputParam = "Component", ExpandBoolAsExecs = "ReturnValue"))
@@ -37,9 +37,10 @@ public:
 	                                          const FVector& Location, const FRotator& Rotation);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Actor Utility",
+		DisplayName = "Is Encroaching Blocking Geometry (Expanded)",
 		Meta = (WorldContext = "WorldContext", ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "Location, Rotation"))
-	static bool SwitchIsEncroachingBlockingGeometry(const UObject* WorldContext, TSubclassOf<AActor> ActorClass,
-	                                                const FVector& Location, const FRotator& Rotation);
+	static bool IsEncroachingBlockingGeometryExpanded(const UObject* WorldContext, TSubclassOf<AActor> ActorClass,
+	                                                  const FVector& Location, const FRotator& Rotation);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Actor Utility",
 		Meta = (WorldContext = "WorldContext", AutoCreateRefTerm = "Location, Rotation", ReturnDisplayName = "Value"))
@@ -48,27 +49,28 @@ public:
 	                                                        FVector& ProposedAdjustment);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Actor Utility",
+		DisplayName = "Is Encroaching Blocking Geometry with Adjustment (Expanded)",
 		Meta = (WorldContext = "WorldContext", ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "Location, Rotation"))
-	static bool SwitchIsEncroachingBlockingGeometryWithAdjustment(const UObject* WorldContext, TSubclassOf<AActor> ActorClass,
-	                                                              const FVector& Location, const FRotator& Rotation,
-	                                                              FVector& ProposedAdjustment);
+	static bool IsEncroachingBlockingGeometryWithAdjustmentExpanded(const UObject* WorldContext, TSubclassOf<AActor> ActorClass,
+	                                                                const FVector& Location, const FRotator& Rotation,
+	                                                                FVector& ProposedAdjustment);
 };
 
-inline bool UFuActorUtility::SwitchIsActorLoadedFromLevel(const AActor* Actor)
+inline bool UFuActorUtility::IsActorLoadedFromLevelExpanded(const AActor* Actor)
 {
 	return IsActorLoadedFromLevel(Actor);
 }
 
-inline bool UFuActorUtility::SwitchIsEncroachingBlockingGeometry(const UObject* WorldContext, const TSubclassOf<AActor> ActorClass,
-                                                                 const FVector& Location, const FRotator& Rotation)
+inline bool UFuActorUtility::IsEncroachingBlockingGeometryExpanded(const UObject* WorldContext, const TSubclassOf<AActor> ActorClass,
+                                                                   const FVector& Location, const FRotator& Rotation)
 {
 	return IsEncroachingBlockingGeometry(WorldContext, ActorClass, Location, Rotation);
 }
 
-inline bool UFuActorUtility::SwitchIsEncroachingBlockingGeometryWithAdjustment(const UObject* WorldContext,
-                                                                               const TSubclassOf<AActor> ActorClass,
-                                                                               const FVector& Location, const FRotator& Rotation,
-                                                                               FVector& ProposedAdjustment)
+inline bool UFuActorUtility::IsEncroachingBlockingGeometryWithAdjustmentExpanded(const UObject* WorldContext,
+                                                                                 const TSubclassOf<AActor> ActorClass,
+                                                                                 const FVector& Location, const FRotator& Rotation,
+                                                                                 FVector& ProposedAdjustment)
 {
 	return IsEncroachingBlockingGeometryWithAdjustment(WorldContext, ActorClass, Location, Rotation, ProposedAdjustment);
 }

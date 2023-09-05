@@ -13,7 +13,7 @@ bool UFuEffectHandleUtility::IsActive(const FActiveGameplayEffectHandle EffectHa
 	return IsValid(AbilitySystem) && AbilitySystem->GetActiveGameplayEffect(EffectHandle) != nullptr;
 }
 
-bool UFuEffectHandleUtility::SwitchIsActive(const FActiveGameplayEffectHandle EffectHandle)
+bool UFuEffectHandleUtility::IsActiveExpanded(const FActiveGameplayEffectHandle EffectHandle)
 {
 	return IsActive(EffectHandle);
 }

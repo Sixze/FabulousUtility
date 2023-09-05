@@ -12,5 +12,5 @@ class FABULOUSUTILITY_API UFuAsyncActionUtility : public UBlueprintFunctionLibra
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Async Action Utility")
-	static void TryCancelAction(UCancellableAsyncAction* Action);
+	static void CancelActionSafe(UCancellableAsyncAction* Action);
 };

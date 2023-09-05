@@ -46,17 +46,17 @@ private:
 
 	DECLARE_FUNCTION(execIsNotEmpty);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility",
-		CustomThunk, Meta = (ArrayParm = "Array", ExpandBoolAsExecs = "ReturnValue"))
-	static bool SwitchIsEmpty(const TArray<UObject*>& Array);
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", CustomThunk,
+		DisplayName = "Is Empty (Expanded)", Meta = (ArrayParm = "Array", ExpandBoolAsExecs = "ReturnValue"))
+	static bool IsEmptyExpanded(const TArray<UObject*>& Array);
 
-	DECLARE_FUNCTION(execSwitchIsEmpty);
+	DECLARE_FUNCTION(execIsEmptyExpanded);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility",
-		CustomThunk, Meta = (ArrayParm = "Array", ExpandBoolAsExecs = "ReturnValue"))
-	static bool SwitchIsNotEmpty(const TArray<UObject*>& Array);
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", CustomThunk,
+		DisplayName = "Is Not Empty (Expanded)", Meta = (ArrayParm = "Array", ExpandBoolAsExecs = "ReturnValue"))
+	static bool IsNotEmptyExpanded(const TArray<UObject*>& Array);
 
-	DECLARE_FUNCTION(execSwitchIsNotEmpty);
+	DECLARE_FUNCTION(execIsNotEmptyExpanded);
 
 	static bool IsEmpty(void* Array, const FArrayProperty* Property);
 
@@ -149,13 +149,13 @@ inline bool UFuArrayUtility::IsNotEmpty(const TArray<UObject*>& Array)
 	return true;
 }
 
-inline bool UFuArrayUtility::SwitchIsEmpty(const TArray<UObject*>& Array)
+inline bool UFuArrayUtility::IsEmptyExpanded(const TArray<UObject*>& Array)
 {
 	checkNoEntry()
 	return true;
 }
 
-inline bool UFuArrayUtility::SwitchIsNotEmpty(const TArray<UObject*>& Array)
+inline bool UFuArrayUtility::IsNotEmptyExpanded(const TArray<UObject*>& Array)
 {
 	checkNoEntry()
 	return true;

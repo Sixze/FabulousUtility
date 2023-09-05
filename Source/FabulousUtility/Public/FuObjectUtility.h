@@ -26,8 +26,8 @@ public:
 	static UObject* DuplicateObject(const UObject* Object, UObject* Outer, const FName& Name = NAME_None);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Object Utility",
-		Meta = (DefaultToSelf = "Object", ExpandBoolAsExecs = "ReturnValue"))
-	static bool SwitchDoesImplementInterface(const UObject* Object, TSubclassOf<UInterface> InterfaceClass);
+		DisplayName = "Does Implement Interface (Expanded)", Meta = (DefaultToSelf = "Object", ExpandBoolAsExecs = "ReturnValue"))
+	static bool DoesImplementInterfaceExpanded(const UObject* Object, TSubclassOf<UInterface> InterfaceClass);
 };
 
 inline UObject* UFuObjectUtility::GetDefaultObject(const TSubclassOf<UObject> Class)
@@ -35,7 +35,7 @@ inline UObject* UFuObjectUtility::GetDefaultObject(const TSubclassOf<UObject> Cl
 	return FU_ENSURE(IsValid(Class)) ? Class.GetDefaultObject() : nullptr;
 }
 
-inline FString UFuObjectUtility::GetObjectName(const TSoftObjectPtr<UObject>& SoftObjectReference)
+inline FString UFuObjectUtility::GetObjectName(const TSoftObjectPtr<>& SoftObjectReference)
 {
 	return FPackageName::ObjectPathToObjectName(SoftObjectReference.ToString());
 }
@@ -45,7 +45,7 @@ inline UObject* UFuObjectUtility::DuplicateObject(const UObject* Object, UObject
 	return ::DuplicateObject(Object, Outer, Name);
 }
 
-inline bool UFuObjectUtility::SwitchDoesImplementInterface(const UObject* Object, const TSubclassOf<UInterface> InterfaceClass)
+inline bool UFuObjectUtility::DoesImplementInterfaceExpanded(const UObject* Object, const TSubclassOf<UInterface> InterfaceClass)
 {
 	return FU_ENSURE(IsValid(Object)) && Object->GetClass()->ImplementsInterface(InterfaceClass);
 }

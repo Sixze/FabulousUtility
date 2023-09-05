@@ -62,8 +62,8 @@ protected:
 public:
 	bool IsActivationByInputAllowed() const;
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Gameplay Ability", Meta = (ExpandBoolAsExecs = "ReturnValue"))
-	bool TryBatchRpcActivateAbility(FGameplayAbilitySpecHandle AbilityHandle, bool bEndAbilityImmediately);
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Gameplay Ability", Meta = (ReturnDisplayName = "Success"))
+	bool BatchRpcActivateAbility(FGameplayAbilitySpecHandle AbilityHandle, bool bEndAbilityImmediately);
 
 	void BatchRpcEndAbility();
 };

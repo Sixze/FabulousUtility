@@ -5,7 +5,7 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAudioUtility)
 
-void UFuAudioUtility::SetTransientMasterVolume(const UObject* WorldContext, const float Volume)
+void UFuAudioUtility::SetTransientPrimaryVolume(const UObject* WorldContext, const float Volume)
 {
 #if !UE_SERVER
 	const auto* World{WorldContext->GetWorld()};

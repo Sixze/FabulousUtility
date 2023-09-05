@@ -2,6 +2,7 @@
 
 #include "AbilitySystemComponent.h"
 #include "FuActorUtility.h"
+#include "FuMacros.h"
 #include "NavigationSystem.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Math/FuVector.h"

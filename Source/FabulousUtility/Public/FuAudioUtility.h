@@ -10,5 +10,5 @@ class FABULOUSUTILITY_API UFuAudioUtility : public UBlueprintFunctionLibrary
 
 public:
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "Fabulous Utility|Fu Audio Utility", Meta = (WorldContext = "WorldContext"))
-	static void SetTransientMasterVolume(const UObject* WorldContext, float Volume);
+	static void SetTransientPrimaryVolume(const UObject* WorldContext, float Volume);
 };

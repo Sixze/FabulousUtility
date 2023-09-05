@@ -127,9 +127,9 @@ void UFuGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle AbilityHand
 }
 
 // ReSharper disable once CppUE4BlueprintCallableFunctionMayBeConst
-bool UFuGameplayAbility::TryBatchRpcActivateAbility(const FGameplayAbilitySpecHandle AbilityHandle, const bool bEndAbilityImmediately)
+bool UFuGameplayAbility::BatchRpcActivateAbility(const FGameplayAbilitySpecHandle AbilityHandle, const bool bEndAbilityImmediately)
 {
-	return UFuAbilityUtility::TryBatchRpcActivateAbility(GetAbilitySystemComponentFromActorInfo(), AbilityHandle, bEndAbilityImmediately);
+	return UFuAbilityUtility::BatchRpcActivateAbility(GetAbilitySystemComponentFromActorInfo(), AbilityHandle, bEndAbilityImmediately);
 }
 
 void UFuGameplayAbility::BatchRpcEndAbility()

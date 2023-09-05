@@ -4,7 +4,7 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncActionUtility)
 
-void UFuAsyncActionUtility::TryCancelAction(UCancellableAsyncAction* Action)
+void UFuAsyncActionUtility::CancelActionSafe(UCancellableAsyncAction* Action)
 {
 	if (IsValid(Action))
 	{

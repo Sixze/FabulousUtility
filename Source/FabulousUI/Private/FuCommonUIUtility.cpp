@@ -4,7 +4,7 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuCommonUIUtility)
 
-ECommonInputType UFuCommonUIUtility::GetInputTypeForKey(const FKey& Key)
+ECommonInputType UFuCommonUIUtility::GetInputType(const FKey& Key)
 {
 	// Based on FCommonInputPreprocessor::GetInputType().
 
@@ -21,7 +21,7 @@ ECommonInputType UFuCommonUIUtility::GetInputTypeForKey(const FKey& Key)
 	return ECommonInputType::Touch;
 }
 
-UUserWidget* UFuCommonUIUtility::FindRootUserWidgetOfClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass)
+UUserWidget* UFuCommonUIUtility::FindRootUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass)
 {
 	if (!IsValid(UserWidgetClass))
 	{
@@ -52,7 +52,7 @@ UUserWidget* UFuCommonUIUtility::FindRootUserWidgetOfClass(const UWidget* Widget
 	return ResultUserWidget;
 }
 
-UUserWidget* UFuCommonUIUtility::FindParentUserWidgetOfClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass)
+UUserWidget* UFuCommonUIUtility::FindParentUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass)
 {
 	if (!IsValid(UserWidgetClass))
 	{

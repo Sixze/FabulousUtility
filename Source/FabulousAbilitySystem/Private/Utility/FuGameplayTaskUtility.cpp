@@ -4,7 +4,7 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuGameplayTaskUtility)
 
-void UFuGameplayTaskUtility::TryEndTask(UGameplayTask* Task)
+void UFuGameplayTaskUtility::EndTaskSafe(UGameplayTask* Task)
 {
 	if (IsValid(Task))
 	{

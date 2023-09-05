@@ -17,8 +17,8 @@ public:
 	static bool HasController(AActor* Actor);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Controller Utility",
-		Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
-	static bool SwitchHasController(AActor* Actor);
+		DisplayName = "Has Controller (Expanded)", Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
+	static bool HasControllerExpanded(AActor* Actor);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Controller Utility",
 		Meta = (DefaultToSelf = "Actor", ReturnDisplayName = "Controller"))
@@ -33,8 +33,8 @@ public:
 	static bool HasPlayerController(AActor* Actor);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Controller Utility",
-		Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
-	static bool SwitchHasPlayerController(AActor* Actor);
+		DisplayName = "Has Player Controller (Expanded)", Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
+	static bool HasPlayerControllerExpanded(AActor* Actor);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Controller Utility",
 		Meta = (DefaultToSelf = "Actor", ReturnDisplayName = "Controller"))
@@ -54,7 +54,7 @@ inline bool UFuControllerUtility::HasController(AActor* Actor)
 	return IsValid(GetControllerFromActor(Actor));
 }
 
-inline bool UFuControllerUtility::SwitchHasController(AActor* Actor)
+inline bool UFuControllerUtility::HasControllerExpanded(AActor* Actor)
 {
 	return HasController(Actor);
 }
@@ -64,7 +64,7 @@ inline bool UFuControllerUtility::HasPlayerController(AActor* Actor)
 	return IsValid(GetPlayerControllerFromActor(Actor));
 }
 
-inline bool UFuControllerUtility::SwitchHasPlayerController(AActor* Actor)
+inline bool UFuControllerUtility::HasPlayerControllerExpanded(AActor* Actor)
 {
 	return HasPlayerController(Actor);
 }

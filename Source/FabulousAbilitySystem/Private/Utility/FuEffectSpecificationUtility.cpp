@@ -5,8 +5,8 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuEffectSpecificationUtility)
 
-float UFuEffectSpecificationUtility::GetSetByCallerMagnitude(const FGameplayEffectSpecHandle& EffectHandle,
-                                                             const FGameplayTag& SetByCallerTag)
+float UFuEffectSpecificationUtility::FindSetByCallerMagnitude(const FGameplayEffectSpecHandle& EffectHandle,
+                                                              const FGameplayTag& SetByCallerTag)
 {
 	const auto* EffectSpecification{EffectHandle.Data.Get()};
 

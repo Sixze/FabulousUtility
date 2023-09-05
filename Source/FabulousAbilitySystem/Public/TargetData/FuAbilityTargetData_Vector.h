@@ -1,6 +1,5 @@
 #pragma once
 
-#include "FuMacros.h"
 #include "Abilities/GameplayAbilityTargetTypes.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuAbilityTargetData_Vector.generated.h"
@@ -43,25 +42,9 @@ class FABULOUSABILITYSYSTEM_API UFuVectorTargetDataUtility : public UBlueprintFu
 public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector Target Data Utility",
 		Meta = (AutoCreateRefTerm = "TargetData", ReturnDisplayName = "Target Data Handle"))
-	static FGameplayAbilityTargetDataHandle MakeVectorTargetDataHandle(
-		const FFuAbilityTargetData_Vector& TargetData);
+	static FGameplayAbilityTargetDataHandle MakeVectorTargetData(const FFuAbilityTargetData_Vector& TargetData);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector Target Data Utility",
 		Meta = (ReturnDisplayName = "Target Data"))
 	static FFuAbilityTargetData_Vector GetVectorTargetData(const FGameplayAbilityTargetDataHandle& TargetDataHandle, int32 Index);
 };
-
-inline FGameplayAbilityTargetDataHandle UFuVectorTargetDataUtility::MakeVectorTargetDataHandle(
-	const FFuAbilityTargetData_Vector& TargetData)
-{
-	return {new FFuAbilityTargetData_Vector{TargetData}};
-}
-
-inline FFuAbilityTargetData_Vector UFuVectorTargetDataUtility::GetVectorTargetData(
-	const FGameplayAbilityTargetDataHandle& TargetDataHandle, const int32 Index)
-{
-	return TargetDataHandle.Data.IsValidIndex(Index) &&
-	       FU_ENSURE(TargetDataHandle.Data[Index].Get()->GetScriptStruct()->IsChildOf(FFuAbilityTargetData_Vector::StaticStruct()))
-		       ? *static_cast<FFuAbilityTargetData_Vector*>(TargetDataHandle.Data[Index].Get())
-		       : FFuAbilityTargetData_Vector{};
-}

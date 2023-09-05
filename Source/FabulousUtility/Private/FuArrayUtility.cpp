@@ -99,7 +99,7 @@ DEFINE_FUNCTION(UFuArrayUtility::execIsNotEmpty)
 	P_NATIVE_END
 }
 
-DEFINE_FUNCTION(UFuArrayUtility::execSwitchIsEmpty)
+DEFINE_FUNCTION(UFuArrayUtility::execIsEmptyExpanded)
 {
 	Stack.MostRecentProperty = nullptr;
 	Stack.StepCompiledIn<FArrayProperty>(nullptr);
@@ -120,7 +120,7 @@ DEFINE_FUNCTION(UFuArrayUtility::execSwitchIsEmpty)
 	P_NATIVE_END
 }
 
-DEFINE_FUNCTION(UFuArrayUtility::execSwitchIsNotEmpty)
+DEFINE_FUNCTION(UFuArrayUtility::execIsNotEmptyExpanded)
 {
 	Stack.MostRecentProperty = nullptr;
 	Stack.StepCompiledIn<FArrayProperty>(nullptr);

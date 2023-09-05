@@ -1,6 +1,5 @@
 #pragma once
 
-#include "FuMacros.h"
 #include "Abilities/GameplayAbilityTargetTypes.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuAbilityTargetData_LocationAndRotation.generated.h"
@@ -47,7 +46,7 @@ class FABULOUSABILITYSYSTEM_API UFuLocationAndRotationTargetDataUtility : public
 public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Location and Rotation Target Data Utility",
 		Meta = (AutoCreateRefTerm = "TargetData", ReturnDisplayName = "Target Data Handle"))
-	static FGameplayAbilityTargetDataHandle MakeLocationAndRotationTargetDataHandle(
+	static FGameplayAbilityTargetDataHandle MakeLocationAndRotationTargetData(
 		const FFuAbilityTargetData_LocationAndRotation& TargetData);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Location and Rotation Target Data Utility",
@@ -55,18 +54,3 @@ public:
 	static FFuAbilityTargetData_LocationAndRotation GetLocationAndRotationTargetData(
 		const FGameplayAbilityTargetDataHandle& TargetDataHandle, int32 Index);
 };
-
-inline FGameplayAbilityTargetDataHandle UFuLocationAndRotationTargetDataUtility::MakeLocationAndRotationTargetDataHandle(
-	const FFuAbilityTargetData_LocationAndRotation& TargetData)
-{
-	return {new FFuAbilityTargetData_LocationAndRotation{TargetData}};
-}
-
-inline FFuAbilityTargetData_LocationAndRotation UFuLocationAndRotationTargetDataUtility::GetLocationAndRotationTargetData(
-	const FGameplayAbilityTargetDataHandle& TargetDataHandle, const int32 Index)
-{
-	return TargetDataHandle.Data.IsValidIndex(Index) && FU_ENSURE(
-		       TargetDataHandle.Data[Index].Get()->GetScriptStruct()->IsChildOf(FFuAbilityTargetData_LocationAndRotation::StaticStruct()))
-		       ? *static_cast<FFuAbilityTargetData_LocationAndRotation*>(TargetDataHandle.Data[Index].Get())
-		       : FFuAbilityTargetData_LocationAndRotation{};
-}

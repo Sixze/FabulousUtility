@@ -12,8 +12,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Handle Utility", Meta = (ReturnDisplayName = "Value"))
 	static bool IsActive(FActiveGameplayEffectHandle EffectHandle);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Handle Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
-	static bool SwitchIsActive(FActiveGameplayEffectHandle EffectHandle);
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Handle Utility",
+		DisplayName = "Is Active (Expanded)", Meta = (ExpandBoolAsExecs = "ReturnValue"))
+	static bool IsActiveExpanded(FActiveGameplayEffectHandle EffectHandle);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Handle Utility")
 	static void RemoveActiveEffect(FActiveGameplayEffectHandle EffectHandle, int32 StacksToRemove = -1);

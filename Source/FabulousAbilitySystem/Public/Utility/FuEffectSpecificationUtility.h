@@ -11,5 +11,5 @@ class FABULOUSABILITYSYSTEM_API UFuEffectSpecificationUtility : public UBlueprin
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Specification Utility",
 		Meta = (AutoCreateRefTerm = "SetByCallerTag", GameplayTagFilter = "SetByCaller", ReturnDisplayName = "Magnitude"))
-	static float GetSetByCallerMagnitude(const FGameplayEffectSpecHandle& EffectHandle, const FGameplayTag& SetByCallerTag);
+	static float FindSetByCallerMagnitude(const FGameplayEffectSpecHandle& EffectHandle, const FGameplayTag& SetByCallerTag);
 };
