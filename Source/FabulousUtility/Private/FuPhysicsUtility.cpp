@@ -12,6 +12,23 @@ void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext,
                                                     TMap<AActor*, TArray<FHitResult>>& ReachableActors,
                                                     const AActor* IgnoredActor)
 {
+	ECollisionChannel CollisionChannel;
+	FCollisionResponseParams CollisionResponses;
+	if (!UCollisionProfile::GetChannelAndResponseParams(CollisionProfile.Name, CollisionChannel, CollisionResponses))
+	{
+		ReachableActors.Reset();
+		return;
+	}
+
+	return FindReachableActorsInRadius(WorldContext, Location, Radius, CollisionChannel, CollisionResponses, FilterPredicate,
+	                                   ReachableActors, IgnoredActor);
+}
+
+void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext, const FVector& Location, float Radius,
+                                                    ECollisionChannel CollisionChannel, const FCollisionResponseParams& CollisionResponses,
+                                                    TFunctionRef<bool(const FOverlapResult& Overlap)> FilterPredicate,
+                                                    TMap<AActor*, TArray<FHitResult>>& ReachableActors, const AActor* IgnoredActor)
+{
 	// Based on UGameplayStatics::ApplyRadialDamageWithFalloff().
 
 	ReachableActors.Reset();
@@ -22,17 +39,10 @@ void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext,
 		return;
 	}
 
-	ECollisionChannel CollisionChannel;
-	FCollisionResponseParams CollisionResponse;
-	if (!UCollisionProfile::GetChannelAndResponseParams(CollisionProfile.Name, CollisionChannel, CollisionResponse))
-	{
-		return;
-	}
-
 	TArray<FOverlapResult> Overlaps;
 
 	World->OverlapMultiByChannel(Overlaps, Location, FQuat::Identity, CollisionChannel, FCollisionShape::MakeSphere(Radius),
-	                             {__FUNCTION__, false, IgnoredActor}, CollisionResponse);
+	                             {__FUNCTION__, false, IgnoredActor}, CollisionResponses);
 
 	FHitResult Hit;
 
@@ -47,7 +57,7 @@ void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext,
 		auto* ActorHits{ReachableActors.Find(Actor)};
 
 		if ((ActorHits == nullptr && !FilterPredicate(Overlap)) || !Overlap.Component.IsValid() ||
-		    !IsComponentReachableFromLocation(Overlap.Component.Get(), Location, CollisionChannel, CollisionResponse, Hit, IgnoredActor))
+		    !IsComponentReachableFromLocation(Overlap.Component.Get(), Location, CollisionChannel, CollisionResponses, Hit, IgnoredActor))
 		{
 			continue;
 		}
@@ -63,7 +73,7 @@ void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext,
 
 bool UFuPhysicsUtility::IsComponentReachableFromLocation(UPrimitiveComponent* Component, const FVector& Location,
                                                          const ECollisionChannel CollisionChannel,
-                                                         const FCollisionResponseParams& CollisionResponse,
+                                                         const FCollisionResponseParams& CollisionResponses,
                                                          FHitResult& Hit, const AActor* IgnoredActor)
 {
 	if (!FU_ENSURE(IsValid(Component)))
@@ -79,36 +89,36 @@ bool UFuPhysicsUtility::IsComponentReachableFromLocation(UPrimitiveComponent* Co
 
 	return IsComponentReachableByLineTrace(Component, Location,
 	                                       ComponentBounds.Origin,
-	                                       CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
+	                                       CollisionChannel, CollisionResponses, Hit, IgnoredActor) ||
 	       IsComponentReachableByLineTrace(Component, Location,
 	                                       ComponentBounds.Origin + TraceEndOffset,
-	                                       CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
+	                                       CollisionChannel, CollisionResponses, Hit, IgnoredActor) ||
 	       IsComponentReachableByLineTrace(Component, Location,
 	                                       ComponentBounds.Origin - TraceEndOffset,
-	                                       CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
+	                                       CollisionChannel, CollisionResponses, Hit, IgnoredActor) ||
 	       IsComponentReachableByLineTrace(Component, Location + TraceStartOffset,
 	                                       ComponentBounds.Origin,
-	                                       CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
+	                                       CollisionChannel, CollisionResponses, Hit, IgnoredActor) ||
 	       IsComponentReachableByLineTrace(Component, Location + TraceStartOffset,
 	                                       ComponentBounds.Origin + TraceEndOffset,
-	                                       CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
+	                                       CollisionChannel, CollisionResponses, Hit, IgnoredActor) ||
 	       IsComponentReachableByLineTrace(Component, Location + TraceStartOffset,
 	                                       ComponentBounds.Origin - TraceEndOffset,
-	                                       CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
+	                                       CollisionChannel, CollisionResponses, Hit, IgnoredActor) ||
 	       IsComponentReachableByLineTrace(Component, Location - TraceStartOffset,
 	                                       ComponentBounds.Origin,
-	                                       CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
+	                                       CollisionChannel, CollisionResponses, Hit, IgnoredActor) ||
 	       IsComponentReachableByLineTrace(Component, Location - TraceStartOffset,
 	                                       ComponentBounds.Origin + TraceEndOffset,
-	                                       CollisionChannel, CollisionResponse, Hit, IgnoredActor) ||
+	                                       CollisionChannel, CollisionResponses, Hit, IgnoredActor) ||
 	       IsComponentReachableByLineTrace(Component, Location - TraceStartOffset,
 	                                       ComponentBounds.Origin - TraceEndOffset,
-	                                       CollisionChannel, CollisionResponse, Hit, IgnoredActor);
+	                                       CollisionChannel, CollisionResponses, Hit, IgnoredActor);
 }
 
 bool UFuPhysicsUtility::IsComponentReachableByLineTrace(UPrimitiveComponent* Component, const FVector& TraceStart,
                                                         const FVector& TraceEnd, const ECollisionChannel CollisionChannel,
-                                                        const FCollisionResponseParams& CollisionResponse,
+                                                        const FCollisionResponseParams& CollisionResponses,
                                                         FHitResult& Hit, const AActor* IgnoredActor)
 {
 	// Based on ComponentIsDamageableFrom().
@@ -120,7 +130,7 @@ bool UFuPhysicsUtility::IsComponentReachableByLineTrace(UPrimitiveComponent* Com
 	}
 
 	if (Component->GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, CollisionChannel,
-	                                                    {__FUNCTION__, true, IgnoredActor}, CollisionResponse))
+	                                                    {__FUNCTION__, true, IgnoredActor}, CollisionResponses))
 	{
 		return Hit.Component.Get() == Component;
 	}
@@ -147,7 +157,7 @@ bool UFuPhysicsUtility::LineTraceBone(UPrimitiveComponent* Primitive, const FNam
 }
 
 bool UFuPhysicsUtility::BoxOverlapActors(const UObject* WorldContext, const FVector& Location, const FRotator& Rotation,
-                                         const FVector& Extent, const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes,
+                                         const FVector& Extent, const TArray<TEnumAsByte<ECollisionChannel>>& CollisionChannels,
                                          const TArray<AActor*>& IgnoreActors, TArray<AActor*>& Actors)
 {
 	Actors.Reset();
@@ -158,12 +168,10 @@ bool UFuPhysicsUtility::BoxOverlapActors(const UObject* WorldContext, const FVec
 		return false;
 	}
 
-	const auto* CollisionProfile{UCollisionProfile::Get()};
-
 	FCollisionObjectQueryParams ObjectQueryParameters;
-	for (const auto ObjectType : ObjectTypes)
+	for (const auto CollisionChannel : CollisionChannels)
 	{
-		ObjectQueryParameters.AddObjectTypesToQuery(CollisionProfile->ConvertToCollisionChannel(false, ObjectType));
+		ObjectQueryParameters.AddObjectTypesToQuery(CollisionChannel);
 	}
 
 	FCollisionQueryParams QueryParameters{__FUNCTION__, false};
@@ -188,7 +196,7 @@ bool UFuPhysicsUtility::BoxOverlapActors(const UObject* WorldContext, const FVec
 }
 
 bool UFuPhysicsUtility::BoxOverlapComponents(const UObject* WorldContext, const FVector& Location, const FRotator& Rotation,
-                                             const FVector& Extent, const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes,
+                                             const FVector& Extent, const TArray<TEnumAsByte<ECollisionChannel>>& CollisionChannels,
                                              const TArray<AActor*>& IgnoreActors, TArray<UPrimitiveComponent*>& Components)
 {
 	Components.Reset();
@@ -199,12 +207,10 @@ bool UFuPhysicsUtility::BoxOverlapComponents(const UObject* WorldContext, const 
 		return false;
 	}
 
-	const auto* CollisionProfile{UCollisionProfile::Get()};
-
 	FCollisionObjectQueryParams ObjectQueryParameters;
-	for (const auto ObjectType : ObjectTypes)
+	for (const auto CollisionChannel : CollisionChannels)
 	{
-		ObjectQueryParameters.AddObjectTypesToQuery(CollisionProfile->ConvertToCollisionChannel(false, ObjectType));
+		ObjectQueryParameters.AddObjectTypesToQuery(CollisionChannel);
 	}
 
 	FCollisionQueryParams QueryParameters{__FUNCTION__, false};
@@ -228,7 +234,7 @@ bool UFuPhysicsUtility::BoxOverlapComponents(const UObject* WorldContext, const 
 
 bool UFuPhysicsUtility::ConeOverlapActorsSimple(const UObject* WorldContext, const FVector& Location,
                                                 const FRotator& Rotation, const float Radius, const float Angle,
-                                                const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes,
+                                                const TArray<TEnumAsByte<ECollisionChannel>>& CollisionChannels,
                                                 const TArray<AActor*>& IgnoreActors, TArray<AActor*>& Actors)
 {
 	Actors.Reset();
@@ -239,12 +245,10 @@ bool UFuPhysicsUtility::ConeOverlapActorsSimple(const UObject* WorldContext, con
 		return false;
 	}
 
-	const auto* CollisionProfile{UCollisionProfile::Get()};
-
 	FCollisionObjectQueryParams ObjectQueryParameters;
-	for (const auto ObjectType : ObjectTypes)
+	for (const auto CollisionChannel : CollisionChannels)
 	{
-		ObjectQueryParameters.AddObjectTypesToQuery(CollisionProfile->ConvertToCollisionChannel(false, ObjectType));
+		ObjectQueryParameters.AddObjectTypesToQuery(CollisionChannel);
 	}
 
 	FCollisionQueryParams QueryParameters{__FUNCTION__, false};
@@ -273,7 +277,7 @@ bool UFuPhysicsUtility::ConeOverlapActorsSimple(const UObject* WorldContext, con
 
 bool UFuPhysicsUtility::ConeOverlapComponentsSimple(const UObject* WorldContext, const FVector& Location,
                                                     const FRotator& Rotation, const float Radius, const float Angle,
-                                                    const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes,
+                                                    const TArray<TEnumAsByte<ECollisionChannel>>& CollisionChannels,
                                                     const TArray<AActor*>& IgnoreActors, TArray<UPrimitiveComponent*>& Components)
 {
 	Components.Reset();
@@ -284,12 +288,10 @@ bool UFuPhysicsUtility::ConeOverlapComponentsSimple(const UObject* WorldContext,
 		return false;
 	}
 
-	const auto* CollisionProfile{UCollisionProfile::Get()};
-
 	FCollisionObjectQueryParams ObjectQueryParameters;
-	for (const auto ObjectType : ObjectTypes)
+	for (const auto CollisionChannel : CollisionChannels)
 	{
-		ObjectQueryParameters.AddObjectTypesToQuery(CollisionProfile->ConvertToCollisionChannel(false, ObjectType));
+		ObjectQueryParameters.AddObjectTypesToQuery(CollisionChannel);
 	}
 
 	FCollisionQueryParams QueryParameters{__FUNCTION__, false};
