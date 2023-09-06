@@ -18,20 +18,20 @@ protected:
 	bool bCancelAbilityOnDestroy;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Ability Activator Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Ability Activator Ability Task")
 	FFuAbilityActivatorDelegate OnAbilityActivated;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Ability Activator Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Ability Activator Ability Task")
 	FFuAbilityActivatorDelegate OnAbilityFailed;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Ability Activator Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Ability Activator Ability Task")
 	FFuAbilityActivatorDelegate OnAbilityEnded;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Ability Activator Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Ability Activator Ability Task")
 	FFuAbilityActivatorDelegate OnAbilityCanceled;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_AbilityActivator* FuActivateAbilityByHandle(
 		UGameplayAbility* OwningAbility,

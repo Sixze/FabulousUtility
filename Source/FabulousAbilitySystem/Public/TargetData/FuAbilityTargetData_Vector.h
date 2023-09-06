@@ -40,11 +40,11 @@ class FABULOUSABILITYSYSTEM_API UFuVectorTargetDataUtility : public UBlueprintFu
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector Target Data Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Vector Target Data Utility",
 		Meta = (AutoCreateRefTerm = "TargetData", ReturnDisplayName = "Target Data Handle"))
 	static FGameplayAbilityTargetDataHandle MakeVectorTargetData(const FFuAbilityTargetData_Vector& TargetData);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Vector Target Data Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Vector Target Data Utility",
 		Meta = (ReturnDisplayName = "Target Data"))
 	static FFuAbilityTargetData_Vector GetVectorTargetData(const FGameplayAbilityTargetDataHandle& TargetDataHandle, int32 Index);
 };

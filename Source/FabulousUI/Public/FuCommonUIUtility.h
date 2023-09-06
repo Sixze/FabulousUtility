@@ -10,17 +10,17 @@ class FABULOUSUI_API UFuCommonUIUtility : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Common UI Utility", Meta = (ReturnDisplayName = "Input Type"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Common UI Utility", Meta = (ReturnDisplayName = "Input Type"))
 	static ECommonInputType GetInputType(const FKey& Key);
 
 	template <typename UserWidgetType = UUserWidget>
 	static UserWidgetType* FindRootUserWidget(const UWidget* Widget);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Common UI Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Common UI Utility",
 		Meta = (DefaultToSelf = "Widget", DeterminesOutputType = "UserWidgetClass", ReturnDisplayName = "Root Widget"))
 	static UUserWidget* FindRootUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Common UI Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Common UI Utility",
 		Meta = (DefaultToSelf = "Widget", DeterminesOutputType = "UserWidgetClass",
 			DynamicOutputParam = "UserWidget", ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryFindRootUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass, UUserWidget*& UserWidget);
@@ -28,11 +28,11 @@ public:
 	template <typename UserWidgetType = UUserWidget>
 	static UserWidgetType* FindParentUserWidget(const UWidget* Widget);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Common UI Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Common UI Utility",
 		Meta = (DefaultToSelf = "Widget", DeterminesOutputType = "UserWidgetClass", ReturnDisplayName = "Root Widget"))
 	static UUserWidget* FindParentUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Common UI Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Common UI Utility",
 		Meta = (DefaultToSelf = "Widget", DeterminesOutputType = "UserWidgetClass",
 			DynamicOutputParam = "UserWidget", ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryFindParentUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass, UUserWidget*& UserWidget);

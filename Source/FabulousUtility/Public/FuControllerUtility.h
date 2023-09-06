@@ -12,39 +12,39 @@ class FABULOUSUTILITY_API UFuControllerUtility : public UBlueprintFunctionLibrar
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Controller Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Controller Utility",
 		Meta = (DefaultToSelf = "Actor", ReturnDisplayName = "Value"))
 	static bool HasController(AActor* Actor);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Controller Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Controller Utility",
 		DisplayName = "Has Controller (Expanded)", Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
 	static bool HasControllerExpanded(AActor* Actor);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Controller Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Controller Utility",
 		Meta = (DefaultToSelf = "Actor", ReturnDisplayName = "Controller"))
 	static AController* GetControllerFromActor(AActor* Actor);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Controller Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Controller Utility",
 		Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryGetControllerFromActor(AActor* Actor, AController*& Controller);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Controller Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Controller Utility",
 		Meta = (DefaultToSelf = "Actor", ReturnDisplayName = "Value"))
 	static bool HasPlayerController(AActor* Actor);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Controller Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Controller Utility",
 		DisplayName = "Has Player Controller (Expanded)", Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
 	static bool HasPlayerControllerExpanded(AActor* Actor);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Controller Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Controller Utility",
 		Meta = (DefaultToSelf = "Actor", ReturnDisplayName = "Controller"))
 	static APlayerController* GetPlayerControllerFromActor(AActor* Actor);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Controller Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Controller Utility",
 		Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryGetPlayerControllerFromActor(AActor* Actor, APlayerController*& Player);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Controller Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Controller Utility",
 		Meta = (DefaultToSelf = "Player", ReturnDisplayName = "Local Player"))
 	static ULocalPlayer* GetLocalPlayer(const APlayerController* Player);
 };

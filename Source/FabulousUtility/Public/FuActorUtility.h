@@ -12,43 +12,43 @@ class FABULOUSUTILITY_API UFuActorUtility : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Actor Utility", Meta = (DefaultToSelf = "Actor", ReturnDisplayName = "Value"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Actor Utility", Meta = (DefaultToSelf = "Actor", ReturnDisplayName = "Value"))
 	static bool IsActorLoadedFromLevel(const AActor* Actor);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Actor Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Actor Utility",
 		DisplayName = "Is Actor Loaded from Level (Expanded)", Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
 	static bool IsActorLoadedFromLevelExpanded(const AActor* Actor);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Actor Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Actor Utility",
 		Meta = (DeterminesOutputType = "ComponentClass", DynamicOutputParam = "Component", ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryFindComponentByClass(AActor* Actor, TSubclassOf<UActorComponent> ComponentClass, UActorComponent*& Component);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Actor Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Actor Utility",
 		Meta = (DefaultToSelf = "Actor", ReturnDisplayName = "Feet Location"))
 	static FVector GetActorFeetLocation(const AActor* Actor);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Actor Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Actor Utility",
 		Meta = (DefaultToSelf = "Actor", ReturnDisplayName = "Feet Offset"))
 	static FVector GetActorFeetOffset(const AActor* Actor);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Actor Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Actor Utility",
 		Meta = (WorldContext = "WorldContext", AutoCreateRefTerm = "Location, Rotation", ReturnDisplayName = "Value"))
 	static bool IsEncroachingBlockingGeometry(const UObject* WorldContext, TSubclassOf<AActor> ActorClass,
 	                                          const FVector& Location, const FRotator& Rotation);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Actor Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Actor Utility",
 		DisplayName = "Is Encroaching Blocking Geometry (Expanded)",
 		Meta = (WorldContext = "WorldContext", ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "Location, Rotation"))
 	static bool IsEncroachingBlockingGeometryExpanded(const UObject* WorldContext, TSubclassOf<AActor> ActorClass,
 	                                                  const FVector& Location, const FRotator& Rotation);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Actor Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Actor Utility",
 		Meta = (WorldContext = "WorldContext", AutoCreateRefTerm = "Location, Rotation", ReturnDisplayName = "Value"))
 	static bool IsEncroachingBlockingGeometryWithAdjustment(const UObject* WorldContext, TSubclassOf<AActor> ActorClass,
 	                                                        const FVector& Location, const FRotator& Rotation,
 	                                                        FVector& ProposedAdjustment);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Actor Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Actor Utility",
 		DisplayName = "Is Encroaching Blocking Geometry with Adjustment (Expanded)",
 		Meta = (WorldContext = "WorldContext", ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "Location, Rotation"))
 	static bool IsEncroachingBlockingGeometryWithAdjustmentExpanded(const UObject* WorldContext, TSubclassOf<AActor> ActorClass,

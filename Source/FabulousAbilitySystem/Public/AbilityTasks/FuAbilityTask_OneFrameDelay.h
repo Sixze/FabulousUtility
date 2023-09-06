@@ -11,11 +11,11 @@ class FABULOUSABILITYSYSTEM_API UFuAbilityTask_OneFrameDelay : public UAbilityTa
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu One Frame Delay Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|One Frame Delay Ability Task")
 	FFuOneFrameDelayDelegate OnDelayEnded;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_OneFrameDelay* FuWaitForOneFrameDelay(UGameplayAbility* OwningAbility);
 

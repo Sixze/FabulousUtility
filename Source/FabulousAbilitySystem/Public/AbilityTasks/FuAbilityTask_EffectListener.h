@@ -15,20 +15,20 @@ protected:
 	FGameplayTagContainer EffectTags;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Effect Listener Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Effect Listener Ability Task")
 	FFuEffectListenerDelegate OnEffectAdded;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Effect Listener Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Effect Listener Ability Task")
 	FFuEffectListenerDelegate OnEffectRemoved;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_EffectListener* FuWaitForEffectChangeByTag(
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Effect Tag") FGameplayTag InEffectTag);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_EffectListener* FuWaitForEffectChangeByTags(
 		UGameplayAbility* OwningAbility,

@@ -9,9 +9,9 @@ class FABULOUSUTILITY_API UFuInputUtility : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Input Utility", Meta = (DefaultToSelf = "Actor"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Input Utility", Meta = (DefaultToSelf = "Actor"))
 	static void SetBlockInput(AActor* Actor, bool bBlockInput);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Input Utility", Meta = (DefaultToSelf = "Player"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Input Utility", Meta = (DefaultToSelf = "Player"))
 	static void FuSetInputModeGameOnly(APlayerController* Player, bool bConsumeCaptureMouseDown);
 };

@@ -12,7 +12,7 @@ class FABULOUSUTILITY_API UFuWorldUtility : public UBlueprintFunctionLibrary
 public:
 	static constexpr FStringView WorldTypeToString(EWorldType::Type WorldType);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu World Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|World Utility",
 		Meta = (WorldContext = "WorldContext", ReturnDisplayName = "Gravity Z"))
 	static float GetWorldGravityZ(const UObject* WorldContext);
 };

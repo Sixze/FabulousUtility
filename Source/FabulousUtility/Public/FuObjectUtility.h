@@ -13,19 +13,19 @@ class FABULOUSUTILITY_API UFuObjectUtility : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Object Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Object Utility",
 		Meta = (DeterminesOutputType = "Class", ReturnDisplayName = "Default Object"))
 	static UObject* GetDefaultObject(TSubclassOf<UObject> Class);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Object Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Object Utility",
 		Meta = (AutoCreateRefTerm = "SoftObjectReference", ReturnDisplayName = "Object Name"))
 	static FString GetObjectName(const TSoftObjectPtr<UObject>& SoftObjectReference);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Object Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Object Utility",
 		Meta = (DeterminesOutputType = "Object", AutoCreateRefTerm = "Name", ReturnDisplayName = "Object"))
 	static UObject* DuplicateObject(const UObject* Object, UObject* Outer, const FName& Name = NAME_None);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Object Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Object Utility",
 		DisplayName = "Does Implement Interface (Expanded)", Meta = (DefaultToSelf = "Object", ExpandBoolAsExecs = "ReturnValue"))
 	static bool DoesImplementInterfaceExpanded(const UObject* Object, TSubclassOf<UInterface> InterfaceClass);
 };

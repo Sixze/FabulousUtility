@@ -9,7 +9,7 @@ class FABULOUSABILITYSYSTEM_API UFuEffectSpecificationUtility : public UBlueprin
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Specification Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Effect Specification Utility",
 		Meta = (AutoCreateRefTerm = "SetByCallerTag", GameplayTagFilter = "SetByCaller", ReturnDisplayName = "Magnitude"))
 	static float FindSetByCallerMagnitude(const FGameplayEffectSpecHandle& EffectHandle, const FGameplayTag& SetByCallerTag);
 };

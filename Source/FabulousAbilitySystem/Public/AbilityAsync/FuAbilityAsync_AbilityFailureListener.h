@@ -19,29 +19,29 @@ protected:
 	FGameplayTagContainer FailureTags;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Ability Failure Listener Ability Async")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Ability Failure Listener Ability Async")
 	FFuAbilityFailureListenerDelegate OnAbilityFailed;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AbilityFailureListener* FuListenForAbilityFailureOnActor(
 		const AActor* Actor,
 		UPARAM(DisplayName = "Ability Tag") FGameplayTag InAbilityTag,
 		UPARAM(DisplayName = "Failure Tags") FGameplayTagContainer InFailureTags);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AbilityFailureListener* FuListenForAbilitiesFailureOnActor(
 		const AActor* Actor,
 		UPARAM(DisplayName = "Ability Tags") FGameplayTagContainer InAbilityTags,
 		UPARAM(DisplayName = "Failure Tags") FGameplayTagContainer InFailureTags);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AbilityFailureListener* FuListenForAbilityFailure(
 		UFuAbilitySystemComponent* AbilitySystem,
 		UPARAM(DisplayName = "Ability Tag") FGameplayTag InAbilityTag,
 		UPARAM(DisplayName = "Failure Tags") FGameplayTagContainer InFailureTags);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AbilityFailureListener* FuListenForAbilitiesFailure(
 		UFuAbilitySystemComponent* AbilitySystem,
 		UPARAM(DisplayName = "Ability Tags") FGameplayTagContainer InAbilityTags,

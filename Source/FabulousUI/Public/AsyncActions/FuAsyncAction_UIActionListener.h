@@ -44,10 +44,10 @@ protected:
 	TArray<FUIActionBindingHandle> ActionHandles;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu UI Action Listener Async Action")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|UI Action Listener Async Action")
 	FFuUIActionListenerDelegate OnActionExecuted;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu UI Action Listener Async Action")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|UI Action Listener Async Action")
 	FFuUIActionListenerDelegate OnActionHeld;
 
 public:
@@ -61,7 +61,7 @@ public:
 	 * @param bInDisplayInActionBar Whether this binding can/should be displayed in an action bar (if one exists).
 	 * @param InDisplayNameOverride Optional display name to associate with this binding instead of the default.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu UI Async Actions",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|UI Async Actions",
 		DisplayName = "Fu Listen For UI Action", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InWidget", AdvancedDisplay = 2))
 	static UFuAsyncAction_UIActionListener* FuListenForUIAction(
 		UPARAM(DisplayName = "Widget") UCommonUserWidget* InWidget,
@@ -83,7 +83,7 @@ public:
 	 * @param bInDisplayInActionBar Whether this binding can/should be displayed in an action bar (if one exists).
 	 * @param InDisplayNameOverride Optional display name to associate with this binding instead of the default.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu UI Async Actions",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|UI Async Actions",
 		DisplayName = "Fu Listen For UI Actions", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InWidget", AdvancedDisplay = 2))
 	static UFuAsyncAction_UIActionListener* FuListenForUIActions(
 		UPARAM(DisplayName = "Widget") UCommonUserWidget* InWidget,

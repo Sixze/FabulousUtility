@@ -11,21 +11,21 @@ class FABULOUSABILITYSYSTEM_API UFuEffectContextUtility : public UBlueprintFunct
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Context Utility", Meta = (ReturnDisplayName = "Effect Context Handle"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Effect Context Utility", Meta = (ReturnDisplayName = "Effect Context Handle"))
 	static FGameplayEffectContextHandle DuplicateEffectContext(const FGameplayEffectContextHandle& EffectContextHandle);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Effect Context Utility", Meta = (ReturnDisplayName = "Target Data Handle"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Effect Context Utility", Meta = (ReturnDisplayName = "Target Data Handle"))
 	static FGameplayAbilityTargetDataHandle GetTargetDataHandle(const FGameplayEffectContextHandle& EffectContextHandle);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Context Utility")
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Effect Context Utility")
 	static void AppendTargetData(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle,
 	                             const FGameplayAbilityTargetDataHandle& TargetDataHandle);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Context Utility")
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Effect Context Utility")
 	static void SetTargetData(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle,
 	                          const FGameplayAbilityTargetDataHandle& TargetDataHandle);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Effect Context Utility")
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Effect Context Utility")
 	static void ClearTargetData(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle);
 };
 

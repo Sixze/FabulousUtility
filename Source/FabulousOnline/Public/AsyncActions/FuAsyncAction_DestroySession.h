@@ -13,14 +13,14 @@ protected:
 	TWeakObjectPtr<APlayerController> Player;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Destroy Session Async Action")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Destroy Session Async Action")
 	FEmptyOnlineDelegate OnSuccess;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Destroy Session Async Action")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Destroy Session Async Action")
 	FEmptyOnlineDelegate OnFailure;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InPlayer"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InPlayer"))
 	static UFuAsyncAction_DestroySession* FuDestroySession(UPARAM(DisplayName = "Player") APlayerController* InPlayer);
 
 	virtual void Activate() override;

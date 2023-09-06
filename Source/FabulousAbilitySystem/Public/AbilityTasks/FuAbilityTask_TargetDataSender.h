@@ -15,11 +15,11 @@ protected:
 	FGameplayAbilityTargetDataHandle TargetData;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Target Data Sender Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Target Data Sender Ability Task")
 	FFuTargetDataSenderDelegate OnTargetDataReceived;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_TargetDataSender* FuSendTargetData(
 		UGameplayAbility* OwningAbility,

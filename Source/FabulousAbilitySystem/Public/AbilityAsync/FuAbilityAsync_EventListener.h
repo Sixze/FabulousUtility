@@ -15,15 +15,15 @@ protected:
 	FGameplayTag EventTag;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Event Listener Ability Async")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Event Listener Ability Async")
 	FFuEventListenerDelegate OnEventReceived;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_EventListener* FuListenForEventOnActor(const AActor* Actor,
 	                                                              UPARAM(DisplayName = "Event Tag") FGameplayTag InEventTag);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_EventListener* FuListenForEvent(UAbilitySystemComponent* AbilitySystem,
 	                                                       UPARAM(DisplayName = "Event Tag") FGameplayTag InEventTag);
 

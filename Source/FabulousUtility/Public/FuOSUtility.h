@@ -9,6 +9,6 @@ class FABULOUSUTILITY_API UFuOSUtility : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "Fabulous Utility|Fu OS Utility")
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "Fabulous Utility|OS Utility")
 	static void FlashUnfocusedWindow();
 };

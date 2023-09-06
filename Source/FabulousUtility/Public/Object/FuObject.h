@@ -34,7 +34,7 @@ public:
 public:
 	AActor* GetOwner() const;
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Object", Meta = (ReturnDisplayName = "Local Role"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Object", Meta = (ReturnDisplayName = "Local Role"))
 	ENetRole GetOwnerLocalRole() const;
 
 protected:
@@ -44,7 +44,7 @@ protected:
 	void ReceiveBeginPlay();
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Object")
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Object")
 	void Destroy();
 };
 

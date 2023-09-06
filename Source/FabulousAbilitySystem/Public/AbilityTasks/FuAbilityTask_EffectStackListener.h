@@ -16,11 +16,11 @@ protected:
 	TSubclassOf<UGameplayEffect> EffectClass;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Effect Stack Listener Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Effect Stack Listener Ability Task")
 	FFuEffectStackListenerDelegate OnStackChanged;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_EffectStackListener* FuWaitForEffectStackChange(
 		UGameplayAbility* OwningAbility,

@@ -14,16 +14,16 @@ protected:
 	TSubclassOf<UGameplayEffect> EffectClass;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Effect Stack Listener Ability Async")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Effect Stack Listener Ability Async")
 	FFuEffectStackListenerDelegate OnStackChanged;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_EffectStackListener* FuListenForEffectStackChangeOnActor(
 		const AActor* Actor,
 		UPARAM(DisplayName = "Effect Class") TSubclassOf<UGameplayEffect> InEffectClass);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Async", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_EffectStackListener* FuListenForEffectStackChange(
 		UAbilitySystemComponent* AbilitySystem,
 		UPARAM(DisplayName = "Effect Class") TSubclassOf<UGameplayEffect> InEffectClass);

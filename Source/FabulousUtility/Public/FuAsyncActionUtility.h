@@ -11,6 +11,6 @@ class FABULOUSUTILITY_API UFuAsyncActionUtility : public UBlueprintFunctionLibra
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Async Action Utility")
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Async Action Utility")
 	static void CancelActionSafe(UCancellableAsyncAction* Action);
 };

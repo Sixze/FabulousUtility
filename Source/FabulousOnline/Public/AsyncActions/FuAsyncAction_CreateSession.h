@@ -19,14 +19,14 @@ protected:
 	bool bLanOnly;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Create Session Async Action")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Create Session Async Action")
 	FEmptyOnlineDelegate OnSuccess;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Create Session Async Action")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Create Session Async Action")
 	FEmptyOnlineDelegate OnFailure;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InPlayer"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InPlayer"))
 	static UFuAsyncAction_CreateSession* FuCreateSession(UPARAM(DisplayName = "Player") APlayerController* InPlayer,
 	                                                     UPARAM(DisplayName = "Public Connections") int32 InPublicConnections,
 	                                                     UPARAM(DisplayName = "Lan Only") bool bInLanOnly);

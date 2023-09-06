@@ -9,11 +9,11 @@ class FABULOUSUTILITY_API UFuNetworkingUtility : public UBlueprintFunctionLibrar
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Networking Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Networking Utility",
 		Meta = (DefaultToSelf = "Actor", ReturnDisplayName = "Value"))
 	static bool IsActorLocallyControlled(const AActor* Actor);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Networking Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Networking Utility",
 		DisplayName = "Is Actor Locally Controlled (Expanded)", Meta = (DefaultToSelf = "Actor", ExpandBoolAsExecs = "ReturnValue"))
 	static bool IsActorLocallyControlledExpanded(const AActor* Actor);
 };

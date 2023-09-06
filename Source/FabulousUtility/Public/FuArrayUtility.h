@@ -22,37 +22,37 @@ public:
 	template <typename ValueType, typename PredicateType>
 	static int32 GetWeightedRandomIndexByPredicate(const TArray<ValueType>& Array, const PredicateType& WeightPredicate);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Array Utility", Meta = (ReturnDisplayName = "Random Index"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Array Utility", Meta = (ReturnDisplayName = "Random Index"))
 	static int32 GetWeightedRandomIndex(const TArray<float>& Array);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", Meta = (AutoCreateRefTerm = "Array"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Array Utility", Meta = (AutoCreateRefTerm = "Array"))
 	static void SortByPredicateObject(UPARAM(ref) TArray<UObject*>& Objects, const FFuSortByPredicatObjectDelegate& Predicate);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", Meta = (AutoCreateRefTerm = "Array"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Array Utility", Meta = (AutoCreateRefTerm = "Array"))
 	static void SortByPredicateActor(UPARAM(ref) TArray<AActor*>& Actors, const FFuSortByPredicateActorDelegate& Predicate);
 
 	// Internal blueprint-only functions.
 
 private:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Array Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Array Utility",
 		CustomThunk, Meta = (ArrayParm = "Array", ReturnDisplayName = "Value"))
 	static bool IsEmpty(const TArray<UObject*>& Array);
 
 	DECLARE_FUNCTION(execIsEmpty);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Array Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Array Utility",
 		CustomThunk, Meta = (ArrayParm = "Array", ReturnDisplayName = "Value"))
 	static bool IsNotEmpty(const TArray<UObject*>& Array);
 
 	DECLARE_FUNCTION(execIsNotEmpty);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", CustomThunk,
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Array Utility", CustomThunk,
 		DisplayName = "Is Empty (Expanded)", Meta = (ArrayParm = "Array", ExpandBoolAsExecs = "ReturnValue"))
 	static bool IsEmptyExpanded(const TArray<UObject*>& Array);
 
 	DECLARE_FUNCTION(execIsEmptyExpanded);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", CustomThunk,
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Array Utility", CustomThunk,
 		DisplayName = "Is Not Empty (Expanded)", Meta = (ArrayParm = "Array", ExpandBoolAsExecs = "ReturnValue"))
 	static bool IsNotEmptyExpanded(const TArray<UObject*>& Array);
 
@@ -60,14 +60,14 @@ private:
 
 	static bool IsEmpty(void* Array, const FArrayProperty* Property);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", CustomThunk, Meta = (ArrayParm = "Array"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Array Utility", CustomThunk, Meta = (ArrayParm = "Array"))
 	static void Shuffle(UPARAM(ref) TArray<int32>& Array);
 
 	DECLARE_FUNCTION(execShuffle);
 
 	static void Shuffle(void* Array, const FArrayProperty* Property);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Array Utility", CustomThunk, Meta = (ArrayParm = "Array"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Array Utility", CustomThunk, Meta = (ArrayParm = "Array"))
 	static void ShuffleFirstElements(UPARAM(ref) TArray<int32>& Array, int32 FirstElementsCount);
 
 	DECLARE_FUNCTION(execShuffleFirstElements);

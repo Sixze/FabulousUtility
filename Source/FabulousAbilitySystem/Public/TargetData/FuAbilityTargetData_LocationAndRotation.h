@@ -44,12 +44,12 @@ class FABULOUSABILITYSYSTEM_API UFuLocationAndRotationTargetDataUtility : public
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Location and Rotation Target Data Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Location and Rotation Target Data Utility",
 		Meta = (AutoCreateRefTerm = "TargetData", ReturnDisplayName = "Target Data Handle"))
 	static FGameplayAbilityTargetDataHandle MakeLocationAndRotationTargetData(
 		const FFuAbilityTargetData_LocationAndRotation& TargetData);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Location and Rotation Target Data Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Location and Rotation Target Data Utility",
 		Meta = (ReturnDisplayName = "Target Data"))
 	static FFuAbilityTargetData_LocationAndRotation GetLocationAndRotationTargetData(
 		const FGameplayAbilityTargetDataHandle& TargetDataHandle, int32 Index);

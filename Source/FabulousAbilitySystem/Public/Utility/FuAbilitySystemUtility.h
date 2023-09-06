@@ -11,48 +11,48 @@ class FABULOUSABILITYSYSTEM_API UFuAbilitySystemUtility : public UBlueprintFunct
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability System Utility")
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability System Utility")
 	static UAbilitySystemComponent* GetAbilitySystem(const UObject* Object, bool bAllowFindComponent = true);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability System Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability System Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryGetAbilitySystem(const UObject* Object, UAbilitySystemComponent*& AbilitySystem, bool bAllowFindComponent = true);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability System Utility", Meta = (ReturnDisplayName = "Actor Info"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability System Utility", Meta = (ReturnDisplayName = "Actor Info"))
 	static const FGameplayAbilityActorInfo& GetActorInfo(const UAbilitySystemComponent* AbilitySystem);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability System Utility", Meta = (ReturnDisplayName = "Avatar"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability System Utility", Meta = (ReturnDisplayName = "Avatar"))
 	static AActor* GetAvatar(const UAbilitySystemComponent* AbilitySystem);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability System Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability System Utility",
 		Meta = (AutoCreateRefTerm = "ParentTag", ReturnDisplayName = "Descendant Tag"))
 	static FGameplayTag FindFirstOwnedDescendantTag(const UAbilitySystemComponent* AbilitySystem, const FGameplayTag& ParentTag);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability System Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability System Utility",
 		Meta = (AutoCreateRefTerm = "Tags", ReturnDisplayName = "Ability Handle"))
 	static FGameplayAbilitySpecHandle GiveAbilityWithDynamicTags(UAbilitySystemComponent* AbilitySystem,
 	                                                             TSubclassOf<UGameplayAbility> AbilityClass,
 	                                                             int32 Level, const FGameplayTagContainer& Tags,
 	                                                             UObject* SourceObject = nullptr);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Utility",
 		Meta = (AutoCreateRefTerm = "SetByCallerMagnitudes", ReturnDisplayName = "Effect Handle"))
 	static FActiveGameplayEffectHandle ApplyEffectWithSetByCallerMagnitudes(UAbilitySystemComponent* AbilitySystem,
 	                                                                        TSubclassOf<UGameplayEffect> EffectClass,
 	                                                                        const TMap<FGameplayTag, float>& SetByCallerMagnitudes);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Utility",
 		Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Success"))
 	static bool AddLooseTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag, bool bReplicate = false);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Utility",
 		Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Success"))
 	static bool RemoveLooseTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag, bool bReplicate = false);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Utility",
 		Meta = (AutoCreateRefTerm = "Tags", ReturnDisplayName = "Success"))
 	static bool AddLooseTags(UAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer& Tags, bool bReplicate = false);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Utility",
 		Meta = (AutoCreateRefTerm = "Tags", ReturnDisplayName = "Success"))
 	static bool RemoveLooseTags(UAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer& Tags, bool bReplicate = false);
 };

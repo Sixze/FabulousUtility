@@ -15,14 +15,14 @@ protected:
 	bool bCheckInitialInputState;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Listener Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Input Listener Ability Task")
 	FFuInputListenerDelegate OnInputPressed;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Fu Input Listener Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Input Listener Ability Task")
 	FFuInputListenerDelegate OnInputReleased;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Tasks", BlueprintInternalUseOnly,
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_InputListener* FuWaitForInput(UGameplayAbility* OwningAbility,
 	                                                    UPARAM(DisplayName = "Check Initial Input State") bool bInCheckInitialInputState);
