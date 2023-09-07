@@ -33,7 +33,7 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_AbilityActivator* FuActivateAbilityByHandle(
+	static UFuAbilityTask_AbilityActivator* ActivateAbilityByHandle(
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Ability Handle") FGameplayAbilitySpecHandle InAbilityHandle,
 		UPARAM(DisplayName = "Cancel Ability on Destroy") bool bInCancelAbilityOnDestroy);

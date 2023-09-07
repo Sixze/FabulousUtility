@@ -5,8 +5,8 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_EffectListener)
 
-UFuAbilityTask_EffectListener* UFuAbilityTask_EffectListener::FuWaitForEffectChangeByTag(UGameplayAbility* OwningAbility,
-                                                                                         const FGameplayTag InEffectTag)
+UFuAbilityTask_EffectListener* UFuAbilityTask_EffectListener::WaitForEffectChangeByTag(UGameplayAbility* OwningAbility,
+                                                                                       const FGameplayTag InEffectTag)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
@@ -18,8 +18,8 @@ UFuAbilityTask_EffectListener* UFuAbilityTask_EffectListener::FuWaitForEffectCha
 	return Task;
 }
 
-UFuAbilityTask_EffectListener* UFuAbilityTask_EffectListener::FuWaitForEffectChangeByTags(UGameplayAbility* OwningAbility,
-                                                                                          const FGameplayTagContainer InEffectTags)
+UFuAbilityTask_EffectListener* UFuAbilityTask_EffectListener::WaitForEffectChangeByTags(UGameplayAbility* OwningAbility,
+                                                                                        const FGameplayTagContainer InEffectTags)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 

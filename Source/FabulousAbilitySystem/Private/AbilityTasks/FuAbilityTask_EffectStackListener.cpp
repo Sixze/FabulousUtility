@@ -5,7 +5,7 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_EffectStackListener)
 
-UFuAbilityTask_EffectStackListener* UFuAbilityTask_EffectStackListener::FuWaitForEffectStackChange(
+UFuAbilityTask_EffectStackListener* UFuAbilityTask_EffectStackListener::WaitForEffectStackChange(
 	UGameplayAbility* OwningAbility, const TSubclassOf<UGameplayEffect> InEffectClass)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};

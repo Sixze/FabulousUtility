@@ -5,7 +5,7 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_OneFrameDelay)
 
-UFuAbilityTask_OneFrameDelay* UFuAbilityTask_OneFrameDelay::FuWaitForOneFrameDelay(UGameplayAbility* OwningAbility)
+UFuAbilityTask_OneFrameDelay* UFuAbilityTask_OneFrameDelay::WaitForOneFrameDelay(UGameplayAbility* OwningAbility)
 {
 	return NewAbilityTask<ThisClass>(OwningAbility);
 }

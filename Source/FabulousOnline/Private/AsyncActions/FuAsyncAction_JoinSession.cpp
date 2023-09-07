@@ -7,9 +7,9 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_JoinSession)
 
-UFuAsyncAction_JoinSession* UFuAsyncAction_JoinSession::FuJoinSession(APlayerController* InPlayer,
-                                                                      const FBlueprintSessionResult& InSearchResult,
-                                                                      const bool bInTravelOnSuccess)
+UFuAsyncAction_JoinSession* UFuAsyncAction_JoinSession::JoinSession(APlayerController* InPlayer,
+                                                                    const FBlueprintSessionResult& InSearchResult,
+                                                                    const bool bInTravelOnSuccess)
 {
 	auto* Task{NewObject<UFuAsyncAction_JoinSession>()};
 

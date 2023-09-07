@@ -126,9 +126,9 @@ void FFuDelayLatentAction::Stop()
 	bStop = true;
 }
 
-void UFuLatentActions::FuDelay(const UObject* WorldContext, const FLatentActionInfo LatentInfo, const EFuDelayInputExecs Input,
-                               const float Duration, const int32 LoopsCount, const bool bSkipFirstDelay,
-                               const bool bRetriggerable, int32& LoopIndex, EFuDelayOutputExecs& Output)
+void UFuLatentActions::Delay(const UObject* WorldContext, const FLatentActionInfo LatentInfo, const EFuDelayInputExecs Input,
+                             const float Duration, const int32 LoopsCount, const bool bSkipFirstDelay,
+                             const bool bRetriggerable, int32& LoopIndex, EFuDelayOutputExecs& Output)
 {
 	auto* World{WorldContext->GetWorld()};
 	if (!FU_ENSURE(IsValid(World)))

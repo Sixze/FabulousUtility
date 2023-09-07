@@ -7,7 +7,7 @@ UFuAbilityTask_Tick::UFuAbilityTask_Tick()
 	bTickingTask = true;
 }
 
-UFuAbilityTask_Tick* UFuAbilityTask_Tick::FuWaitForTick(UGameplayAbility* OwningAbility)
+UFuAbilityTask_Tick* UFuAbilityTask_Tick::WaitForTick(UGameplayAbility* OwningAbility)
 {
 	return NewAbilityTask<ThisClass>(OwningAbility);
 }

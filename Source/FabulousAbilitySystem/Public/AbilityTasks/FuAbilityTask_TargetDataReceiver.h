@@ -22,8 +22,8 @@ public:
 	// this task works only on the server and does nothing in the standalone game or on clients.
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_TargetDataReceiver* FuReceiveTargetData(UGameplayAbility* OwningAbility,
-	                                                              UPARAM(DisplayName = "Receive Once") bool bInReceiveOnce);
+	static UFuAbilityTask_TargetDataReceiver* ReceiveTargetData(UGameplayAbility* OwningAbility,
+	                                                            UPARAM(DisplayName = "Receive Once") bool bInReceiveOnce);
 
 protected:
 	virtual void Activate() override;

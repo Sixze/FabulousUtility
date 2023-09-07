@@ -5,19 +5,19 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AbilityGiveListener)
 
-UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuListenForAbilityGiveOnActor(
+UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::ListenForAbilityGiveOnActor(
 	const AActor* Actor, const FGameplayTag InAbilityTag)
 {
-	return FuListenForAbilityGive(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InAbilityTag);
+	return ListenForAbilityGive(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InAbilityTag);
 }
 
-UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuListenForAbilitiesGiveOnActor(
+UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::ListenForAbilitiesGiveOnActor(
 	const AActor* Actor, const FGameplayTagContainer InAbilityTags)
 {
-	return FuListenForAbilitiesGive(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InAbilityTags);
+	return ListenForAbilitiesGive(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InAbilityTags);
 }
 
-UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuListenForAbilityGive(
+UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::ListenForAbilityGive(
 	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag InAbilityTag)
 {
 	auto* Task{NewObject<ThisClass>()};
@@ -32,7 +32,7 @@ UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuList
 	return Task;
 }
 
-UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::FuListenForAbilitiesGive(
+UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::ListenForAbilitiesGive(
 	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer InAbilityTags)
 {
 	auto* Task{NewObject<ThisClass>()};

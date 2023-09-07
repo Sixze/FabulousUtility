@@ -4,8 +4,8 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_InputListener)
 
-UFuAbilityTask_InputListener* UFuAbilityTask_InputListener::FuWaitForInput(UGameplayAbility* OwningAbility,
-                                                                           const bool bInCheckInitialInputState)
+UFuAbilityTask_InputListener* UFuAbilityTask_InputListener::WaitForInput(UGameplayAbility* OwningAbility,
+                                                                         const bool bInCheckInitialInputState)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 

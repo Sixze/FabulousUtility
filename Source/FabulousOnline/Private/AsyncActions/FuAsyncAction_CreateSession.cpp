@@ -8,8 +8,8 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_CreateSession)
 
-UFuAsyncAction_CreateSession* UFuAsyncAction_CreateSession::FuCreateSession(APlayerController* InPlayer, const int32 InPublicConnections,
-                                                                            const bool bInLanOnly)
+UFuAsyncAction_CreateSession* UFuAsyncAction_CreateSession::CreateSession(APlayerController* InPlayer, const int32 InPublicConnections,
+                                                                          const bool bInLanOnly)
 {
 	auto* Task{NewObject<UFuAsyncAction_CreateSession>()};
 

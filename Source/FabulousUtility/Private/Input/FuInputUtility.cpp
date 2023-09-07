@@ -19,7 +19,7 @@ void UFuInputUtility::SetBlockInput(AActor* Actor, const bool bBlockInput)
 	}
 }
 
-void UFuInputUtility::FuSetInputModeGameOnly(APlayerController* Player, const bool bConsumeCaptureMouseDown)
+void UFuInputUtility::SetInputModeGameOnly(APlayerController* Player, const bool bConsumeCaptureMouseDown)
 {
 	if (FU_ENSURE(IsValid(Player)))
 	{

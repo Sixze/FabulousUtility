@@ -23,20 +23,20 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_TagListener* FuListenForTagChangeOnActor(const AActor* Actor,
-	                                                                UPARAM(DisplayName = "Tag") FGameplayTag InTag);
+	static UFuAbilityAsync_TagListener* ListenForTagChangeOnActor(const AActor* Actor,
+	                                                              UPARAM(DisplayName = "Tag") FGameplayTag InTag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_TagListener* FuListenForTagsChangeOnActor(const AActor* Actor,
-	                                                                 UPARAM(DisplayName = "Tags") FGameplayTagContainer InTags);
+	static UFuAbilityAsync_TagListener* ListenForTagsChangeOnActor(const AActor* Actor,
+	                                                               UPARAM(DisplayName = "Tags") FGameplayTagContainer InTags);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_TagListener* FuListenForTagChange(UAbilitySystemComponent* AbilitySystem,
-	                                                         UPARAM(DisplayName = "Tag") FGameplayTag InTag);
+	static UFuAbilityAsync_TagListener* ListenForTagChange(UAbilitySystemComponent* AbilitySystem,
+	                                                       UPARAM(DisplayName = "Tag") FGameplayTag InTag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_TagListener* FuListenForTagsChange(UAbilitySystemComponent* AbilitySystem,
-	                                                          UPARAM(DisplayName = "Tags") FGameplayTagContainer InTags);
+	static UFuAbilityAsync_TagListener* ListenForTagsChange(UAbilitySystemComponent* AbilitySystem,
+	                                                        UPARAM(DisplayName = "Tags") FGameplayTagContainer InTags);
 
 public:
 	virtual void Activate() override;

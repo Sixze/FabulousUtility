@@ -20,12 +20,12 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_EventListener* FuListenForEventOnActor(const AActor* Actor,
-	                                                              UPARAM(DisplayName = "Event Tag") FGameplayTag InEventTag);
+	static UFuAbilityAsync_EventListener* ListenForEventOnActor(const AActor* Actor,
+	                                                            UPARAM(DisplayName = "Event Tag") FGameplayTag InEventTag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_EventListener* FuListenForEvent(UAbilitySystemComponent* AbilitySystem,
-	                                                       UPARAM(DisplayName = "Event Tag") FGameplayTag InEventTag);
+	static UFuAbilityAsync_EventListener* ListenForEvent(UAbilitySystemComponent* AbilitySystem,
+	                                                     UPARAM(DisplayName = "Event Tag") FGameplayTag InEventTag);
 
 public:
 	virtual void Activate() override;

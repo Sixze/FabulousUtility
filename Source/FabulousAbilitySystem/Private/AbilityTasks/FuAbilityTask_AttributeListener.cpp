@@ -6,7 +6,7 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_AttributeListener)
 
-UFuAbilityTask_AttributeListener* UFuAbilityTask_AttributeListener::FuWaitForAttributeChange(
+UFuAbilityTask_AttributeListener* UFuAbilityTask_AttributeListener::WaitForAttributeChange(
 	UGameplayAbility* OwningAbility, const FGameplayAttribute InAttribute)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
@@ -19,7 +19,7 @@ UFuAbilityTask_AttributeListener* UFuAbilityTask_AttributeListener::FuWaitForAtt
 	return Task;
 }
 
-UFuAbilityTask_AttributeListener* UFuAbilityTask_AttributeListener::FuWaitForAttributesChange(
+UFuAbilityTask_AttributeListener* UFuAbilityTask_AttributeListener::WaitForAttributesChange(
 	UGameplayAbility* OwningAbility, const TArray<FGameplayAttribute>& InAttributes)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};

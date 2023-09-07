@@ -24,8 +24,8 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_InputListener* FuWaitForInput(UGameplayAbility* OwningAbility,
-	                                                    UPARAM(DisplayName = "Check Initial Input State") bool bInCheckInitialInputState);
+	static UFuAbilityTask_InputListener* WaitForInput(UGameplayAbility* OwningAbility,
+	                                                  UPARAM(DisplayName = "Check Initial Input State") bool bInCheckInitialInputState);
 
 protected:
 	virtual void Activate() override;

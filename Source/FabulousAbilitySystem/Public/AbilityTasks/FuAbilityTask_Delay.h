@@ -35,10 +35,10 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_Delay* FuWaitForDelay(UGameplayAbility* OwningAbility,
-	                                            UPARAM(DisplayName = "Duration") float InDuration = 0.2f,
-	                                            UPARAM(DisplayName = "Loop Count") int32 InLoopsCount = 0,
-	                                            UPARAM(DisplayName = "Skip First Delay") bool bInSkipFirstDelay = false);
+	static UFuAbilityTask_Delay* WaitForDelay(UGameplayAbility* OwningAbility,
+	                                          UPARAM(DisplayName = "Duration") float InDuration = 0.2f,
+	                                          UPARAM(DisplayName = "Loop Count") int32 InLoopsCount = 0,
+	                                          UPARAM(DisplayName = "Skip First Delay") bool bInSkipFirstDelay = false);
 
 protected:
 	virtual void Activate() override;

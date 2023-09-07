@@ -62,8 +62,8 @@ public:
 	 * @param InDisplayNameOverride Optional display name to associate with this binding instead of the default.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|UI Async Actions",
-		DisplayName = "Fu Listen For UI Action", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InWidget", AdvancedDisplay = 2))
-	static UFuAsyncAction_UIActionListener* FuListenForUIAction(
+		DisplayName = "Listen For UI Action", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InWidget", AdvancedDisplay = 2))
+	static UFuAsyncAction_UIActionListener* ListenForUIAction(
 		UPARAM(DisplayName = "Widget") UCommonUserWidget* InWidget,
 		UPARAM(DisplayName = "Action Tag") FUIActionTag InActionTag,
 		UPARAM(DisplayName = "Input Mode") ECommonInputMode InInputMode = ECommonInputMode::Menu,
@@ -84,8 +84,8 @@ public:
 	 * @param InDisplayNameOverride Optional display name to associate with this binding instead of the default.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|UI Async Actions",
-		DisplayName = "Fu Listen For UI Actions", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InWidget", AdvancedDisplay = 2))
-	static UFuAsyncAction_UIActionListener* FuListenForUIActions(
+		DisplayName = "Listen For UI Actions", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InWidget", AdvancedDisplay = 2))
+	static UFuAsyncAction_UIActionListener* ListenForUIActions(
 		UPARAM(DisplayName = "Widget") UCommonUserWidget* InWidget,
 		UPARAM(DisplayName = "Action Tags") FGameplayTagContainer InActionTags,
 		UPARAM(DisplayName = "Input Mode") ECommonInputMode InInputMode = ECommonInputMode::Menu,

@@ -19,7 +19,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_Tick* FuWaitForTick(UGameplayAbility* OwningAbility);
+	static UFuAbilityTask_Tick* WaitForTick(UGameplayAbility* OwningAbility);
 
 protected:
 	virtual void TickTask(float DeltaTime) override;

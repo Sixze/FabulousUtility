@@ -28,9 +28,9 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InPlayer"))
-	static UFuAsyncAction_JoinSession* FuJoinSession(UPARAM(DisplayName = "Player") APlayerController* InPlayer,
-	                                                 UPARAM(DisplayName = "Search Result") const FBlueprintSessionResult& InSearchResult,
-	                                                 UPARAM(DisplayName = "Travel on Success") bool bInTravelOnSuccess = true);
+	static UFuAsyncAction_JoinSession* JoinSession(UPARAM(DisplayName = "Player") APlayerController* InPlayer,
+	                                               UPARAM(DisplayName = "Search Result") const FBlueprintSessionResult& InSearchResult,
+	                                               UPARAM(DisplayName = "Travel on Success") bool bInTravelOnSuccess = true);
 
 	virtual void Activate() override;
 

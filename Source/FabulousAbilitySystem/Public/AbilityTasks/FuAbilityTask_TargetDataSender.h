@@ -21,7 +21,7 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_TargetDataSender* FuSendTargetData(
+	static UFuAbilityTask_TargetDataSender* SendTargetData(
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Target Data") const FGameplayAbilityTargetDataHandle& InTargetData);
 

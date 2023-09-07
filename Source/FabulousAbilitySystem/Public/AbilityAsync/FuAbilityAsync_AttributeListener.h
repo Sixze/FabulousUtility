@@ -24,25 +24,25 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AttributeListener* FuListenForAttributeChangeOnActor(
+	static UFuAbilityAsync_AttributeListener* ListenForAttributeChangeOnActor(
 		const AActor* Actor,
 		UPARAM(DisplayName = "Attribute") FGameplayAttribute InAttribute,
 		UPARAM(DisplayName = "Skip Equal Values on Server") bool bInSkipEqualValuesOnServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AttributeListener* FuListenForAttributesChangeOnActor(
+	static UFuAbilityAsync_AttributeListener* ListenForAttributesChangeOnActor(
 		const AActor* Actor,
 		UPARAM(DisplayName = "Attributes") const TArray<FGameplayAttribute>& InAttributes,
 		UPARAM(DisplayName = "Skip Equal Values on Server") bool bInSkipEqualValuesOnServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AttributeListener* FuListenForAttributeChange(
+	static UFuAbilityAsync_AttributeListener* ListenForAttributeChange(
 		UAbilitySystemComponent* AbilitySystem,
 		UPARAM(DisplayName = "Attribute") FGameplayAttribute InAttribute,
 		UPARAM(DisplayName = "Skip Equal Values on Server") bool bInSkipEqualValuesOnServer = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_AttributeListener* FuListenForAttributesChange(
+	static UFuAbilityAsync_AttributeListener* ListenForAttributesChange(
 		UAbilitySystemComponent* AbilitySystem,
 		UPARAM(DisplayName = "Attributes") const TArray<FGameplayAttribute>& InAttributes,
 		UPARAM(DisplayName = "Skip Equal Values on Server") bool bInSkipEqualValuesOnServer = true);

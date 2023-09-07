@@ -4,13 +4,13 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_EffectStackListener)
 
-UFuAbilityAsync_EffectStackListener* UFuAbilityAsync_EffectStackListener::FuListenForEffectStackChangeOnActor(
+UFuAbilityAsync_EffectStackListener* UFuAbilityAsync_EffectStackListener::ListenForEffectStackChangeOnActor(
 	const AActor* Actor, const TSubclassOf<UGameplayEffect> InEffectClass)
 {
-	return FuListenForEffectStackChange(UFuAbilitySystemUtility::GetAbilitySystem(Actor), InEffectClass);
+	return ListenForEffectStackChange(UFuAbilitySystemUtility::GetAbilitySystem(Actor), InEffectClass);
 }
 
-UFuAbilityAsync_EffectStackListener* UFuAbilityAsync_EffectStackListener::FuListenForEffectStackChange(
+UFuAbilityAsync_EffectStackListener* UFuAbilityAsync_EffectStackListener::ListenForEffectStackChange(
 	UAbilitySystemComponent* AbilitySystem, const TSubclassOf<UGameplayEffect> InEffectClass)
 {
 	auto* Task{NewObject<ThisClass>()};

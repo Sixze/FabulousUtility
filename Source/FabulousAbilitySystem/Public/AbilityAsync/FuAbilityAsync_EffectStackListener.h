@@ -19,12 +19,12 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_EffectStackListener* FuListenForEffectStackChangeOnActor(
+	static UFuAbilityAsync_EffectStackListener* ListenForEffectStackChangeOnActor(
 		const AActor* Actor,
 		UPARAM(DisplayName = "Effect Class") TSubclassOf<UGameplayEffect> InEffectClass);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
-	static UFuAbilityAsync_EffectStackListener* FuListenForEffectStackChange(
+	static UFuAbilityAsync_EffectStackListener* ListenForEffectStackChange(
 		UAbilitySystemComponent* AbilitySystem,
 		UPARAM(DisplayName = "Effect Class") TSubclassOf<UGameplayEffect> InEffectClass);
 

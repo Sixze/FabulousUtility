@@ -7,7 +7,7 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_UIActionListener)
 
-UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::FuListenForUIAction(
+UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::ListenForUIAction(
 	UCommonUserWidget* InWidget, const FUIActionTag InActionTag, const ECommonInputMode InInputMode,
 	const TEnumAsByte<EInputEvent> InKeyEvent, const bool bInPersistent, const bool bInConsumeInput,
 	const bool bInDisplayInActionBar, const FText InDisplayNameOverride)
@@ -30,7 +30,7 @@ UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::FuListenForUIA
 	return Task;
 }
 
-UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::FuListenForUIActions(
+UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::ListenForUIActions(
 	UCommonUserWidget* InWidget, const FGameplayTagContainer InActionTags, const ECommonInputMode InInputMode,
 	const TEnumAsByte<EInputEvent> InKeyEvent, const bool bInPersistent, const bool bInConsumeInput,
 	const bool bInDisplayInActionBar, const FText InDisplayNameOverride)

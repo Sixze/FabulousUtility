@@ -4,8 +4,8 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_TargetDataSender)
 
-UFuAbilityTask_TargetDataSender* UFuAbilityTask_TargetDataSender::FuSendTargetData(UGameplayAbility* OwningAbility,
-                                                                                   const FGameplayAbilityTargetDataHandle& InTargetData)
+UFuAbilityTask_TargetDataSender* UFuAbilityTask_TargetDataSender::SendTargetData(UGameplayAbility* OwningAbility,
+                                                                                 const FGameplayAbilityTargetDataHandle& InTargetData)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 

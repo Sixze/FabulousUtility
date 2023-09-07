@@ -5,7 +5,7 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_AbilityActivator)
 
-UFuAbilityTask_AbilityActivator* UFuAbilityTask_AbilityActivator::FuActivateAbilityByHandle(
+UFuAbilityTask_AbilityActivator* UFuAbilityTask_AbilityActivator::ActivateAbilityByHandle(
 	UGameplayAbility* OwningAbility, const FGameplayAbilitySpecHandle InAbilityHandle, const bool bInCancelAbilityOnDestroy)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};

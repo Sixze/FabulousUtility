@@ -5,7 +5,7 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_TagListener)
 
-UFuAbilityTask_TagListener* UFuAbilityTask_TagListener::FuWaitForTagChange(UGameplayAbility* OwningAbility, const FGameplayTag InTag)
+UFuAbilityTask_TagListener* UFuAbilityTask_TagListener::WaitForTagChange(UGameplayAbility* OwningAbility, const FGameplayTag InTag)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 
@@ -17,8 +17,8 @@ UFuAbilityTask_TagListener* UFuAbilityTask_TagListener::FuWaitForTagChange(UGame
 	return Task;
 }
 
-UFuAbilityTask_TagListener* UFuAbilityTask_TagListener::FuWaitForTagsChange(UGameplayAbility* OwningAbility,
-                                                                            const FGameplayTagContainer InTags)
+UFuAbilityTask_TagListener* UFuAbilityTask_TagListener::WaitForTagsChange(UGameplayAbility* OwningAbility,
+                                                                          const FGameplayTagContainer InTags)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 

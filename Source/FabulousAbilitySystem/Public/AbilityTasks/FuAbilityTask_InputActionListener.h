@@ -55,14 +55,14 @@ public:
 	// Warning! This task only works locally, its events will never be called on the server!
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_InputActionListener* FuWaitForInputAction(
+	static UFuAbilityTask_InputActionListener* WaitForInputAction(
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Input Action") UInputAction* InInputAction);
 
 	// Warning! This task only works locally, its events will never be called on the server!
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_InputActionListener* FuWaitForInputActions(
+	static UFuAbilityTask_InputActionListener* WaitForInputActions(
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Input Actions") const TArray<UInputAction*>& InInputActions);
 

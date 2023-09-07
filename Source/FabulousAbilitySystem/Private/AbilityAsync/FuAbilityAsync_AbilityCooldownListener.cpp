@@ -6,28 +6,28 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AbilityCooldownListener)
 
-UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByAbilityTagOnActor(
+UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::ListenForAbilityCooldownByAbilityTagOnActor(
 	const AActor* Actor, const FGameplayTag InAbilityTag, const bool bInWaitForTimeFromServer)
 {
-	return FuListenForAbilityCooldownByAbilityTag(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor),
-	                                              InAbilityTag, bInWaitForTimeFromServer);
+	return ListenForAbilityCooldownByAbilityTag(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor),
+	                                            InAbilityTag, bInWaitForTimeFromServer);
 }
 
-UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByAbilityTagsOnActor(
+UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::ListenForAbilityCooldownByAbilityTagsOnActor(
 	const AActor* Actor, const FGameplayTagContainer InAbilityTags, const bool bInWaitForTimeFromServer)
 {
-	return FuListenForAbilityCooldownByAbilityTags(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor),
-	                                               InAbilityTags, bInWaitForTimeFromServer);
+	return ListenForAbilityCooldownByAbilityTags(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor),
+	                                             InAbilityTags, bInWaitForTimeFromServer);
 }
 
-UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByInputIdOnActor(
+UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::ListenForAbilityCooldownByInputIdOnActor(
 	const AActor* Actor, const int32 InInputId, const bool bInWaitForTimeFromServer)
 {
-	return FuListenForAbilityCooldownByInputId(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor),
-	                                           InInputId, bInWaitForTimeFromServer);
+	return ListenForAbilityCooldownByInputId(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor),
+	                                         InInputId, bInWaitForTimeFromServer);
 }
 
-UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByAbilityTag(
+UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::ListenForAbilityCooldownByAbilityTag(
 	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag InAbilityTag, const bool bInWaitForTimeFromServer)
 {
 	auto* Task{NewObject<ThisClass>()};
@@ -44,7 +44,7 @@ UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener
 	return Task;
 }
 
-UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByAbilityTags(
+UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::ListenForAbilityCooldownByAbilityTags(
 	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer InAbilityTags, const bool bInWaitForTimeFromServer)
 {
 	auto* Task{NewObject<ThisClass>()};
@@ -64,7 +64,7 @@ UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener
 	return Task;
 }
 
-UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::FuListenForAbilityCooldownByInputId(
+UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::ListenForAbilityCooldownByInputId(
 	UFuAbilitySystemComponent* AbilitySystem, const int32 InInputId, const bool bInWaitForTimeFromServer)
 {
 	auto* Task{NewObject<ThisClass>()};

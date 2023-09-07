@@ -17,7 +17,7 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_OneFrameDelay* FuWaitForOneFrameDelay(UGameplayAbility* OwningAbility);
+	static UFuAbilityTask_OneFrameDelay* WaitForOneFrameDelay(UGameplayAbility* OwningAbility);
 
 protected:
 	virtual void Activate() override;

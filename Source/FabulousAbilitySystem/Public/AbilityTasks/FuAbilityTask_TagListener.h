@@ -23,13 +23,13 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_TagListener* FuWaitForTagChange(UGameplayAbility* OwningAbility,
-	                                                      UPARAM(DisplayName = "Tag") FGameplayTag InTag);
+	static UFuAbilityTask_TagListener* WaitForTagChange(UGameplayAbility* OwningAbility,
+	                                                    UPARAM(DisplayName = "Tag") FGameplayTag InTag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_TagListener* FuWaitForTagsChange(UGameplayAbility* OwningAbility,
-	                                                       UPARAM(DisplayName = "Tags") FGameplayTagContainer InTags);
+	static UFuAbilityTask_TagListener* WaitForTagsChange(UGameplayAbility* OwningAbility,
+	                                                     UPARAM(DisplayName = "Tags") FGameplayTagContainer InTags);
 
 protected:
 	virtual void Activate() override;

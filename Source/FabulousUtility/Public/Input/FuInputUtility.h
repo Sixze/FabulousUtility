@@ -13,5 +13,5 @@ public:
 	static void SetBlockInput(AActor* Actor, bool bBlockInput);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Input Utility", Meta = (DefaultToSelf = "Player"))
-	static void FuSetInputModeGameOnly(APlayerController* Player, bool bConsumeCaptureMouseDown);
+	static void SetInputModeGameOnly(APlayerController* Player, bool bConsumeCaptureMouseDown);
 };

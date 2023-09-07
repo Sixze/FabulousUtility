@@ -6,19 +6,19 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AbilityFailureListener)
 
-UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::FuListenForAbilityFailureOnActor(
+UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::ListenForAbilityFailureOnActor(
 	const AActor* Actor, const FGameplayTag InAbilityTag, const FGameplayTagContainer InFailureTags)
 {
-	return FuListenForAbilityFailure(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InAbilityTag, InFailureTags);
+	return ListenForAbilityFailure(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InAbilityTag, InFailureTags);
 }
 
-UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::FuListenForAbilitiesFailureOnActor(
+UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::ListenForAbilitiesFailureOnActor(
 	const AActor* Actor, const FGameplayTagContainer InAbilityTags, const FGameplayTagContainer InFailureTags)
 {
-	return FuListenForAbilitiesFailure(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InAbilityTags, InFailureTags);
+	return ListenForAbilitiesFailure(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InAbilityTags, InFailureTags);
 }
 
-UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::FuListenForAbilityFailure(
+UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::ListenForAbilityFailure(
 	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag InAbilityTag, const FGameplayTagContainer InFailureTags)
 {
 	auto* Task{NewObject<ThisClass>()};
@@ -41,7 +41,7 @@ UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::
 	return Task;
 }
 
-UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::FuListenForAbilitiesFailure(
+UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::ListenForAbilitiesFailure(
 	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer InAbilityTags, const FGameplayTagContainer InFailureTags)
 {
 	auto* Task{NewObject<ThisClass>()};

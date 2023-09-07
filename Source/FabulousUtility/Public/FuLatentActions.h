@@ -25,6 +25,6 @@ class FABULOUSUTILITY_API UFuLatentActions : public UBlueprintFunctionLibrary
 public:
 	UFUNCTION(BlueprintCallable, Category="Fabulous Utility|Latent Actions", Meta = (WorldContext = "WorldContext",
 		Latent, LatentInfo = "LatentInfo", ExpandEnumAsExecs = "Input, Output", Duration = 0.2))
-	static void FuDelay(const UObject* WorldContext, FLatentActionInfo LatentInfo, EFuDelayInputExecs Input, float Duration,
-	                    int32 LoopsCount, bool bSkipFirstDelay, bool bRetriggerable, int32& LoopIndex, EFuDelayOutputExecs& Output);
+	static void Delay(const UObject* WorldContext, FLatentActionInfo LatentInfo, EFuDelayInputExecs Input, float Duration,
+	                  int32 LoopsCount, bool bSkipFirstDelay, bool bRetriggerable, int32& LoopIndex, EFuDelayOutputExecs& Output);
 };

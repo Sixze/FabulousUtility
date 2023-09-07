@@ -8,7 +8,7 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_DestroySession)
 
-UFuAsyncAction_DestroySession* UFuAsyncAction_DestroySession::FuDestroySession(APlayerController* InPlayer)
+UFuAsyncAction_DestroySession* UFuAsyncAction_DestroySession::DestroySession(APlayerController* InPlayer)
 {
 	auto* Task{NewObject<UFuAsyncAction_DestroySession>()};
 

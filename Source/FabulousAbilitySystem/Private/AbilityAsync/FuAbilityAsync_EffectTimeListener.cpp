@@ -6,19 +6,19 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_EffectTimeListener)
 
-UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListenForEffectTimeChangeOnActor(
+UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::ListenForEffectTimeChangeOnActor(
 	const AActor* Actor, const FGameplayTag InEffectTag, const bool bInWaitForTimeFromServer)
 {
-	return FuListenForEffectTimeChange(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InEffectTag, bInWaitForTimeFromServer);
+	return ListenForEffectTimeChange(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InEffectTag, bInWaitForTimeFromServer);
 }
 
-UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListenForEffectsTimeChangeOnActor(
+UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::ListenForEffectsTimeChangeOnActor(
 	const AActor* Actor, const FGameplayTagContainer InEffectTags, const bool bInWaitForTimeFromServer)
 {
-	return FuListenForEffectsTimeChange(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InEffectTags, bInWaitForTimeFromServer);
+	return ListenForEffectsTimeChange(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InEffectTags, bInWaitForTimeFromServer);
 }
 
-UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListenForEffectTimeChange(
+UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::ListenForEffectTimeChange(
 	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag EffectTag, const bool bInWaitForTimeFromServer)
 {
 	auto* Task{NewObject<ThisClass>()};
@@ -35,7 +35,7 @@ UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListen
 	return Task;
 }
 
-UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::FuListenForEffectsTimeChange(
+UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::ListenForEffectsTimeChange(
 	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer InEffectTags, const bool bInWaitForTimeFromServer)
 {
 	auto* Task{NewObject<ThisClass>()};

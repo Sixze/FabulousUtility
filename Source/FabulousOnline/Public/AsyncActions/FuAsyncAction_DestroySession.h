@@ -21,7 +21,7 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InPlayer"))
-	static UFuAsyncAction_DestroySession* FuDestroySession(UPARAM(DisplayName = "Player") APlayerController* InPlayer);
+	static UFuAsyncAction_DestroySession* DestroySession(UPARAM(DisplayName = "Player") APlayerController* InPlayer);
 
 	virtual void Activate() override;
 

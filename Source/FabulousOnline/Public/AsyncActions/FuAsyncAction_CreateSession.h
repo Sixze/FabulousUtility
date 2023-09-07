@@ -27,9 +27,9 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InPlayer"))
-	static UFuAsyncAction_CreateSession* FuCreateSession(UPARAM(DisplayName = "Player") APlayerController* InPlayer,
-	                                                     UPARAM(DisplayName = "Public Connections") int32 InPublicConnections,
-	                                                     UPARAM(DisplayName = "Lan Only") bool bInLanOnly);
+	static UFuAsyncAction_CreateSession* CreateSession(UPARAM(DisplayName = "Player") APlayerController* InPlayer,
+	                                                   UPARAM(DisplayName = "Public Connections") int32 InPublicConnections,
+	                                                   UPARAM(DisplayName = "Lan Only") bool bInLanOnly);
 
 	virtual void Activate() override;
 

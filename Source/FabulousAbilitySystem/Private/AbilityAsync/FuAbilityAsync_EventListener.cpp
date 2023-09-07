@@ -4,13 +4,13 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_EventListener)
 
-UFuAbilityAsync_EventListener* UFuAbilityAsync_EventListener::FuListenForEventOnActor(const AActor* Actor, const FGameplayTag InEventTag)
+UFuAbilityAsync_EventListener* UFuAbilityAsync_EventListener::ListenForEventOnActor(const AActor* Actor, const FGameplayTag InEventTag)
 {
-	return FuListenForEvent(UFuAbilitySystemUtility::GetAbilitySystem(Actor), InEventTag);
+	return ListenForEvent(UFuAbilitySystemUtility::GetAbilitySystem(Actor), InEventTag);
 }
 
-UFuAbilityAsync_EventListener* UFuAbilityAsync_EventListener::FuListenForEvent(UAbilitySystemComponent* AbilitySystem,
-                                                                               const FGameplayTag InEventTag)
+UFuAbilityAsync_EventListener* UFuAbilityAsync_EventListener::ListenForEvent(UAbilitySystemComponent* AbilitySystem,
+                                                                             const FGameplayTag InEventTag)
 {
 	auto* Task{NewObject<ThisClass>()};
 

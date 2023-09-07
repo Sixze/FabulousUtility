@@ -5,21 +5,21 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AttributeListener)
 
-UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::FuListenForAttributeChangeOnActor(
+UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::ListenForAttributeChangeOnActor(
 	const AActor* Actor, const FGameplayAttribute InAttribute, const bool bInSkipEqualValuesOnServer)
 {
-	return FuListenForAttributeChange(UFuAbilitySystemUtility::GetAbilitySystem(Actor),
-	                                  InAttribute, bInSkipEqualValuesOnServer);
+	return ListenForAttributeChange(UFuAbilitySystemUtility::GetAbilitySystem(Actor),
+	                                InAttribute, bInSkipEqualValuesOnServer);
 }
 
-UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::FuListenForAttributesChangeOnActor(
+UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::ListenForAttributesChangeOnActor(
 	const AActor* Actor, const TArray<FGameplayAttribute>& InAttributes, const bool bInSkipEqualValuesOnServer)
 {
-	return FuListenForAttributesChange(UFuAbilitySystemUtility::GetAbilitySystem(Actor),
-	                                   InAttributes, bInSkipEqualValuesOnServer);
+	return ListenForAttributesChange(UFuAbilitySystemUtility::GetAbilitySystem(Actor),
+	                                 InAttributes, bInSkipEqualValuesOnServer);
 }
 
-UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::FuListenForAttributeChange(
+UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::ListenForAttributeChange(
 	UAbilitySystemComponent* AbilitySystem, const FGameplayAttribute InAttribute, const bool bInSkipEqualValuesOnServer)
 {
 	auto* Task{NewObject<ThisClass>()};
@@ -36,7 +36,7 @@ UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::FuListenFo
 	return Task;
 }
 
-UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::FuListenForAttributesChange(
+UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::ListenForAttributesChange(
 	UAbilitySystemComponent* AbilitySystem, const TArray<FGameplayAttribute>& InAttributes, const bool bInSkipEqualValuesOnServer)
 {
 	auto* Task{NewObject<ThisClass>()};

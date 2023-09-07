@@ -4,19 +4,19 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_TagListener)
 
-UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::FuListenForTagChangeOnActor(const AActor* Actor, const FGameplayTag InTag)
+UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::ListenForTagChangeOnActor(const AActor* Actor, const FGameplayTag InTag)
 {
-	return FuListenForTagChange(UFuAbilitySystemUtility::GetAbilitySystem(Actor), InTag);
+	return ListenForTagChange(UFuAbilitySystemUtility::GetAbilitySystem(Actor), InTag);
 }
 
-UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::FuListenForTagsChangeOnActor(const AActor* Actor,
-                                                                                       const FGameplayTagContainer InTags)
+UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::ListenForTagsChangeOnActor(const AActor* Actor,
+                                                                                     const FGameplayTagContainer InTags)
 {
-	return FuListenForTagsChange(UFuAbilitySystemUtility::GetAbilitySystem(Actor), InTags);
+	return ListenForTagsChange(UFuAbilitySystemUtility::GetAbilitySystem(Actor), InTags);
 }
 
-UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::FuListenForTagChange(UAbilitySystemComponent* AbilitySystem,
-                                                                               const FGameplayTag InTag)
+UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::ListenForTagChange(UAbilitySystemComponent* AbilitySystem,
+                                                                             const FGameplayTag InTag)
 {
 	auto* Task{NewObject<ThisClass>()};
 
@@ -30,8 +30,8 @@ UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::FuListenForTagChange(U
 	return Task;
 }
 
-UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::FuListenForTagsChange(UAbilitySystemComponent* AbilitySystem,
-                                                                                const FGameplayTagContainer InTags)
+UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::ListenForTagsChange(UAbilitySystemComponent* AbilitySystem,
+                                                                              const FGameplayTagContainer InTags)
 {
 	auto* Task{NewObject<ThisClass>()};
 

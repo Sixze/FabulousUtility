@@ -6,8 +6,8 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_Delay)
 
-UFuAbilityTask_Delay* UFuAbilityTask_Delay::FuWaitForDelay(UGameplayAbility* OwningAbility, float InDuration,
-                                                           const int32 InLoopsCount, const bool bInSkipFirstDelay)
+UFuAbilityTask_Delay* UFuAbilityTask_Delay::WaitForDelay(UGameplayAbility* OwningAbility, float InDuration,
+                                                         const int32 InLoopsCount, const bool bInSkipFirstDelay)
 {
 	UAbilitySystemGlobals::NonShipping_ApplyGlobalAbilityScaler_Duration(InDuration);
 

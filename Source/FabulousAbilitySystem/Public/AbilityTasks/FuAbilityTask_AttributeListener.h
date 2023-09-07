@@ -20,13 +20,13 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_AttributeListener* FuWaitForAttributeChange(
+	static UFuAbilityTask_AttributeListener* WaitForAttributeChange(
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Attribute") FGameplayAttribute InAttribute);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_AttributeListener* FuWaitForAttributesChange(
+	static UFuAbilityTask_AttributeListener* WaitForAttributesChange(
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Attributes") const TArray<FGameplayAttribute>& InAttributes);
 

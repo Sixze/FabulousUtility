@@ -24,13 +24,13 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_EffectListener* FuWaitForEffectChangeByTag(
+	static UFuAbilityTask_EffectListener* WaitForEffectChangeByTag(
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Effect Tag") FGameplayTag InEffectTag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_EffectListener* FuWaitForEffectChangeByTags(
+	static UFuAbilityTask_EffectListener* WaitForEffectChangeByTags(
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Effect Tags") FGameplayTagContainer InEffectTags);
 

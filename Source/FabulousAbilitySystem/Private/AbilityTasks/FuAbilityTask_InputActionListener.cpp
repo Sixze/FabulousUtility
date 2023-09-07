@@ -7,7 +7,7 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_InputActionListener)
 
-UFuAbilityTask_InputActionListener* UFuAbilityTask_InputActionListener::FuWaitForInputAction(
+UFuAbilityTask_InputActionListener* UFuAbilityTask_InputActionListener::WaitForInputAction(
 	UGameplayAbility* OwningAbility, UInputAction* InInputAction)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
@@ -22,7 +22,7 @@ UFuAbilityTask_InputActionListener* UFuAbilityTask_InputActionListener::FuWaitFo
 	return Task;
 }
 
-UFuAbilityTask_InputActionListener* UFuAbilityTask_InputActionListener::FuWaitForInputActions(
+UFuAbilityTask_InputActionListener* UFuAbilityTask_InputActionListener::WaitForInputActions(
 	UGameplayAbility* OwningAbility, const TArray<UInputAction*>& InInputActions)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};

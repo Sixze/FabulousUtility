@@ -22,7 +22,7 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
 		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
-	static UFuAbilityTask_EffectStackListener* FuWaitForEffectStackChange(
+	static UFuAbilityTask_EffectStackListener* WaitForEffectStackChange(
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Effect Class") TSubclassOf<UGameplayEffect> InEffectClass);
 
