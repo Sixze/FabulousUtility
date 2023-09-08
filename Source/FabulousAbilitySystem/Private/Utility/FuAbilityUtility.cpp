@@ -43,6 +43,28 @@ bool UFuAbilityUtility::HasAbilityTag(UAbilitySystemComponent* AbilitySystem,
 	        AbilitySpecification->Ability->AbilityTags.HasTag(Tag));
 }
 
+bool UFuAbilityUtility::TryGetSourceObjectCasted(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle,
+                                                 TSubclassOf<UObject> SourceObjectClass, UObject*& SourceObject)
+{
+	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(AbilityHandle.IsValid()))
+	{
+		SourceObject = nullptr;
+		return false;
+	}
+
+	const auto* AbilitySpecification{AbilitySystem->FindAbilitySpecFromHandle(AbilityHandle)};
+
+	if (AbilitySpecification == nullptr || !AbilitySpecification->SourceObject.IsValid() ||
+	    !AbilitySpecification->SourceObject->IsA(SourceObjectClass))
+	{
+		SourceObject = nullptr;
+		return false;
+	}
+
+	SourceObject = AbilitySpecification->SourceObject.Get();
+	return true;
+}
+
 FGameplayTag UFuAbilityUtility::GetFirstDescendantAbilityTagByHandle(UAbilitySystemComponent* AbilitySystem,
                                                                      const FGameplayAbilitySpecHandle AbilityHandle,
                                                                      const FGameplayTag& ParentTag)

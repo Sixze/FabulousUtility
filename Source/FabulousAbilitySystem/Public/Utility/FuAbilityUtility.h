@@ -46,6 +46,11 @@ public:
 		Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Value"))
 	static bool HasAbilityTag(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle, const FGameplayTag& Tag);
 
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Fu Ability Utility",
+		Meta = (DeterminesOutputType = "SourceObjectClass", DynamicOutputParam = "SourceObject", ExpandBoolAsExecs = "ReturnValue"))
+	static bool TryGetSourceObjectCasted(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle,
+	                                     TSubclassOf<UObject> SourceObjectClass, UObject*& SourceObject);
+
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Fu Ability Utility",
 		Meta = (AutoCreateRefTerm = "ParentTag", ReturnDisplayName = "Descendant Tag"))
 	static FGameplayTag GetFirstDescendantAbilityTagByHandle(UAbilitySystemComponent* AbilitySystem,
