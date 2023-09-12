@@ -1,7 +1,7 @@
 #include "FuMacros.h"
 
 #include "CoreGlobals.h"
-#include "Logging/LogMacros.h"
+#include "Templates/Function.h"
 
 #if DO_ENSURE && !USING_CODE_ANALYSIS
 

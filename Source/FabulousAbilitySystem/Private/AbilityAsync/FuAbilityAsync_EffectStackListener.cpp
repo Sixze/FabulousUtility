@@ -61,7 +61,7 @@ void UFuAbilityAsync_EffectStackListener::Activate()
 
 		if (bDelegatesBroadcastAllowed)
 		{
-			OnStackChanged.Broadcast(ActiveEffect.Handle, ActiveEffect.Spec.StackCount, 0);
+			OnStackChanged.Broadcast(ActiveEffect.Handle, ActiveEffect.Spec.GetStackCount(), 0);
 		}
 	}
 
@@ -99,7 +99,7 @@ void UFuAbilityAsync_EffectStackListener::AbilitySystem_OnActiveGameplayEffectAd
 	{
 		AbilitySystem->OnGameplayEffectStackChangeDelegate(EffectHandle)->AddUObject(this, &ThisClass::AbilitySystem_OnEffectStackChanged);
 
-		OnStackChanged.Broadcast(EffectHandle, EffectSpecification.StackCount, 0);
+		OnStackChanged.Broadcast(EffectHandle, EffectSpecification.GetStackCount(), 0);
 	}
 }
 
@@ -114,7 +114,7 @@ void UFuAbilityAsync_EffectStackListener::AbilitySystem_OnActiveGameplayEffectRe
 
 		if (ShouldBroadcastDelegates())
 		{
-			OnStackChanged.Broadcast(ActiveEffect.Handle, 0, ActiveEffect.Spec.StackCount);
+			OnStackChanged.Broadcast(ActiveEffect.Handle, 0, ActiveEffect.Spec.GetStackCount());
 		}
 	}
 }

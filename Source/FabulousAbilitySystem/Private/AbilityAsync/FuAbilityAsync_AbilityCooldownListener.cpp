@@ -117,7 +117,7 @@ void UFuAbilityAsync_AbilityCooldownListener::Activate()
 
 	for (auto& ActiveEffect : const_cast<FActiveGameplayEffectsContainer*>(&AbilitySystem->GetActiveGameplayEffects()))
 	{
-		if (ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasAny(EffectTags.GetExplicitGameplayTags()) ||
+		if (ActiveEffect.Spec.Def->GetGrantedTags().HasAny(EffectTags.GetExplicitGameplayTags()) ||
 		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(EffectTags.GetExplicitGameplayTags()))
 		{
 			ActiveEffect.EventSet.OnTimeChanged.AddUObject(this, &ThisClass::ActiveEffect_OnTimeChanged);
@@ -209,7 +209,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(
 	{
 		ActiveEffect.EventSet.OnTimeChanged.RemoveAll(this);
 
-		if (ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasAny(EffectTags.GetExplicitGameplayTags()) ||
+		if (ActiveEffect.Spec.Def->GetGrantedTags().HasAny(EffectTags.GetExplicitGameplayTags()) ||
 		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(EffectTags.GetExplicitGameplayTags()))
 		{
 			ActiveEffect.EventSet.OnTimeChanged.AddUObject(this, &ThisClass::ActiveEffect_OnTimeChanged);
@@ -285,7 +285,7 @@ void UFuAbilityAsync_AbilityCooldownListener::AbilitySystem_OnActiveGameplayEffe
 
 	for (const auto& EffectTag : EffectTags.GetExplicitGameplayTags())
 	{
-		if (!EffectSpecification.Def->InheritableOwnedTagsContainer.CombinedTags.HasTag(EffectTag) &&
+		if (!EffectSpecification.Def->GetGrantedTags().HasTag(EffectTag) &&
 		    !EffectSpecification.DynamicGrantedTags.HasTag(EffectTag))
 		{
 			continue;
@@ -331,7 +331,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ActiveEffect_OnTimeChanged(const F
 
 	for (const auto& EffectTag : EffectTags.GetExplicitGameplayTags())
 	{
-		if (ActiveEffect->Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasTag(EffectTag) ||
+		if (ActiveEffect->Spec.Def->GetGrantedTags().HasTag(EffectTag) ||
 		    ActiveEffect->Spec.DynamicGrantedTags.HasTag(EffectTag))
 		{
 			RefreshEffectTimeRemainingAndDurationForTag(EffectTag);
