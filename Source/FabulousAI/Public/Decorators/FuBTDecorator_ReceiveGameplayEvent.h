@@ -18,7 +18,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
 	FGameplayTagContainer EventTags;
 
-	// If set to true and FlowAbortMode is set to LowerPriority or Self, then the execution
+	// If checked and FlowAbortMode is set to LowerPriority or Self, then the execution
 	// flow will only be able to pass through this node upon receiving a gameplay event.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
 	bool bAllowEntryInNonSelfFlowAbortMode{true};

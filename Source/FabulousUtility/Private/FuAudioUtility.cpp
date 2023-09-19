@@ -10,7 +10,7 @@ void UFuAudioUtility::SetTransientPrimaryVolume(const UObject* WorldContext, con
 {
 #if !UE_SERVER
 	const auto* World{WorldContext->GetWorld()};
-	auto* AudioDevice{FU_ENSURE(IsValid(World)) ? World->GetAudioDeviceRaw() : nullptr};
+	auto* AudioDevice{IsValid(World) ? World->GetAudioDeviceRaw() : nullptr};
 
 	if (AudioDevice != nullptr)
 	{

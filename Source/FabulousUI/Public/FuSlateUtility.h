@@ -12,7 +12,6 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "Fabulous Utility|Slate Utility")
 	static void PlaySound(const FSlateSound& Sound);
 
-	UFUNCTION(BlueprintPure, BlueprintCosmetic, Category = "Fabulous Utility|Slate Utility",
-		Meta = (AutoCreateRefTerm = "ViewportSize", ReturnDisplayName = "Dpi Scale"))
+	UFUNCTION(BlueprintPure, BlueprintCosmetic, Category = "Fabulous Utility|Slate Utility", Meta = (ReturnDisplayName = "Dpi Scale"))
 	static float GetViewportDpiScale(FVector2D ViewportSize);
 };
