@@ -5,11 +5,11 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuEffectUtility)
 
-const FGameplayTagContainer& UFuEffectUtility::GetOwnedTags(const TSubclassOf<UGameplayEffect> EffectClass)
+const FGameplayTagContainer& UFuEffectUtility::GetGrantedTags(const TSubclassOf<UGameplayEffect> EffectClass)
 {
 	if (FU_ENSURE(IsValid(EffectClass)))
 	{
-		return EffectClass.GetDefaultObject()->InheritableOwnedTagsContainer.CombinedTags;
+		return EffectClass.GetDefaultObject()->GetGrantedTags();
 	}
 
 	static const FGameplayTagContainer None;
@@ -36,7 +36,7 @@ int32 UFuEffectUtility::GetEffectStackCountByClass(const UAbilitySystemComponent
 
 		if (ActiveEffect.Spec.Def->GetClass() == EffectClass)
 		{
-			MaxCount = FMath::Max(MaxCount, ActiveEffect.Spec.StackCount);
+			MaxCount = FMath::Max(MaxCount, ActiveEffect.Spec.GetStackCount());
 		}
 	}
 
@@ -95,7 +95,7 @@ bool UFuEffectUtility::HasActiveEffectsWithTag(const UAbilitySystemComponent* Ab
 			continue;
 		}
 
-		if (ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasTag(Tag) ||
+		if (ActiveEffect.Spec.Def->GetGrantedTags().HasTag(Tag) ||
 		    ActiveEffect.Spec.DynamicGrantedTags.HasTag(Tag))
 		{
 			return true;
@@ -120,7 +120,7 @@ bool UFuEffectUtility::HasActiveEffectsWithAnyTags(const UAbilitySystemComponent
 			continue;
 		}
 
-		if (ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasAny(Tags) ||
+		if (ActiveEffect.Spec.Def->GetGrantedTags().HasAny(Tags) ||
 		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(Tags))
 		{
 			return true;
@@ -147,10 +147,10 @@ int32 UFuEffectUtility::GetEffectsCountByTag(const UAbilitySystemComponent* Abil
 			continue;
 		}
 
-		if (ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasTag(Tag) ||
+		if (ActiveEffect.Spec.Def->GetGrantedTags().HasTag(Tag) ||
 		    ActiveEffect.Spec.DynamicGrantedTags.HasTag(Tag))
 		{
-			Count += ActiveEffect.Spec.StackCount;
+			Count += ActiveEffect.Spec.GetStackCount();
 		}
 	}
 
@@ -174,10 +174,10 @@ int32 UFuEffectUtility::GetEffectsCountWithAnyTags(const UAbilitySystemComponent
 			continue;
 		}
 
-		if (ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasAny(Tags) ||
+		if (ActiveEffect.Spec.Def->GetGrantedTags().HasAny(Tags) ||
 		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(Tags))
 		{
-			Count += ActiveEffect.Spec.StackCount;
+			Count += ActiveEffect.Spec.GetStackCount();
 		}
 	}
 
@@ -203,7 +203,7 @@ const FActiveGameplayEffect* UFuEffectUtility::GetActiveEffectTimeRemainingAndDu
 
 	for (auto& ActiveEffect : &ActiveEffects)
 	{
-		if (!ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasTag(Tag) &&
+		if (!ActiveEffect.Spec.Def->GetGrantedTags().HasTag(Tag) &&
 		    !ActiveEffect.Spec.DynamicGrantedTags.HasTag(Tag))
 		{
 			continue;

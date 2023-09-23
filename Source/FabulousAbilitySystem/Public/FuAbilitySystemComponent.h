@@ -41,13 +41,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability System", Meta = (ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryGetFuAbilitySystem(const UObject* Object, UFuAbilitySystemComponent*& AbilitySystem, bool bAllowFindComponent = true);
 
-protected:
-	virtual void OnRegister() override;
-
 public:
-	virtual FActiveGameplayEffectHandle ApplyGameplayEffectSpecToSelf(const FGameplayEffectSpec& EffectSpecification,
-	                                                                  FPredictionKey PredictionKey = FPredictionKey()) override;
-
 	virtual void NotifyAbilityActivated(FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability) override;
 
 	virtual void NotifyAbilityFailed(FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability,
@@ -75,10 +69,4 @@ public:
 	void BlockAbilitiesWithoutTags(const FGameplayTagContainer& Tags);
 
 	void UnBlockAbilitiesWithoutTags(const FGameplayTagContainer& Tags);
-
-private:
-	void AbilitySystem_OnGameplayEffectApplied(UAbilitySystemComponent* InstigatorAbilitySystem,
-	                                           const FGameplayEffectSpec& EffectSpecification, FActiveGameplayEffectHandle EffectHandle);
-
-	void AbilitySystem_OnAnyTagChanged(FGameplayTag Tag, int32 Count);
 };

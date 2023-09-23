@@ -78,7 +78,7 @@ void UFuAbilityAsync_EffectTimeListener::Activate()
 
 	for (auto& ActiveEffect : const_cast<FActiveGameplayEffectsContainer*>(&AbilitySystem->GetActiveGameplayEffects()))
 	{
-		if (ActiveEffect.Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasAny(EffectTags) ||
+		if (ActiveEffect.Spec.Def->GetGrantedTags().HasAny(EffectTags) ||
 		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(EffectTags))
 		{
 			ActiveEffect.EventSet.OnTimeChanged.AddUObject(this, &ThisClass::ActiveEffect_OnTimeChanged);
@@ -171,7 +171,7 @@ void UFuAbilityAsync_EffectTimeListener::AbilitySystem_OnActiveGameplayEffectAdd
 
 	for (const auto& EffectTag : EffectTags)
 	{
-		if (!EffectSpecification.Def->InheritableOwnedTagsContainer.CombinedTags.HasTag(EffectTag) &&
+		if (!EffectSpecification.Def->GetGrantedTags().HasTag(EffectTag) &&
 		    !EffectSpecification.DynamicGrantedTags.HasTag(EffectTag))
 		{
 			continue;
@@ -223,7 +223,7 @@ void UFuAbilityAsync_EffectTimeListener::ActiveEffect_OnTimeChanged(const FActiv
 
 	for (const auto& EffectTag : EffectTags)
 	{
-		if (ActiveEffect->Spec.Def->InheritableOwnedTagsContainer.CombinedTags.HasTag(EffectTag) ||
+		if (ActiveEffect->Spec.Def->GetGrantedTags().HasTag(EffectTag) ||
 		    ActiveEffect->Spec.DynamicGrantedTags.HasTag(EffectTag))
 		{
 			RefreshEffectTimeRemainingAndDurationForTag(EffectTag);

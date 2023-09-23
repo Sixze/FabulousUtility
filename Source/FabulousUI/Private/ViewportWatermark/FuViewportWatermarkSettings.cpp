@@ -4,7 +4,7 @@
 #include "RHI.h"
 #include "Engine/Font.h"
 #include "GenericPlatform/GenericPlatformDriver.h"
-#include "Launch/Resources/Version.h"
+#include "Runtime/Launch/Resources/Version.h"
 #include "UObject/ConstructorHelpers.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuViewportWatermarkSettings)

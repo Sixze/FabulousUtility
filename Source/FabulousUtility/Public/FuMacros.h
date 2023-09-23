@@ -28,6 +28,8 @@ namespace FuEnsure
 	{ \
 		static constexpr auto StaticMessage{TEXT("Ensure failed: " #Expression ", File: " __FILE__ ", Line: " FU_STRINGIFY(__LINE__) ".")}; \
  		static auto bExecuted{false}; \
+ 		\
+		FValidateArgsInternal(__VA_ARGS__); \
 		\
 		if (FuEnsure::Execute(bExecuted, bEnsureAlways, #Expression, StaticMessage, Format, ##__VA_ARGS__)) \
 		{ \
