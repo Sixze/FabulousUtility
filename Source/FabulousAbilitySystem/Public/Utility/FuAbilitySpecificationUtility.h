@@ -1,5 +1,6 @@
 #pragma once
 
+#include "AbilitySystemComponent.h"
 #include "Abilities/GameplayAbility.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuAbilitySpecificationUtility.generated.h"
@@ -25,6 +26,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Specification Utility",
 		DisplayName = "Is Active (Expanded)", Meta = (ExpandBoolAsExecs = "ReturnValue"))
 	static bool IsActiveExpanded(const FGameplayAbilitySpec& AbilitySpecification);
+
+	// This is not the same function as UAbilitySystemComponent::FindAbilitySpecFromClass(), because that
+	// function performs a direct class comparison, while this function checks the parent-child class relationship.
+	template <typename AbilityType = UGameplayAbility>
+	static const FGameplayAbilitySpec* FindAbilitySpecificationByClass(const UAbilitySystemComponent* AbilitySystem);
 };
 
 inline FGameplayAbilitySpecHandle UFuAbilitySpecificationUtility::GetAbilityHandle(const FGameplayAbilitySpec& AbilitySpecification)
@@ -50,4 +56,25 @@ inline bool UFuAbilitySpecificationUtility::IsActive(const FGameplayAbilitySpec&
 inline bool UFuAbilitySpecificationUtility::IsActiveExpanded(const FGameplayAbilitySpec& AbilitySpecification)
 {
 	return AbilitySpecification.IsActive();
+}
+
+template <typename AbilityType>
+const FGameplayAbilitySpec* UFuAbilitySpecificationUtility::FindAbilitySpecificationByClass(const UAbilitySystemComponent* AbilitySystem)
+{
+	static_assert(TIsDerivedFrom<AbilityType, UGameplayAbility>::IsDerived);
+
+	if (!ensure(IsValid(AbilitySystem)))
+	{
+		return nullptr;
+	}
+
+	for (const auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
+	{
+		if (AbilitySpecification.Ability->IsA<AbilityType>())
+		{
+			return &AbilitySpecification;
+		}
+	}
+
+	return nullptr;
 }

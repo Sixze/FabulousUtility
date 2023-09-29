@@ -2,6 +2,7 @@
 
 #include "FuAbilitySystemComponent.h"
 #include "FuMacros.h"
+#include "Utility/FuEffectSpecificationUtility.h"
 #include "Utility/FuEffectUtility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_EffectTimeListener)
@@ -78,8 +79,7 @@ void UFuAbilityAsync_EffectTimeListener::Activate()
 
 	for (auto& ActiveEffect : const_cast<FActiveGameplayEffectsContainer*>(&AbilitySystem->GetActiveGameplayEffects()))
 	{
-		if (ActiveEffect.Spec.Def->GetGrantedTags().HasAny(EffectTags) ||
-		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(EffectTags))
+		if (UFuEffectSpecificationUtility::HasAnyGrantedTags(ActiveEffect.Spec, EffectTags))
 		{
 			ActiveEffect.EventSet.OnTimeChanged.AddUObject(this, &ThisClass::ActiveEffect_OnTimeChanged);
 		}
@@ -171,8 +171,7 @@ void UFuAbilityAsync_EffectTimeListener::AbilitySystem_OnActiveGameplayEffectAdd
 
 	for (const auto& EffectTag : EffectTags)
 	{
-		if (!EffectSpecification.Def->GetGrantedTags().HasTag(EffectTag) &&
-		    !EffectSpecification.DynamicGrantedTags.HasTag(EffectTag))
+		if (!UFuEffectSpecificationUtility::HasGrantedTag(EffectSpecification, EffectTag))
 		{
 			continue;
 		}
@@ -223,8 +222,7 @@ void UFuAbilityAsync_EffectTimeListener::ActiveEffect_OnTimeChanged(const FActiv
 
 	for (const auto& EffectTag : EffectTags)
 	{
-		if (ActiveEffect->Spec.Def->GetGrantedTags().HasTag(EffectTag) ||
-		    ActiveEffect->Spec.DynamicGrantedTags.HasTag(EffectTag))
+		if (UFuEffectSpecificationUtility::HasGrantedTag(ActiveEffect->Spec, EffectTag))
 		{
 			RefreshEffectTimeRemainingAndDurationForTag(EffectTag);
 		}

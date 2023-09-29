@@ -2,6 +2,7 @@
 
 #include "AbilitySystemComponent.h"
 #include "FuMacros.h"
+#include "Utility/FuEffectSpecificationUtility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuEffectUtility)
 
@@ -90,13 +91,8 @@ bool UFuEffectUtility::HasActiveEffectsWithTag(const UAbilitySystemComponent* Ab
 
 	for (const auto& ActiveEffect : &AbilitySystem->GetActiveGameplayEffects())
 	{
-		if (ActiveEffect.bIsInhibited && !bIgnoreInhibitedEffects)
-		{
-			continue;
-		}
-
-		if (ActiveEffect.Spec.Def->GetGrantedTags().HasTag(Tag) ||
-		    ActiveEffect.Spec.DynamicGrantedTags.HasTag(Tag))
+		if ((!ActiveEffect.bIsInhibited || bIgnoreInhibitedEffects) &&
+		    UFuEffectSpecificationUtility::HasGrantedTag(ActiveEffect.Spec, Tag))
 		{
 			return true;
 		}
@@ -115,13 +111,8 @@ bool UFuEffectUtility::HasActiveEffectsWithAnyTags(const UAbilitySystemComponent
 
 	for (const auto& ActiveEffect : &AbilitySystem->GetActiveGameplayEffects())
 	{
-		if (ActiveEffect.bIsInhibited && !bIgnoreInhibitedEffects)
-		{
-			continue;
-		}
-
-		if (ActiveEffect.Spec.Def->GetGrantedTags().HasAny(Tags) ||
-		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(Tags))
+		if ((!ActiveEffect.bIsInhibited || bIgnoreInhibitedEffects) &&
+		    UFuEffectSpecificationUtility::HasAnyGrantedTags(ActiveEffect.Spec, Tags))
 		{
 			return true;
 		}
@@ -138,7 +129,7 @@ int32 UFuEffectUtility::GetEffectsCountByTag(const UAbilitySystemComponent* Abil
 		return false;
 	}
 
-	auto Count{0};
+	auto EffectsCount{0};
 
 	for (const auto& ActiveEffect : &AbilitySystem->GetActiveGameplayEffects())
 	{
@@ -147,14 +138,13 @@ int32 UFuEffectUtility::GetEffectsCountByTag(const UAbilitySystemComponent* Abil
 			continue;
 		}
 
-		if (ActiveEffect.Spec.Def->GetGrantedTags().HasTag(Tag) ||
-		    ActiveEffect.Spec.DynamicGrantedTags.HasTag(Tag))
+		if (UFuEffectSpecificationUtility::HasGrantedTag(ActiveEffect.Spec, Tag))
 		{
-			Count += ActiveEffect.Spec.GetStackCount();
+			EffectsCount += ActiveEffect.Spec.GetStackCount();
 		}
 	}
 
-	return Count;
+	return EffectsCount;
 }
 
 int32 UFuEffectUtility::GetEffectsCountWithAnyTags(const UAbilitySystemComponent* AbilitySystem,
@@ -165,23 +155,18 @@ int32 UFuEffectUtility::GetEffectsCountWithAnyTags(const UAbilitySystemComponent
 		return 0;
 	}
 
-	auto Count{0};
+	auto EffectsCount{0};
 
 	for (const auto& ActiveEffect : &AbilitySystem->GetActiveGameplayEffects())
 	{
-		if (ActiveEffect.bIsInhibited && !bIgnoreInhibitedEffects)
+		if ((!ActiveEffect.bIsInhibited || bIgnoreInhibitedEffects) &&
+		    UFuEffectSpecificationUtility::HasAnyGrantedTags(ActiveEffect.Spec, Tags))
 		{
-			continue;
-		}
-
-		if (ActiveEffect.Spec.Def->GetGrantedTags().HasAny(Tags) ||
-		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(Tags))
-		{
-			Count += ActiveEffect.Spec.GetStackCount();
+			EffectsCount += ActiveEffect.Spec.GetStackCount();
 		}
 	}
 
-	return Count;
+	return EffectsCount;
 }
 
 const FActiveGameplayEffect* UFuEffectUtility::GetActiveEffectTimeRemainingAndDurationByTag(const UAbilitySystemComponent* AbilitySystem,
@@ -203,8 +188,7 @@ const FActiveGameplayEffect* UFuEffectUtility::GetActiveEffectTimeRemainingAndDu
 
 	for (auto& ActiveEffect : &ActiveEffects)
 	{
-		if (!ActiveEffect.Spec.Def->GetGrantedTags().HasTag(Tag) &&
-		    !ActiveEffect.Spec.DynamicGrantedTags.HasTag(Tag))
+		if (!UFuEffectSpecificationUtility::HasGrantedTag(ActiveEffect.Spec, Tag))
 		{
 			continue;
 		}

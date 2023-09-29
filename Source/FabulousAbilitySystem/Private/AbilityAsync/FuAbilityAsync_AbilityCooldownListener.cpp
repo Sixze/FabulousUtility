@@ -2,6 +2,7 @@
 
 #include "FuAbilitySystemComponent.h"
 #include "FuMacros.h"
+#include "Utility/FuEffectSpecificationUtility.h"
 #include "Utility/FuEffectUtility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AbilityCooldownListener)
@@ -117,8 +118,7 @@ void UFuAbilityAsync_AbilityCooldownListener::Activate()
 
 	for (auto& ActiveEffect : const_cast<FActiveGameplayEffectsContainer*>(&AbilitySystem->GetActiveGameplayEffects()))
 	{
-		if (ActiveEffect.Spec.Def->GetGrantedTags().HasAny(EffectTags.GetExplicitGameplayTags()) ||
-		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(EffectTags.GetExplicitGameplayTags()))
+		if (UFuEffectSpecificationUtility::HasAnyGrantedTags(ActiveEffect.Spec, EffectTags.GetExplicitGameplayTags()))
 		{
 			ActiveEffect.EventSet.OnTimeChanged.AddUObject(this, &ThisClass::ActiveEffect_OnTimeChanged);
 		}
@@ -209,8 +209,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(
 	{
 		ActiveEffect.EventSet.OnTimeChanged.RemoveAll(this);
 
-		if (ActiveEffect.Spec.Def->GetGrantedTags().HasAny(EffectTags.GetExplicitGameplayTags()) ||
-		    ActiveEffect.Spec.DynamicGrantedTags.HasAny(EffectTags.GetExplicitGameplayTags()))
+		if (UFuEffectSpecificationUtility::HasAnyGrantedTags(ActiveEffect.Spec, EffectTags.GetExplicitGameplayTags()))
 		{
 			ActiveEffect.EventSet.OnTimeChanged.AddUObject(this, &ThisClass::ActiveEffect_OnTimeChanged);
 		}
@@ -285,8 +284,7 @@ void UFuAbilityAsync_AbilityCooldownListener::AbilitySystem_OnActiveGameplayEffe
 
 	for (const auto& EffectTag : EffectTags.GetExplicitGameplayTags())
 	{
-		if (!EffectSpecification.Def->GetGrantedTags().HasTag(EffectTag) &&
-		    !EffectSpecification.DynamicGrantedTags.HasTag(EffectTag))
+		if (!UFuEffectSpecificationUtility::HasGrantedTag(EffectSpecification, EffectTag))
 		{
 			continue;
 		}
@@ -331,8 +329,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ActiveEffect_OnTimeChanged(const F
 
 	for (const auto& EffectTag : EffectTags.GetExplicitGameplayTags())
 	{
-		if (ActiveEffect->Spec.Def->GetGrantedTags().HasTag(EffectTag) ||
-		    ActiveEffect->Spec.DynamicGrantedTags.HasTag(EffectTag))
+		if (UFuEffectSpecificationUtility::HasGrantedTag(ActiveEffect->Spec, EffectTag))
 		{
 			RefreshEffectTimeRemainingAndDurationForTag(EffectTag);
 		}

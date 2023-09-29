@@ -11,63 +11,71 @@ class FABULOUSABILITYSYSTEM_API UFuEffectContextUtility : public UBlueprintFunct
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Effect Context Utility", Meta = (ReturnDisplayName = "Effect Context Handle"))
-	static FGameplayEffectContextHandle DuplicateEffectContext(const FGameplayEffectContextHandle& EffectContextHandle);
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Effect Context Utility", Meta = (ReturnDisplayName = "Effect Context"))
+	static FGameplayEffectContextHandle DuplicateEffectContext(const FGameplayEffectContextHandle& EffectContext);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Effect Context Utility", Meta = (ReturnDisplayName = "Target Data Handle"))
-	static FGameplayAbilityTargetDataHandle GetTargetDataHandle(const FGameplayEffectContextHandle& EffectContextHandle);
+	static FGameplayAbilityTargetDataHandle GetTargetDataHandle(const FGameplayEffectContextHandle& EffectContext);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Effect Context Utility")
-	static void AppendTargetData(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle,
-	                             const FGameplayAbilityTargetDataHandle& TargetDataHandle);
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Effect Context Utility", Meta = (ReturnDisplayName = "Effect Context"))
+	static FGameplayEffectContextHandle& AppendTargetData(UPARAM(ref) FGameplayEffectContextHandle& EffectContext,
+	                                                      const FGameplayAbilityTargetDataHandle& TargetDataHandle);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Effect Context Utility")
-	static void SetTargetData(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle,
-	                          const FGameplayAbilityTargetDataHandle& TargetDataHandle);
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Effect Context Utility", Meta = (ReturnDisplayName = "Effect Context"))
+	static FGameplayEffectContextHandle& SetTargetData(UPARAM(ref) FGameplayEffectContextHandle& EffectContext,
+	                                                   const FGameplayAbilityTargetDataHandle& TargetDataHandle);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Effect Context Utility")
-	static void ClearTargetData(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle);
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Effect Context Utility", Meta = (ReturnDisplayName = "Effect Context"))
+	static FGameplayEffectContextHandle& ClearTargetData(UPARAM(ref) FGameplayEffectContextHandle& EffectContext);
 };
 
-inline FGameplayEffectContextHandle UFuEffectContextUtility::DuplicateEffectContext(const FGameplayEffectContextHandle& EffectContextHandle)
+inline FGameplayEffectContextHandle UFuEffectContextUtility::DuplicateEffectContext(const FGameplayEffectContextHandle& EffectContext)
 {
-	return EffectContextHandle.Duplicate();
+	return EffectContext.Duplicate();
 }
 
-inline FGameplayAbilityTargetDataHandle UFuEffectContextUtility::GetTargetDataHandle(
-	const FGameplayEffectContextHandle& EffectContextHandle)
+inline FGameplayAbilityTargetDataHandle UFuEffectContextUtility::GetTargetDataHandle(const FGameplayEffectContextHandle& EffectContext)
 {
-	return FU_ENSURE(EffectContextHandle.IsValid()) &&
-	       FU_ENSURE(EffectContextHandle.Get()->GetScriptStruct()->IsChildOf(FFuGameplayEffectContext::StaticStruct()))
-		       ? static_cast<const FFuGameplayEffectContext*>(EffectContextHandle.Get())->GetTargetDataHandle()
-		       : FGameplayAbilityTargetDataHandle{};
-}
-
-inline void UFuEffectContextUtility::AppendTargetData(FGameplayEffectContextHandle& EffectContextHandle,
-                                                      const FGameplayAbilityTargetDataHandle& TargetDataHandle)
-{
-	if (FU_ENSURE(EffectContextHandle.IsValid()) &&
-	    FU_ENSURE(EffectContextHandle.Get()->GetScriptStruct()->IsChildOf(FFuGameplayEffectContext::StaticStruct())))
+	if (!FU_ENSURE(EffectContext.IsValid()) ||
+	    !FU_ENSURE(EffectContext.Get()->GetScriptStruct()->IsChildOf(FFuGameplayEffectContext::StaticStruct())))
 	{
-		static_cast<FFuGameplayEffectContext*>(EffectContextHandle.Get())->AppendTargetDataHandle(TargetDataHandle);
+		return {};
 	}
+
+	return static_cast<const FFuGameplayEffectContext*>(EffectContext.Get())->GetTargetDataHandle();
 }
 
-inline void UFuEffectContextUtility::SetTargetData(FGameplayEffectContextHandle& EffectContextHandle,
-                                                   const FGameplayAbilityTargetDataHandle& TargetDataHandle)
+inline FGameplayEffectContextHandle& UFuEffectContextUtility::AppendTargetData(FGameplayEffectContextHandle& EffectContext,
+                                                                               const FGameplayAbilityTargetDataHandle& TargetDataHandle)
 {
-	if (FU_ENSURE(EffectContextHandle.IsValid()) &&
-	    FU_ENSURE(EffectContextHandle.Get()->GetScriptStruct()->IsChildOf(FFuGameplayEffectContext::StaticStruct())))
+	if (FU_ENSURE(EffectContext.IsValid()) &&
+	    FU_ENSURE(EffectContext.Get()->GetScriptStruct()->IsChildOf(FFuGameplayEffectContext::StaticStruct())))
 	{
-		static_cast<FFuGameplayEffectContext*>(EffectContextHandle.Get())->SetTargetDataHandle(TargetDataHandle);
+		static_cast<FFuGameplayEffectContext*>(EffectContext.Get())->AppendTargetDataHandle(TargetDataHandle);
 	}
+
+	return EffectContext;
 }
 
-inline void UFuEffectContextUtility::ClearTargetData(FGameplayEffectContextHandle& EffectContextHandle)
+inline FGameplayEffectContextHandle& UFuEffectContextUtility::SetTargetData(FGameplayEffectContextHandle& EffectContext,
+                                                                            const FGameplayAbilityTargetDataHandle& TargetDataHandle)
 {
-	if (FU_ENSURE(EffectContextHandle.IsValid()) &&
-	    FU_ENSURE(EffectContextHandle.Get()->GetScriptStruct()->IsChildOf(FFuGameplayEffectContext::StaticStruct())))
+	if (FU_ENSURE(EffectContext.IsValid()) &&
+	    FU_ENSURE(EffectContext.Get()->GetScriptStruct()->IsChildOf(FFuGameplayEffectContext::StaticStruct())))
 	{
-		static_cast<FFuGameplayEffectContext*>(EffectContextHandle.Get())->ClearTargetDataHandle();
+		static_cast<FFuGameplayEffectContext*>(EffectContext.Get())->SetTargetDataHandle(TargetDataHandle);
 	}
+
+	return EffectContext;
+}
+
+inline FGameplayEffectContextHandle& UFuEffectContextUtility::ClearTargetData(FGameplayEffectContextHandle& EffectContext)
+{
+	if (FU_ENSURE(EffectContext.IsValid()) &&
+	    FU_ENSURE(EffectContext.Get()->GetScriptStruct()->IsChildOf(FFuGameplayEffectContext::StaticStruct())))
+	{
+		static_cast<FFuGameplayEffectContext*>(EffectContext.Get())->ClearTargetDataHandle();
+	}
+
+	return EffectContext;
 }
