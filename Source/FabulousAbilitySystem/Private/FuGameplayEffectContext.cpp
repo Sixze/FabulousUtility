@@ -18,7 +18,7 @@ FGameplayEffectContext* FFuGameplayEffectContext::Duplicate() const
 {
 	auto* NewEffectContext{new FFuGameplayEffectContext{*this}};
 
-	if (HitResult != nullptr)
+	if (HitResult.IsValid())
 	{
 		NewEffectContext->AddHitResult(*HitResult, true);
 	}
