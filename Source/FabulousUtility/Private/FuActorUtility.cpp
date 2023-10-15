@@ -2,6 +2,7 @@
 
 #include "FuMacros.h"
 #include "Engine/World.h"
+#include "GameFramework/Controller.h"
 #include "GameFramework/Pawn.h"
 #include "GameFramework/PawnMovementComponent.h"
 
@@ -19,6 +20,28 @@ bool UFuActorUtility::TryFindComponentByClass(AActor* Actor, const TSubclassOf<U
 {
 	Component = IsValid(Actor) ? Actor->FindComponentByClass(ComponentClass) : nullptr;
 	return IsValid(Component);
+}
+
+void UFuActorUtility::GetPlayerViewPoint(const AActor* Actor, FVector& Location, FRotator& Rotation)
+{
+	Location = FVector::ZeroVector;
+	Rotation = FRotator::ZeroRotator;
+
+	if (!FU_ENSURE(IsValid(Actor)))
+	{
+		return;
+	}
+
+	const auto* Pawn{Cast<APawn>(Actor)};
+
+	if (IsValid(Pawn) && IsValid(Pawn->GetController()))
+	{
+		Pawn->GetController()->GetPlayerViewPoint(Location, Rotation);
+	}
+	else
+	{
+		Actor->GetActorEyesViewPoint(Location, Rotation);
+	}
 }
 
 FVector UFuActorUtility::GetActorFeetLocation(const AActor* Actor)

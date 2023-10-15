@@ -22,12 +22,12 @@ void UFuAnyTagRemovalRequirementEffectComponent::PostInitProperties()
 #if WITH_EDITOR
 void UFuAnyTagRemovalRequirementEffectComponent::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
 {
-	Super::PostEditChangeProperty(PropertyChangedEvent);
-
 	if (PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, RemovalRequirementTags))
 	{
 		RefreshRemovalRequirementTags();
 	}
+
+	Super::PostEditChangeProperty(PropertyChangedEvent);
 }
 #endif
 

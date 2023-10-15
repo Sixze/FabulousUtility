@@ -23,6 +23,11 @@ public:
 		Meta = (DeterminesOutputType = "ComponentClass", DynamicOutputParam = "Component", ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryFindComponentByClass(AActor* Actor, TSubclassOf<UActorComponent> ComponentClass, UActorComponent*& Component);
 
+	// Not the same as AActor::GetActorEyesViewPoint(), since this function
+	// returns the exact location and rotation of the camera, if possible.
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Actor Utility")
+	static void GetPlayerViewPoint(const AActor* Actor, FVector& Location, FRotator& Rotation);
+
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Actor Utility",
 		Meta = (DefaultToSelf = "Actor", ReturnDisplayName = "Feet Location"))
 	static FVector GetActorFeetLocation(const AActor* Actor);
