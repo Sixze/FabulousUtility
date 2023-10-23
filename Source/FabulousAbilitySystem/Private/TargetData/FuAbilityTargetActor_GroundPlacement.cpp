@@ -16,6 +16,18 @@ AFuAbilityTargetActor_GroundPlacement::AFuAbilityTargetActor_GroundPlacement()
 	PrimaryActorTick.TickGroup = TG_PostUpdateWork;
 }
 
+#if WITH_EDITOR
+void AFuAbilityTargetActor_GroundPlacement::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
+{
+	if (PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, SlopeAngleThreshold))
+	{
+		SlopeAngleThresholdCos = FMath::Cos(FMath::DegreesToRadians(SlopeAngleThreshold));
+	}
+
+	Super::PostEditChangeProperty(PropertyChangedEvent);
+}
+#endif
+
 void AFuAbilityTargetActor_GroundPlacement::Tick(const float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -128,11 +140,11 @@ bool AFuAbilityTargetActor_GroundPlacement::PerformGroundPlacement(FVector& Resu
 	ResultLocation = SphereSweepHit.Location;
 	ResultLocation.Z -= SphereSweepRadius;
 
-	const auto SlopeVector{SphereSweepHit.Location - SphereSweepHit.ImpactPoint};
+	const FVector3f SlopeVector{SphereSweepHit.Location - SphereSweepHit.ImpactPoint};
 	const auto SlopeVectorLength{SlopeVector.Size()};
-	const auto SlopeCos{(SlopeVector / SlopeVectorLength).Z};
+	const auto SlopeAngleCos{SlopeVector.Z / SlopeVectorLength};
 
-	if (FMath::RadiansToDegrees(FMath::Acos(SlopeCos)) > MaxSlopeAngle + 1.0f)
+	if (SlopeAngleCos < SlopeAngleThresholdCos)
 	{
 		return false;
 	}
@@ -146,7 +158,7 @@ bool AFuAbilityTargetActor_GroundPlacement::PerformGroundPlacement(FVector& Resu
 	                                     TraceStart,
 	                                     {
 		                                     SphereSweepHit.Location.X, SphereSweepHit.Location.Y, SphereSweepHit.Location.Z -
-			                                     SlopeVectorLength / SlopeCos - UCharacterMovementComponent::MAX_FLOOR_DIST
+			                                     SlopeVectorLength / SlopeAngleCos - UCharacterMovementComponent::MAX_FLOOR_DIST
 	                                     },
 	                                     TraceProfile.Name, {SlopeTraceTagName, false, SourceActor});
 

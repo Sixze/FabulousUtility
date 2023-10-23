@@ -16,8 +16,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
 	FVector2f SphereSweepHeight{-100.0f, 100.0f};
 
+	// Prevents placement on surfaces whose slope angle exceeds this value.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings", Meta = (ClampMin = 0, ClampMax = 90, ForceUnits = "deg"))
-	float MaxSlopeAngle{20.0f};
+	float SlopeAngleThreshold{20.0f};
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Settings", AdvancedDisplay, Meta = (ClampMin = 0, ClampMax = 1))
+	float SlopeAngleThresholdCos{FMath::Cos(FMath::DegreesToRadians(20.0f))};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings", Meta = (ForceUnits = "cm"))
 	float TraceHorizontalOffset{200.0f};
@@ -36,6 +40,10 @@ protected:
 
 public:
 	AFuAbilityTargetActor_GroundPlacement();
+
+#if WITH_EDITOR
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+#endif
 
 	virtual void Tick(float DeltaTime) override;
 
