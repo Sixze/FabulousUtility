@@ -10,13 +10,13 @@ class FABULOUSABILITYSYSTEM_API UFuGameplayAbility : public UGameplayAbility
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Ability")
-	FGameplayTagContainer RemoveAbilitiesWithTag;
+	FGameplayTagContainer RemoveAbilitiesWithAnyTags;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Ability")
-	FGameplayTagContainer CancelAbilitiesWithoutTag;
+	FGameplayTagContainer CancelAbilitiesWithoutAllTags;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Ability")
-	FGameplayTagContainer BlockAbilitiesWithoutTag;
+	FGameplayTagContainer BlockAbilitiesWithoutAllTags;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Ability")
 	bool bAutoActivateWhenGiven;

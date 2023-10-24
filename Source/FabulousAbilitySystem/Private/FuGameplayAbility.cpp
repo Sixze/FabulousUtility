@@ -35,11 +35,11 @@ void UFuGameplayAbility::SetShouldBlockOtherAbilities(const bool bShouldBlockAbi
 
 	if (bIsBlockingOtherAbilities)
 	{
-		FuAbilitySystem->BlockAbilitiesWithoutTags(BlockAbilitiesWithoutTag);
+		FuAbilitySystem->BlockAbilitiesWithoutAllTags(BlockAbilitiesWithoutAllTags);
 	}
 	else
 	{
-		FuAbilitySystem->UnBlockAbilitiesWithoutTags(BlockAbilitiesWithoutTag);
+		FuAbilitySystem->UnBlockAbilitiesWithoutAllTags(BlockAbilitiesWithoutAllTags);
 	}
 }
 
@@ -94,17 +94,17 @@ void UFuGameplayAbility::PreActivate(const FGameplayAbilitySpecHandle AbilityHan
 
 	if (bIsBlockingOtherAbilities && FU_ENSURE(IsValid(FuAbilitySystem)))
 	{
-		FuAbilitySystem->BlockAbilitiesWithoutTags(BlockAbilitiesWithoutTag);
+		FuAbilitySystem->BlockAbilitiesWithoutAllTags(BlockAbilitiesWithoutAllTags);
 	}
 
-	if (CancelAbilitiesWithoutTag.IsValid())
+	if (CancelAbilitiesWithoutAllTags.IsValid())
 	{
-		ActorInfo->AbilitySystemComponent->CancelAbilities(nullptr, &CancelAbilitiesWithoutTag, this);
+		ActorInfo->AbilitySystemComponent->CancelAbilities(nullptr, &CancelAbilitiesWithoutAllTags, this);
 	}
 
-	if (RemoveAbilitiesWithTag.IsValid())
+	if (RemoveAbilitiesWithAnyTags.IsValid())
 	{
-		UFuAbilityUtility::RemoveAbilitiesWithAnyTags(ActorInfo->AbilitySystemComponent.Get(), RemoveAbilitiesWithTag, AbilityHandle);
+		UFuAbilityUtility::RemoveAbilitiesWithAnyTags(ActorInfo->AbilitySystemComponent.Get(), RemoveAbilitiesWithAnyTags, AbilityHandle);
 	}
 }
 
@@ -119,7 +119,7 @@ void UFuGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle AbilityHand
 
 		if (FU_ENSURE(IsValid(FuAbilitySystem)) && IsBlockingOtherAbilities())
 		{
-			FuAbilitySystem->UnBlockAbilitiesWithoutTags(BlockAbilitiesWithoutTag);
+			FuAbilitySystem->UnBlockAbilitiesWithoutAllTags(BlockAbilitiesWithoutAllTags);
 		}
 	}
 

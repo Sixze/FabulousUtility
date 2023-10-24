@@ -86,8 +86,8 @@ void UFuAbilitySystemComponent::OnRemoveAbility(FGameplayAbilitySpec& AbilitySpe
 bool UFuAbilitySystemComponent::AreAbilityTagsBlocked(const FGameplayTagContainer& Tags) const
 {
 	return Super::AreAbilityTagsBlocked(Tags) ||
-	       (BlockedAbilityWithoutTags.GetExplicitGameplayTags().IsValid() &&
-	        !Tags.HasAny(BlockedAbilityWithoutTags.GetExplicitGameplayTags()));
+	       (BlockedAbilityWithoutAllTags.GetExplicitGameplayTags().IsValid() &&
+	        !Tags.HasAny(BlockedAbilityWithoutAllTags.GetExplicitGameplayTags()));
 }
 
 void UFuAbilitySystemComponent::AbilityLocalInputPressed(const int32 InputId)
@@ -287,12 +287,12 @@ void UFuAbilitySystemComponent::InputTagReleased(const FGameplayTag& InputTag)
 	}
 }
 
-void UFuAbilitySystemComponent::BlockAbilitiesWithoutTags(const FGameplayTagContainer& Tags)
+void UFuAbilitySystemComponent::BlockAbilitiesWithoutAllTags(const FGameplayTagContainer& Tags)
 {
-	BlockedAbilityWithoutTags.UpdateTagCount(Tags, 1);
+	BlockedAbilityWithoutAllTags.UpdateTagCount(Tags, 1);
 }
 
-void UFuAbilitySystemComponent::UnBlockAbilitiesWithoutTags(const FGameplayTagContainer& Tags)
+void UFuAbilitySystemComponent::UnBlockAbilitiesWithoutAllTags(const FGameplayTagContainer& Tags)
 {
-	BlockedAbilityWithoutTags.UpdateTagCount(Tags, -1);
+	BlockedAbilityWithoutAllTags.UpdateTagCount(Tags, -1);
 }

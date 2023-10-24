@@ -23,7 +23,7 @@ public:
 	FGameplayTag CancelInputTag;
 
 protected:
-	FGameplayTagCountContainer BlockedAbilityWithoutTags;
+	FGameplayTagCountContainer BlockedAbilityWithoutAllTags;
 
 public:
 	FFuAbilityAddedOrRemovedDelegate OnAbilityGiven;
@@ -66,7 +66,7 @@ public:
 
 	void InputTagReleased(const FGameplayTag& InputTag);
 
-	void BlockAbilitiesWithoutTags(const FGameplayTagContainer& Tags);
+	void BlockAbilitiesWithoutAllTags(const FGameplayTagContainer& Tags);
 
-	void UnBlockAbilitiesWithoutTags(const FGameplayTagContainer& Tags);
+	void UnBlockAbilitiesWithoutAllTags(const FGameplayTagContainer& Tags);
 };
