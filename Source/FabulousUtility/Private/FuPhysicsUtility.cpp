@@ -151,9 +151,9 @@ bool UFuPhysicsUtility::LineTraceBone(UPrimitiveComponent* Primitive, const FNam
 		return false;
 	}
 
-	const auto* BodyInstance{Primitive->GetBodyInstance(BoneName)};
+	const auto* Body{Primitive->GetBodyInstance(BoneName)};
 
-	return BodyInstance != nullptr && BodyInstance->LineTrace(Hit, TraceStart, TraceEnd, false, true);
+	return Body != nullptr && Body->LineTrace(Hit, TraceStart, TraceEnd, false, true);
 }
 
 bool UFuPhysicsUtility::BoxOverlapActors(const UObject* WorldContext, const FVector& Location, const FRotator& Rotation,
