@@ -1,8 +1,8 @@
 # Fabulous Utility
 
-A collection of utility functions, nodes, and other things that can come in handy in **Unreal Engine** projects of any type.
+A collection of useful functions, nodes, and other things that can come in handy in **Unreal Engine** projects of any type.
 
-Many of these utilities are designed for use with the **Gameplay Ability System**.
+Many of these things are designed for use with the **Gameplay Ability System**.
 
 ## Quick Start
 
