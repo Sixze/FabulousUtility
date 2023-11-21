@@ -13,17 +13,17 @@ class FABULOUSUI_API UFuSlateNavigationSettings : public UDeveloperSettings
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Slate Navigation", Config)
-	bool bApplySettings;
+	uint8 bApplySettings : 1;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Key Navigation", Config)
-	bool bAllowKeyNavigation{true};
+	uint8 bAllowKeyNavigation : 1 {true};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Key Navigation", Config,
 		Meta = (ForceInlineRow, EditCondition = "bAllowKeyNavigation"))
 	TMap<FKey, EUINavigation> KeyNavigationMappings;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Analog Navigation", Config)
-	bool bAllowAnalogNavigation{true};
+	uint8 bAllowAnalogNavigation : 1 {true};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Analog Navigation",
 		Meta = (ClampMin = 0, ClampMax = 1, EditCondition = "bAllowAnalogNavigation"))
@@ -38,7 +38,7 @@ public:
 	FKey AnalogNavigationHorizontalKey{EKeys::Gamepad_LeftX};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Tab Navigation", Config)
-	bool bAllowTabNavigation{true};
+	uint8 bAllowTabNavigation : 1 {true};
 
 public:
 	UFuSlateNavigationSettings();

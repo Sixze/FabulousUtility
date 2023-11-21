@@ -21,7 +21,7 @@ protected:
 	// If checked and FlowAbortMode is set to LowerPriority or Self, then the execution
 	// flow will only be able to pass through this node upon receiving a gameplay event.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
-	bool bAllowEntryInNonSelfFlowAbortMode{true};
+	uint8 bAllowEntryInNonSelfFlowAbortMode : 1 {true};
 
 public:
 	UFuBTDecorator_ReceiveGameplayEvent();

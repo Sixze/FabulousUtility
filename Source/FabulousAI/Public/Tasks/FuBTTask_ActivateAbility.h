@@ -15,10 +15,10 @@ protected:
 	FGameplayTag AbilityTag;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
-	bool bWaitForAbilityEnd{true};
+	uint8 bWaitForAbilityEnd : 1 {true};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings", Meta = (EditCondition = "bWaitForAbilityEnd"))
-	bool bCancelAbilityOnAbort;
+	uint8 bCancelAbilityOnAbort : 1;
 
 public:
 	UFuBTTask_ActivateAbility();

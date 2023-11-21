@@ -17,7 +17,7 @@ protected:
 	FBlueprintSessionResult SearchResult;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	bool bTravelOnSuccess;
+	uint8 bTravelOnSuccess : 1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Join Session Async Action")

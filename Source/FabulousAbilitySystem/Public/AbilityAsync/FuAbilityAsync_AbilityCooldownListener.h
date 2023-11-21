@@ -18,7 +18,7 @@ protected:
 	int32 InputId{-1};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	bool bWaitForTimeFromServer;
+	uint8 bWaitForTimeFromServer : 1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Ability Cooldown Listener Ability Async")

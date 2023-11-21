@@ -18,7 +18,7 @@ protected:
 	int32 LoopsCount;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	bool bSkipFirstDelay;
+	uint8 bSkipFirstDelay : 1;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, Meta = (ClampMin = 0))
 	int32 LoopIndex{-1};

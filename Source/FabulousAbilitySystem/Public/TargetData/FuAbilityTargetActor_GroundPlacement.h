@@ -36,7 +36,7 @@ protected:
 	FRotator GroundPlaceRotation;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	bool bGroundPlaceValid;
+	uint8 bGroundPlaceValid : 1;
 
 public:
 	AFuAbilityTargetActor_GroundPlacement();

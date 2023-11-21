@@ -15,7 +15,7 @@ protected:
 
 	float Duration;
 	int32 LoopsCount;
-	bool bStop;
+	uint8 bStop : 1;
 
 	float TimeRemaining;
 	int32& LoopIndex;

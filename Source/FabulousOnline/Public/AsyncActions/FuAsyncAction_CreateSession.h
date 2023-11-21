@@ -16,7 +16,7 @@ protected:
 	int32 PublicConnections;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	bool bLanOnly;
+	uint8 bLanOnly : 1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Create Session Async Action")

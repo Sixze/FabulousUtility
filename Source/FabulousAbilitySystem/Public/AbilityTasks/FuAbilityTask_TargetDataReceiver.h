@@ -10,7 +10,7 @@ class FABULOUSABILITYSYSTEM_API UFuAbilityTask_TargetDataReceiver : public UAbil
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	bool bReceiveOnce;
+	uint8 bReceiveOnce : 1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Target Data Receiver Ability Task")

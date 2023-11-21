@@ -27,13 +27,13 @@ protected:
 	TEnumAsByte<EInputEvent> KeyEvent{IE_Pressed};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	bool bPersistent{false};
+	uint8 bPersistent : 1 {false};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	bool bConsumeInput{true};
+	uint8 bConsumeInput : 1 {true};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	bool bDisplayInActionBar{true};
+	uint8 bDisplayInActionBar : 1 {true};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
 	FText DisplayNameOverride;

@@ -19,15 +19,15 @@ protected:
 	FGameplayTagContainer BlockAbilitiesWithoutAllTags;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Ability")
-	bool bAutoActivateWhenGiven;
+	uint8 bAutoActivateWhenGiven : 1;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Ability")
-	bool bAllowActivationByInput{true};
+	uint8 bAllowActivationByInput : 1 {true};
+
+	uint8 bCheckCostBlueprintImplemented : 1 {false};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Ability", Instanced)
 	TObjectPtr<UObject> UserData;
-
-	bool bCheckCostBlueprintImplemented{false};
 
 public:
 	UFuGameplayAbility();

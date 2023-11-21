@@ -15,7 +15,7 @@ protected:
 	FGameplayAbilitySpecHandle AbilityHandle;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	bool bCancelAbilityOnDestroy;
+	uint8 bCancelAbilityOnDestroy : 1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Ability Activator Ability Task")

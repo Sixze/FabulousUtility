@@ -11,7 +11,7 @@ struct FFuActivateAbilityMemory
 
 	TSet<FGameplayAbilitySpecHandle> ActiveAbilityHandles;
 
-	bool bAnyAbilitySuccessfullyEnded{false};
+	uint8 bAnyAbilitySuccessfullyEnded : 1 {false};
 };
 
 UFuBTTask_ActivateAbility::UFuBTTask_ActivateAbility()

@@ -16,7 +16,7 @@ protected:
 	TArray<FGameplayAttribute> Attributes;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	bool bSkipEqualValuesOnServer;
+	uint8 bSkipEqualValuesOnServer : 1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Attribute Listener Ability Async")

@@ -12,7 +12,7 @@ class FABULOUSABILITYSYSTEM_API UFuAbilityTask_InputListener : public UAbilityTa
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	bool bCheckInitialInputState;
+	uint8 bCheckInitialInputState : 1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Input Listener Ability Task")

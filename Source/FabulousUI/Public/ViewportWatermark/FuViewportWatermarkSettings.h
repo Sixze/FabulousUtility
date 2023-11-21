@@ -39,13 +39,13 @@ class FABULOUSUI_API UFuViewportWatermarkSettings : public UDeveloperSettings
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Viewport Watermark", Config)
-	bool bEnabled;
+	uint8 bEnabled : 1;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Viewport Watermark", Config, DisplayName = "Z Order")
 	int32 ZOrder{100};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Title", Config)
-	bool bShowTitle{true};
+	uint8 bShowTitle : 1 {true};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Title",
 		Config, Meta = (MultiLine = true, EditCondition = "bShowTitle"))
@@ -55,14 +55,14 @@ public:
 	FFuViewportWatermarkTextSettings TitleSettings;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Copyright", Config)
-	bool bShowCopyright{true};
+	uint8 bShowCopyright : 1 {true};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Copyright",
 		Config, Meta = (MultiLine = true, EditCondition = "bShowCopyright"))
 	FText CopyrightText;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Copyright", Config, Meta = (EditCondition = "bShowCopyright"))
-	bool bAddEngineVersionToCopyright{true};
+	uint8 bAddEngineVersionToCopyright : 1 {true};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Copyright", Transient, Meta = (MultiLine = true))
 	FText EngineVersionText;
@@ -71,7 +71,7 @@ public:
 	FFuViewportWatermarkTextSettings CopyrightSettings;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "System Info", Config)
-	bool bShowSystemInfo{true};
+	uint8 bShowSystemInfo : 1 {true};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "System Info", Transient, Meta = (MultiLine = true))
 	FText SystemInfoText;
