@@ -22,10 +22,13 @@ bool FFuAbilityTargetData_Float::NetSerialize(FArchive& Archive, UPackageMap* Ma
 	return true;
 }
 
-FGameplayAbilityTargetDataHandle UFuFloatTargetDataUtility::MakeFloatTargetData(const FFuAbilityTargetData_Float& TargetData)
+FGameplayAbilityTargetDataHandle UFuFloatTargetDataUtility::MakeFloatTargetData(const float Value)
 {
+	auto TargetData{MakeShared<FFuAbilityTargetData_Float>()};
+	TargetData->Value = Value;
+
 	FGameplayAbilityTargetDataHandle TargetDataHandle;
-	TargetDataHandle.Data.Emplace(MakeShared<FFuAbilityTargetData_Float>(TargetData));
+	TargetDataHandle.Data.Emplace(TargetData);
 
 	return TargetDataHandle;
 }

@@ -33,10 +33,13 @@ bool FFuAbilityTargetData_Vector::NetSerialize(FArchive& Archive, UPackageMap* M
 	return bSuccess;
 }
 
-FGameplayAbilityTargetDataHandle UFuVectorTargetDataUtility::MakeVectorTargetData(const FFuAbilityTargetData_Vector& TargetData)
+FGameplayAbilityTargetDataHandle UFuVectorTargetDataUtility::MakeVectorTargetData(const FVector& Vector)
 {
+	auto TargetData{MakeShared<FFuAbilityTargetData_Vector>()};
+	TargetData->Vector = Vector;
+
 	FGameplayAbilityTargetDataHandle TargetDataHandle;
-	TargetDataHandle.Data.Emplace(MakeShared<FFuAbilityTargetData_Vector>(TargetData));
+	TargetDataHandle.Data.Emplace(MoveTemp(TargetData));
 
 	return TargetDataHandle;
 }

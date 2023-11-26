@@ -45,9 +45,8 @@ class FABULOUSABILITYSYSTEM_API UFuLocationAndRotationTargetDataUtility : public
 
 public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Location and Rotation Target Data Utility",
-		Meta = (AutoCreateRefTerm = "TargetData", ReturnDisplayName = "Target Data Handle"))
-	static FGameplayAbilityTargetDataHandle MakeLocationAndRotationTargetData(
-		const FFuAbilityTargetData_LocationAndRotation& TargetData);
+		Meta = (AutoCreateRefTerm = "Location, Rotation", ReturnDisplayName = "Target Data Handle"))
+	static FGameplayAbilityTargetDataHandle MakeLocationAndRotationTargetData(const FVector& Location, const FRotator& Rotation);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Location and Rotation Target Data Utility",
 		Meta = (ReturnDisplayName = "Target Data"))

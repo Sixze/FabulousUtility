@@ -39,10 +39,14 @@ bool FFuAbilityTargetData_LocationAndRotation::NetSerialize(FArchive& Archive, U
 }
 
 FGameplayAbilityTargetDataHandle UFuLocationAndRotationTargetDataUtility::MakeLocationAndRotationTargetData(
-	const FFuAbilityTargetData_LocationAndRotation& TargetData)
+	const FVector& Location, const FRotator& Rotation)
 {
+	auto TargetData{MakeShared<FFuAbilityTargetData_LocationAndRotation>()};
+	TargetData->Location = Location;
+	TargetData->Rotation = Rotation;
+
 	FGameplayAbilityTargetDataHandle TargetDataHandle;
-	TargetDataHandle.Data.Emplace(MakeShared<FFuAbilityTargetData_LocationAndRotation>(TargetData));
+	TargetDataHandle.Data.Emplace(MoveTemp(TargetData));
 
 	return TargetDataHandle;
 }
