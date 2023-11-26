@@ -8,19 +8,19 @@
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_EffectTimeListener)
 
 UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::ListenForEffectTimeChangeOnActor(
-	const AActor* Actor, const FGameplayTag InEffectTag, const bool bInWaitForTimeFromServer)
+	const AActor* Actor, const FGameplayTag InEffectTag, const bool bAllowPredictedTime)
 {
-	return ListenForEffectTimeChange(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InEffectTag, bInWaitForTimeFromServer);
+	return ListenForEffectTimeChange(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InEffectTag, bAllowPredictedTime);
 }
 
 UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::ListenForEffectsTimeChangeOnActor(
-	const AActor* Actor, const FGameplayTagContainer InEffectTags, const bool bInWaitForTimeFromServer)
+	const AActor* Actor, const FGameplayTagContainer InEffectTags, const bool bAllowPredictedTime)
 {
-	return ListenForEffectsTimeChange(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InEffectTags, bInWaitForTimeFromServer);
+	return ListenForEffectsTimeChange(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor), InEffectTags, bAllowPredictedTime);
 }
 
 UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::ListenForEffectTimeChange(
-	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag EffectTag, const bool bInWaitForTimeFromServer)
+	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag EffectTag, const bool bAllowPredictedTime)
 {
 	auto* Task{NewObject<ThisClass>()};
 
@@ -31,13 +31,13 @@ UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::ListenFo
 		Task->EffectTags.AddTag(EffectTag);
 	}
 
-	Task->bWaitForTimeFromServer = bInWaitForTimeFromServer;
+	Task->bPredictedTimeAllowed = bAllowPredictedTime;
 
 	return Task;
 }
 
 UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::ListenForEffectsTimeChange(
-	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer InEffectTags, const bool bInWaitForTimeFromServer)
+	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer InEffectTags, const bool bAllowPredictedTime)
 {
 	auto* Task{NewObject<ThisClass>()};
 
@@ -51,7 +51,7 @@ UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::ListenFo
 		}
 	}
 
-	Task->bWaitForTimeFromServer = bInWaitForTimeFromServer;
+	Task->bPredictedTimeAllowed = bAllowPredictedTime;
 
 	return Task;
 }
@@ -121,7 +121,6 @@ void UFuAbilityAsync_EffectTimeListener::RefreshEffectTimeRemainingAndDurationFo
 	}
 
 	const auto* AbilitySystem{GetAbilitySystemComponent()};
-
 	float TimeRemaining, Duration;
 
 	const auto* ActiveEffect{
@@ -138,27 +137,15 @@ void UFuAbilityAsync_EffectTimeListener::RefreshEffectTimeRemainingAndDurationFo
 		return;
 	}
 
-	if (AbilitySystem->GetOwnerRole() >= ROLE_Authority)
+	// A non-replicated ability instance is only valid for predicted effects on the client.
+
+	const auto bPredictedTime{
+		AbilitySystem->GetOwnerRole() <= ROLE_AutonomousProxy && IsValid(ActiveEffect->Spec.GetContext().GetAbilityInstance_NotReplicated())
+	};
+
+	if (bPredictedTimeAllowed || !bPredictedTime)
 	{
-		OnEffectStated.Broadcast(EffectTag, TimeRemaining, Duration, false);
-	}
-	else if (IsValid(ActiveEffect->Spec.GetContext().GetAbilityInstance_NotReplicated()))
-	{
-		if (bWaitForTimeFromServer)
-		{
-			// Waiting for time from the server.
-			OnEffectStated.Broadcast(EffectTag, TimeRemaining, Duration, true);
-		}
-		else
-		{
-			// Predicted time.
-			OnEffectStated.Broadcast(EffectTag, TimeRemaining, Duration, false);
-		}
-	}
-	else if (bWaitForTimeFromServer)
-	{
-		// Time from the server.
-		OnEffectStated.Broadcast(EffectTag, TimeRemaining, Duration, false);
+		OnEffectStated.Broadcast(EffectTag, TimeRemaining, Duration, bPredictedTime);
 	}
 }
 

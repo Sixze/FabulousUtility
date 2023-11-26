@@ -8,28 +8,28 @@
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityAsync_AbilityCooldownListener)
 
 UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::ListenForAbilityCooldownByAbilityTagOnActor(
-	const AActor* Actor, const FGameplayTag InAbilityTag, const bool bInWaitForTimeFromServer)
+	const AActor* Actor, const FGameplayTag InAbilityTag, const bool bAllowPredictedTime)
 {
 	return ListenForAbilityCooldownByAbilityTag(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor),
-	                                            InAbilityTag, bInWaitForTimeFromServer);
+	                                            InAbilityTag, bAllowPredictedTime);
 }
 
 UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::ListenForAbilityCooldownByAbilityTagsOnActor(
-	const AActor* Actor, const FGameplayTagContainer InAbilityTags, const bool bInWaitForTimeFromServer)
+	const AActor* Actor, const FGameplayTagContainer InAbilityTags, const bool bAllowPredictedTime)
 {
 	return ListenForAbilityCooldownByAbilityTags(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor),
-	                                             InAbilityTags, bInWaitForTimeFromServer);
+	                                             InAbilityTags, bAllowPredictedTime);
 }
 
 UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::ListenForAbilityCooldownByInputIdOnActor(
-	const AActor* Actor, const int32 InInputId, const bool bInWaitForTimeFromServer)
+	const AActor* Actor, const int32 InInputId, const bool bAllowPredictedTime)
 {
 	return ListenForAbilityCooldownByInputId(UFuAbilitySystemComponent::GetFuAbilitySystem(Actor),
-	                                         InInputId, bInWaitForTimeFromServer);
+	                                         InInputId, bAllowPredictedTime);
 }
 
 UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::ListenForAbilityCooldownByAbilityTag(
-	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag InAbilityTag, const bool bInWaitForTimeFromServer)
+	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag InAbilityTag, const bool bAllowPredictedTime)
 {
 	auto* Task{NewObject<ThisClass>()};
 
@@ -40,13 +40,13 @@ UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener
 		Task->AbilityTags.AddTag(InAbilityTag);
 	}
 
-	Task->bWaitForTimeFromServer = bInWaitForTimeFromServer;
+	Task->bPredictedTimeAllowed = bAllowPredictedTime;
 
 	return Task;
 }
 
 UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::ListenForAbilityCooldownByAbilityTags(
-	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer InAbilityTags, const bool bInWaitForTimeFromServer)
+	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer InAbilityTags, const bool bAllowPredictedTime)
 {
 	auto* Task{NewObject<ThisClass>()};
 
@@ -60,19 +60,19 @@ UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener
 		}
 	}
 
-	Task->bWaitForTimeFromServer = bInWaitForTimeFromServer;
+	Task->bPredictedTimeAllowed = bAllowPredictedTime;
 
 	return Task;
 }
 
 UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener::ListenForAbilityCooldownByInputId(
-	UFuAbilitySystemComponent* AbilitySystem, const int32 InInputId, const bool bInWaitForTimeFromServer)
+	UFuAbilitySystemComponent* AbilitySystem, const int32 InInputId, const bool bAllowPredictedTime)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->SetAbilitySystemComponent(AbilitySystem);
 	Task->InputId = InInputId;
-	Task->bWaitForTimeFromServer = bInWaitForTimeFromServer;
+	Task->bPredictedTimeAllowed = bAllowPredictedTime;
 
 	return Task;
 }
@@ -224,7 +224,6 @@ void UFuAbilityAsync_AbilityCooldownListener::RefreshEffectTimeRemainingAndDurat
 	}
 
 	const auto* AbilitySystem{GetAbilitySystemComponent()};
-
 	float TimeRemaining, Duration;
 
 	const auto* ActiveEffect{
@@ -241,27 +240,15 @@ void UFuAbilityAsync_AbilityCooldownListener::RefreshEffectTimeRemainingAndDurat
 		return;
 	}
 
-	if (AbilitySystem->GetOwnerRole() >= ROLE_Authority)
+	// A non-replicated ability instance is only valid for predicted effects on the client.
+
+	const auto bPredictedTime{
+		AbilitySystem->GetOwnerRole() <= ROLE_AutonomousProxy && IsValid(ActiveEffect->Spec.GetContext().GetAbilityInstance_NotReplicated())
+	};
+
+	if (bPredictedTimeAllowed || !bPredictedTime)
 	{
-		OnEffectStated.Broadcast(EffectTag, TimeRemaining, Duration, false);
-	}
-	else if (IsValid(ActiveEffect->Spec.GetContext().GetAbilityInstance_NotReplicated()))
-	{
-		if (bWaitForTimeFromServer)
-		{
-			// Waiting for time from the server.
-			OnEffectStated.Broadcast(EffectTag, TimeRemaining, Duration, true);
-		}
-		else
-		{
-			// Predicted time.
-			OnEffectStated.Broadcast(EffectTag, TimeRemaining, Duration, false);
-		}
-	}
-	else if (bWaitForTimeFromServer)
-	{
-		// Time from the server.
-		OnEffectStated.Broadcast(EffectTag, TimeRemaining, Duration, false);
+		OnEffectStated.Broadcast(EffectTag, TimeRemaining, Duration, bPredictedTime);
 	}
 }
 

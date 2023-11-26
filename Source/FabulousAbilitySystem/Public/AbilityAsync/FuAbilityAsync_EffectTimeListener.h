@@ -4,7 +4,7 @@
 #include "FuAbilityAsync_EffectTimeListener.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FFuEffectTimeListenerDelegate, const FGameplayTag&, EffectTag,
-                                              float, TimeRemaining, float, Duration, bool, bWaitingForTimeFromServer);
+                                              float, TimeRemaining, float, Duration, bool, bPredictedTime);
 
 UCLASS(DisplayName = "Fu Effect Time Listener Ability Async")
 class FABULOUSABILITYSYSTEM_API UFuAbilityAsync_EffectTimeListener : public UAbilityAsync
@@ -16,7 +16,7 @@ protected:
 	FGameplayTagContainer EffectTags;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	bool bWaitForTimeFromServer;
+	uint8 bPredictedTimeAllowed : 1;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Effect Time Listener Ability Async")
@@ -30,25 +30,25 @@ public:
 	static UFuAbilityAsync_EffectTimeListener* ListenForEffectTimeChangeOnActor(
 		const AActor* Actor,
 		UPARAM(DisplayName = "Effect Tag") FGameplayTag InEffectTag,
-		UPARAM(DisplayName = "Wait For Time From Server") bool bInWaitForTimeFromServer = true);
+		bool bAllowPredictedTime = false);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_EffectTimeListener* ListenForEffectsTimeChangeOnActor(
 		const AActor* Actor,
 		UPARAM(DisplayName = "Effect Tags") FGameplayTagContainer InEffectTags,
-		UPARAM(DisplayName = "Wait For Time From Server") bool bInWaitForTimeFromServer = true);
+		bool bAllowPredictedTime = false);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_EffectTimeListener* ListenForEffectTimeChange(
 		UFuAbilitySystemComponent* AbilitySystem,
 		UPARAM(DisplayName = "Effect Tag") FGameplayTag InEffectTag,
-		UPARAM(DisplayName = "Wait For Time From Server") bool bInWaitForTimeFromServer = true);
+		bool bAllowPredictedTime = false);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_EffectTimeListener* ListenForEffectsTimeChange(
 		UFuAbilitySystemComponent* AbilitySystem,
 		UPARAM(DisplayName = "Effect Tags") FGameplayTagContainer InEffectTags,
-		UPARAM(DisplayName = "Wait For Time From Server") bool bInWaitForTimeFromServer = true);
+		bool bAllowPredictedTime = false);
 
 public:
 	virtual void Activate() override;
