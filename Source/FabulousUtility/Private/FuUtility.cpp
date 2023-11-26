@@ -8,7 +8,7 @@
 
 UGameInstance* UFuUtility::GetGameInstanceCasted(const UObject* WorldContext, const TSubclassOf<UGameInstance> GameInstanceClass)
 {
-	const auto* World{WorldContext->GetWorld()};
+	const auto* World{IsValid(WorldContext) ? WorldContext->GetWorld() : nullptr};
 	auto* GameInstance{FU_ENSURE(IsValid(World)) ? World->GetGameInstance() : nullptr};
 
 	return FU_ENSURE(IsValid(GameInstance)) && FU_ENSURE(IsValid(GameInstanceClass)) && GameInstance->IsA(GameInstanceClass)
@@ -19,7 +19,7 @@ UGameInstance* UFuUtility::GetGameInstanceCasted(const UObject* WorldContext, co
 bool UFuUtility::TryGetGameInstanceCasted(const UObject* WorldContext, const TSubclassOf<UGameInstance> GameInstanceClass,
                                           UGameInstance*& GameInstance)
 {
-	const auto* World{WorldContext->GetWorld()};
+	const auto* World{IsValid(WorldContext) ? WorldContext->GetWorld() : nullptr};
 	GameInstance = IsValid(World) ? World->GetGameInstance() : nullptr;
 
 	if (!IsValid(GameInstance) || !IsValid(GameInstanceClass) || !GameInstance->IsA(GameInstanceClass))

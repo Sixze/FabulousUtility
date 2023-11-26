@@ -136,7 +136,7 @@ bool UFuCoordinateSpaceUtility::TryGetViewportWidgetSize(const UObject* WorldCon
 {
 	// Based on UWidgetLayoutLibrary::GetViewportWidgetGeometry().
 
-	const auto* World{WorldContext->GetWorld()};
+	const auto* World{IsValid(WorldContext) ? WorldContext->GetWorld() : nullptr};
 	const auto* Viewport{IsValid(World) ? World->GetGameViewport() : nullptr};
 	const auto LayerManager{IsValid(Viewport) ? Viewport->GetGameLayerManager() : nullptr};
 

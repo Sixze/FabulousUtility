@@ -33,7 +33,7 @@ void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext,
 
 	ReachableActors.Reset();
 
-	auto* World{WorldContext->GetWorld()};
+	const auto* World{IsValid(WorldContext) ? WorldContext->GetWorld() : nullptr};
 	if (!FU_ENSURE(IsValid(World)))
 	{
 		return;
@@ -162,7 +162,7 @@ bool UFuPhysicsUtility::BoxOverlapActors(const UObject* WorldContext, const FVec
 {
 	Actors.Reset();
 
-	const auto* World{WorldContext->GetWorld()};
+	const auto* World{IsValid(WorldContext) ? WorldContext->GetWorld() : nullptr};
 	if (!FU_ENSURE(IsValid(World)))
 	{
 		return false;
@@ -201,7 +201,7 @@ bool UFuPhysicsUtility::BoxOverlapComponents(const UObject* WorldContext, const 
 {
 	Components.Reset();
 
-	const auto* World{WorldContext->GetWorld()};
+	const auto* World{IsValid(WorldContext) ? WorldContext->GetWorld() : nullptr};
 	if (!FU_ENSURE(IsValid(World)))
 	{
 		return false;
@@ -239,7 +239,7 @@ bool UFuPhysicsUtility::ConeOverlapActorsSimple(const UObject* WorldContext, con
 {
 	Actors.Reset();
 
-	const auto* World{WorldContext->GetWorld()};
+	const auto* World{IsValid(WorldContext) ? WorldContext->GetWorld() : nullptr};
 	if (!FU_ENSURE(IsValid(World)))
 	{
 		return false;
@@ -282,7 +282,7 @@ bool UFuPhysicsUtility::ConeOverlapComponentsSimple(const UObject* WorldContext,
 {
 	Components.Reset();
 
-	const auto* World{WorldContext->GetWorld()};
+	const auto* World{IsValid(WorldContext) ? WorldContext->GetWorld() : nullptr};
 	if (!FU_ENSURE(IsValid(World)))
 	{
 		return false;

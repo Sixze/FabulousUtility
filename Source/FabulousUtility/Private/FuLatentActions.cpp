@@ -130,7 +130,7 @@ void UFuLatentActions::Delay(const UObject* WorldContext, const FLatentActionInf
                              const float Duration, const int32 LoopsCount, const bool bSkipFirstDelay,
                              const bool bRetriggerable, int32& LoopIndex, EFuDelayOutputExecs& Output)
 {
-	auto* World{WorldContext->GetWorld()};
+	auto* World{IsValid(WorldContext) ? WorldContext->GetWorld() : nullptr};
 	if (!FU_ENSURE(IsValid(World)))
 	{
 		return;

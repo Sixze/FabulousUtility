@@ -83,7 +83,7 @@ FVector UFuActorUtility::GetActorFeetOffset(const AActor* Actor)
 bool UFuActorUtility::IsEncroachingBlockingGeometry(const UObject* WorldContext, const TSubclassOf<AActor> ActorClass,
                                                     const FVector& Location, const FRotator& Rotation)
 {
-	auto* World{WorldContext->GetWorld()};
+	auto* World{IsValid(WorldContext) ? WorldContext->GetWorld() : nullptr};
 
 	return FU_ENSURE(IsValid(World)) && FU_ENSURE(IsValid(ActorClass)) &&
 	       World->EncroachingBlockingGeometry(ActorClass.GetDefaultObject(), Location, Rotation);
@@ -93,7 +93,7 @@ bool UFuActorUtility::IsEncroachingBlockingGeometryWithAdjustment(const UObject*
                                                                   const FVector& Location, const FRotator& Rotation,
                                                                   FVector& ProposedAdjustment)
 {
-	auto* World{WorldContext->GetWorld()};
+	auto* World{IsValid(WorldContext) ? WorldContext->GetWorld() : nullptr};
 
 	return FU_ENSURE(IsValid(World)) && FU_ENSURE(IsValid(ActorClass)) &&
 	       World->EncroachingBlockingGeometry(ActorClass.GetDefaultObject(), Location, Rotation, &ProposedAdjustment);

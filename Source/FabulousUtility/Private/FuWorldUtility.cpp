@@ -29,7 +29,7 @@ constexpr FStringView UFuWorldUtility::WorldTypeToString(const EWorldType::Type 
 
 float UFuWorldUtility::GetWorldGravityZ(const UObject* WorldContext)
 {
-	const auto* World{WorldContext->GetWorld()};
+	const auto* World{IsValid(WorldContext) ? WorldContext->GetWorld() : nullptr};
 
 	return FU_ENSURE(IsValid(World)) ? World->GetGravityZ() : 0.0f;
 }

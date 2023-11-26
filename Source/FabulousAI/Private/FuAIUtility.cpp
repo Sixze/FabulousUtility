@@ -10,7 +10,9 @@ bool UFuAIUtility::TryProjectLocationToNavigation(UObject* WorldContext, const F
 {
 	if (!IsValid(NavigationData))
 	{
-		auto* NavigationSystem{FNavigationSystem::GetCurrent<UNavigationSystemV1>(WorldContext->GetWorld())};
+		auto* World{IsValid(WorldContext) ? WorldContext->GetWorld() : nullptr};
+		auto* NavigationSystem{FNavigationSystem::GetCurrent<UNavigationSystemV1>(World)};
+
 		if (IsValid(NavigationSystem))
 		{
 			NavigationData = NavigationSystem->GetDefaultNavDataInstance(FNavigationSystem::DontCreate);
