@@ -11,8 +11,8 @@ public class FabulousUI : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new[]
 		{
-			"Core", "CoreUObject", "Engine", "InputCore", "RHI", "SlateCore", "Slate", "UMG",
-			"GameplayTags", "CommonInput", "CommonUI", "FabulousUtility", "DeveloperSettings"
+			"Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "RHI", "SlateCore", "Slate",
+			"UMG", "GameplayTags", "CommonInput", "CommonUI", "FabulousUtility", "DeveloperSettings"
 		});
 	}
 }

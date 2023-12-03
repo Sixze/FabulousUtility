@@ -1,14 +1,14 @@
-#include "AsyncActions/FuAsyncAction_UIActionListener.h"
+#include "AsyncActions/FuAsyncAction_UIActionListenerByInputAction.h"
 
 #include "CommonUserWidget.h"
 #include "FuMacros.h"
 #include "Input/CommonUIActionRouterBase.h"
 #include "Input/CommonUIInputTypes.h"
 
-#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_UIActionListener)
+#include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_UIActionListenerByInputAction)
 
-UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::ListenForUIAction(
-	UCommonUserWidget* InWidget, const FUIActionTag InActionTag, const ECommonInputMode InInputMode,
+UFuAsyncAction_UIActionListenerByInputAction* UFuAsyncAction_UIActionListenerByInputAction::ListenForUIActionByInputAction(
+	UCommonUserWidget* InWidget, UInputAction* InInputAction, const ECommonInputMode InInputMode,
 	const TEnumAsByte<EInputEvent> InKeyEvent, const bool bInPersistent, const bool bInConsumeInput,
 	const bool bInDisplayInActionBar, const FText InDisplayNameOverride)
 {
@@ -22,16 +22,16 @@ UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::ListenForUIAct
 	Task->bDisplayInActionBar = bInDisplayInActionBar;
 	Task->DisplayNameOverride = InDisplayNameOverride;
 
-	if (FU_ENSURE(InActionTag.IsValid()))
+	if (FU_ENSURE(IsValid(InInputAction)))
 	{
-		Task->ActionTags.AddUnique(InActionTag);
+		Task->InputActions.AddUnique(InInputAction);
 	}
 
 	return Task;
 }
 
-UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::ListenForUIActions(
-	UCommonUserWidget* InWidget, const FGameplayTagContainer InActionTags, const ECommonInputMode InInputMode,
+UFuAsyncAction_UIActionListenerByInputAction* UFuAsyncAction_UIActionListenerByInputAction::ListenForUIActionsByInputActions(
+	UCommonUserWidget* InWidget, TArray<UInputAction*> InInputActions, const ECommonInputMode InInputMode,
 	const TEnumAsByte<EInputEvent> InKeyEvent, const bool bInPersistent, const bool bInConsumeInput,
 	const bool bInDisplayInActionBar, const FText InDisplayNameOverride)
 {
@@ -45,25 +45,24 @@ UFuAsyncAction_UIActionListener* UFuAsyncAction_UIActionListener::ListenForUIAct
 	Task->bDisplayInActionBar = bInDisplayInActionBar;
 	Task->DisplayNameOverride = InDisplayNameOverride;
 
-	Task->ActionTags.Reserve(InActionTags.Num());
+	Task->InputActions.Reserve(InInputActions.Num());
 
-	for (const auto& Tag : InActionTags)
+	for (auto* InputAction : InInputActions)
 	{
-		const auto ActionTag{FUIActionTag::TryConvert(Tag)};
-		if (FU_ENSURE(ActionTag.IsValid()))
+		if (FU_ENSURE(IsValid(InputAction)))
 		{
-			Task->ActionTags.AddUnique(ActionTag);
+			Task->InputActions.AddUnique(InputAction);
 		}
 	}
 
 	return Task;
 }
 
-void UFuAsyncAction_UIActionListener::Activate()
+void UFuAsyncAction_UIActionListenerByInputAction::Activate()
 {
 	Super::Activate();
 
-	if (!FU_ENSURE(Widget.IsValid()) || ActionTags.IsEmpty())
+	if (!FU_ENSURE(Widget.IsValid()) || InputActions.IsEmpty())
 	{
 		SetReadyToDestroy();
 		return;
@@ -79,7 +78,7 @@ void UFuAsyncAction_UIActionListener::Activate()
 		return;
 	}
 
-	FBindUIActionArgs ActionArguments{ActionTags[0], nullptr};
+	FBindUIActionArgs ActionArguments{InputActions[0], nullptr};
 	ActionArguments.InputMode = InputMode;
 	ActionArguments.KeyEvent = KeyEvent;
 	ActionArguments.bIsPersistent = bPersistent;
@@ -87,18 +86,16 @@ void UFuAsyncAction_UIActionListener::Activate()
 	ActionArguments.bDisplayInActionBar = bDisplayInActionBar;
 	ActionArguments.OverrideDisplayName = DisplayNameOverride;
 
-	ActionHandles.Reserve(ActionTags.Num());
+	ActionHandles.Reserve(InputActions.Num());
 
 	auto& WidgetActionHandles{const_cast<TArray<FUIActionBindingHandle>&>(Widget->GetActionBindings())};
 
-	for (const auto& ActionTag : ActionTags)
+	for (UInputAction* InputAction : InputActions)
 	{
-		ActionArguments.ActionTag = ActionTag;
+		ActionArguments.InputAction = InputAction;
 
-		ActionArguments.OnExecuteAction = FSimpleDelegate::CreateUObject(this, &ThisClass::Widget_OnActionExecuted, ActionTag);
-
-		ActionArguments.OnHoldActionProgressed = FBindUIActionArgs::FOnHoldActionProgressed::CreateUObject(
-			this, &ThisClass::Widget_OnActionHeld, ActionTag);
+		ActionArguments.OnExecuteAction = FSimpleDelegate::CreateUObject(
+			this, &ThisClass::Widget_OnActionExecuted, TWeakObjectPtr<UInputAction>{InputAction});
 
 		const auto ActionHandle{ActionRouter->RegisterUIActionBinding(*Widget.Get(), ActionArguments)};
 		if (ActionHandle.IsValid())
@@ -109,23 +106,9 @@ void UFuAsyncAction_UIActionListener::Activate()
 	}
 }
 
-void UFuAsyncAction_UIActionListener::Cancel()
+void UFuAsyncAction_UIActionListenerByInputAction::Cancel()
 {
-	if (Widget.IsValid())
-	{
-		auto* ActionRouter{UCommonUIActionRouterBase::Get(*Widget.Get())};
-		auto& WidgetActionHandles{const_cast<TArray<FUIActionBindingHandle>&>(Widget->GetActionBindings())};
-
-		for (const auto& ActionHandle : ActionHandles)
-		{
-			WidgetActionHandles.RemoveSwap(ActionHandle);
-
-			if (IsValid(ActionRouter))
-			{
-				ActionRouter->RemoveBinding(ActionHandle);
-			}
-		}
-	}
+	Widget.Reset();
 
 	for (auto& ActionHandle : ActionHandles)
 	{
@@ -135,23 +118,15 @@ void UFuAsyncAction_UIActionListener::Cancel()
 	Super::Cancel();
 }
 
-bool UFuAsyncAction_UIActionListener::ShouldBroadcastDelegates() const
+bool UFuAsyncAction_UIActionListenerByInputAction::ShouldBroadcastDelegates() const
 {
 	return Widget.IsValid();
 }
 
-void UFuAsyncAction_UIActionListener::Widget_OnActionExecuted(const FUIActionTag ActionTag) const
+void UFuAsyncAction_UIActionListenerByInputAction::Widget_OnActionExecuted(const TWeakObjectPtr<UInputAction> InputAction) const
 {
 	if (ShouldBroadcastDelegates())
 	{
-		OnActionExecuted.Broadcast(ActionTag, 0.0f);
-	}
-}
-
-void UFuAsyncAction_UIActionListener::Widget_OnActionHeld(const float HeldPercent, const FUIActionTag ActionTag) const
-{
-	if (ShouldBroadcastDelegates())
-	{
-		OnActionHeld.Broadcast(ActionTag, HeldPercent);
+		OnActionExecuted.Broadcast(InputAction.Get());
 	}
 }
