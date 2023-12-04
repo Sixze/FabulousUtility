@@ -1,9 +1,8 @@
 #pragma once
 
-#include "CommonInputModeTypes.h"
+#include "FuUIActionBindingArguments.h"
 #include "UITag.h"
 #include "Engine/CancellableAsyncAction.h"
-#include "Engine/EngineBaseTypes.h"
 #include "Input/UIActionBindingHandle.h"
 #include "FuAsyncAction_UIActionListenerByTag.generated.h"
 
@@ -21,22 +20,7 @@ protected:
 	TWeakObjectPtr<UCommonUserWidget> Widget;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	ECommonInputMode InputMode{ECommonInputMode::Menu};
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	TEnumAsByte<EInputEvent> KeyEvent{IE_Pressed};
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	uint8 bPersistent : 1 {false};
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	uint8 bConsumeInput : 1 {true};
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	uint8 bDisplayInActionBar : 1 {true};
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	FText DisplayNameOverride;
+	FFuUIActionBindingArguments ActionArguments;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
 	TArray<FUIActionTag> ActionTags;
@@ -51,54 +35,24 @@ public:
 	FFuUIActionListenerByTagDelegate OnActionHeld;
 
 public:
-	/**
-	 * @param bInPersistent A persistent binding is always registered and will be executed regardless of
-	 * the activation status of the binding widget's parentage. Persistent bindings also never stomp one
-	 * another - if two are bound to the same action, both will execute. Use should be kept to a minimum.
-	 * @param bInConsumeInput True to have this binding consume the triggering key input. Persistent
-	 * bindings that consume will prevent the key reaching non-persistent bindings and game
-	 * agents. Non-persistent bindings that consume will prevent the key reaching game agents.
-	 * @param bInDisplayInActionBar Whether this binding can/should be displayed in an action bar (if one exists).
-	 * @param InDisplayNameOverride Optional display name to associate with this binding instead of the default.
-	*/
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|UI Async Actions",
-		DisplayName = "Listen For UI Action By Tag", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InWidget", AdvancedDisplay = 2))
+		DisplayName = "Listen For UI Action By Tag", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InWidget"))
 	static UFuAsyncAction_UIActionListenerByTag* ListenForUIActionByTag(
 		UPARAM(DisplayName = "Widget") UCommonUserWidget* InWidget,
 		UPARAM(DisplayName = "Action Tag") FUIActionTag InActionTag,
-		UPARAM(DisplayName = "Input Mode") ECommonInputMode InInputMode = ECommonInputMode::Menu,
-		UPARAM(DisplayName = "Key Event") TEnumAsByte<EInputEvent> InKeyEvent = IE_Pressed,
-		UPARAM(DisplayName = "Persistent") bool bInPersistent = false,
-		UPARAM(DisplayName = "Consume Input") bool bInConsumeInput = true,
-		UPARAM(DisplayName = "Display in Action Bar") bool bInDisplayInActionBar = true,
-		UPARAM(DisplayName = "Display Name Override") FText InDisplayNameOverride = FText());
+		UPARAM(DisplayName = "Action Arguments") FFuUIActionBindingArguments InActionArguments);
 
-	/**
-	 * @param bInPersistent A persistent binding is always registered and will be executed regardless of
-	 * the activation status of the binding widget's parentage. Persistent bindings also never stomp one
-	 * another - if two are bound to the same action, both will execute. Use should be kept to a minimum.
-	 * @param bInConsumeInput True to have this binding consume the triggering key input. Persistent
-	 * bindings that consume will prevent the key reaching non-persistent bindings and game
-	 * agents. Non-persistent bindings that consume will prevent the key reaching game agents.
-	 * @param bInDisplayInActionBar Whether this binding can/should be displayed in an action bar (if one exists).
-	 * @param InDisplayNameOverride Optional display name to associate with this binding instead of the default.
-	*/
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|UI Async Actions",
-		DisplayName = "Listen For UI Actions By Tags", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InWidget", AdvancedDisplay = 2))
+		DisplayName = "Listen For UI Actions By Tags", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InWidget"))
 	static UFuAsyncAction_UIActionListenerByTag* ListenForUIActionsByTags(
 		UPARAM(DisplayName = "Widget") UCommonUserWidget* InWidget,
 		UPARAM(DisplayName = "Action Tags", Meta = (Categories = "UI.Action")) FGameplayTagContainer InActionTags,
-		UPARAM(DisplayName = "Input Mode") ECommonInputMode InInputMode = ECommonInputMode::Menu,
-		UPARAM(DisplayName = "Key Event") TEnumAsByte<EInputEvent> InKeyEvent = IE_Pressed,
-		UPARAM(DisplayName = "Persistent") bool bInPersistent = false,
-		UPARAM(DisplayName = "Consume Input") bool bInConsumeInput = true,
-		UPARAM(DisplayName = "Display in Action Bar") bool bInDisplayInActionBar = true,
-		UPARAM(DisplayName = "Display Name Override") FText InDisplayNameOverride = FText());
+		UPARAM(DisplayName = "Action Arguments") FFuUIActionBindingArguments InActionArguments);
 
 public:
 	virtual void Activate() override;
 
-	virtual void Cancel() override;
+	virtual void SetReadyToDestroy() override;
 
 	virtual bool ShouldBroadcastDelegates() const override;
 

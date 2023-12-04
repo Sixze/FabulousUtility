@@ -8,19 +8,12 @@
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_UIActionListenerByInputAction)
 
 UFuAsyncAction_UIActionListenerByInputAction* UFuAsyncAction_UIActionListenerByInputAction::ListenForUIActionByInputAction(
-	UCommonUserWidget* InWidget, UInputAction* InInputAction, const ECommonInputMode InInputMode,
-	const TEnumAsByte<EInputEvent> InKeyEvent, const bool bInPersistent, const bool bInConsumeInput,
-	const bool bInDisplayInActionBar, const FText InDisplayNameOverride)
+	UCommonUserWidget* InWidget, UInputAction* InInputAction, const FFuUIActionBindingArguments InActionArguments)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->Widget = InWidget;
-	Task->InputMode = InInputMode;
-	Task->KeyEvent = InKeyEvent;
-	Task->bPersistent = bInPersistent;
-	Task->bConsumeInput = bInConsumeInput;
-	Task->bDisplayInActionBar = bInDisplayInActionBar;
-	Task->DisplayNameOverride = InDisplayNameOverride;
+	Task->ActionArguments = InActionArguments;
 
 	if (FU_ENSURE(IsValid(InInputAction)))
 	{
@@ -31,19 +24,12 @@ UFuAsyncAction_UIActionListenerByInputAction* UFuAsyncAction_UIActionListenerByI
 }
 
 UFuAsyncAction_UIActionListenerByInputAction* UFuAsyncAction_UIActionListenerByInputAction::ListenForUIActionsByInputActions(
-	UCommonUserWidget* InWidget, TArray<UInputAction*> InInputActions, const ECommonInputMode InInputMode,
-	const TEnumAsByte<EInputEvent> InKeyEvent, const bool bInPersistent, const bool bInConsumeInput,
-	const bool bInDisplayInActionBar, const FText InDisplayNameOverride)
+	UCommonUserWidget* InWidget, TArray<UInputAction*> InInputActions, const FFuUIActionBindingArguments InActionArguments)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->Widget = InWidget;
-	Task->InputMode = InInputMode;
-	Task->KeyEvent = InKeyEvent;
-	Task->bPersistent = bInPersistent;
-	Task->bConsumeInput = bInConsumeInput;
-	Task->bDisplayInActionBar = bInDisplayInActionBar;
-	Task->DisplayNameOverride = InDisplayNameOverride;
+	Task->ActionArguments = InActionArguments;
 
 	Task->InputActions.Reserve(InInputActions.Num());
 
@@ -78,13 +64,8 @@ void UFuAsyncAction_UIActionListenerByInputAction::Activate()
 		return;
 	}
 
-	FBindUIActionArgs ActionArguments{InputActions[0], nullptr};
-	ActionArguments.InputMode = InputMode;
-	ActionArguments.KeyEvent = KeyEvent;
-	ActionArguments.bIsPersistent = bPersistent;
-	ActionArguments.bConsumeInput = bConsumeInput;
-	ActionArguments.bDisplayInActionBar = bDisplayInActionBar;
-	ActionArguments.OverrideDisplayName = DisplayNameOverride;
+	FBindUIActionArgs ActionArgs{InputActions[0], nullptr};
+	ActionArguments.Fill(ActionArgs);
 
 	ActionHandles.Reserve(InputActions.Num());
 
@@ -92,21 +73,26 @@ void UFuAsyncAction_UIActionListenerByInputAction::Activate()
 
 	for (UInputAction* InputAction : InputActions)
 	{
-		ActionArguments.InputAction = InputAction;
+		ActionArgs.InputAction = InputAction;
 
-		ActionArguments.OnExecuteAction = FSimpleDelegate::CreateUObject(
+		ActionArgs.OnExecuteAction = FSimpleDelegate::CreateUObject(
 			this, &ThisClass::Widget_OnActionExecuted, TWeakObjectPtr<UInputAction>{InputAction});
 
-		const auto ActionHandle{ActionRouter->RegisterUIActionBinding(*Widget.Get(), ActionArguments)};
+		const auto ActionHandle{ActionRouter->RegisterUIActionBinding(*Widget.Get(), ActionArgs)};
 		if (ActionHandle.IsValid())
 		{
 			ActionHandles.Emplace(ActionHandle);
 			WidgetActionHandles.Emplace(ActionHandle);
 		}
 	}
+
+	if (ActionHandles.IsEmpty())
+	{
+		SetReadyToDestroy();
+	}
 }
 
-void UFuAsyncAction_UIActionListenerByInputAction::Cancel()
+void UFuAsyncAction_UIActionListenerByInputAction::SetReadyToDestroy()
 {
 	Widget.Reset();
 
@@ -115,7 +101,7 @@ void UFuAsyncAction_UIActionListenerByInputAction::Cancel()
 		ActionHandle.Unregister();
 	}
 
-	Super::Cancel();
+	Super::SetReadyToDestroy();
 }
 
 bool UFuAsyncAction_UIActionListenerByInputAction::ShouldBroadcastDelegates() const
