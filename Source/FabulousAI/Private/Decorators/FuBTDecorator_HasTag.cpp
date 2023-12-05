@@ -189,7 +189,7 @@ void UFuBTDecorator_HasTag::ClearDecoratorMemory(FFuHasTagMemory& Memory)
 		}
 	}
 
-	Memory.AbilitySystem = nullptr;
+	Memory.AbilitySystem.Reset();
 }
 
 EBlackboardNotificationResult UFuBTDecorator_HasTag::Blackboard_OnTargetKeyChanged(const UBlackboardComponent& Blackboard,

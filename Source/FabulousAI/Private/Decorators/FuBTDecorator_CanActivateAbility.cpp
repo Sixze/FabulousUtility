@@ -102,7 +102,7 @@ void UFuBTDecorator_CanActivateAbility::OnCeaseRelevant(UBehaviorTreeComponent& 
 	{
 		Memory.AbilitySystem->OnAbilityGiven.RemoveAll(this);
 		Memory.AbilitySystem->OnAbilityRemoved.RemoveAll(this);
-		Memory.AbilitySystem = nullptr;
+		Memory.AbilitySystem.Reset();
 	}
 
 	Memory.AbilityHandles.Reset();

@@ -164,7 +164,7 @@ void UFuBTDecorator_ReceiveGameplayEvent::ClearDecoratorMemory(FFuReceiveGamepla
 		}
 	}
 
-	Memory.AbilitySystem = nullptr;
+	Memory.AbilitySystem.Reset();
 	Memory.EventReceivedCounter = 0;
 }
 

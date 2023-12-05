@@ -3,7 +3,7 @@
 	"Version": 1,
 	"VersionName": "1.0",
 	"FriendlyName": "Fabulous Utility",
-	"Description": "A collection of utility functions, nodes and other things that can come in handy in Unreal Engine projects of any type.",
+	"Description": "A collection of useful functions, nodes, and other things that can come in handy in Unreal Engine projects of any type.",
 	"Category": "Other",
 	"CreatedBy": "Sixze",
 	"CreatedByURL": "https://github.com/Sixze",

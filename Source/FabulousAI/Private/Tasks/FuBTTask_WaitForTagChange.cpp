@@ -106,7 +106,7 @@ void UFuBTTask_WaitForTagChange::OnTaskFinished(UBehaviorTreeComponent& Behavior
 	if (Memory.AbilitySystem.IsValid())
 	{
 		Memory.AbilitySystem->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved).RemoveAll(this);
-		Memory.AbilitySystem = nullptr;
+		Memory.AbilitySystem.Reset();
 	}
 
 	Super::OnTaskFinished(BehaviorTree, NodeMemory, Result);

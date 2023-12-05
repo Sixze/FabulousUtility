@@ -151,7 +151,7 @@ void UFuBTTask_ActivateAbility::OnTaskFinished(UBehaviorTreeComponent& BehaviorT
 	if (Memory.AbilitySystem.IsValid())
 	{
 		Memory.AbilitySystem->OnAbilityEnded.RemoveAll(this);
-		Memory.AbilitySystem = nullptr;
+		Memory.AbilitySystem.Reset();;
 	}
 
 	Memory.ActiveAbilityHandles.Reset();
