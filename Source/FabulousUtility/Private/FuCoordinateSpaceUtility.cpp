@@ -10,14 +10,12 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuCoordinateSpaceUtility)
 
-bool UFuCoordinateSpaceUtility::TryTransformWorldToClipLocation(const APlayerController* Player,
-                                                                const FVector& WorldLocation, FVector4& ClipLocation)
+bool UFuCoordinateSpaceUtility::TryTransformWorldToClipLocationLocalPlayer(const ULocalPlayer* LocalPlayer,
+                                                                           const FVector& WorldLocation, FVector4& ClipLocation)
 {
 	// Based on APlayerController::ProjectWorldLocationToScreenWithDistance() and FSceneView::ProjectWorldToScreen().
 
-	const auto* LocalPlayer{IsValid(Player) ? Player->GetLocalPlayer() : nullptr};
 	const auto* Viewport{IsValid(LocalPlayer) ? LocalPlayer->ViewportClient.Get() : nullptr};
-
 	if (!IsValid(Viewport))
 	{
 		ClipLocation = FVector4{};
@@ -37,13 +35,25 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToClipLocation(const APlayerCon
 	return true;
 }
 
-bool UFuCoordinateSpaceUtility::TryTransformWorldToScreenLocation(const APlayerController* Player,
-                                                                  const FVector& WorldLocation, FVector2f& ScreenLocation)
+bool UFuCoordinateSpaceUtility::TryTransformWorldToClipLocation(const APlayerController* Player,
+                                                                const FVector& WorldLocation, FVector4& ClipLocation)
+{
+	if (!IsValid(Player))
+	{
+		ClipLocation = FVector4{};
+		return false;
+	}
+
+	return TryTransformWorldToClipLocationLocalPlayer(Player->GetLocalPlayer(), WorldLocation, ClipLocation);
+}
+
+bool UFuCoordinateSpaceUtility::TryTransformWorldToScreenLocationLocalPlayer(const ULocalPlayer* LocalPlayer,
+                                                                             const FVector& WorldLocation, FVector2f& ScreenLocation)
 {
 	// Based on SceneView::ProjectWorldToScreen().
 
 	FVector4 ClipLocation;
-	if (!TryTransformWorldToClipLocation(Player, WorldLocation, ClipLocation))
+	if (!TryTransformWorldToClipLocationLocalPlayer(LocalPlayer, WorldLocation, ClipLocation))
 	{
 		ScreenLocation = FVector2f::ZeroVector;
 		return false;
@@ -59,14 +69,24 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToScreenLocation(const APlayerC
 	return true;
 }
 
-bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocation(const APlayerController* Player,
-                                                                    const FVector& WorldLocation, FVector2f& ViewportLocation)
+bool UFuCoordinateSpaceUtility::TryTransformWorldToScreenLocation(const APlayerController* Player,
+                                                                  const FVector& WorldLocation, FVector2f& ScreenLocation)
+{
+	if (!IsValid(Player))
+	{
+		ScreenLocation = FVector2f::ZeroVector;
+		return false;
+	}
+
+	return TryTransformWorldToScreenLocationLocalPlayer(Player->GetLocalPlayer(), WorldLocation, ScreenLocation);
+}
+
+bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocationLocalPlayer(const ULocalPlayer* LocalPlayer,
+                                                                               const FVector& WorldLocation, FVector2f& ViewportLocation)
 {
 	// Based on APlayerController::ProjectWorldLocationToScreenWithDistance() and FSceneView::ProjectWorldToScreen().
 
-	const auto* LocalPlayer{IsValid(Player) ? Player->GetLocalPlayer() : nullptr};
 	const auto* Viewport{IsValid(LocalPlayer) ? LocalPlayer->ViewportClient.Get() : nullptr};
-
 	if (!IsValid(Viewport))
 	{
 		ViewportLocation = FVector2f::ZeroVector;
@@ -100,19 +120,32 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocation(const APlaye
 	return true;
 }
 
-bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocation(const APlayerController* Player, const FVector& WorldLocation,
-                                                                          FVector2f& ViewportWidgetLocation)
+bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocation(const APlayerController* Player,
+                                                                    const FVector& WorldLocation, FVector2f& ViewportLocation)
+{
+	if (!IsValid(Player))
+	{
+		ViewportLocation = FVector2f::ZeroVector;
+		return false;
+	}
+
+	return TryTransformWorldToViewportLocationLocalPlayer(Player->GetLocalPlayer(), WorldLocation, ViewportLocation);
+}
+
+bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocationLocalPlayer(
+	const ULocalPlayer* LocalPlayer, const FVector& WorldLocation,
+	FVector2f& ViewportWidgetLocation)
 {
 	// Based on USlateBlueprintLibrary::ScreenToWidgetAbsolute().
 
 	FVector2f ViewportLocation;
-	if (!TryTransformWorldToViewportLocation(Player, WorldLocation, ViewportLocation))
+	if (!TryTransformWorldToViewportLocationLocalPlayer(LocalPlayer, WorldLocation, ViewportLocation))
 	{
 		ViewportWidgetLocation = FVector2f::ZeroVector;
 		return false;
 	}
 
-	const auto* Viewport{Player->GetLocalPlayer()->ViewportClient.Get()};
+	const auto* Viewport{LocalPlayer->ViewportClient.Get()};
 
 	const auto ViewportSize{Viewport->Viewport->GetSizeXY()};
 	if (ViewportSize.X == 0 || ViewportSize.Y == 0)
@@ -130,6 +163,18 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocation(const 
 
 	ViewportWidgetLocation = LayerManager->GetViewportWidgetHostGeometry().GetLocalSize() * ViewportLocation / ViewportSize;
 	return true;
+}
+
+bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocation(const APlayerController* Player, const FVector& WorldLocation,
+                                                                          FVector2f& ViewportWidgetLocation)
+{
+	if (!IsValid(Player))
+	{
+		ViewportWidgetLocation = FVector2f::ZeroVector;
+		return false;
+	}
+
+	return TryTransformWorldToViewportWidgetLocationLocalPlayer(Player->GetLocalPlayer(), WorldLocation, ViewportWidgetLocation);
 }
 
 bool UFuCoordinateSpaceUtility::TryGetViewportWidgetSize(const UObject* WorldContext, FVector2f& ViewportWidgetSize)

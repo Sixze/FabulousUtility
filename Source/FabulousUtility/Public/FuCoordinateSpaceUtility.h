@@ -12,19 +12,47 @@ class FABULOUSUTILITY_API UFuCoordinateSpaceUtility : public UBlueprintFunctionL
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
+		DisplayName = "Try Transform World to Clip Location (Local Player)",
+		Meta = (ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
+	static bool TryTransformWorldToClipLocationLocalPlayer(const ULocalPlayer* LocalPlayer, const FVector& WorldLocation,
+	                                                       FVector4& ClipLocation);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
+		DisplayName = "Try Transform World to Clip Location (Player Controller)",
 		Meta = (DefaultToSelf = "Player", ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
 	static bool TryTransformWorldToClipLocation(const APlayerController* Player, const FVector& WorldLocation, FVector4& ClipLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
+		DisplayName = "Try Transform World to Screen Location (Local Player)",
+		Meta = (ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
+	static bool TryTransformWorldToScreenLocationLocalPlayer(const ULocalPlayer* LocalPlayer, const FVector& WorldLocation,
+	                                                         FVector2f& ScreenLocation);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
+		DisplayName = "Try Transform World to Screen Location (Player Controller)",
 		Meta = (DefaultToSelf = "Player", ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
 	static bool TryTransformWorldToScreenLocation(const APlayerController* Player, const FVector& WorldLocation, FVector2f& ScreenLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
+		DisplayName = "Try Transform World to Viewport Location (Local Player)",
+		Meta = (ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
+	static bool TryTransformWorldToViewportLocationLocalPlayer(const ULocalPlayer* LocalPlayer, const FVector& WorldLocation,
+	                                                           FVector2f& ViewportLocation);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
+		DisplayName = "Try Transform World to Viewport Location (Player Controller)",
 		Meta = (DefaultToSelf = "Player", ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
 	static bool TryTransformWorldToViewportLocation(const APlayerController* Player, const FVector& WorldLocation,
 	                                                FVector2f& ViewportLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
+		DisplayName = "Try Transform World to Viewport Widget Location (Local Player)",
+		Meta = (xpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
+	static bool TryTransformWorldToViewportWidgetLocationLocalPlayer(const ULocalPlayer* LocalPlayer, const FVector& WorldLocation,
+	                                                                 FVector2f& ViewportWidgetLocation);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
+		DisplayName = "Try Transform World to Viewport Widget Location (Player Controller)",
 		Meta = (DefaultToSelf = "Player", ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
 	static bool TryTransformWorldToViewportWidgetLocation(const APlayerController* Player, const FVector& WorldLocation,
 	                                                      FVector2f& ViewportWidgetLocation);
