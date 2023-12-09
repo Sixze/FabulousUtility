@@ -81,8 +81,8 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToScreenLocation(const APlayerC
 	return TryTransformWorldToScreenLocationLocalPlayer(Player->GetLocalPlayer(), WorldLocation, ScreenLocation);
 }
 
-bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocationLocalPlayer(const ULocalPlayer* LocalPlayer,
-                                                                               const FVector& WorldLocation, FVector2f& ViewportLocation)
+bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocationLocalPlayer(
+	const ULocalPlayer* LocalPlayer, const FVector& WorldLocation, FVector2f& ViewportLocation, const bool bPlayerViewportRelative)
 {
 	// Based on APlayerController::ProjectWorldLocationToScreenWithDistance() and FSceneView::ProjectWorldToScreen().
 
@@ -113,15 +113,20 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocationLocalPlayer(c
 	const auto& ViewRect{ProjectionData.GetConstrainedViewRect()};
 
 	ViewportLocation = {
-		(ScreenLocation.X * 0.5f + 0.5f) * ViewRect.Width() + ViewRect.Min.X,
-		(1.0f - ScreenLocation.Y * 0.5f - 0.5f) * ViewRect.Height() + ViewRect.Min.Y
+		(ScreenLocation.X * 0.5f + 0.5f) * ViewRect.Width(),
+		(1.0f - ScreenLocation.Y * 0.5f - 0.5f) * ViewRect.Height()
 	};
+
+	if (!bPlayerViewportRelative)
+	{
+		ViewportLocation += ViewRect.Min;
+	}
 
 	return true;
 }
 
-bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocation(const APlayerController* Player,
-                                                                    const FVector& WorldLocation, FVector2f& ViewportLocation)
+bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocation(
+	const APlayerController* Player, const FVector& WorldLocation, FVector2f& ViewportLocation, const bool bPlayerViewportRelative)
 {
 	if (!IsValid(Player))
 	{
@@ -129,17 +134,17 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocation(const APlaye
 		return false;
 	}
 
-	return TryTransformWorldToViewportLocationLocalPlayer(Player->GetLocalPlayer(), WorldLocation, ViewportLocation);
+	return TryTransformWorldToViewportLocationLocalPlayer(Player->GetLocalPlayer(), WorldLocation, ViewportLocation,
+	                                                      bPlayerViewportRelative);
 }
 
 bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocationLocalPlayer(
-	const ULocalPlayer* LocalPlayer, const FVector& WorldLocation,
-	FVector2f& ViewportWidgetLocation)
+	const ULocalPlayer* LocalPlayer, const FVector& WorldLocation, FVector2f& ViewportWidgetLocation, const bool bPlayerViewportRelative)
 {
 	// Based on USlateBlueprintLibrary::ScreenToWidgetAbsolute().
 
 	FVector2f ViewportLocation;
-	if (!TryTransformWorldToViewportLocationLocalPlayer(LocalPlayer, WorldLocation, ViewportLocation))
+	if (!TryTransformWorldToViewportLocationLocalPlayer(LocalPlayer, WorldLocation, ViewportLocation, bPlayerViewportRelative))
 	{
 		ViewportWidgetLocation = FVector2f::ZeroVector;
 		return false;
@@ -165,8 +170,8 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocationLocalPl
 	return true;
 }
 
-bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocation(const APlayerController* Player, const FVector& WorldLocation,
-                                                                          FVector2f& ViewportWidgetLocation)
+bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocation(
+	const APlayerController* Player, const FVector& WorldLocation, FVector2f& ViewportWidgetLocation, const bool bPlayerViewportRelative)
 {
 	if (!IsValid(Player))
 	{
@@ -174,7 +179,8 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocation(const 
 		return false;
 	}
 
-	return TryTransformWorldToViewportWidgetLocationLocalPlayer(Player->GetLocalPlayer(), WorldLocation, ViewportWidgetLocation);
+	return TryTransformWorldToViewportWidgetLocationLocalPlayer(Player->GetLocalPlayer(), WorldLocation,
+	                                                            ViewportWidgetLocation, bPlayerViewportRelative);
 }
 
 bool UFuCoordinateSpaceUtility::TryGetViewportWidgetSize(const UObject* WorldContext, FVector2f& ViewportWidgetSize)
