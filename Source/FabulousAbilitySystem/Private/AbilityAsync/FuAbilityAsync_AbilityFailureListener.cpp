@@ -22,7 +22,6 @@ UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::
 	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag InAbilityTag, const FGameplayTagContainer InFailureTags)
 {
 	auto* Task{NewObject<ThisClass>()};
-
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
 	if (InAbilityTag.IsValid())
@@ -45,7 +44,6 @@ UFuAbilityAsync_AbilityFailureListener* UFuAbilityAsync_AbilityFailureListener::
 	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer InAbilityTags, const FGameplayTagContainer InFailureTags)
 {
 	auto* Task{NewObject<ThisClass>()};
-
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
 	for (const auto& Tag : InAbilityTags)

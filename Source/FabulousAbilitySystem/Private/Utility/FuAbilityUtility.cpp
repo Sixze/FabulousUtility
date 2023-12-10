@@ -27,7 +27,7 @@ FGameplayTag UFuAbilityUtility::FindFirstDescendantAbilityTag(const UGameplayAbi
 	return UFuGameplayTagUtility::FindFirstDescendantTag(AbilitySpecification->DynamicAbilityTags, ParentTag);
 }
 
-bool UFuAbilityUtility::HasAbilityTag(UAbilitySystemComponent* AbilitySystem,
+bool UFuAbilityUtility::HasAbilityTag(const UAbilitySystemComponent* AbilitySystem,
                                       const FGameplayAbilitySpecHandle AbilityHandle,
                                       const FGameplayTag& Tag)
 {
@@ -43,8 +43,9 @@ bool UFuAbilityUtility::HasAbilityTag(UAbilitySystemComponent* AbilitySystem,
 	        AbilitySpecification->Ability->AbilityTags.HasTag(Tag));
 }
 
-bool UFuAbilityUtility::TryGetSourceObjectCasted(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle,
-                                                 TSubclassOf<UObject> SourceObjectClass, UObject*& SourceObject)
+bool UFuAbilityUtility::TryGetSourceObjectCasted(
+	const UAbilitySystemComponent* AbilitySystem, const FGameplayAbilitySpecHandle AbilityHandle,
+	const TSubclassOf<UObject> SourceObjectClass, UObject*& SourceObject)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(AbilityHandle.IsValid()))
 	{
@@ -65,7 +66,7 @@ bool UFuAbilityUtility::TryGetSourceObjectCasted(UAbilitySystemComponent* Abilit
 	return true;
 }
 
-FGameplayTag UFuAbilityUtility::FindFirstDescendantAbilityTagByHandle(UAbilitySystemComponent* AbilitySystem,
+FGameplayTag UFuAbilityUtility::FindFirstDescendantAbilityTagByHandle(const UAbilitySystemComponent* AbilitySystem,
                                                                       const FGameplayAbilitySpecHandle AbilityHandle,
                                                                       const FGameplayTag& ParentTag)
 {
@@ -109,7 +110,7 @@ bool UFuAbilityUtility::TryCommitAbility(UGameplayAbility* Ability, const bool b
 	return false;
 }
 
-bool UFuAbilityUtility::HasAbilitiesWithTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag)
+bool UFuAbilityUtility::HasAbilitiesWithTag(const UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(Tag.IsValid()))
 	{
@@ -128,7 +129,7 @@ bool UFuAbilityUtility::HasAbilitiesWithTag(UAbilitySystemComponent* AbilitySyst
 	return false;
 }
 
-bool UFuAbilityUtility::CanActivateAbilityByTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag)
+bool UFuAbilityUtility::CanActivateAbilityByTag(const UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(Tag.IsValid()))
 	{
@@ -148,7 +149,7 @@ bool UFuAbilityUtility::CanActivateAbilityByTag(UAbilitySystemComponent* Ability
 	return false;
 }
 
-bool UFuAbilityUtility::CanActivateAbilityByClass(UAbilitySystemComponent* AbilitySystem,
+bool UFuAbilityUtility::CanActivateAbilityByClass(const UAbilitySystemComponent* AbilitySystem,
                                                   const TSubclassOf<UGameplayAbility> AbilityClass)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(IsValid(AbilityClass)))
@@ -162,7 +163,7 @@ bool UFuAbilityUtility::CanActivateAbilityByClass(UAbilitySystemComponent* Abili
 	       AbilitySpecification->Ability->CanActivateAbility(AbilitySpecification->Handle, AbilitySystem->AbilityActorInfo.Get());
 }
 
-bool UFuAbilityUtility::CanActivateAbilityByHandle(UAbilitySystemComponent* AbilitySystem,
+bool UFuAbilityUtility::CanActivateAbilityByHandle(const UAbilitySystemComponent* AbilitySystem,
                                                    const FGameplayAbilitySpecHandle AbilityHandle)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(AbilityHandle.IsValid()))

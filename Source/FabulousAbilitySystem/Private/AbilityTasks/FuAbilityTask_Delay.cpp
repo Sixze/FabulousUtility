@@ -12,7 +12,6 @@ UFuAbilityTask_Delay* UFuAbilityTask_Delay::WaitForDelay(UGameplayAbility* Ownin
 	UAbilitySystemGlobals::NonShipping_ApplyGlobalAbilityScaler_Duration(InDuration);
 
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
-
 	Task->Duration = FMath::Max(0.0f, InDuration);
 	Task->LoopsCount = FMath::Max(-1, InLoopsCount);
 	Task->bSkipFirstDelay = bInSkipFirstDelay;

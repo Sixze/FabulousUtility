@@ -103,8 +103,22 @@ FActiveGameplayEffectHandle UFuAbilitySystemUtility::ApplyEffectWithSetByCallerM
 	}
 
 	FGameplayEffectSpec EffectSpecification{EffectClass.GetDefaultObject(), AbilitySystem->MakeEffectContext(), 1.0f};
-
 	EffectSpecification.SetByCallerTagMagnitudes = SetByCallerMagnitudes;
+
+	return AbilitySystem->ApplyGameplayEffectSpecToSelf(EffectSpecification);
+}
+
+FActiveGameplayEffectHandle UFuAbilitySystemUtility::ApplyEffectWithSetByCallerMagnitudes(
+	UAbilitySystemComponent* AbilitySystem, const TSubclassOf<UGameplayEffect> EffectClass,
+	TMap<FGameplayTag, float>&& SetByCallerMagnitudes)
+{
+	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(IsValid(EffectClass)))
+	{
+		return {};
+	}
+
+	FGameplayEffectSpec EffectSpecification{EffectClass.GetDefaultObject(), AbilitySystem->MakeEffectContext(), 1.0f};
+	EffectSpecification.SetByCallerTagMagnitudes = MoveTemp(SetByCallerMagnitudes);
 
 	return AbilitySystem->ApplyGameplayEffectSpecToSelf(EffectSpecification);
 }

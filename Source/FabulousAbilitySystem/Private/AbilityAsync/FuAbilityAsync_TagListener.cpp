@@ -19,7 +19,6 @@ UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::ListenForTagChange(UAb
                                                                              const FGameplayTag InTag)
 {
 	auto* Task{NewObject<ThisClass>()};
-
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
 	if (FU_ENSURE(InTag.IsValid()))
@@ -34,7 +33,6 @@ UFuAbilityAsync_TagListener* UFuAbilityAsync_TagListener::ListenForTagsChange(UA
                                                                               const FGameplayTagContainer InTags)
 {
 	auto* Task{NewObject<ThisClass>()};
-
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
 	for (const auto& Tag : InTags)

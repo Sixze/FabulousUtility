@@ -8,7 +8,6 @@ UFuAbilityTask_InputListener* UFuAbilityTask_InputListener::WaitForInput(UGamepl
                                                                          const bool bInCheckInitialInputState)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
-
 	Task->bCheckInitialInputState = bInCheckInitialInputState;
 
 	return Task;

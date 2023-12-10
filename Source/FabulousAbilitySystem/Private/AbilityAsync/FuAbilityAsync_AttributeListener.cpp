@@ -23,7 +23,6 @@ UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::ListenForA
 	UAbilitySystemComponent* AbilitySystem, const FGameplayAttribute InAttribute, const bool bInSkipEqualValuesOnServer)
 {
 	auto* Task{NewObject<ThisClass>()};
-
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
 	if (FU_ENSURE(InAttribute.IsValid()) && FU_ENSURE(!InAttribute.IsSystemAttribute()))
@@ -40,9 +39,7 @@ UFuAbilityAsync_AttributeListener* UFuAbilityAsync_AttributeListener::ListenForA
 	UAbilitySystemComponent* AbilitySystem, const TArray<FGameplayAttribute>& InAttributes, const bool bInSkipEqualValuesOnServer)
 {
 	auto* Task{NewObject<ThisClass>()};
-
 	Task->SetAbilitySystemComponent(AbilitySystem);
-
 	Task->Attributes.Reserve(InAttributes.Num());
 
 	for (const auto& Attribute : InAttributes)

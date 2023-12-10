@@ -21,11 +21,11 @@ ECommonInputType UFuCommonUIUtility::GetInputType(const FKey& Key)
 	return ECommonInputType::Touch;
 }
 
-UUserWidget* UFuCommonUIUtility::FindRootUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass)
+UUserWidget* UFuCommonUIUtility::FindRootUserWidgetByClass(const UWidget* Widget, const TSubclassOf<UUserWidget> UserWidgetClass)
 {
 	if (!IsValid(UserWidgetClass))
 	{
-		UserWidgetClass = UUserWidget::StaticClass();
+		return nullptr;
 	}
 
 	UUserWidget* ResultUserWidget{nullptr};
@@ -52,11 +52,11 @@ UUserWidget* UFuCommonUIUtility::FindRootUserWidgetByClass(const UWidget* Widget
 	return ResultUserWidget;
 }
 
-UUserWidget* UFuCommonUIUtility::FindParentUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass)
+UUserWidget* UFuCommonUIUtility::FindParentUserWidgetByClass(const UWidget* Widget, const TSubclassOf<UUserWidget> UserWidgetClass)
 {
 	if (!IsValid(UserWidgetClass))
 	{
-		UserWidgetClass = UUserWidget::StaticClass();
+		return nullptr;
 	}
 
 	while (IsValid(Widget))

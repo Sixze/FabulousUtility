@@ -32,7 +32,6 @@ UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener
 	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag InAbilityTag, const bool bAllowPredictedTime)
 {
 	auto* Task{NewObject<ThisClass>()};
-
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
 	if (FU_ENSURE(InAbilityTag.IsValid()))
@@ -49,7 +48,6 @@ UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener
 	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer InAbilityTags, const bool bAllowPredictedTime)
 {
 	auto* Task{NewObject<ThisClass>()};
-
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
 	for (const auto& Tag : InAbilityTags)
@@ -69,7 +67,6 @@ UFuAbilityAsync_AbilityCooldownListener* UFuAbilityAsync_AbilityCooldownListener
 	UFuAbilitySystemComponent* AbilitySystem, const int32 InInputId, const bool bAllowPredictedTime)
 {
 	auto* Task{NewObject<ThisClass>()};
-
 	Task->SetAbilitySystemComponent(AbilitySystem);
 	Task->InputId = InInputId;
 	Task->bPredictedTimeAllowed = bAllowPredictedTime;

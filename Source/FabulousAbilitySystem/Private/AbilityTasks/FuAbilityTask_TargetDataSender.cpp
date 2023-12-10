@@ -8,7 +8,6 @@ UFuAbilityTask_TargetDataSender* UFuAbilityTask_TargetDataSender::SendTargetData
                                                                                  const FGameplayAbilityTargetDataHandle& InTargetData)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
-
 	Task->TargetData = InTargetData;
 
 	return Task;

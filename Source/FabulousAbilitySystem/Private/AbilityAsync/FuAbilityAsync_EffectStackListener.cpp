@@ -14,7 +14,6 @@ UFuAbilityAsync_EffectStackListener* UFuAbilityAsync_EffectStackListener::Listen
 	UAbilitySystemComponent* AbilitySystem, const TSubclassOf<UGameplayEffect> InEffectClass)
 {
 	auto* Task{NewObject<ThisClass>()};
-
 	Task->SetAbilitySystemComponent(AbilitySystem);
 	Task->EffectClass = InEffectClass;
 
@@ -27,7 +26,7 @@ void UFuAbilityAsync_EffectStackListener::Activate()
 
 	auto* AbilitySystem{GetAbilitySystemComponent()};
 
-	if (!IsValid(AbilitySystem) || !FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(IsValid(EffectClass)) ||
+	if (!IsValid(AbilitySystem) || !FU_ENSURE(IsValid(EffectClass)) ||
 	    !FU_ENSURE(EffectClass.GetDefaultObject()->StackingType != EGameplayEffectStackingType::None))
 	{
 		EndAction();

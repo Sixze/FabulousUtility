@@ -8,7 +8,6 @@ UFuAbilityTask_TargetDataReceiver* UFuAbilityTask_TargetDataReceiver::ReceiveTar
                                                                                         const bool bInReceiveOnce)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
-
 	Task->bReceiveOnce = bInReceiveOnce;
 
 	return Task;

@@ -23,7 +23,6 @@ UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::ListenFo
 	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag EffectTag, const bool bAllowPredictedTime)
 {
 	auto* Task{NewObject<ThisClass>()};
-
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
 	if (FU_ENSURE(EffectTag.IsValid()))
@@ -40,7 +39,6 @@ UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::ListenFo
 	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer InEffectTags, const bool bAllowPredictedTime)
 {
 	auto* Task{NewObject<ThisClass>()};
-
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
 	for (const auto& Tag : InEffectTags)
@@ -62,7 +60,7 @@ void UFuAbilityAsync_EffectTimeListener::Activate()
 
 	auto* AbilitySystem{GetAbilitySystemComponent()};
 
-	if (!IsValid(AbilitySystem) || !FU_ENSURE(IsValid(AbilitySystem)) || EffectTags.IsEmpty())
+	if (!IsValid(AbilitySystem) || EffectTags.IsEmpty())
 	{
 		EndAction();
 		return;

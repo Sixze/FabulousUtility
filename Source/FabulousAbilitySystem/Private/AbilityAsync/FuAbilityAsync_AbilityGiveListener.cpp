@@ -21,7 +21,6 @@ UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::Listen
 	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag InAbilityTag)
 {
 	auto* Task{NewObject<ThisClass>()};
-
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
 	if (InAbilityTag.IsValid())
@@ -36,7 +35,6 @@ UFuAbilityAsync_AbilityGiveListener* UFuAbilityAsync_AbilityGiveListener::Listen
 	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer InAbilityTags)
 {
 	auto* Task{NewObject<ThisClass>()};
-
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
 	for (const auto& Tag : InAbilityTags)

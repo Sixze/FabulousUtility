@@ -23,7 +23,6 @@ UFuAbilityTask_AttributeListener* UFuAbilityTask_AttributeListener::WaitForAttri
 	UGameplayAbility* OwningAbility, const TArray<FGameplayAttribute>& InAttributes)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
-
 	Task->Attributes.Reserve(InAttributes.Num());
 
 	for (const auto& Attribute : InAttributes)

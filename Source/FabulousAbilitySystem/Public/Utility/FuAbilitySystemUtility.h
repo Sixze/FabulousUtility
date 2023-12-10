@@ -40,6 +40,10 @@ public:
 	                                                                        TSubclassOf<UGameplayEffect> EffectClass,
 	                                                                        const TMap<FGameplayTag, float>& SetByCallerMagnitudes);
 
+	static FActiveGameplayEffectHandle ApplyEffectWithSetByCallerMagnitudes(UAbilitySystemComponent* AbilitySystem,
+	                                                                        TSubclassOf<UGameplayEffect> EffectClass,
+	                                                                        TMap<FGameplayTag, float>&& SetByCallerMagnitudes);
+
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Utility",
 		Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Success"))
 	static bool AddLooseTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag, bool bReplicate = false);

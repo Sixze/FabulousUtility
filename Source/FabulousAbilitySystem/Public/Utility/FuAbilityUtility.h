@@ -44,16 +44,18 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Utility",
 		Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Value"))
-	static bool HasAbilityTag(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle, const FGameplayTag& Tag);
+	static bool HasAbilityTag(const UAbilitySystemComponent* AbilitySystem,
+	                          FGameplayAbilitySpecHandle AbilityHandle,
+	                          const FGameplayTag& Tag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Utility",
 		Meta = (DeterminesOutputType = "SourceObjectClass", DynamicOutputParam = "SourceObject", ExpandBoolAsExecs = "ReturnValue"))
-	static bool TryGetSourceObjectCasted(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle,
+	static bool TryGetSourceObjectCasted(const UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle,
 	                                     TSubclassOf<UObject> SourceObjectClass, UObject*& SourceObject);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Utility",
 		Meta = (AutoCreateRefTerm = "ParentTag", ReturnDisplayName = "Descendant Tag"))
-	static FGameplayTag FindFirstDescendantAbilityTagByHandle(UAbilitySystemComponent* AbilitySystem,
+	static FGameplayTag FindFirstDescendantAbilityTagByHandle(const UAbilitySystemComponent* AbilitySystem,
 	                                                          FGameplayAbilitySpecHandle AbilityHandle,
 	                                                          const FGameplayTag& ParentTag);
 
@@ -69,41 +71,40 @@ public:
 	static const TArray<FGameplayAbilitySpec>& GetActivatableAbilities(const UAbilitySystemComponent* AbilitySystem);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Utility", Meta = (ReturnDisplayName = "Ability"))
-	static const UGameplayAbility* GetPrimaryAbilityInstance(UAbilitySystemComponent* AbilitySystem,
+	static const UGameplayAbility* GetPrimaryAbilityInstance(const UAbilitySystemComponent* AbilitySystem,
 	                                                         FGameplayAbilitySpecHandle AbilityHandle);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Utility", Meta = (ReturnDisplayName = "Value"))
-	static bool IsPrimaryAbilityInstanceActive(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle);
+	static bool IsPrimaryAbilityInstanceActive(const UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Utility",
 		DisplayName = "Is Primary Ability Instance Active (Expanded)", Meta = (ExpandBoolAsExecs = "ReturnValue"))
-	static bool IsPrimaryAbilityInstanceActiveExpanded(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle);
+	static bool IsPrimaryAbilityInstanceActiveExpanded(const UAbilitySystemComponent* AbilitySystem,
+	                                                   FGameplayAbilitySpecHandle AbilityHandle);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Utility",
-		Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Value"))
-	static bool HasAbilitiesWithTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag);
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Utility", Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Value"))
+	static bool HasAbilitiesWithTag(const UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Utility",
-		Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Value"))
-	static bool CanActivateAbilityByTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag);
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Utility", Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Value"))
+	static bool CanActivateAbilityByTag(const UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Utility",
 		DisplayName = "Can Activate Ability by Tag (Expanded)", Meta = (ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "Tag"))
-	static bool CanActivateAbilityByTagExpanded(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag);
+	static bool CanActivateAbilityByTagExpanded(const UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Utility", Meta = (ReturnDisplayName = "Value"))
-	static bool CanActivateAbilityByClass(UAbilitySystemComponent* AbilitySystem, TSubclassOf<UGameplayAbility> AbilityClass);
+	static bool CanActivateAbilityByClass(const UAbilitySystemComponent* AbilitySystem, TSubclassOf<UGameplayAbility> AbilityClass);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Utility",
 		DisplayName = "Can Activate Ability by Class (Expanded)", Meta = (ExpandBoolAsExecs = "ReturnValue"))
-	static bool CanActivateAbilityByClassExpanded(UAbilitySystemComponent* AbilitySystem, TSubclassOf<UGameplayAbility> AbilityClass);
+	static bool CanActivateAbilityByClassExpanded(const UAbilitySystemComponent* AbilitySystem, TSubclassOf<UGameplayAbility> AbilityClass);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Utility", Meta = (ReturnDisplayName = "Value"))
-	static bool CanActivateAbilityByHandle(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle);
+	static bool CanActivateAbilityByHandle(const UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Utility",
 		DisplayName = "Can Activate Ability by Handle (Expanded)", Meta = (ExpandBoolAsExecs = "ReturnValue"))
-	static bool CanActivateAbilityByHandleExpanded(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle);
+	static bool CanActivateAbilityByHandleExpanded(const UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Utility", Meta = (ReturnDisplayName = "Success"))
 	static bool BatchRpcActivateAbility(UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle,
@@ -184,7 +185,7 @@ inline const TArray<FGameplayAbilitySpec>& UFuAbilityUtility::GetActivatableAbil
 	return FU_ENSURE(IsValid(AbilitySystem)) ? AbilitySystem->GetActivatableAbilities() : None;
 }
 
-inline const UGameplayAbility* UFuAbilityUtility::GetPrimaryAbilityInstance(UAbilitySystemComponent* AbilitySystem,
+inline const UGameplayAbility* UFuAbilityUtility::GetPrimaryAbilityInstance(const UAbilitySystemComponent* AbilitySystem,
                                                                             const FGameplayAbilitySpecHandle AbilityHandle)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(AbilityHandle.IsValid()))
@@ -197,7 +198,7 @@ inline const UGameplayAbility* UFuAbilityUtility::GetPrimaryAbilityInstance(UAbi
 	return AbilitySpecification != nullptr ? AbilitySpecification->GetPrimaryInstance() : nullptr;
 }
 
-inline bool UFuAbilityUtility::IsPrimaryAbilityInstanceActive(UAbilitySystemComponent* AbilitySystem,
+inline bool UFuAbilityUtility::IsPrimaryAbilityInstanceActive(const UAbilitySystemComponent* AbilitySystem,
                                                               const FGameplayAbilitySpecHandle AbilityHandle)
 {
 	const auto* AbilityInstance{GetPrimaryAbilityInstance(AbilitySystem, AbilityHandle)};
@@ -205,24 +206,24 @@ inline bool UFuAbilityUtility::IsPrimaryAbilityInstanceActive(UAbilitySystemComp
 	return IsValid(AbilityInstance) && AbilityInstance->IsActive();
 }
 
-inline bool UFuAbilityUtility::IsPrimaryAbilityInstanceActiveExpanded(UAbilitySystemComponent* AbilitySystem,
+inline bool UFuAbilityUtility::IsPrimaryAbilityInstanceActiveExpanded(const UAbilitySystemComponent* AbilitySystem,
                                                                       const FGameplayAbilitySpecHandle AbilityHandle)
 {
 	return IsPrimaryAbilityInstanceActive(AbilitySystem, AbilityHandle);
 }
 
-inline bool UFuAbilityUtility::CanActivateAbilityByTagExpanded(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag)
+inline bool UFuAbilityUtility::CanActivateAbilityByTagExpanded(const UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag)
 {
 	return CanActivateAbilityByTag(AbilitySystem, Tag);
 }
 
-inline bool UFuAbilityUtility::CanActivateAbilityByClassExpanded(UAbilitySystemComponent* AbilitySystem,
+inline bool UFuAbilityUtility::CanActivateAbilityByClassExpanded(const UAbilitySystemComponent* AbilitySystem,
                                                                  const TSubclassOf<UGameplayAbility> AbilityClass)
 {
 	return CanActivateAbilityByClass(AbilitySystem, AbilityClass);
 }
 
-inline bool UFuAbilityUtility::CanActivateAbilityByHandleExpanded(UAbilitySystemComponent* AbilitySystem,
+inline bool UFuAbilityUtility::CanActivateAbilityByHandleExpanded(const UAbilitySystemComponent* AbilitySystem,
                                                                   const FGameplayAbilitySpecHandle AbilityHandle)
 {
 	return CanActivateAbilityByHandle(AbilitySystem, AbilityHandle);

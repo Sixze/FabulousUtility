@@ -9,7 +9,6 @@ UFuAbilityTask_AbilityActivator* UFuAbilityTask_AbilityActivator::ActivateAbilit
 	UGameplayAbility* OwningAbility, const FGameplayAbilitySpecHandle InAbilityHandle, const bool bInCancelAbilityOnDestroy)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
-
 	Task->AbilityHandle = InAbilityHandle;
 	Task->bCancelAbilityOnDestroy = bInCancelAbilityOnDestroy;
 

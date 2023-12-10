@@ -17,24 +17,26 @@ public:
 	static UserWidgetType* FindRootUserWidget(const UWidget* Widget);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Common UI Utility",
-		Meta = (DefaultToSelf = "Widget", DeterminesOutputType = "UserWidgetClass", ReturnDisplayName = "Root Widget"))
+		Meta = (DefaultToSelf = "Widget", UserWidgetClass = "/Script/UMG.UserWidget",
+			DeterminesOutputType = "UserWidgetClass", ReturnDisplayName = "Root Widget"))
 	static UUserWidget* FindRootUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Common UI Utility",
-		Meta = (DefaultToSelf = "Widget", DeterminesOutputType = "UserWidgetClass",
-			DynamicOutputParam = "UserWidget", ExpandBoolAsExecs = "ReturnValue"))
+		Meta = (DefaultToSelf = "Widget", UserWidgetClass = "/Script/UMG.UserWidget",
+			DeterminesOutputType = "UserWidgetClass", DynamicOutputParam = "UserWidget", ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryFindRootUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass, UUserWidget*& UserWidget);
 
 	template <typename UserWidgetType = UUserWidget>
 	static UserWidgetType* FindParentUserWidget(const UWidget* Widget);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Common UI Utility",
-		Meta = (DefaultToSelf = "Widget", DeterminesOutputType = "UserWidgetClass", ReturnDisplayName = "Root Widget"))
+		Meta = (DefaultToSelf = "Widget", UserWidgetClass = "/Script/UMG.UserWidget",
+			DeterminesOutputType = "UserWidgetClass", ReturnDisplayName = "Root Widget"))
 	static UUserWidget* FindParentUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Common UI Utility",
-		Meta = (DefaultToSelf = "Widget", DeterminesOutputType = "UserWidgetClass",
-			DynamicOutputParam = "UserWidget", ExpandBoolAsExecs = "ReturnValue"))
+		Meta = (DefaultToSelf = "Widget", UserWidgetClass = "/Script/UMG.UserWidget",
+			DeterminesOutputType = "UserWidgetClass", DynamicOutputParam = "UserWidget", ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryFindParentUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass, UUserWidget*& UserWidget);
 };
 
@@ -67,7 +69,8 @@ UserWidgetType* UFuCommonUIUtility::FindRootUserWidget(const UWidget* Widget)
 	return ResultUserWidget;
 }
 
-inline bool UFuCommonUIUtility::TryFindRootUserWidgetByClass(const UWidget* Widget, const TSubclassOf<UUserWidget> UserWidgetClass,
+inline bool UFuCommonUIUtility::TryFindRootUserWidgetByClass(const UWidget* Widget,
+                                                             const TSubclassOf<UUserWidget> UserWidgetClass,
                                                              UUserWidget*& UserWidget)
 {
 	UserWidget = FindRootUserWidgetByClass(Widget, UserWidgetClass);
@@ -101,7 +104,8 @@ UserWidgetType* UFuCommonUIUtility::FindParentUserWidget(const UWidget* Widget)
 	return nullptr;
 }
 
-inline bool UFuCommonUIUtility::TryFindParentUserWidgetByClass(const UWidget* Widget, const TSubclassOf<UUserWidget> UserWidgetClass,
+inline bool UFuCommonUIUtility::TryFindParentUserWidgetByClass(const UWidget* Widget,
+                                                               const TSubclassOf<UUserWidget> UserWidgetClass,
                                                                UUserWidget*& UserWidget)
 {
 	UserWidget = FindParentUserWidgetByClass(Widget, UserWidgetClass);

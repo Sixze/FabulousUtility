@@ -11,7 +11,6 @@ UFuAbilityTask_InputActionListener* UFuAbilityTask_InputActionListener::WaitForI
 	UGameplayAbility* OwningAbility, UInputAction* InInputAction)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
-
 	Task->Input = Cast<UEnhancedInputComponent>(Task->AbilitySystemComponent->GetAvatarActor_Direct()->InputComponent);
 
 	if (FU_ENSURE(IsValid(InInputAction)))
@@ -26,7 +25,6 @@ UFuAbilityTask_InputActionListener* UFuAbilityTask_InputActionListener::WaitForI
 	UGameplayAbility* OwningAbility, const TArray<UInputAction*>& InInputActions)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
-
 	Task->Input = Cast<UEnhancedInputComponent>(Task->AbilitySystemComponent->GetAvatarActor_Direct()->InputComponent);
 	Task->InputActions.Reserve(InInputActions.Num());
 

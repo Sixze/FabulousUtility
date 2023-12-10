@@ -13,7 +13,6 @@ UFuAbilityAsync_EventListener* UFuAbilityAsync_EventListener::ListenForEvent(UAb
                                                                              const FGameplayTag InEventTag)
 {
 	auto* Task{NewObject<ThisClass>()};
-
 	Task->SetAbilitySystemComponent(AbilitySystem);
 	Task->EventTag = InEventTag;
 

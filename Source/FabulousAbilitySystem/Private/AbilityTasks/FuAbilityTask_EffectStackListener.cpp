@@ -9,7 +9,6 @@ UFuAbilityTask_EffectStackListener* UFuAbilityTask_EffectStackListener::WaitForE
 	UGameplayAbility* OwningAbility, const TSubclassOf<UGameplayEffect> InEffectClass)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
-
 	Task->EffectClass = InEffectClass;
 
 	return Task;
