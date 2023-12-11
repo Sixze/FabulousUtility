@@ -95,9 +95,20 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Utility", Meta = (ReturnDisplayName = "Value"))
 	static bool CanActivateAbilityByClass(const UAbilitySystemComponent* AbilitySystem, TSubclassOf<UGameplayAbility> AbilityClass);
 
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Utility",
+		Meta = (AutoCreateRefTerm = "AbilityClassSoft", ReturnDisplayName = "Value"))
+	static bool CanActivateAbilityByClassSoft(const UAbilitySystemComponent* AbilitySystem,
+	                                          const TSoftClassPtr<UGameplayAbility>& AbilityClassSoft);
+
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Utility",
 		DisplayName = "Can Activate Ability by Class (Expanded)", Meta = (ExpandBoolAsExecs = "ReturnValue"))
 	static bool CanActivateAbilityByClassExpanded(const UAbilitySystemComponent* AbilitySystem, TSubclassOf<UGameplayAbility> AbilityClass);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Utility",
+		DisplayName = "Can Activate Ability by Class Soft (Expanded)",
+		Meta = (AutoCreateRefTerm = "AbilityClassSoft", ExpandBoolAsExecs = "ReturnValue"))
+	static bool CanActivateAbilityByClassSoftExpanded(const UAbilitySystemComponent* AbilitySystem,
+	                                                  const TSoftClassPtr<UGameplayAbility>& AbilityClassSoft);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Utility", Meta = (ReturnDisplayName = "Value"))
 	static bool CanActivateAbilityByHandle(const UAbilitySystemComponent* AbilitySystem, FGameplayAbilitySpecHandle AbilityHandle);
@@ -221,6 +232,12 @@ inline bool UFuAbilityUtility::CanActivateAbilityByClassExpanded(const UAbilityS
                                                                  const TSubclassOf<UGameplayAbility> AbilityClass)
 {
 	return CanActivateAbilityByClass(AbilitySystem, AbilityClass);
+}
+
+inline bool UFuAbilityUtility::CanActivateAbilityByClassSoftExpanded(const UAbilitySystemComponent* AbilitySystem,
+                                                                     const TSoftClassPtr<UGameplayAbility>& AbilityClassSoft)
+{
+	return CanActivateAbilityByClassSoft(AbilitySystem, AbilityClassSoft);
 }
 
 inline bool UFuAbilityUtility::CanActivateAbilityByHandleExpanded(const UAbilitySystemComponent* AbilitySystem,

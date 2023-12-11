@@ -44,6 +44,20 @@ int32 UFuEffectUtility::GetEffectStackCountByClass(const UAbilitySystemComponent
 	return MaxCount;
 }
 
+int32 UFuEffectUtility::GetEffectStackCountByClassSoft(const UAbilitySystemComponent* AbilitySystem,
+                                                       const TSoftClassPtr<UGameplayEffect>& EffectClassSoft)
+{
+	// If the effect is not loaded, then there are no active effects.
+
+	const TSubclassOf<UGameplayEffect> EffectClass{EffectClassSoft.Get()};
+	if (!FU_ENSURE(!EffectClassSoft.IsNull()) || !IsValid(EffectClass))
+	{
+		return 0;
+	}
+
+	return GetEffectStackCountByClass(AbilitySystem, EffectClass);
+}
+
 bool UFuEffectUtility::HasActiveEffectsByQuery(const UAbilitySystemComponent* AbilitySystem, const FGameplayEffectQuery& EffectQuery)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(!EffectQuery.IsEmpty()))

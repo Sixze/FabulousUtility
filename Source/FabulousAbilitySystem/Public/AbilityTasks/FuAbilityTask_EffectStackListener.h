@@ -26,6 +26,12 @@ public:
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Effect Class") TSubclassOf<UGameplayEffect> InEffectClass);
 
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
+		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
+	static UFuAbilityTask_EffectStackListener* WaitForEffectStackChangeSoft(
+		UGameplayAbility* OwningAbility,
+		UPARAM(DisplayName = "Effect Class") TSoftClassPtr<UGameplayEffect> InEffectClass);
+
 protected:
 	virtual void Activate() override;
 

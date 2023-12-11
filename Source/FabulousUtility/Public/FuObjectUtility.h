@@ -28,6 +28,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Object Utility",
 		DisplayName = "Does Implement Interface (Expanded)", Meta = (ExpandBoolAsExecs = "ReturnValue"))
 	static bool DoesImplementInterfaceExpanded(const UObject* Object, TSubclassOf<UInterface> InterfaceClass);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Object Utility",
+		DisplayName = "Does Implement Interface Soft (Expanded)",
+		Meta = (AutoCreateRefTerm = "InterfaceClass", ExpandBoolAsExecs = "ReturnValue"))
+	static bool DoesImplementInterfaceSoftExpanded(const UObject* Object, const TSoftClassPtr<UInterface>& InterfaceClass);
 };
 
 inline UObject* UFuObjectUtility::GetDefaultObject(const TSubclassOf<UObject> Class)
@@ -48,4 +53,9 @@ inline UObject* UFuObjectUtility::DuplicateObject(const UObject* Object, UObject
 inline bool UFuObjectUtility::DoesImplementInterfaceExpanded(const UObject* Object, const TSubclassOf<UInterface> InterfaceClass)
 {
 	return FU_ENSURE(IsValid(Object)) && Object->GetClass()->ImplementsInterface(InterfaceClass);
+}
+
+inline bool UFuObjectUtility::DoesImplementInterfaceSoftExpanded(const UObject* Object, const TSoftClassPtr<UInterface>& InterfaceClass)
+{
+	return FU_ENSURE(IsValid(Object)) && Object->GetClass()->ImplementsInterface(InterfaceClass.Get());
 }

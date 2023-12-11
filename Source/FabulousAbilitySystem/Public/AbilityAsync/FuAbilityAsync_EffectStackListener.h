@@ -24,9 +24,19 @@ public:
 		UPARAM(DisplayName = "Effect Class") TSubclassOf<UGameplayEffect> InEffectClass);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
+	static UFuAbilityAsync_EffectStackListener* ListenForEffectStackChangeOnActorSoft(
+		const AActor* Actor,
+		UPARAM(DisplayName = "Effect Class") TSoftClassPtr<UGameplayEffect> InEffectClass);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_EffectStackListener* ListenForEffectStackChange(
 		UAbilitySystemComponent* AbilitySystem,
 		UPARAM(DisplayName = "Effect Class") TSubclassOf<UGameplayEffect> InEffectClass);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
+	static UFuAbilityAsync_EffectStackListener* ListenForEffectStackChangeSoft(
+		UAbilitySystemComponent* AbilitySystem,
+		UPARAM(DisplayName = "Effect Class") TSoftClassPtr<UGameplayEffect> InEffectClass);
 
 public:
 	virtual void Activate() override;

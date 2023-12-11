@@ -10,12 +10,37 @@ UFuAbilityAsync_EffectStackListener* UFuAbilityAsync_EffectStackListener::Listen
 	return ListenForEffectStackChange(UFuAbilitySystemUtility::GetAbilitySystem(Actor), InEffectClass);
 }
 
+UFuAbilityAsync_EffectStackListener* UFuAbilityAsync_EffectStackListener::ListenForEffectStackChangeOnActorSoft(
+	const AActor* Actor, const TSoftClassPtr<UGameplayEffect> InEffectClass)
+{
+	return ListenForEffectStackChangeSoft(UFuAbilitySystemUtility::GetAbilitySystem(Actor), InEffectClass);
+}
+
 UFuAbilityAsync_EffectStackListener* UFuAbilityAsync_EffectStackListener::ListenForEffectStackChange(
 	UAbilitySystemComponent* AbilitySystem, const TSubclassOf<UGameplayEffect> InEffectClass)
 {
 	auto* Task{NewObject<ThisClass>()};
 	Task->SetAbilitySystemComponent(AbilitySystem);
-	Task->EffectClass = InEffectClass;
+
+	if (FU_ENSURE(IsValid(InEffectClass)))
+	{
+		Task->EffectClass = InEffectClass;
+	}
+
+	return Task;
+}
+
+UFuAbilityAsync_EffectStackListener* UFuAbilityAsync_EffectStackListener::ListenForEffectStackChangeSoft(
+	UAbilitySystemComponent* AbilitySystem, const TSoftClassPtr<UGameplayEffect> InEffectClass)
+{
+	auto* Task{NewObject<ThisClass>()};
+	Task->SetAbilitySystemComponent(AbilitySystem);
+
+	if (FU_ENSURE(!InEffectClass.IsNull()))
+	{
+		// If the effect is not loaded, then there are no active effects.
+		Task->EffectClass = InEffectClass.Get();
+	}
 
 	return Task;
 }
@@ -26,7 +51,7 @@ void UFuAbilityAsync_EffectStackListener::Activate()
 
 	auto* AbilitySystem{GetAbilitySystemComponent()};
 
-	if (!IsValid(AbilitySystem) || !FU_ENSURE(IsValid(EffectClass)) ||
+	if (!IsValid(AbilitySystem) || !IsValid(EffectClass) ||
 	    !FU_ENSURE(EffectClass.GetDefaultObject()->StackingType != EGameplayEffectStackingType::None))
 	{
 		EndAction();

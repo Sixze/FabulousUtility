@@ -16,6 +16,11 @@ public:
 	static int32 GetEffectStackCountByClass(const UAbilitySystemComponent* AbilitySystem, TSubclassOf<UGameplayEffect> EffectClass);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Effect Utility",
+		Meta = (AutoCreateRefTerm = "EffectClassSoft", ReturnDisplayName = "Stack Count"))
+	static int32 GetEffectStackCountByClassSoft(const UAbilitySystemComponent* AbilitySystem,
+	                                            const TSoftClassPtr<UGameplayEffect>& EffectClassSoft);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Effect Utility",
 		Meta = (AutoCreateRefTerm = "EffectQuery", ReturnDisplayName = "Value"))
 	static bool HasActiveEffectsByQuery(const UAbilitySystemComponent* AbilitySystem, const FGameplayEffectQuery& EffectQuery);
 

@@ -163,6 +163,20 @@ bool UFuAbilityUtility::CanActivateAbilityByClass(const UAbilitySystemComponent*
 	       AbilitySpecification->Ability->CanActivateAbility(AbilitySpecification->Handle, AbilitySystem->AbilityActorInfo.Get());
 }
 
+bool UFuAbilityUtility::CanActivateAbilityByClassSoft(const UAbilitySystemComponent* AbilitySystem,
+                                                      const TSoftClassPtr<UGameplayAbility>& AbilityClassSoft)
+{
+	// If the ability is not loaded, then there are no granted abilities.
+
+	const TSubclassOf<UGameplayAbility> AbilityClass{AbilityClassSoft.Get()};
+	if (!FU_ENSURE(!AbilityClassSoft.IsNull()) || !IsValid(AbilityClass))
+	{
+		return false;
+	}
+
+	return CanActivateAbilityByClass(AbilitySystem, AbilityClass);
+}
+
 bool UFuAbilityUtility::CanActivateAbilityByHandle(const UAbilitySystemComponent* AbilitySystem,
                                                    const FGameplayAbilitySpecHandle AbilityHandle)
 {

@@ -9,7 +9,25 @@ UFuAbilityTask_EffectStackListener* UFuAbilityTask_EffectStackListener::WaitForE
 	UGameplayAbility* OwningAbility, const TSubclassOf<UGameplayEffect> InEffectClass)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
-	Task->EffectClass = InEffectClass;
+
+	if (FU_ENSURE(IsValid(InEffectClass)))
+	{
+		Task->EffectClass = InEffectClass;
+	}
+
+	return Task;
+}
+
+UFuAbilityTask_EffectStackListener* UFuAbilityTask_EffectStackListener::WaitForEffectStackChangeSoft(
+	UGameplayAbility* OwningAbility, const TSoftClassPtr<UGameplayEffect> InEffectClass)
+{
+	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
+
+	if (FU_ENSURE(!InEffectClass.IsNull()))
+	{
+		// If the effect is not loaded, then there are no active effects.
+		Task->EffectClass = InEffectClass.Get();
+	}
 
 	return Task;
 }
@@ -18,7 +36,7 @@ void UFuAbilityTask_EffectStackListener::Activate()
 {
 	Super::Activate();
 
-	if (!FU_ENSURE(IsValid(EffectClass)) || !FU_ENSURE(EffectClass.GetDefaultObject()->StackingType != EGameplayEffectStackingType::None))
+	if (!IsValid(EffectClass) || !FU_ENSURE(EffectClass.GetDefaultObject()->StackingType != EGameplayEffectStackingType::None))
 	{
 		EndTask();
 		return;
