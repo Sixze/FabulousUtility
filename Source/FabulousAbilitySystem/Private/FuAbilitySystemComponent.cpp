@@ -2,6 +2,7 @@
 
 #include "AbilitySystemInterface.h"
 #include "FuGameplayAbility.h"
+#include "Utility/FuAbilityUtility.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilitySystemComponent)
 
@@ -143,7 +144,14 @@ void UFuAbilitySystemComponent::AbilityLocalInputPressed(const int32 InputId)
 
 		if (!IsValid(FuAbility) || FuAbility->IsActivationByInputAllowed())
 		{
-			TryActivateAbility(AbilitySpecification->Handle);
+			if (FuAbility->CanBatchActivationByInput())
+			{
+				UFuAbilityUtility::BatchRpcActivateAbility(this, AbilitySpecification->Handle, false);
+			}
+			else
+			{
+				TryActivateAbility(AbilitySpecification->Handle);
+			}
 		}
 	}
 }
@@ -240,7 +248,14 @@ void UFuAbilitySystemComponent::InputTagPressed(const FGameplayTag& InputTag)
 
 		if (!IsValid(FuAbility) || FuAbility->IsActivationByInputAllowed())
 		{
-			TryActivateAbility(AbilitySpecification->Handle);
+			if (FuAbility->CanBatchActivationByInput())
+			{
+				UFuAbilityUtility::BatchRpcActivateAbility(this, AbilitySpecification->Handle, false);
+			}
+			else
+			{
+				TryActivateAbility(AbilitySpecification->Handle);
+			}
 		}
 	}
 }

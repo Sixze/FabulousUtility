@@ -203,7 +203,7 @@ bool UFuAbilityUtility::BatchRpcActivateAbility(UAbilitySystemComponent* Ability
 
 	FScopedServerAbilityRPCBatcher RpcBatcher{AbilitySystem, AbilityHandle};
 
-	const auto bAbilityActivated{AbilitySystem->TryActivateAbility(AbilityHandle, true)};
+	const auto bAbilityActivated{AbilitySystem->TryActivateAbility(AbilityHandle)};
 
 	if (!bEndAbilityImmediately)
 	{

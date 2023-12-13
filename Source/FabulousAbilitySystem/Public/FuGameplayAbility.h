@@ -24,7 +24,13 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Ability")
 	uint8 bAllowActivationByInput : 1 {true};
 
-	uint8 bCheckCostBlueprintImplemented : 1 {false};
+	// If checked, RPC batching will be used during activation of this ability by input.
+	// See https://github.com/tranek/GASDocumentation#concepts-ga-batching
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Ability",
+		Meta = (EditCondition = "bAllowActivationByInput"))
+	uint8 bBatchActivationByInput : 1;
+
+	uint8 bCheckCostBlueprintImplemented : 1;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Ability", Instanced)
 	TObjectPtr<UObject> UserData;
@@ -62,6 +68,8 @@ protected:
 public:
 	bool IsActivationByInputAllowed() const;
 
+	bool CanBatchActivationByInput() const;
+
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Gameplay Ability", Meta = (ReturnDisplayName = "Success"))
 	bool BatchRpcActivateAbility(FGameplayAbilitySpecHandle AbilityHandle, bool bEndAbilityImmediately);
 
@@ -71,4 +79,9 @@ public:
 inline bool UFuGameplayAbility::IsActivationByInputAllowed() const
 {
 	return bAllowActivationByInput;
+}
+
+inline bool UFuGameplayAbility::CanBatchActivationByInput() const
+{
+	return bBatchActivationByInput;
 }
