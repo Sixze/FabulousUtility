@@ -25,9 +25,9 @@ FString UFuAnimNotifyState_GameplayEvent::GetNotifyName_Implementation() const
 	}
 #endif
 
-	TStringBuilder<256> NotifyNameBuilder;
-
-	NotifyNameBuilder << TEXTVIEW("Fu Gameplay Event: ") << BeginEventTag.GetTagName() << TEXTVIEW(" - ") << EndEventTag.GetTagName();
+	TStringBuilder<256> NotifyNameBuilder{
+		InPlace, TEXTVIEW("Fu Gameplay Event: "), BeginEventTag.GetTagName(), TEXTVIEW(" - "), EndEventTag.GetTagName()
+	};
 
 	return FString{NotifyNameBuilder};
 }

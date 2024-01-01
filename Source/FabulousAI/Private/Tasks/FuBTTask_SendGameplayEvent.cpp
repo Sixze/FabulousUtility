@@ -31,9 +31,7 @@ void UFuBTTask_SendGameplayEvent::InitializeFromAsset(UBehaviorTree& Asset)
 
 FString UFuBTTask_SendGameplayEvent::GetStaticDescription() const
 {
-	TStringBuilder<256> DescriptionBuilder;
-
-	DescriptionBuilder << TEXTVIEW("Send Gameplay Event: ");
+	TStringBuilder<256> DescriptionBuilder{InPlace, TEXTVIEW("Send Gameplay Event: ")};
 
 	if (EventTag.IsValid())
 	{
