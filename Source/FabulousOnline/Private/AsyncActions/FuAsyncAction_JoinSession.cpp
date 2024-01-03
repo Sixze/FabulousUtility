@@ -26,7 +26,7 @@ void UFuAsyncAction_JoinSession::Activate()
 
 	if (!FU_ENSURE(Player.IsValid()) || !FU_ENSURE(IsValid(Player->PlayerState)))
 	{
-		OnFailure.Broadcast();
+		OnFailure.Broadcast(UnknownFailureString);
 		SetReadyToDestroy();
 		return;
 	}
@@ -34,7 +34,7 @@ void UFuAsyncAction_JoinSession::Activate()
 	const auto Session{Online::GetSessionInterface(Player->GetWorld())};
 	if (!FU_ENSURE(Session.IsValid()))
 	{
-		OnFailure.Broadcast();
+		OnFailure.Broadcast(UnknownFailureString);
 		SetReadyToDestroy();
 		return;
 	}
@@ -48,7 +48,7 @@ void UFuAsyncAction_JoinSession::Session_OnJoined(const FName SessionName, const
 {
 	if (!Player.IsValid())
 	{
-		OnFailure.Broadcast();
+		OnFailure.Broadcast(UnknownFailureString);
 		SetReadyToDestroy();
 		return;
 	}
@@ -56,7 +56,7 @@ void UFuAsyncAction_JoinSession::Session_OnJoined(const FName SessionName, const
 	const auto Session{Online::GetSessionInterface(Player->GetWorld())};
 	if (!Session.IsValid())
 	{
-		OnFailure.Broadcast();
+		OnFailure.Broadcast(UnknownFailureString);
 		SetReadyToDestroy();
 		return;
 	}
@@ -65,7 +65,7 @@ void UFuAsyncAction_JoinSession::Session_OnJoined(const FName SessionName, const
 
 	if (Result != EOnJoinSessionCompleteResult::Success)
 	{
-		OnFailure.Broadcast();
+		OnFailure.Broadcast(FName::NameToDisplayString(LexToString(Result), false));
 		SetReadyToDestroy();
 		return;
 	}
@@ -73,7 +73,7 @@ void UFuAsyncAction_JoinSession::Session_OnJoined(const FName SessionName, const
 	FString ConnectString;
 	if (!Session->GetResolvedConnectString(NAME_GameSession, ConnectString))
 	{
-		OnFailure.Broadcast();
+		OnFailure.Broadcast(UnknownFailureString);
 		SetReadyToDestroy();
 		return;
 	}
@@ -83,6 +83,6 @@ void UFuAsyncAction_JoinSession::Session_OnJoined(const FName SessionName, const
 		Player->ClientTravel(ConnectString, TRAVEL_Absolute);
 	}
 
-	OnSuccess.Broadcast();
+	OnSuccess.Broadcast({});
 	SetReadyToDestroy();
 }

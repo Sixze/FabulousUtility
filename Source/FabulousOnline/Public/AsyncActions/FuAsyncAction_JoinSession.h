@@ -4,10 +4,15 @@
 #include "Interfaces/OnlineSessionInterface.h"
 #include "FuAsyncAction_JoinSession.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuJoinSessionDelegate, const FString&, FailureString);
+
 UCLASS(DisplayName = "Fu Join Session Async Action")
 class FABULOUSONLINE_API UFuAsyncAction_JoinSession : public UOnlineBlueprintCallProxyBase
 {
 	GENERATED_BODY()
+
+public:
+	inline static const FString UnknownFailureString{TEXTVIEW("Failed to Join Session")};
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
@@ -21,10 +26,10 @@ protected:
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Join Session Async Action")
-	FEmptyOnlineDelegate OnSuccess;
+	FFuJoinSessionDelegate OnSuccess;
 
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Join Session Async Action")
-	FEmptyOnlineDelegate OnFailure;
+	FFuJoinSessionDelegate OnFailure;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InPlayer"))
