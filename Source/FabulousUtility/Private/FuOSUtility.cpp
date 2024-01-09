@@ -13,6 +13,13 @@
 void UFuOSUtility::FlashUnfocusedWindow()
 {
 #if PLATFORM_WINDOWS
+#if WITH_EDITOR
+	if (GIsEditor)
+	{
+		return;
+	}
+#endif
+
 	auto* Viewport{IsValid(GEngine) ? GEngine->GameViewport.Get() : nullptr};
 	const auto Window{IsValid(Viewport) ? Viewport->GetWindow() : nullptr};
 	const auto NativeWindow{Window.IsValid() ? Window->GetNativeWindow() : nullptr};
