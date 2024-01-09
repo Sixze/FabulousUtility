@@ -2,17 +2,20 @@
 
 #include "CommonUserWidget.h"
 #include "FuMacros.h"
+#include "Framework/Application/SlateApplication.h"
 #include "Input/CommonUIActionRouterBase.h"
 #include "Input/CommonUIInputTypes.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_UIActionListenerByInputAction)
 
 UFuAsyncAction_UIActionListenerByInputAction* UFuAsyncAction_UIActionListenerByInputAction::ListenForUIActionByInputAction(
-	UCommonUserWidget* InWidget, UInputAction* InInputAction, const FFuUIActionBindingArguments InActionArguments)
+	UCommonUserWidget* InWidget, UInputAction* InInputAction,
+	const FSlateSound InSound, const FFuUIActionBindingArguments InActionArguments)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->Widget = InWidget;
+	Task->Sound = InSound;
 	Task->ActionArguments = InActionArguments;
 
 	if (FU_ENSURE(IsValid(InInputAction)))
@@ -24,11 +27,13 @@ UFuAsyncAction_UIActionListenerByInputAction* UFuAsyncAction_UIActionListenerByI
 }
 
 UFuAsyncAction_UIActionListenerByInputAction* UFuAsyncAction_UIActionListenerByInputAction::ListenForUIActionsByInputActions(
-	UCommonUserWidget* InWidget, TArray<UInputAction*> InInputActions, const FFuUIActionBindingArguments InActionArguments)
+	UCommonUserWidget* InWidget, TArray<UInputAction*> InInputActions,
+	const FSlateSound InSound, const FFuUIActionBindingArguments InActionArguments)
 {
 	auto* Task{NewObject<ThisClass>()};
 
 	Task->Widget = InWidget;
+	Task->Sound = InSound;
 	Task->ActionArguments = InActionArguments;
 
 	Task->InputActions.Reserve(InInputActions.Num());
@@ -113,6 +118,8 @@ void UFuAsyncAction_UIActionListenerByInputAction::Widget_OnActionExecuted(const
 {
 	if (ShouldBroadcastDelegates())
 	{
+		FSlateApplication::Get().PlaySound(Sound);
+
 		OnActionExecuted.Broadcast(InputAction.Get());
 	}
 }

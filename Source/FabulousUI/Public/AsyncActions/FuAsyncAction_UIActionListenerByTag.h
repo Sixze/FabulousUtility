@@ -4,6 +4,7 @@
 #include "UITag.h"
 #include "Engine/CancellableAsyncAction.h"
 #include "Input/UIActionBindingHandle.h"
+#include "Sound/SlateSound.h"
 #include "FuAsyncAction_UIActionListenerByTag.generated.h"
 
 class UCommonUserWidget;
@@ -25,6 +26,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
 	TArray<FUIActionTag> ActionTags;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	FSlateSound Sound;
+
 	TArray<FUIActionBindingHandle> ActionHandles;
 
 public:
@@ -40,6 +44,7 @@ public:
 	static UFuAsyncAction_UIActionListenerByTag* ListenForUIActionByTag(
 		UPARAM(DisplayName = "Widget") UCommonUserWidget* InWidget,
 		UPARAM(DisplayName = "Action Tag") FUIActionTag InActionTag,
+		UPARAM(DisplayName = "Sound") FSlateSound InSound,
 		UPARAM(DisplayName = "Action Arguments") FFuUIActionBindingArguments InActionArguments);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|UI Async Actions",
@@ -47,6 +52,7 @@ public:
 	static UFuAsyncAction_UIActionListenerByTag* ListenForUIActionsByTags(
 		UPARAM(DisplayName = "Widget") UCommonUserWidget* InWidget,
 		UPARAM(DisplayName = "Action Tags", Meta = (Categories = "UI.Action")) FGameplayTagContainer InActionTags,
+		UPARAM(DisplayName = "Sound") FSlateSound InSound,
 		UPARAM(DisplayName = "Action Arguments") FFuUIActionBindingArguments InActionArguments);
 
 public:

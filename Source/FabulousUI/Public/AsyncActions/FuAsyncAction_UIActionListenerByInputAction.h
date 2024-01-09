@@ -3,6 +3,7 @@
 #include "FuUIActionBindingArguments.h"
 #include "Engine/CancellableAsyncAction.h"
 #include "Input/UIActionBindingHandle.h"
+#include "Sound/SlateSound.h"
 #include "FuAsyncAction_UIActionListenerByInputAction.generated.h"
 
 class UCommonUserWidget;
@@ -24,6 +25,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, Meta = (DisplayThumbnail = false))
 	TArray<TObjectPtr<UInputAction>> InputActions;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
+	FSlateSound Sound;
+
 	TArray<FUIActionBindingHandle> ActionHandles;
 
 public:
@@ -36,6 +40,7 @@ public:
 	static UFuAsyncAction_UIActionListenerByInputAction* ListenForUIActionByInputAction(
 		UPARAM(DisplayName = "Widget") UCommonUserWidget* InWidget,
 		UPARAM(DisplayName = "Input Action") UInputAction* InInputAction,
+		UPARAM(DisplayName = "Sound") FSlateSound InSound,
 		UPARAM(DisplayName = "Action Arguments") FFuUIActionBindingArguments InActionArguments);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|UI Async Actions",
@@ -43,6 +48,7 @@ public:
 	static UFuAsyncAction_UIActionListenerByInputAction* ListenForUIActionsByInputActions(
 		UPARAM(DisplayName = "Widget") UCommonUserWidget* InWidget,
 		UPARAM(DisplayName = "Input Actions") TArray<UInputAction*> InInputActions,
+		UPARAM(DisplayName = "Sound") FSlateSound InSound,
 		UPARAM(DisplayName = "Action Arguments") FFuUIActionBindingArguments InActionArguments);
 
 public:
