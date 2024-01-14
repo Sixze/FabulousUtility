@@ -9,10 +9,14 @@ public class FabulousAI : ModuleRules
 
 		bEnableNonInlinedGenCppWarnings = true;
 
+		PublicDependencyModuleNames.AddRange(new[]
+		{
+			"Core", "CoreUObject", "Engine", "GameplayTags", "AIModule"
+		});
+
 		PrivateDependencyModuleNames.AddRange(new[]
 		{
-			"Core", "CoreUObject", "Engine", "GameplayTags", "GameplayTasks", "GameplayAbilities",
-			"NavigationSystem", "AIModule", "FabulousUtility", "FabulousAbilitySystem"
+			"GameplayAbilities", "NavigationSystem", "FabulousUtility", "FabulousAbilitySystem"
 		});
 	}
 }

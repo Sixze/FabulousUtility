@@ -1,6 +1,5 @@
 #pragma once
 
-#include "InputActionValue.h"
 #include "Abilities/Tasks/AbilityTask.h"
 #include "FuAbilityTask_InputActionListener.generated.h"
 
@@ -9,7 +8,8 @@ struct FInputActionInstance;
 class UEnhancedInputComponent;
 class UInputAction;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuInputActionListenerDelegate, const UInputAction*, InputAction, FInputActionValue, Value);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuInputActionListenerDelegate, const UInputAction*, InputAction,
+                                             const FInputActionValue&, Value);
 
 UCLASS(DisplayName = "Fu Input Action Listener Ability Task")
 class FABULOUSABILITYSYSTEM_API UFuAbilityTask_InputActionListener : public UAbilityTask

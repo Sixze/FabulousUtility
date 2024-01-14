@@ -9,10 +9,14 @@ public class FabulousUI : ModuleRules
 
 		bEnableNonInlinedGenCppWarnings = true;
 
+		PublicDependencyModuleNames.AddRange(new[]
+		{
+			"Core", "CoreUObject", "Engine", "InputCore", "SlateCore", "UMG", "CommonInput", "CommonUI", "DeveloperSettings"
+		});
+
 		PrivateDependencyModuleNames.AddRange(new[]
 		{
-			"Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "RHI", "SlateCore", "Slate",
-			"UMG", "GameplayTags", "CommonInput", "CommonUI", "FabulousUtility", "DeveloperSettings"
+			"EnhancedInput", "RHI", "Slate", "GameplayTags", "FabulousUtility"
 		});
 	}
 }

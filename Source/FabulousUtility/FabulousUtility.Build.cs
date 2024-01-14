@@ -9,9 +9,14 @@ public class FabulousUtility : ModuleRules
 
 		bEnableNonInlinedGenCppWarnings = true;
 
+		PublicDependencyModuleNames.AddRange(new[]
+		{
+			"Core", "CoreUObject", "Engine"
+		});
+
 		PrivateDependencyModuleNames.AddRange(new[]
 		{
-			"Core", "CoreUObject", "Engine", "EngineSettings", "NetCore", "SlateCore", "GameplayTags"
+			"EngineSettings", "NetCore", "SlateCore", "GameplayTags"
 		});
 	}
 }
