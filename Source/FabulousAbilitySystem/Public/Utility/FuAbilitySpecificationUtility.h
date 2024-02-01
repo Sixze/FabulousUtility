@@ -1,7 +1,7 @@
 #pragma once
 
 #include "AbilitySystemComponent.h"
-#include "Abilities/GameplayAbility.h"
+#include "FuMacros.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuAbilitySpecificationUtility.generated.h"
 
@@ -29,7 +29,7 @@ public:
 
 	// This is not the same function as UAbilitySystemComponent::FindAbilitySpecFromClass(), because that
 	// function performs a direct class comparison, while this function checks the parent-child class relationship.
-	template <typename AbilityType = UGameplayAbility>
+	template <typename AbilityType = UGameplayAbility> requires TIsDerivedFrom<AbilityType, UGameplayAbility>::Value
 	static const FGameplayAbilitySpec* FindAbilitySpecificationByClass(const UAbilitySystemComponent* AbilitySystem);
 };
 
@@ -58,12 +58,10 @@ inline bool UFuAbilitySpecificationUtility::IsActiveExpanded(const FGameplayAbil
 	return AbilitySpecification.IsActive();
 }
 
-template <typename AbilityType>
+template <typename AbilityType> requires TIsDerivedFrom<AbilityType, UGameplayAbility>::Value
 const FGameplayAbilitySpec* UFuAbilitySpecificationUtility::FindAbilitySpecificationByClass(const UAbilitySystemComponent* AbilitySystem)
 {
-	static_assert(TIsDerivedFrom<AbilityType, UGameplayAbility>::IsDerived);
-
-	if (!ensure(IsValid(AbilitySystem)))
+	if (!FU_ENSURE(IsValid(AbilitySystem)))
 	{
 		return nullptr;
 	}

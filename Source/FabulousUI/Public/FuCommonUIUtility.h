@@ -13,7 +13,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Common UI Utility", Meta = (ReturnDisplayName = "Input Type"))
 	static ECommonInputType GetInputType(const FKey& Key);
 
-	template <typename UserWidgetType = UUserWidget>
+	template <typename UserWidgetType = UUserWidget> requires TIsDerivedFrom<UserWidgetType, UUserWidget>::Value
 	static UserWidgetType* FindRootUserWidget(const UWidget* Widget);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Common UI Utility",
@@ -26,7 +26,7 @@ public:
 			DeterminesOutputType = "UserWidgetClass", DynamicOutputParam = "UserWidget", ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryFindRootUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass, UUserWidget*& UserWidget);
 
-	template <typename UserWidgetType = UUserWidget>
+	template <typename UserWidgetType = UUserWidget> requires TIsDerivedFrom<UserWidgetType, UUserWidget>::Value
 	static UserWidgetType* FindParentUserWidget(const UWidget* Widget);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Common UI Utility",
@@ -40,11 +40,9 @@ public:
 	static bool TryFindParentUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass, UUserWidget*& UserWidget);
 };
 
-template <typename UserWidgetType>
+template <typename UserWidgetType> requires TIsDerivedFrom<UserWidgetType, UUserWidget>::Value
 UserWidgetType* UFuCommonUIUtility::FindRootUserWidget(const UWidget* Widget)
 {
-	static_assert(TIsDerivedFrom<UserWidgetType, UUserWidget>::IsDerived);
-
 	UserWidgetType* ResultUserWidget{nullptr};
 
 	while (IsValid(Widget))
@@ -77,11 +75,9 @@ inline bool UFuCommonUIUtility::TryFindRootUserWidgetByClass(const UWidget* Widg
 	return IsValid(UserWidget);
 }
 
-template <typename UserWidgetType>
+template <typename UserWidgetType> requires TIsDerivedFrom<UserWidgetType, UUserWidget>::Value
 UserWidgetType* UFuCommonUIUtility::FindParentUserWidget(const UWidget* Widget)
 {
-	static_assert(TIsDerivedFrom<UserWidgetType, UUserWidget>::IsDerived);
-
 	while (IsValid(Widget))
 	{
 		// The outer of every widget is the UWidgetTree it's in, and the outer of every UWidgetTree is the UUserWidget that owns it.

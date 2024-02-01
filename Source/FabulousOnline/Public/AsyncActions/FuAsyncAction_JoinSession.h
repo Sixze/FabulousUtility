@@ -12,7 +12,7 @@ class FABULOUSONLINE_API UFuAsyncAction_JoinSession : public UOnlineBlueprintCal
 	GENERATED_BODY()
 
 public:
-	inline static const FString UnknownFailureString{TEXTVIEW("Failed to Join Session")};
+	static inline const FString UnknownFailureString{TEXTVIEW("Failed to Join Session")};
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)

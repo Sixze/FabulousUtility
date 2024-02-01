@@ -19,10 +19,10 @@ public:
 	static float ExponentialDecay(float DeltaTime, float Lambda);
 
 	template <typename ValueType>
-	static ValueType Damp(const ValueType& Current, const ValueType& Target, const float DeltaTime, const float Smoothing);
+	static ValueType Damp(const ValueType& Current, const ValueType& Target, float DeltaTime, float Smoothing);
 
 	template <typename ValueType>
-	static ValueType ExponentialDecay(const ValueType& Current, const ValueType& Target, const float DeltaTime, const float Lambda);
+	static ValueType ExponentialDecay(const ValueType& Current, const ValueType& Target, float DeltaTime, float Lambda);
 };
 
 inline float UFuMath::Clamp01(const float Value)

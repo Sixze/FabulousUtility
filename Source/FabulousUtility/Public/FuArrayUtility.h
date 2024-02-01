@@ -19,7 +19,7 @@ public:
 	template <typename ValueType>
 	static void ShuffleFirstElements(TArray<ValueType>& Array, int32 FirstElementsCount);
 
-	template <typename ValueType, typename PredicateType>
+	template <typename ValueType, typename PredicateType> requires std::is_invocable_r_v<float, PredicateType, ValueType>
 	static int32 GetWeightedRandomIndexByPredicate(const TArray<ValueType>& Array, const PredicateType& WeightPredicate);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Array Utility", Meta = (ReturnDisplayName = "Random Index"))
@@ -106,7 +106,7 @@ void UFuArrayUtility::ShuffleFirstElements(TArray<ValueType>& Array, const int32
 	}
 }
 
-template <typename ValueType, typename PredicateType>
+template <typename ValueType, typename PredicateType> requires std::is_invocable_r_v<float, PredicateType, ValueType>
 int32 UFuArrayUtility::GetWeightedRandomIndexByPredicate(const TArray<ValueType>& Array, const PredicateType& WeightPredicate)
 {
 	if (Array.IsEmpty())
