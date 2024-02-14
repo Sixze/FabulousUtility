@@ -14,4 +14,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|UI Utility",
 		Meta = (DefaultToSelf = "OwningWidget", DeterminesOutputType = "UserWidgetClass", ReturnDisplayName = "User Widget"))
 	static UUserWidget* CreateWidgetWithOwningWidget(TSubclassOf<UUserWidget> UserWidgetClass, UWidget* OwningWidget);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|UI Utility")
+	static void InvalidatePaint(UWidget* Widget);
 };
