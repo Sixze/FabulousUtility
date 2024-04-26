@@ -4,6 +4,10 @@
 #include "Engine/Engine.h"
 #include "Engine/NetDriver.h"
 
+#if UE_WITH_IRIS
+#include "Iris/ReplicationSystem/ReplicationFragmentUtil.h"
+#endif
+
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuObject)
 
 void UFuObject::PostInitProperties()
@@ -33,6 +37,14 @@ void UFuObject::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetim
 		BlueprintClass->GetLifetimeBlueprintReplicationList(OutLifetimeProps);
 	}
 }
+
+#if UE_WITH_IRIS
+void UFuObject::RegisterReplicationFragments(UE::Net::FFragmentRegistrationContext& Context,
+                                             const UE::Net::EFragmentRegistrationFlags RegistrationFlags)
+{
+	UE::Net::FReplicationFragmentUtil::CreateAndRegisterFragmentsForObject(this, Context, RegistrationFlags);
+}
+#endif
 
 bool UFuObject::IsSupportedForNetworking() const
 {

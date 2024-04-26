@@ -18,5 +18,7 @@ public class FabulousUtility : ModuleRules
 		{
 			"EngineSettings", "NetCore", "SlateCore", "GameplayTags"
 		});
+
+		SetupIrisSupport(Target);
 	}
 }

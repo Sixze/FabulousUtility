@@ -18,5 +18,7 @@ public class FabulousAbilitySystem : ModuleRules
 		{
 			"EnhancedInput", "NetCore", "GameplayTasks", "NavigationSystem"
 		});
+
+		SetupIrisSupport(Target);
 	}
 }

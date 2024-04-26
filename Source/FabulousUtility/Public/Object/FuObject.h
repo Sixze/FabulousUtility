@@ -20,6 +20,11 @@ public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
+#if UE_WITH_IRIS
+	virtual void RegisterReplicationFragments(UE::Net::FFragmentRegistrationContext& Context,
+	                                          UE::Net::EFragmentRegistrationFlags RegistrationFlags) override;
+#endif
+
 	virtual bool IsSupportedForNetworking() const override;
 
 	virtual int32 GetFunctionCallspace(UFunction* Function, FFrame* Stack) override;
