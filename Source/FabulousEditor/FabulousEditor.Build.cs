@@ -9,6 +9,9 @@ public class FabulousEditor : ModuleRules
 
 		bEnableNonInlinedGenCppWarnings = true;
 
-		PrivateDependencyModuleNames.AddRange(new[] {"Core", "CoreUObject", "Slate", "DeveloperSettings"});
+		PrivateDependencyModuleNames.AddRange(new[]
+		{
+			"Core", "CoreUObject", "Slate", "DeveloperSettings"
+		});
 	}
 }
