@@ -23,6 +23,10 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Quaternion", Meta = (ReturnDisplayName = "Quaternion"))
 	static FQuat AddRelativeDeltaQuaternion(const FQuat& Quaternion, const FQuat& RelativeDelta);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Quaternion",
+		Meta = (AutoCreateRefTerm = "TwistAxis", ReturnDisplayName = "Twist"))
+	static FQuat GetTwist(const FQuat& Quaternion, const FVector& TwistAxis = FVector::UpVector);
 };
 
 inline FQuat UFuQuaternion::DeltaQuaternion(const FQuat& From, const FQuat& To)
