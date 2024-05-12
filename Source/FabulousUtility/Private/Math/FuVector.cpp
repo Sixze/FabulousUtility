@@ -4,7 +4,7 @@
 
 FVector UFuVector::SlerpSkipNormalization(const FVector& From, const FVector& To, float Angle)
 {
-	// http://allenchou.net/2018/05/game-math-deriving-the-slerp-formula/
+	// https://allenchou.net/2018/05/game-math-deriving-the-slerp-formula/
 
 	Angle = FMath::DegreesToRadians(FMath::Max(0.0f, Angle));
 
@@ -25,7 +25,7 @@ FVector UFuVector::SlerpSkipNormalization(const FVector& From, const FVector& To
 
 FVector UFuVector::RandomDirection()
 {
-	// http://stackoverflow.com/questions/5408276/python-uniform-spherical-distribution
+	// https://stackoverflow.com/questions/5408276/sampling-uniformly-distributed-random-points-inside-a-spherical-volume
 
 	const auto Phi{FMath::FRandRange(0.0f, UE_TWO_PI)};
 
