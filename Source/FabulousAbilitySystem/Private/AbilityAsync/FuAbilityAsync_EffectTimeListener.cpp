@@ -20,14 +20,14 @@ UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::ListenFo
 }
 
 UFuAbilityAsync_EffectTimeListener* UFuAbilityAsync_EffectTimeListener::ListenForEffectTimeChange(
-	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag EffectTag, const bool bAllowPredictedTime)
+	UFuAbilitySystemComponent* AbilitySystem, const FGameplayTag InEffectTag, const bool bAllowPredictedTime)
 {
 	auto* Task{NewObject<ThisClass>()};
 	Task->SetAbilitySystemComponent(AbilitySystem);
 
-	if (FU_ENSURE(EffectTag.IsValid()))
+	if (FU_ENSURE(InEffectTag.IsValid()))
 	{
-		Task->EffectTags.AddTag(EffectTag);
+		Task->EffectTags.AddTag(InEffectTag);
 	}
 
 	Task->bPredictedTimeAllowed = bAllowPredictedTime;

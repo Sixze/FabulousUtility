@@ -74,6 +74,7 @@ void AFuAbilityTargetActor_GroundPlacement::ConfirmTargeting()
 
 	if (FU_ENSURE(ActorInfo->AbilitySystemComponent.IsValid()) && ActorInfo->IsLocallyControlled())
 	{
+		// ReSharper disable once CppBoundToDelegateMethodIsNotMarkedAsUFunction
 		ActorInfo->AbilitySystemComponent->GenericLocalConfirmCallbacks.AddUniqueDynamic(this, &ThisClass::ConfirmTargeting);
 	}
 }

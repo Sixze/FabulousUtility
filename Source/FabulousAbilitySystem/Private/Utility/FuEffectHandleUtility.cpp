@@ -18,7 +18,7 @@ bool UFuEffectHandleUtility::IsActiveExpanded(const FActiveGameplayEffectHandle 
 	return IsActive(EffectHandle);
 }
 
-void UFuEffectHandleUtility::RemoveActiveEffect(FActiveGameplayEffectHandle EffectHandle, const int32 StacksToRemove)
+void UFuEffectHandleUtility::RemoveActiveEffect(const FActiveGameplayEffectHandle EffectHandle, const int32 StacksToRemove)
 {
 	auto* AbilitySystem{EffectHandle.GetOwningAbilitySystemComponent()};
 	if (IsValid(AbilitySystem))
@@ -39,7 +39,7 @@ void UFuEffectHandleUtility::RemoveActiveEffects(const TArray<FActiveGameplayEff
 	}
 }
 
-void UFuEffectHandleUtility::RecalculateEffectModifiers(FActiveGameplayEffectHandle EffectHandle)
+void UFuEffectHandleUtility::RecalculateEffectModifiers(const FActiveGameplayEffectHandle EffectHandle)
 {
 	// https://github.com/tranek/GASDocumentation#concepts-ge-definition
 
@@ -58,7 +58,7 @@ void UFuEffectHandleUtility::RecalculateEffectModifiers(FActiveGameplayEffectHan
 	}
 }
 
-bool UFuEffectHandleUtility::TryGetEffectTimeRemainingAndDurationByHandle(FActiveGameplayEffectHandle EffectHandle,
+bool UFuEffectHandleUtility::TryGetEffectTimeRemainingAndDurationByHandle(const FActiveGameplayEffectHandle EffectHandle,
                                                                           float& TimeRemaining, float& Duration)
 {
 	TimeRemaining = -1.0f;
@@ -84,7 +84,7 @@ bool UFuEffectHandleUtility::TryGetEffectTimeRemainingAndDurationByHandle(FActiv
 	return true;
 }
 
-void UFuEffectHandleUtility::SetEffectDuration(FActiveGameplayEffectHandle EffectHandle, float Duration)
+void UFuEffectHandleUtility::SetEffectDuration(const FActiveGameplayEffectHandle EffectHandle, float Duration)
 {
 	// https://github.com/tranek/GASDocumentation#concepts-ge-duration
 
@@ -105,7 +105,7 @@ void UFuEffectHandleUtility::SetEffectDuration(FActiveGameplayEffectHandle Effec
 
 	if (!FU_ENSURE(Duration > 0.0f))
 	{
-		Duration = 0.001f;
+		Duration = UE_KINDA_SMALL_NUMBER;
 	}
 
 	ActiveEffect->Spec.Duration = Duration;
@@ -122,7 +122,7 @@ void UFuEffectHandleUtility::SetEffectDuration(FActiveGameplayEffectHandle Effec
 	ActiveEffects.MarkItemDirty(*ActiveEffect);
 }
 
-void UFuEffectHandleUtility::SetEffectTimeRemaining(FActiveGameplayEffectHandle EffectHandle, float TimeRemaining)
+void UFuEffectHandleUtility::SetEffectTimeRemaining(const FActiveGameplayEffectHandle EffectHandle, float TimeRemaining)
 {
 	auto* AbilitySystem{EffectHandle.GetOwningAbilitySystemComponent()};
 	if (!FU_ENSURE(IsValid(AbilitySystem)))
@@ -141,7 +141,7 @@ void UFuEffectHandleUtility::SetEffectTimeRemaining(FActiveGameplayEffectHandle 
 
 	if (!FU_ENSURE(TimeRemaining > 0.0f))
 	{
-		TimeRemaining = 0.001f;
+		TimeRemaining = UE_KINDA_SMALL_NUMBER;
 	}
 
 	const auto Time{ActiveEffect->GetDuration() - TimeRemaining};
@@ -170,7 +170,8 @@ void UFuEffectHandleUtility::SetEffectTimeRemaining(FActiveGameplayEffectHandle 
 	ActiveEffects.MarkItemDirty(*ActiveEffect);
 }
 
-void UFuEffectHandleUtility::IncreaseEffectTimeRemaining(FActiveGameplayEffectHandle EffectHandle, const float AdditionalTimeRemaining)
+void UFuEffectHandleUtility::IncreaseEffectTimeRemaining(const FActiveGameplayEffectHandle EffectHandle,
+                                                         const float AdditionalTimeRemaining)
 {
 	const auto* AbilitySystem{EffectHandle.GetOwningAbilitySystemComponent()};
 	if (!FU_ENSURE(IsValid(AbilitySystem)))

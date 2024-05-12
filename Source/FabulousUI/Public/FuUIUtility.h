@@ -10,7 +10,7 @@ class FABULOUSUI_API UFuUIUtility : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	// Unlike the Create Widget node, this function exposes the Owning Widget parameter instead of Owning Player.
+	// Unlike the Create Widget node, this function exposes the OwningWidget parameter instead of OwningPlayer.
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|UI Utility",
 		Meta = (DefaultToSelf = "OwningWidget", DeterminesOutputType = "UserWidgetClass", ReturnDisplayName = "User Widget"))
 	static UUserWidget* CreateWidgetWithOwningWidget(TSubclassOf<UUserWidget> UserWidgetClass, UWidget* OwningWidget);
