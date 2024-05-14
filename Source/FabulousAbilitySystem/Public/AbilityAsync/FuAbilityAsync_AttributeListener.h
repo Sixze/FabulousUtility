@@ -19,29 +19,29 @@ protected:
 	uint8 bSkipEqualValuesOnServer : 1;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Attribute Listener Ability Async")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Async|Attribute Listener")
 	FFuAttributeListenerDelegate OnAttributeChanged;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AttributeListener* ListenForAttributeChangeOnActor(
 		const AActor* Actor,
 		UPARAM(DisplayName = "Attribute") FGameplayAttribute InAttribute,
 		UPARAM(DisplayName = "Skip Equal Values on Server") bool bInSkipEqualValuesOnServer = true);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AttributeListener* ListenForAttributesChangeOnActor(
 		const AActor* Actor,
 		UPARAM(DisplayName = "Attributes") const TArray<FGameplayAttribute>& InAttributes,
 		UPARAM(DisplayName = "Skip Equal Values on Server") bool bInSkipEqualValuesOnServer = true);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AttributeListener* ListenForAttributeChange(
 		UAbilitySystemComponent* AbilitySystem,
 		UPARAM(DisplayName = "Attribute") FGameplayAttribute InAttribute,
 		UPARAM(DisplayName = "Skip Equal Values on Server") bool bInSkipEqualValuesOnServer = true);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AttributeListener* ListenForAttributesChange(
 		UAbilitySystemComponent* AbilitySystem,
 		UPARAM(DisplayName = "Attributes") const TArray<FGameplayAttribute>& InAttributes,

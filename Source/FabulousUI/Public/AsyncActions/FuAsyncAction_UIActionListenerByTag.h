@@ -11,7 +11,7 @@ class UCommonUserWidget;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuUIActionListenerByTagDelegate, const FGameplayTag&, ActionTag, float, HeldPercent);
 
-UCLASS(DisplayName = "Fu UI Action Listener By Tag Async Action")
+UCLASS(DisplayName = "Fu UI Action Listener by Tag Async Action")
 class FABULOUSUI_API UFuAsyncAction_UIActionListenerByTag : public UCancellableAsyncAction
 {
 	GENERATED_BODY()
@@ -32,23 +32,25 @@ protected:
 	TArray<FUIActionBindingHandle> ActionHandles;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|UI Action Listener By Tag Async Action")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous UI|Async Actions|UI Action Listener by Tag")
 	FFuUIActionListenerByTagDelegate OnActionExecuted;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|UI Action Listener By Tag Async Action")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous UI|Async Actions|UI Action Listener by Tag")
 	FFuUIActionListenerByTagDelegate OnActionHeld;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|UI Async Actions",
-		DisplayName = "Listen For UI Action By Tag", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InWidget"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous UI|Async Actions",
+		DisplayName = "Listen for UI Action by Tag",
+		BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InWidget"))
 	static UFuAsyncAction_UIActionListenerByTag* ListenForUIActionByTag(
 		UPARAM(DisplayName = "Widget") UCommonUserWidget* InWidget,
 		UPARAM(DisplayName = "Action Tag") FUIActionTag InActionTag,
 		UPARAM(DisplayName = "Sound") FSlateSound InSound,
 		UPARAM(DisplayName = "Action Arguments") FFuUIActionBindingArguments InActionArguments);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|UI Async Actions",
-		DisplayName = "Listen For UI Actions By Tags", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InWidget"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous UI|Async Actions",
+		DisplayName = "Listen for UI Actions by Tags",
+		BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InWidget"))
 	static UFuAsyncAction_UIActionListenerByTag* ListenForUIActionsByTags(
 		UPARAM(DisplayName = "Widget") UCommonUserWidget* InWidget,
 		UPARAM(DisplayName = "Action Tags", Meta = (Categories = "UI.Action")) FGameplayTagContainer InActionTags,

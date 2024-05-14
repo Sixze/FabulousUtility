@@ -14,18 +14,18 @@ protected:
 	TArray<FGameplayAttribute> Attributes;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Attribute Listener Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Tasks|Attribute Listener")
 	FFuAttributeListenerDelegate OnAttributeChanged;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
-		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Tasks",
+		BlueprintInternalUseOnly, Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_AttributeListener* WaitForAttributeChange(
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Attribute") FGameplayAttribute InAttribute);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
-		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Tasks",
+		BlueprintInternalUseOnly, Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_AttributeListener* WaitForAttributesChange(
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Attributes") const TArray<FGameplayAttribute>& InAttributes);

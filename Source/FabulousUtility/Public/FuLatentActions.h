@@ -26,6 +26,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Latent Actions", DisplayName = "Delay (Advanced)",
 		Meta = (WorldContext = "WorldContext", Latent, LatentInfo = "LatentInfo", ExpandEnumAsExecs = "Input, Output", Duration = 0.2))
 	static void AdvancedDelay(const UObject* WorldContext, FLatentActionInfo LatentInfo, EFuAdvancedDelayInputExecs Input,
-	                          float Duration, int32 LoopsCount, bool bSkipFirstDelay, bool bRetriggerable,
-	                          int32& LoopIndex, EFuAdvancedDelayOutputExecs& Output);
+	                          float Duration, int32 LoopsCount, bool bSkipFirstDelay,
+	                          bool bRetriggerable, int32& LoopIndex, EFuAdvancedDelayOutputExecs& Output);
 };

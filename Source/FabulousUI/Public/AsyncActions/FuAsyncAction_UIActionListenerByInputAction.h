@@ -10,7 +10,7 @@ class UCommonUserWidget;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuUIActionListenerByInputActionDelegate, const UInputAction*, InputAction);
 
-UCLASS(DisplayName = "Fu UI Action Listener By Input Action Async Action")
+UCLASS(DisplayName = "Fu UI Action Listener by Input Action Async Action")
 class FABULOUSUI_API UFuAsyncAction_UIActionListenerByInputAction : public UCancellableAsyncAction
 {
 	GENERATED_BODY()
@@ -31,20 +31,22 @@ protected:
 	TArray<FUIActionBindingHandle> ActionHandles;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|UI Action Listener By Input Action Async Action")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous UI|Async Actions|UI Action Listener by Input Action")
 	FFuUIActionListenerByInputActionDelegate OnActionExecuted;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|UI Async Actions",
-		DisplayName = "Listen For UI Action By Input Action", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InWidget"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous UI|Async Actions",
+		DisplayName = "Listen for UI Action by Input Action",
+		BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InWidget"))
 	static UFuAsyncAction_UIActionListenerByInputAction* ListenForUIActionByInputAction(
 		UPARAM(DisplayName = "Widget") UCommonUserWidget* InWidget,
 		UPARAM(DisplayName = "Input Action") UInputAction* InInputAction,
 		UPARAM(DisplayName = "Sound") FSlateSound InSound,
 		UPARAM(DisplayName = "Action Arguments") FFuUIActionBindingArguments InActionArguments);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|UI Async Actions",
-		DisplayName = "Listen For UI Actions By Input Actions", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InWidget"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous UI|Async Actions",
+		DisplayName = "Listen for UI Actions by Input Actions",
+		BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InWidget"))
 	static UFuAsyncAction_UIActionListenerByInputAction* ListenForUIActionsByInputActions(
 		UPARAM(DisplayName = "Widget") UCommonUserWidget* InWidget,
 		UPARAM(DisplayName = "Input Actions") TArray<UInputAction*> InInputActions,

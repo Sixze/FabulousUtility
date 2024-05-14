@@ -25,14 +25,14 @@ protected:
 	uint8 bTravelOnSuccess : 1;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Join Session Async Action")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Online|Async Actions|Join Session")
 	FFuJoinSessionDelegate OnSuccess;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Join Session Async Action")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Online|Async Actions|Join Session")
 	FFuJoinSessionDelegate OnFailure;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Session", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InPlayer"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Online|Async Actions", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InPlayer"))
 	static UFuAsyncAction_JoinSession* JoinSession(UPARAM(DisplayName = "Player") APlayerController* InPlayer,
 	                                               UPARAM(DisplayName = "Search Result") const FBlueprintSessionResult& InSearchResult,
 	                                               UPARAM(DisplayName = "Travel on Success") bool bInTravelOnSuccess = true);

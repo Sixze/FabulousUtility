@@ -16,18 +16,18 @@ protected:
 	TSubclassOf<UGameplayEffect> EffectClass;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Effect Stack Listener Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Tasks|Effect Stack Listener")
 	FFuEffectStackListenerDelegate OnStackChanged;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
-		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Tasks",
+		BlueprintInternalUseOnly, Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_EffectStackListener* WaitForEffectStackChange(
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Effect Class") TSubclassOf<UGameplayEffect> InEffectClass);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
-		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Tasks",
+		BlueprintInternalUseOnly, Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_EffectStackListener* WaitForEffectStackChangeSoft(
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Effect Class") TSoftClassPtr<UGameplayEffect> InEffectClass);

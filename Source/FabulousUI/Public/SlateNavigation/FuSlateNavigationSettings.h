@@ -18,8 +18,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Key Navigation", Config)
 	uint8 bAllowKeyNavigation : 1 {true};
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Key Navigation", Config,
-		Meta = (ForceInlineRow, EditCondition = "bAllowKeyNavigation"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Key Navigation",
+		Config, Meta = (ForceInlineRow, EditCondition = "bAllowKeyNavigation"))
 	TMap<FKey, EUINavigation> KeyNavigationMappings;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Analog Navigation", Config)
@@ -29,12 +29,10 @@ public:
 		Meta = (ClampMin = 0, ClampMax = 1, EditCondition = "bAllowAnalogNavigation"))
 	float AnalogNavigationThreshold{0.5f};
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Analog Navigation",
-		Config, Meta = (EditCondition = "bAllowAnalogNavigation"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Analog Navigation", Config, Meta = (EditCondition = "bAllowAnalogNavigation"))
 	FKey AnalogNavigationVerticalKey{EKeys::Gamepad_LeftY};
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Analog Navigation",
-		Config, Meta = (EditCondition = "bAllowAnalogNavigation"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Analog Navigation", Config, Meta = (EditCondition = "bAllowAnalogNavigation"))
 	FKey AnalogNavigationHorizontalKey{EKeys::Gamepad_LeftX};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Tab Navigation", Config)

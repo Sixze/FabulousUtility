@@ -57,8 +57,8 @@ void UFuAbilitySystemComponent::NotifyAbilityActivated(const FGameplayAbilitySpe
 	OnAbilityActivated.Broadcast(AbilityHandle, Ability);
 }
 
-void UFuAbilitySystemComponent::NotifyAbilityFailed(const FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability,
-                                                    const FGameplayTagContainer& FailureTags)
+void UFuAbilitySystemComponent::NotifyAbilityFailed(const FGameplayAbilitySpecHandle AbilityHandle,
+                                                    UGameplayAbility* Ability, const FGameplayTagContainer& FailureTags)
 {
 	Super::NotifyAbilityFailed(AbilityHandle, Ability, FailureTags);
 

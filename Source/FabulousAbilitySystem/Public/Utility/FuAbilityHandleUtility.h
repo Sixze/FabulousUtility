@@ -10,19 +10,19 @@ class FABULOUSABILITYSYSTEM_API UFuAbilityHandleUtility : public UBlueprintFunct
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Handle Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Ability Handle Utility",
 		DisplayName = "Is Valid (Ability Handle)", Meta = (CompactNodeTitle = "Is Valid ?"))
 	static bool IsValid(FGameplayAbilitySpecHandle AbilityHandle);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Handle Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Handle Utility",
 		DisplayName = "Is Valid (Expanded)", Meta = (ExpandBoolAsExecs = "ReturnValue"))
 	static bool IsValidExpanded(FGameplayAbilitySpecHandle AbilityHandle);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Handle Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Ability Handle Utility",
 		DisplayName = "Equal (Ability Handle)", Meta = (CompactNodeTitle = "==", Keywords = "== equal"))
 	static bool IsEqual(FGameplayAbilitySpecHandle AbilityHandleA, FGameplayAbilitySpecHandle AbilityHandleB);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Handle Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Ability Handle Utility",
 		DisplayName = "Not Equal (Ability Handle)", Meta = (CompactNodeTitle = "!=", Keywords = "!= not equal"))
 	static bool IsNotEqual(FGameplayAbilitySpecHandle AbilityHandleA, FGameplayAbilitySpecHandle AbilityHandleB);
 };

@@ -17,14 +17,12 @@ public:
 	static void FindReachableActorsInRadius(const UObject* WorldContext, const FVector& Location,
 	                                        float Radius, const FCollisionProfileName& CollisionProfile,
 	                                        TFunctionRef<bool(const FOverlapResult& Overlap)> FilterPredicate,
-	                                        TMap<AActor*, TArray<FHitResult>>& ReachableActors,
-	                                        const AActor* IgnoredActor = nullptr);
+	                                        TMap<AActor*, TArray<FHitResult>>& ReachableActors, const AActor* IgnoredActor = nullptr);
 
 	static void FindReachableActorsInRadius(const UObject* WorldContext, const FVector& Location, float Radius,
 	                                        ECollisionChannel CollisionChannel, const FCollisionResponseParams& CollisionResponses,
 	                                        TFunctionRef<bool(const FOverlapResult& Overlap)> FilterPredicate,
-	                                        TMap<AActor*, TArray<FHitResult>>& ReachableActors,
-	                                        const AActor* IgnoredActor = nullptr);
+	                                        TMap<AActor*, TArray<FHitResult>>& ReachableActors, const AActor* IgnoredActor = nullptr);
 
 	static bool IsComponentReachableFromLocation(UPrimitiveComponent* Component, const FVector& Location,
 	                                             ECollisionChannel CollisionChannel, const FCollisionResponseParams& CollisionResponses,
@@ -52,14 +50,14 @@ public:
 	                                 const FVector& Extent, const TArray<TEnumAsByte<ECollisionChannel>>& CollisionChannels,
 	                                 const TArray<AActor*>& IgnoreActors, TArray<UPrimitiveComponent*>& Components);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Physics Utility", Meta = (WorldContext = "WorldContext",
-		AutoCreateRefTerm = "Location, Rotation, IgnoreActors", ReturnDisplayName = "Success"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Physics Utility",
+		Meta = (WorldContext = "WorldContext", AutoCreateRefTerm = "Location, Rotation, IgnoreActors", ReturnDisplayName = "Success"))
 	static bool ConeOverlapActorsSimple(const UObject* WorldContext, const FVector& Location, const FRotator& Rotation,
 	                                    float Radius, float Angle, const TArray<TEnumAsByte<ECollisionChannel>>& CollisionChannels,
 	                                    const TArray<AActor*>& IgnoreActors, TArray<AActor*>& Actors);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Physics Utility", Meta = (WorldContext = "WorldContext",
-		AutoCreateRefTerm = "Location, Rotation, IgnoreActors", ReturnDisplayName = "Success"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Physics Utility",
+		Meta = (WorldContext = "WorldContext", AutoCreateRefTerm = "Location, Rotation, IgnoreActors", ReturnDisplayName = "Success"))
 	static bool ConeOverlapComponentsSimple(const UObject* WorldContext, const FVector& Location, const FRotator& Rotation,
 	                                        float Radius, float Angle, const TArray<TEnumAsByte<ECollisionChannel>>& CollisionChannels,
 	                                        const TArray<AActor*>& IgnoreActors, TArray<UPrimitiveComponent*>& Components);

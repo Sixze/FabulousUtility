@@ -11,21 +11,21 @@ class FABULOUSABILITYSYSTEM_API UFuEffectContextUtility : public UBlueprintFunct
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Effect Context Utility", Meta = (ReturnDisplayName = "Effect Context"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Effect Context Utility", Meta = (ReturnDisplayName = "Effect Context"))
 	static FGameplayEffectContextHandle DuplicateEffectContext(const FGameplayEffectContextHandle& EffectContext);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Effect Context Utility", Meta = (ReturnDisplayName = "Target Data Handle"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Effect Context Utility", Meta = (ReturnDisplayName = "Target Data Handle"))
 	static FGameplayAbilityTargetDataHandle GetTargetDataHandle(const FGameplayEffectContextHandle& EffectContext);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Effect Context Utility", Meta = (ReturnDisplayName = "Effect Context"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Effect Context Utility", Meta = (ReturnDisplayName = "Effect Context"))
 	static FGameplayEffectContextHandle& AppendTargetData(UPARAM(ref) FGameplayEffectContextHandle& EffectContext,
 	                                                      const FGameplayAbilityTargetDataHandle& TargetDataHandle);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Effect Context Utility", Meta = (ReturnDisplayName = "Effect Context"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Effect Context Utility", Meta = (ReturnDisplayName = "Effect Context"))
 	static FGameplayEffectContextHandle& SetTargetData(UPARAM(ref) FGameplayEffectContextHandle& EffectContext,
 	                                                   const FGameplayAbilityTargetDataHandle& TargetDataHandle);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Effect Context Utility", Meta = (ReturnDisplayName = "Effect Context"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Effect Context Utility", Meta = (ReturnDisplayName = "Effect Context"))
 	static FGameplayEffectContextHandle& ClearTargetData(UPARAM(ref) FGameplayEffectContextHandle& EffectContext);
 };
 

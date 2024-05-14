@@ -43,8 +43,8 @@ void UFuGameplayAbility::SetShouldBlockOtherAbilities(const bool bShouldBlockAbi
 	}
 }
 
-bool UFuGameplayAbility::CheckCost(const FGameplayAbilitySpecHandle AbilityHandle, const FGameplayAbilityActorInfo* ActorInfo,
-                                   FGameplayTagContainer* FailureTags) const
+bool UFuGameplayAbility::CheckCost(const FGameplayAbilitySpecHandle AbilityHandle,
+                                   const FGameplayAbilityActorInfo* ActorInfo, FGameplayTagContainer* FailureTags) const
 {
 	if (!Super::CheckCost(AbilityHandle, ActorInfo, FailureTags))
 	{
@@ -109,8 +109,8 @@ void UFuGameplayAbility::PreActivate(const FGameplayAbilitySpecHandle AbilityHan
 }
 
 void UFuGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle AbilityHandle, const FGameplayAbilityActorInfo* ActorInfo,
-                                    const FGameplayAbilityActivationInfo ActivationInfo, const bool bReplicateEndAbility,
-                                    const bool bCanceled)
+                                    const FGameplayAbilityActivationInfo ActivationInfo,
+                                    const bool bReplicateEndAbility, const bool bCanceled)
 {
 	if (IsEndAbilityValid(AbilityHandle, ActorInfo) &&
 	    (bIsActive || GetInstancingPolicy() == EGameplayAbilityInstancingPolicy::NonInstanced))

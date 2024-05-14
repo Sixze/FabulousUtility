@@ -35,10 +35,10 @@ public:
 	FFuAbilityFailedDelegate OnAbilityFailed;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability System")
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability System")
 	static UFuAbilitySystemComponent* GetFuAbilitySystem(const UObject* Object, bool bAllowFindComponent = true);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability System", Meta = (ExpandBoolAsExecs = "ReturnValue"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability System", Meta = (ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryGetFuAbilitySystem(const UObject* Object, UFuAbilitySystemComponent*& AbilitySystem, bool bAllowFindComponent = true);
 
 public:

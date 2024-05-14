@@ -11,6 +11,6 @@ class FABULOUSANIMATION_API UFuAnimationUtility : public UBlueprintFunctionLibra
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Animation Utility", Meta = (ReturnDisplayName = "Play Length"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Animation|Utility", Meta = (ReturnDisplayName = "Play Length"))
 	static float GetScaledPlayLength(const UAnimSequenceBase* Sequence);
 };

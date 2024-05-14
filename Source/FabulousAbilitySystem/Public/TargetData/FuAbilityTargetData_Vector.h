@@ -10,7 +10,7 @@ struct FABULOUSABILITYSYSTEM_API FFuAbilityTargetData_Vector : public FGameplayA
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Ability System")
 	FVector Vector{ForceInit};
 
 public:
@@ -40,11 +40,10 @@ class FABULOUSABILITYSYSTEM_API UFuVectorTargetDataUtility : public UBlueprintFu
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Vector Target Data Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Vector Target Data Utility",
 		Meta = (AutoCreateRefTerm = "Vector", ReturnDisplayName = "Target Data Handle"))
 	static FGameplayAbilityTargetDataHandle MakeVectorTargetData(const FVector& Vector);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Vector Target Data Utility",
-		Meta = (ReturnDisplayName = "Target Data"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Vector Target Data Utility", Meta = (ReturnDisplayName = "Target Data"))
 	static FFuAbilityTargetData_Vector GetVectorTargetData(const FGameplayAbilityTargetDataHandle& TargetDataHandle, int32 Index);
 };

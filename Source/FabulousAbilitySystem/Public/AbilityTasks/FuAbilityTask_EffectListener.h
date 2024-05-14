@@ -15,21 +15,21 @@ protected:
 	FGameplayTagContainer EffectTags;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Effect Listener Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Tasks|Effect Listener")
 	FFuEffectListenerDelegate OnEffectAdded;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Effect Listener Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Tasks|Effect Listener")
 	FFuEffectListenerDelegate OnEffectRemoved;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
-		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Tasks",
+		BlueprintInternalUseOnly, Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_EffectListener* WaitForEffectChangeByTag(
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Effect Tag") FGameplayTag InEffectTag);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
-		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Tasks",
+		BlueprintInternalUseOnly, Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_EffectListener* WaitForEffectChangeByTags(
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Effect Tags") FGameplayTagContainer InEffectTags);

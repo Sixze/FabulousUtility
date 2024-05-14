@@ -9,7 +9,7 @@ class FABULOUSAI_API UFuAIUtility : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|AI Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous AI|Utility",
 		Meta = (WorldContext = "WorldContext", ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "QueryExtent"))
 	static bool TryProjectLocationToNavigation(UObject* WorldContext, const FVector& Location, ANavigationData* NavigationData,
 	                                           TSubclassOf<UNavigationQueryFilter> QueryFilterClass,

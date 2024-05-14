@@ -26,15 +26,15 @@ protected:
 	FTimerHandle TimerHandle;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Delay Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Tasks|Delay")
 	FFuDelayDelegate OnLoop;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Delay Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Tasks|Delay")
 	FFuDelayDelegate OnDelayEnded;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
-		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Tasks",
+		BlueprintInternalUseOnly, Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_Delay* WaitForDelay(UGameplayAbility* OwningAbility,
 	                                          UPARAM(DisplayName = "Duration") float InDuration = 0.2f,
 	                                          UPARAM(DisplayName = "Loop Count") int32 InLoopsCount = 0,

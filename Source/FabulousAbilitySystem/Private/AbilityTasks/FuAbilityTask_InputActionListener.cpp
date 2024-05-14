@@ -7,8 +7,8 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityTask_InputActionListener)
 
-UFuAbilityTask_InputActionListener* UFuAbilityTask_InputActionListener::WaitForInputAction(
-	UGameplayAbility* OwningAbility, UInputAction* InInputAction)
+UFuAbilityTask_InputActionListener* UFuAbilityTask_InputActionListener::WaitForInputAction(UGameplayAbility* OwningAbility,
+                                                                                           UInputAction* InInputAction)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 	Task->Input = Cast<UEnhancedInputComponent>(Task->AbilitySystemComponent->GetAvatarActor_Direct()->InputComponent);
@@ -21,8 +21,8 @@ UFuAbilityTask_InputActionListener* UFuAbilityTask_InputActionListener::WaitForI
 	return Task;
 }
 
-UFuAbilityTask_InputActionListener* UFuAbilityTask_InputActionListener::WaitForInputActions(
-	UGameplayAbility* OwningAbility, const TArray<UInputAction*>& InInputActions)
+UFuAbilityTask_InputActionListener* UFuAbilityTask_InputActionListener::WaitForInputActions(UGameplayAbility* OwningAbility,
+                                                                                            const TArray<UInputAction*>& InInputActions)
 {
 	auto* Task{NewAbilityTask<ThisClass>(OwningAbility)};
 	Task->Input = Cast<UEnhancedInputComponent>(Task->AbilitySystemComponent->GetAvatarActor_Direct()->InputComponent);

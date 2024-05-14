@@ -11,19 +11,21 @@ class FABULOUSABILITYSYSTEM_API UFuAbilitySpecificationUtility : public UBluepri
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Specification Utility", Meta = (ReturnDisplayName = "Ability Handle"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Ability Specification Utility",
+		Meta = (ReturnDisplayName = "Ability Handle"))
 	static FGameplayAbilitySpecHandle GetAbilityHandle(const FGameplayAbilitySpec& AbilitySpecification);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Specification Utility", Meta = (ReturnDisplayName = "Ability Class"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Ability Specification Utility",
+		Meta = (ReturnDisplayName = "Ability Class"))
 	static TSubclassOf<UGameplayAbility> GetAbilityClass(const FGameplayAbilitySpec& AbilitySpecification);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Specification Utility", Meta = (ReturnDisplayName = "Input Id"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Ability Specification Utility", Meta = (ReturnDisplayName = "Input Id"))
 	static uint8 GetInputId(const FGameplayAbilitySpec& AbilitySpecification);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Ability Specification Utility", Meta = (ReturnDisplayName = "Value"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Ability Specification Utility", Meta = (ReturnDisplayName = "Value"))
 	static bool IsActive(const FGameplayAbilitySpec& AbilitySpecification);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Specification Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Specification Utility",
 		DisplayName = "Is Active (Expanded)", Meta = (ExpandBoolAsExecs = "ReturnValue"))
 	static bool IsActiveExpanded(const FGameplayAbilitySpec& AbilitySpecification);
 

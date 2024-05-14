@@ -10,7 +10,7 @@ struct FABULOUSABILITYSYSTEM_API FFuAbilityTargetData_Float : public FGameplayAb
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Ability System")
 	float Value{0.0f};
 
 public:
@@ -36,9 +36,10 @@ class FABULOUSABILITYSYSTEM_API UFuFloatTargetDataUtility : public UBlueprintFun
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Float Target Data Utility", Meta = (ReturnDisplayName = "Target Data Handle"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Float Target Data Utility",
+		Meta = (ReturnDisplayName = "Target Data Handle"))
 	static FGameplayAbilityTargetDataHandle MakeFloatTargetData(float Value);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Float Target Data Utility", Meta = (ReturnDisplayName = "Target Data"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Float Target Data Utility", Meta = (ReturnDisplayName = "Target Data"))
 	static FFuAbilityTargetData_Float GetFloatTargetData(const FGameplayAbilityTargetDataHandle& TargetDataHandle, int32 Index);
 };

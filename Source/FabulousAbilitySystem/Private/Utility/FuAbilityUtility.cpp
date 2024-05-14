@@ -27,8 +27,7 @@ FGameplayTag UFuAbilityUtility::FindFirstDescendantAbilityTag(const UGameplayAbi
 	return UFuGameplayTagUtility::FindFirstDescendantTag(AbilitySpecification->DynamicAbilityTags, ParentTag);
 }
 
-bool UFuAbilityUtility::HasAbilityTag(const UAbilitySystemComponent* AbilitySystem,
-                                      const FGameplayAbilitySpecHandle AbilityHandle,
+bool UFuAbilityUtility::HasAbilityTag(const UAbilitySystemComponent* AbilitySystem, const FGameplayAbilitySpecHandle AbilityHandle,
                                       const FGameplayTag& Tag)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(AbilityHandle.IsValid()) || !FU_ENSURE(Tag.IsValid()))
@@ -43,9 +42,9 @@ bool UFuAbilityUtility::HasAbilityTag(const UAbilitySystemComponent* AbilitySyst
 	        AbilitySpecification->Ability->AbilityTags.HasTag(Tag));
 }
 
-bool UFuAbilityUtility::TryGetSourceObjectCasted(
-	const UAbilitySystemComponent* AbilitySystem, const FGameplayAbilitySpecHandle AbilityHandle,
-	const TSubclassOf<UObject> SourceObjectClass, UObject*& SourceObject)
+bool UFuAbilityUtility::TryGetSourceObjectCasted(const UAbilitySystemComponent* AbilitySystem,
+                                                 const FGameplayAbilitySpecHandle AbilityHandle,
+                                                 const TSubclassOf<UObject> SourceObjectClass, UObject*& SourceObject)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(AbilityHandle.IsValid()))
 	{

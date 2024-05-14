@@ -11,6 +11,6 @@ class FABULOUSABILITYSYSTEM_API UFuGameplayTaskUtility : public UBlueprintFuncti
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Gameplay Task Utility")
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Gameplay Task Utility")
 	static void EndTaskSafe(UGameplayTask* Task);
 };

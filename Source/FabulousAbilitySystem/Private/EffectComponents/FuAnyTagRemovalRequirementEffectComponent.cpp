@@ -88,9 +88,9 @@ void UFuAnyTagRemovalRequirementEffectComponent::AbilitySystem_OnTagChanged(cons
 	}
 }
 
-void UFuAnyTagRemovalRequirementEffectComponent::Effect_OnRemoved(
-	const FGameplayEffectRemovalInfo& RemovalInfo, UAbilitySystemComponent* AbilitySystem,
-	TArray<FDelegateHandle> TagChangedDelegateHandles) const
+void UFuAnyTagRemovalRequirementEffectComponent::Effect_OnRemoved(const FGameplayEffectRemovalInfo& RemovalInfo,
+                                                                  UAbilitySystemComponent* AbilitySystem,
+                                                                  TArray<FDelegateHandle> TagChangedDelegateHandles) const
 {
 	for (auto i{0}; i < TagChangedDelegateHandles.Num(); i++)
 	{

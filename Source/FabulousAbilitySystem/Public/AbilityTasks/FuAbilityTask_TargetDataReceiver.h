@@ -13,15 +13,15 @@ protected:
 	uint8 bReceiveOnce : 1;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Target Data Receiver Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Tasks|Target Data Receiver")
 	FFuTargetDataSenderDelegate OnTargetDataReceived;
 
 public:
 	// In most cases, you probably don't need to use UFuAbilityTask_TargetDataReceiver because
 	// UFuAbilityTask_TargetDataSender also handles receiving target data on the server. Also,
 	// this task works only on the server and does nothing in the standalone game or on clients.
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
-		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Tasks",
+		BlueprintInternalUseOnly, Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_TargetDataReceiver* ReceiveTargetData(UGameplayAbility* OwningAbility,
 	                                                            UPARAM(DisplayName = "Receive Once") bool bInReceiveOnce);
 

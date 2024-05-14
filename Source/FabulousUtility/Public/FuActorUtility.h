@@ -41,8 +41,7 @@ public:
 	static bool IsEncroachingBlockingGeometry(const UObject* WorldContext, TSubclassOf<AActor> ActorClass,
 	                                          const FVector& Location, const FRotator& Rotation);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Actor Utility",
-		DisplayName = "Is Encroaching Blocking Geometry (Expanded)",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Actor Utility", DisplayName = "Is Encroaching Blocking Geometry (Expanded)",
 		Meta = (WorldContext = "WorldContext", ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "Location, Rotation"))
 	static bool IsEncroachingBlockingGeometryExpanded(const UObject* WorldContext, TSubclassOf<AActor> ActorClass,
 	                                                  const FVector& Location, const FRotator& Rotation);

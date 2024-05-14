@@ -18,21 +18,21 @@ protected:
 	uint8 bCancelAbilityOnDestroy : 1;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Ability Activator Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Tasks|Ability Activator")
 	FFuAbilityActivatorDelegate OnAbilityActivated;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Ability Activator Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Tasks|Ability Activator")
 	FFuAbilityActivatorDelegate OnAbilityFailed;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Ability Activator Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Tasks|Ability Activator")
 	FFuAbilityActivatorDelegate OnAbilityEnded;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Ability Activator Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Tasks|Ability Activator")
 	FFuAbilityActivatorDelegate OnAbilityCanceled;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
-		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Tasks",
+		BlueprintInternalUseOnly, Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_AbilityActivator* ActivateAbilityByHandle(
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Ability Handle") FGameplayAbilitySpecHandle InAbilityHandle,

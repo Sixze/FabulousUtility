@@ -9,8 +9,7 @@
 void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext, const FVector& Location,
                                                     const float Radius, const FCollisionProfileName& CollisionProfile,
                                                     const TFunctionRef<bool(const FOverlapResult& Overlap)> FilterPredicate,
-                                                    TMap<AActor*, TArray<FHitResult>>& ReachableActors,
-                                                    const AActor* IgnoredActor)
+                                                    TMap<AActor*, TArray<FHitResult>>& ReachableActors, const AActor* IgnoredActor)
 {
 	ECollisionChannel CollisionChannel;
 	FCollisionResponseParams CollisionResponses;

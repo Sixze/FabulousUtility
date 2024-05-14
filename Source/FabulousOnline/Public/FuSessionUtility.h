@@ -9,11 +9,11 @@ class FABULOUSONLINE_API UFuSessionUtility : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Session Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Online|Session Utility",
 		Meta = (DefaultToSelf = "Player", ReturnDisplayName = "Success"))
 	static bool TravelToGameSession(APlayerController* Player);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Session Utility",
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Online|Session Utility",
 		DisplayName = "Travel to Game Session (Expanded)", Meta = (DefaultToSelf = "Player", ExpandBoolAsExecs = "ReturnValue"))
 	static bool TravelToGameSessionExpanded(APlayerController* Player);
 };

@@ -11,14 +11,14 @@ class FABULOUSABILITYSYSTEM_API UFuAbilityTask_Tick : public UAbilityTask
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Tick Ability Task")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Tasks|Tick")
 	FFuTickDelegate OnTick;
 
 public:
 	UFuAbilityTask_Tick();
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Tasks", BlueprintInternalUseOnly,
-		Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Tasks",
+		BlueprintInternalUseOnly, Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_Tick* WaitForTick(UGameplayAbility* OwningAbility);
 
 protected:

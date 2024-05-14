@@ -44,8 +44,8 @@ FGameplayAbilityTargetDataHandle UFuVectorTargetDataUtility::MakeVectorTargetDat
 	return TargetDataHandle;
 }
 
-FFuAbilityTargetData_Vector UFuVectorTargetDataUtility::GetVectorTargetData(
-	const FGameplayAbilityTargetDataHandle& TargetDataHandle, const int32 Index)
+FFuAbilityTargetData_Vector UFuVectorTargetDataUtility::GetVectorTargetData(const FGameplayAbilityTargetDataHandle& TargetDataHandle,
+                                                                            const int32 Index)
 {
 	if (!TargetDataHandle.Data.IsValidIndex(Index) ||
 	    !FU_ENSURE(TargetDataHandle.Data[Index].Get()->GetScriptStruct()->IsChildOf(FFuAbilityTargetData_Vector::StaticStruct())))

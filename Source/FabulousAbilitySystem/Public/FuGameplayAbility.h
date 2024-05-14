@@ -70,7 +70,7 @@ public:
 
 	bool CanBatchActivationByInput() const;
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Gameplay Ability", Meta = (ReturnDisplayName = "Success"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Gameplay Ability", Meta = (ReturnDisplayName = "Success"))
 	bool BatchRpcActivateAbility(FGameplayAbilitySpecHandle AbilityHandle, bool bEndAbilityImmediately);
 
 	void BatchRpcEndAbility();

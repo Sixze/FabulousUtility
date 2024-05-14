@@ -32,8 +32,8 @@ FString UFuAnimNotifyState_GameplayEvent::GetNotifyName_Implementation() const
 	return FString{NotifyNameBuilder};
 }
 
-void UFuAnimNotifyState_GameplayEvent::NotifyBegin(USkeletalMeshComponent* Mesh, UAnimSequenceBase* Animation, const float Duration,
-                                                   const FAnimNotifyEventReference& EventReference)
+void UFuAnimNotifyState_GameplayEvent::NotifyBegin(USkeletalMeshComponent* Mesh, UAnimSequenceBase* Animation,
+                                                   const float Duration, const FAnimNotifyEventReference& EventReference)
 {
 	Super::NotifyBegin(Mesh, Animation, Duration, EventReference);
 

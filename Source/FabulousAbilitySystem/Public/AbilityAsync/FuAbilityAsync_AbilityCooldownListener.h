@@ -21,44 +21,44 @@ protected:
 	uint8 bPredictedTimeAllowed : 1;
 
 public:
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Ability Cooldown Listener Ability Async")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Async|Ability Cooldown Listener")
 	FFuEffectTimeListenerDelegate OnEffectStated;
 
-	UPROPERTY(BlueprintAssignable, Category = "Fabulous Utility|Ability Cooldown Listener Ability Async")
+	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Async|Ability Cooldown Listener")
 	FFuEffectTimeListenerDelegate OnEffectEnded;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AbilityCooldownListener* ListenForAbilityCooldownByAbilityTagOnActor(
 		const AActor* Actor,
 		UPARAM(DisplayName = "Ability Tag") FGameplayTag InAbilityTag,
 		bool bAllowPredictedTime = false);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AbilityCooldownListener* ListenForAbilityCooldownByAbilityTagsOnActor(
 		const AActor* Actor,
 		UPARAM(DisplayName = "Ability Tags") FGameplayTagContainer InAbilityTags,
 		bool bAllowPredictedTime = false);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AbilityCooldownListener* ListenForAbilityCooldownByInputIdOnActor(
 		const AActor* Actor,
 		UPARAM(DisplayName = "Input Id") int32 InInputId,
 		bool bAllowPredictedTime = false);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AbilityCooldownListener* ListenForAbilityCooldownByAbilityTag(
 		UFuAbilitySystemComponent* AbilitySystem,
 		UPARAM(DisplayName = "Ability Tag") FGameplayTag InAbilityTag,
 		bool bAllowPredictedTime = false);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AbilityCooldownListener* ListenForAbilityCooldownByAbilityTags(
 		UFuAbilitySystemComponent* AbilitySystem,
 		UPARAM(DisplayName = "Ability Tags") FGameplayTagContainer InAbilityTags,
 		bool bAllowPredictedTime = false);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Ability Async", BlueprintInternalUseOnly)
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Async", BlueprintInternalUseOnly)
 	static UFuAbilityAsync_AbilityCooldownListener* ListenForAbilityCooldownByInputId(
 		UFuAbilitySystemComponent* AbilitySystem,
 		UPARAM(DisplayName = "Input Id") int32 InInputId,

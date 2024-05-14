@@ -25,7 +25,6 @@ FString UFuStringUtility::FloatToFormattedString(const double Value, const TEnum
 
 	// FastDecimalFormat::GetCultureAgnosticFormattingRules();
 
-	return FastDecimalFormat::NumberToString(Value,
-	                                         FInternationalization::Get().GetCurrentLocale()->GetDecimalNumberFormattingRules(),
+	return FastDecimalFormat::NumberToString(Value, FInternationalization::Get().GetCurrentLocale()->GetDecimalNumberFormattingRules(),
 	                                         Options);
 }

@@ -10,10 +10,10 @@ struct FABULOUSABILITYSYSTEM_API FFuAbilityTargetData_LocationAndRotation : publ
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Ability System")
 	FVector Location{ForceInit};
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Utility")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fabulous Ability System")
 	FRotator Rotation{ForceInit};
 
 public:
@@ -29,8 +29,8 @@ public:
 };
 
 template <>
-struct TStructOpsTypeTraits<FFuAbilityTargetData_LocationAndRotation> :
-	public TStructOpsTypeTraitsBase2<FFuAbilityTargetData_LocationAndRotation>
+struct TStructOpsTypeTraits<FFuAbilityTargetData_LocationAndRotation>
+	: public TStructOpsTypeTraitsBase2<FFuAbilityTargetData_LocationAndRotation>
 {
 	enum
 	{
@@ -44,11 +44,11 @@ class FABULOUSABILITYSYSTEM_API UFuLocationAndRotationTargetDataUtility : public
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Location and Rotation Target Data Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Location and Rotation Target Data Utility",
 		Meta = (AutoCreateRefTerm = "Location, Rotation", ReturnDisplayName = "Target Data Handle"))
 	static FGameplayAbilityTargetDataHandle MakeLocationAndRotationTargetData(const FVector& Location, const FRotator& Rotation);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Location and Rotation Target Data Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Location and Rotation Target Data Utility",
 		Meta = (ReturnDisplayName = "Target Data"))
 	static FFuAbilityTargetData_LocationAndRotation GetLocationAndRotationTargetData(
 		const FGameplayAbilityTargetDataHandle& TargetDataHandle, int32 Index);

@@ -9,13 +9,13 @@ class FABULOUSUTILITY_API UFuMath : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Math", Meta = (ReturnDisplayName = "Value"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Math Utility", Meta = (ReturnDisplayName = "Value"))
 	static float Clamp01(float Value);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Math", Meta = (ReturnDisplayName = "Interpolation Ammount"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Math Utility", Meta = (ReturnDisplayName = "Interpolation Ammount"))
 	static float Damp(float DeltaTime, float Smoothing);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Math", Meta = (ReturnDisplayName = "Interpolation Ammount"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Math Utility", Meta = (ReturnDisplayName = "Interpolation Ammount"))
 	static float ExponentialDecay(float DeltaTime, float Lambda);
 
 	template <typename ValueType>

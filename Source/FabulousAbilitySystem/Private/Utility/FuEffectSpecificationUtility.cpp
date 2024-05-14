@@ -11,8 +11,7 @@ bool UFuEffectSpecificationUtility::HasAssetTag(const FGameplayEffectSpec& Effec
 	       EffectSpecification.GetDynamicAssetTags().HasTag(Tag);
 }
 
-bool UFuEffectSpecificationUtility::HasAnyAssetTags(const FGameplayEffectSpec& EffectSpecification,
-                                                    const FGameplayTagContainer& Tags)
+bool UFuEffectSpecificationUtility::HasAnyAssetTags(const FGameplayEffectSpec& EffectSpecification, const FGameplayTagContainer& Tags)
 {
 	return EffectSpecification.Def->GetAssetTags().HasAny(Tags) ||
 	       EffectSpecification.GetDynamicAssetTags().HasAny(Tags);
@@ -24,8 +23,7 @@ bool UFuEffectSpecificationUtility::HasGrantedTag(const FGameplayEffectSpec& Eff
 	       EffectSpecification.DynamicGrantedTags.HasTag(Tag);
 }
 
-bool UFuEffectSpecificationUtility::HasAnyGrantedTags(const FGameplayEffectSpec& EffectSpecification,
-                                                      const FGameplayTagContainer& Tags)
+bool UFuEffectSpecificationUtility::HasAnyGrantedTags(const FGameplayEffectSpec& EffectSpecification, const FGameplayTagContainer& Tags)
 {
 	return EffectSpecification.Def->GetGrantedTags().HasAny(Tags) ||
 	       EffectSpecification.DynamicGrantedTags.HasAny(Tags);
