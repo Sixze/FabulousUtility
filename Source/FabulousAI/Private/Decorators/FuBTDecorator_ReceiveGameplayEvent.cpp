@@ -183,7 +183,7 @@ EBlackboardNotificationResult UFuBTDecorator_ReceiveGameplayEvent::Blackboard_On
 	return EBlackboardNotificationResult::ContinueObserving;
 }
 
-void UFuBTDecorator_ReceiveGameplayEvent::AbilitySystem_OnEventReceived(const FGameplayEventData* Payload,
+void UFuBTDecorator_ReceiveGameplayEvent::AbilitySystem_OnEventReceived(const FGameplayEventData* EventData,
                                                                         const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
 {
 	if (!FU_ENSURE(BehaviorTree.IsValid()))

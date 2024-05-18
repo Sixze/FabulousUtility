@@ -58,10 +58,10 @@ EBTNodeResult::Type UFuBTTask_SendGameplayEvent::ExecuteTask(UBehaviorTreeCompon
 		return EBTNodeResult::Failed;
 	}
 
-	const auto* Target{Blackboard->GetValue<UBlackboardKeyType_Object>(TargetKey.GetSelectedKeyID())};
+	const auto* TargetObject{Blackboard->GetValue<UBlackboardKeyType_Object>(TargetKey.GetSelectedKeyID())};
 
 	UAbilitySystemComponent* TargetAbilitySystem;
-	if (!UFuAbilitySystemUtility::TryGetAbilitySystem(Target, TargetAbilitySystem))
+	if (!UFuAbilitySystemUtility::TryGetAbilitySystem(TargetObject, TargetAbilitySystem))
 	{
 		return EBTNodeResult::Failed;
 	}

@@ -50,5 +50,5 @@ private:
 
 	EBlackboardNotificationResult Blackboard_OnTargetKeyChanged(const UBlackboardComponent& Blackboard, FBlackboard::FKey Key);
 
-	void AbilitySystem_OnTagChanged(FGameplayTag Tag, int32 Count, TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree);
+	void AbilitySystem_OnTagChanged(FGameplayTag Tag, int32 TagCount, TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree);
 };

@@ -41,5 +41,5 @@ public:
 	static FGameplayAbilityTargetDataHandle MakeFloatTargetData(float Value);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Float Target Data Utility", Meta = (ReturnDisplayName = "Target Data"))
-	static FFuAbilityTargetData_Float GetFloatTargetData(const FGameplayAbilityTargetDataHandle& TargetDataHandle, int32 Index);
+	static FFuAbilityTargetData_Float GetFloatTargetData(const FGameplayAbilityTargetDataHandle& TargetDataHandle, int32 TargetDataIndex);
 };

@@ -39,10 +39,10 @@ void UFuObject::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetim
 }
 
 #if UE_WITH_IRIS
-void UFuObject::RegisterReplicationFragments(UE::Net::FFragmentRegistrationContext& Context,
+void UFuObject::RegisterReplicationFragments(UE::Net::FFragmentRegistrationContext& RegistrationContext,
                                              const UE::Net::EFragmentRegistrationFlags RegistrationFlags)
 {
-	UE::Net::FReplicationFragmentUtil::CreateAndRegisterFragmentsForObject(this, Context, RegistrationFlags);
+	UE::Net::FReplicationFragmentUtil::CreateAndRegisterFragmentsForObject(this, RegistrationContext, RegistrationFlags);
 }
 #endif
 

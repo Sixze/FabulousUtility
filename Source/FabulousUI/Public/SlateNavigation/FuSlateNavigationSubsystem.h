@@ -10,9 +10,9 @@ class FABULOUSUI_API UFuSlateNavigationSubsystem : public UGameInstanceSubsystem
 
 public:
 #if !UE_SERVER
-	virtual bool ShouldCreateSubsystem(UObject* Outer) const override;
+	virtual bool ShouldCreateSubsystem(UObject* OuterObject) const override;
 
-	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
+	virtual void Initialize(FSubsystemCollectionBase& SubsystemCollection) override;
 
 	virtual void Deinitialize() override;
 #endif

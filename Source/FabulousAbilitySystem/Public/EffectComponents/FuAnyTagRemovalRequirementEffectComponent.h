@@ -23,7 +23,7 @@ public:
 	virtual void PostInitProperties() override;
 
 #if WITH_EDITOR
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& ChangedEvent) override;
 #endif
 
 	virtual bool CanGameplayEffectApply(const FActiveGameplayEffectsContainer& ActiveEffects,
@@ -37,7 +37,7 @@ public:
 private:
 	void RefreshRemovalRequirementTags();
 
-	void AbilitySystem_OnTagChanged(FGameplayTag Tag, int32 Count, FActiveGameplayEffectHandle EffectHandle) const;
+	void AbilitySystem_OnTagChanged(FGameplayTag Tag, int32 TagCount, FActiveGameplayEffectHandle EffectHandle) const;
 
 	void Effect_OnRemoved(const FGameplayEffectRemovalInfo& RemovalInfo, UAbilitySystemComponent* AbilitySystem,
 	                      TArray<FDelegateHandle> TagChangedDelegateHandles) const;

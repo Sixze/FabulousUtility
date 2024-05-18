@@ -52,14 +52,14 @@ FGameplayAbilityTargetDataHandle UFuLocationAndRotationTargetDataUtility::MakeLo
 }
 
 FFuAbilityTargetData_LocationAndRotation UFuLocationAndRotationTargetDataUtility::GetLocationAndRotationTargetData(
-	const FGameplayAbilityTargetDataHandle& TargetDataHandle, const int32 Index)
+	const FGameplayAbilityTargetDataHandle& TargetDataHandle, const int32 TargetDataIndex)
 {
-	if (!TargetDataHandle.Data.IsValidIndex(Index) ||
-	    !FU_ENSURE(TargetDataHandle.Data[Index].Get()->GetScriptStruct()
+	if (!TargetDataHandle.Data.IsValidIndex(TargetDataIndex) ||
+	    !FU_ENSURE(TargetDataHandle.Data[TargetDataIndex].Get()->GetScriptStruct()
 		    ->IsChildOf(FFuAbilityTargetData_LocationAndRotation::StaticStruct())))
 	{
 		return {};
 	}
 
-	return *static_cast<FFuAbilityTargetData_LocationAndRotation*>(TargetDataHandle.Data[Index].Get());
+	return *static_cast<FFuAbilityTargetData_LocationAndRotation*>(TargetDataHandle.Data[TargetDataIndex].Get());
 }

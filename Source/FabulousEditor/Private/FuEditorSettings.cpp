@@ -12,15 +12,15 @@ UFuEditorSettings::UFuEditorSettings()
 }
 
 #if WITH_EDITOR
-void UFuEditorSettings::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
+void UFuEditorSettings::PostEditChangeProperty(FPropertyChangedEvent& ChangedEvent)
 {
-	if (PropertyChangedEvent.GetPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, bApplyEditorScale) ||
-	    PropertyChangedEvent.GetPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, EditorScale))
+	if (ChangedEvent.GetPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, bApplyEditorScale) ||
+	    ChangedEvent.GetPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, EditorScale))
 	{
 		FSlateApplication::Get().SetApplicationScale(bApplyEditorScale ? EditorScale : 1.0f);
 	}
 
-	Super::PostEditChangeProperty(PropertyChangedEvent);
+	Super::PostEditChangeProperty(ChangedEvent);
 }
 
 FText UFuEditorSettings::GetSectionText() const

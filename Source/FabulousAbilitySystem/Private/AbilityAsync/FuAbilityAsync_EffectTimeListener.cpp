@@ -85,7 +85,7 @@ void UFuAbilityAsync_EffectTimeListener::Activate()
 
 	for (const auto& EffectTag : EffectTags)
 	{
-		RefreshEffectTimeRemainingAndDurationForTag(EffectTag);
+		BroadcastEffectTimeRemainingAndDurationForTag(EffectTag);
 	}
 }
 
@@ -111,7 +111,7 @@ void UFuAbilityAsync_EffectTimeListener::EndAction()
 	Super::EndAction();
 }
 
-void UFuAbilityAsync_EffectTimeListener::RefreshEffectTimeRemainingAndDurationForTag(const FGameplayTag& EffectTag) const
+void UFuAbilityAsync_EffectTimeListener::BroadcastEffectTimeRemainingAndDurationForTag(const FGameplayTag& EffectTag) const
 {
 	if (!ShouldBroadcastDelegates())
 	{
@@ -143,7 +143,7 @@ void UFuAbilityAsync_EffectTimeListener::RefreshEffectTimeRemainingAndDurationFo
 
 	if (bPredictedTimeAllowed || !bPredictedTime)
 	{
-		OnEffectStated.Broadcast(EffectTag, TimeRemaining, Duration, bPredictedTime);
+		OnEffectStarted.Broadcast(EffectTag, TimeRemaining, Duration, bPredictedTime);
 	}
 }
 
@@ -173,7 +173,7 @@ void UFuAbilityAsync_EffectTimeListener::AbilitySystem_OnActiveGameplayEffectAdd
 			}
 		}
 
-		RefreshEffectTimeRemainingAndDurationForTag(EffectTag);
+		BroadcastEffectTimeRemainingAndDurationForTag(EffectTag);
 	}
 }
 
@@ -182,9 +182,9 @@ void UFuAbilityAsync_EffectTimeListener::AbilitySystem_OnActiveGameplayEffectRem
 	const_cast<FActiveGameplayEffect&>(ActiveEffect).EventSet.OnTimeChanged.RemoveAll(this);
 }
 
-void UFuAbilityAsync_EffectTimeListener::AbilitySystem_OnTagChanged(const FGameplayTag Tag, const int32 Count) const
+void UFuAbilityAsync_EffectTimeListener::AbilitySystem_OnTagChanged(const FGameplayTag Tag, const int32 TagCount) const
 {
-	if (ShouldBroadcastDelegates() && Count <= 0)
+	if (ShouldBroadcastDelegates() && TagCount <= 0)
 	{
 		OnEffectEnded.Broadcast(Tag, 0.0f, 0.0f, false);
 	}
@@ -209,7 +209,7 @@ void UFuAbilityAsync_EffectTimeListener::ActiveEffect_OnTimeChanged(const FActiv
 	{
 		if (UFuEffectSpecificationUtility::HasGrantedTag(ActiveEffect->Spec, EffectTag))
 		{
-			RefreshEffectTimeRemainingAndDurationForTag(EffectTag);
+			BroadcastEffectTimeRemainingAndDurationForTag(EffectTag);
 		}
 	}
 }

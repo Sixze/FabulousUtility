@@ -30,10 +30,10 @@ FString UFuAnimNotify_GameplayEvent::GetNotifyName_Implementation() const
 	return FString{NotifyNameBuilder};
 }
 
-void UFuAnimNotify_GameplayEvent::Notify(USkeletalMeshComponent* Mesh, UAnimSequenceBase* Animation,
-                                         const FAnimNotifyEventReference& EventReference)
+void UFuAnimNotify_GameplayEvent::Notify(USkeletalMeshComponent* Mesh, UAnimSequenceBase* Sequence,
+                                         const FAnimNotifyEventReference& NotifyEventReference)
 {
-	Super::Notify(Mesh, Animation, EventReference);
+	Super::Notify(Mesh, Sequence, NotifyEventReference);
 
 	const auto* Owner{Mesh->GetOwner()};
 
@@ -41,7 +41,7 @@ void UFuAnimNotify_GameplayEvent::Notify(USkeletalMeshComponent* Mesh, UAnimSequ
 	if (UFuAbilitySystemUtility::TryGetAbilitySystem(Owner, AbilitySystem))
 	{
 		auto EventData{UFuEventDataUtility::MakeEventDataFromAbilitySystems(AbilitySystem, AbilitySystem)};
-		EventData.OptionalObject = Animation;
+		EventData.OptionalObject = Sequence;
 
 		FScopedPredictionWindow PredictionWindow{AbilitySystem, true};
 

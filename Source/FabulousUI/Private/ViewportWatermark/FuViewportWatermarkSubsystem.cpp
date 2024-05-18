@@ -8,14 +8,14 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuViewportWatermarkSubsystem)
 
-bool UFuViewportWatermarkSubsystem::ShouldCreateSubsystem(UObject* Outer) const
+bool UFuViewportWatermarkSubsystem::ShouldCreateSubsystem(UObject* OuterObject) const
 {
-	return !CastChecked<UGameInstance>(Outer)->IsDedicatedServerInstance() && Super::ShouldCreateSubsystem(Outer);
+	return !CastChecked<UGameInstance>(OuterObject)->IsDedicatedServerInstance() && Super::ShouldCreateSubsystem(OuterObject);
 }
 
-void UFuViewportWatermarkSubsystem::Initialize(FSubsystemCollectionBase& Collection)
+void UFuViewportWatermarkSubsystem::Initialize(FSubsystemCollectionBase& SubsystemCollection)
 {
-	Super::Initialize(Collection);
+	Super::Initialize(SubsystemCollection);
 
 	if (!GetDefault<UFuViewportWatermarkSettings>()->bEnabled)
 	{

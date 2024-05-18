@@ -3,7 +3,7 @@
 #include "Abilities/Async/AbilityAsync.h"
 #include "FuAbilityAsync_EventListener.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuEventListenerDelegate, const FGameplayEventData&, Payload);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuEventListenerDelegate, const FGameplayEventData&, EventData);
 
 UCLASS(DisplayName = "Fu Event Listener Ability Async")
 class FABULOUSABILITYSYSTEM_API UFuAbilityAsync_EventListener : public UAbilityAsync
@@ -33,5 +33,5 @@ public:
 	virtual void EndAction() override;
 
 protected:
-	virtual void AbilitySystem_OnEventReceived(const FGameplayEventData* Payload);
+	virtual void AbilitySystem_OnEventReceived(const FGameplayEventData* EventData);
 };

@@ -8,13 +8,13 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_CreateSession)
 
-UFuAsyncAction_CreateSession* UFuAsyncAction_CreateSession::CreateSession(APlayerController* InPlayer, const int32 InPublicConnections,
+UFuAsyncAction_CreateSession* UFuAsyncAction_CreateSession::CreateSession(APlayerController* InPlayer, const int32 InMaxPublicConnections,
                                                                           const bool bInLanOnly)
 {
 	auto* Task{NewObject<UFuAsyncAction_CreateSession>()};
 
 	Task->Player = InPlayer;
-	Task->PublicConnections = FMath::Max(0, InPublicConnections);
+	Task->MaxPublicConnections = FMath::Max(0, InMaxPublicConnections);
 	Task->bLanOnly = bInLanOnly;
 
 	return Task;
@@ -43,7 +43,7 @@ void UFuAsyncAction_CreateSession::Activate()
 		FOnCreateSessionCompleteDelegate::CreateUObject(this, &ThisClass::Session_OnCreated));
 
 	FOnlineSessionSettings Settings;
-	Settings.NumPublicConnections = PublicConnections;
+	Settings.NumPublicConnections = MaxPublicConnections;
 	Settings.bShouldAdvertise = true;
 	Settings.bAllowJoinInProgress = true;
 	Settings.bIsLANMatch = bLanOnly;

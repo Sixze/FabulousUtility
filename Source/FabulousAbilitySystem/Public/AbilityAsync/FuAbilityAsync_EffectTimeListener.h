@@ -20,7 +20,7 @@ protected:
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Async|Effect Time Listener")
-	FFuEffectTimeListenerDelegate OnEffectStated;
+	FFuEffectTimeListenerDelegate OnEffectStarted;
 
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Async|Effect Time Listener")
 	FFuEffectTimeListenerDelegate OnEffectEnded;
@@ -56,14 +56,14 @@ public:
 	virtual void EndAction() override;
 
 private:
-	void RefreshEffectTimeRemainingAndDurationForTag(const FGameplayTag& EffectTag) const;
+	void BroadcastEffectTimeRemainingAndDurationForTag(const FGameplayTag& EffectTag) const;
 
 	void AbilitySystem_OnActiveGameplayEffectAdded(UAbilitySystemComponent* AbilitySystem, const FGameplayEffectSpec& EffectSpecification,
 	                                               FActiveGameplayEffectHandle EffectHandle) const;
 
 	void AbilitySystem_OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const;
 
-	void AbilitySystem_OnTagChanged(FGameplayTag Tag, int32 Count) const;
+	void AbilitySystem_OnTagChanged(FGameplayTag Tag, int32 TagCount) const;
 
 	void ActiveEffect_OnTimeChanged(FActiveGameplayEffectHandle EffectHandle, float StartTime, float Duration) const;
 };

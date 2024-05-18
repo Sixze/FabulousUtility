@@ -96,11 +96,11 @@ void UFuAbilityAsync_TagListener::EndAction()
 	Super::EndAction();
 }
 
-void UFuAbilityAsync_TagListener::AbilitySystem_OnTagChanged(const FGameplayTag Tag, const int32 Count) const
+void UFuAbilityAsync_TagListener::AbilitySystem_OnTagChanged(const FGameplayTag Tag, const int32 TagCount) const
 {
 	if (ShouldBroadcastDelegates())
 	{
-		if (Count > 0)
+		if (TagCount > 0)
 		{
 			OnTagAdded.Broadcast(Tag);
 		}

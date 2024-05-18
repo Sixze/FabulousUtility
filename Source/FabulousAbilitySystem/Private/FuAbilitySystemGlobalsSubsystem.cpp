@@ -4,9 +4,9 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilitySystemGlobalsSubsystem)
 
-void UFuAbilitySystemGlobalsSubsystem::Initialize(FSubsystemCollectionBase& Collection)
+void UFuAbilitySystemGlobalsSubsystem::Initialize(FSubsystemCollectionBase& SubsystemCollection)
 {
-	Super::Initialize(Collection);
+	Super::Initialize(SubsystemCollection);
 
 	UAbilitySystemGlobals::Get().InitGlobalData();
 }

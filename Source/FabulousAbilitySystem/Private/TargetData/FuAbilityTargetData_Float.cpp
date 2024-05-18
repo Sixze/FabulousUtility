@@ -34,13 +34,14 @@ FGameplayAbilityTargetDataHandle UFuFloatTargetDataUtility::MakeFloatTargetData(
 }
 
 FFuAbilityTargetData_Float UFuFloatTargetDataUtility::GetFloatTargetData(const FGameplayAbilityTargetDataHandle& TargetDataHandle,
-                                                                         const int32 Index)
+                                                                         const int32 TargetDataIndex)
 {
-	if (!TargetDataHandle.Data.IsValidIndex(Index) ||
-	    !FU_ENSURE(TargetDataHandle.Data[Index].Get()->GetScriptStruct()->IsChildOf(FFuAbilityTargetData_Float::StaticStruct())))
+	if (!TargetDataHandle.Data.IsValidIndex(TargetDataIndex) ||
+	    !FU_ENSURE(TargetDataHandle.Data[TargetDataIndex].Get()->GetScriptStruct()
+		    ->IsChildOf(FFuAbilityTargetData_Float::StaticStruct())))
 	{
 		return {};
 	}
 
-	return *static_cast<FFuAbilityTargetData_Float*>(TargetDataHandle.Data[Index].Get());
+	return *static_cast<FFuAbilityTargetData_Float*>(TargetDataHandle.Data[TargetDataIndex].Get());
 }

@@ -32,10 +32,10 @@ FString UFuAnimNotifyState_GameplayEvent::GetNotifyName_Implementation() const
 	return FString{NotifyNameBuilder};
 }
 
-void UFuAnimNotifyState_GameplayEvent::NotifyBegin(USkeletalMeshComponent* Mesh, UAnimSequenceBase* Animation,
-                                                   const float Duration, const FAnimNotifyEventReference& EventReference)
+void UFuAnimNotifyState_GameplayEvent::NotifyBegin(USkeletalMeshComponent* Mesh, UAnimSequenceBase* Sequence,
+                                                   const float Duration, const FAnimNotifyEventReference& NotifyEventReference)
 {
-	Super::NotifyBegin(Mesh, Animation, Duration, EventReference);
+	Super::NotifyBegin(Mesh, Sequence, Duration, NotifyEventReference);
 
 	const auto* Owner{Mesh->GetOwner()};
 
@@ -43,7 +43,7 @@ void UFuAnimNotifyState_GameplayEvent::NotifyBegin(USkeletalMeshComponent* Mesh,
 	if (UFuAbilitySystemUtility::TryGetAbilitySystem(Owner, AbilitySystem))
 	{
 		auto EventData{UFuEventDataUtility::MakeEventDataFromAbilitySystems(AbilitySystem, AbilitySystem)};
-		EventData.OptionalObject = Animation;
+		EventData.OptionalObject = Sequence;
 
 		FScopedPredictionWindow PredictionWindow{AbilitySystem, true};
 
@@ -51,10 +51,10 @@ void UFuAnimNotifyState_GameplayEvent::NotifyBegin(USkeletalMeshComponent* Mesh,
 	}
 }
 
-void UFuAnimNotifyState_GameplayEvent::NotifyEnd(USkeletalMeshComponent* Mesh, UAnimSequenceBase* Animation,
-                                                 const FAnimNotifyEventReference& EventReference)
+void UFuAnimNotifyState_GameplayEvent::NotifyEnd(USkeletalMeshComponent* Mesh, UAnimSequenceBase* Sequence,
+                                                 const FAnimNotifyEventReference& NotifyEventReference)
 {
-	Super::NotifyEnd(Mesh, Animation, EventReference);
+	Super::NotifyEnd(Mesh, Sequence, NotifyEventReference);
 
 	const auto* Owner{Mesh->GetOwner()};
 
@@ -62,7 +62,7 @@ void UFuAnimNotifyState_GameplayEvent::NotifyEnd(USkeletalMeshComponent* Mesh, U
 	if (UFuAbilitySystemUtility::TryGetAbilitySystem(Owner, AbilitySystem))
 	{
 		auto EventData{UFuEventDataUtility::MakeEventDataFromAbilitySystems(AbilitySystem, AbilitySystem)};
-		EventData.OptionalObject = Animation;
+		EventData.OptionalObject = Sequence;
 
 		FScopedPredictionWindow PredictionWindow{AbilitySystem, true};
 

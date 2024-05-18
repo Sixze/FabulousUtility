@@ -51,5 +51,5 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Location and Rotation Target Data Utility",
 		Meta = (ReturnDisplayName = "Target Data"))
 	static FFuAbilityTargetData_LocationAndRotation GetLocationAndRotationTargetData(
-		const FGameplayAbilityTargetDataHandle& TargetDataHandle, int32 Index);
+		const FGameplayAbilityTargetDataHandle& TargetDataHandle, int32 TargetDataIndex);
 };

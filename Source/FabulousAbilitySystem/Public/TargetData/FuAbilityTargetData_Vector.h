@@ -45,5 +45,5 @@ public:
 	static FGameplayAbilityTargetDataHandle MakeVectorTargetData(const FVector& Vector);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Vector Target Data Utility", Meta = (ReturnDisplayName = "Target Data"))
-	static FFuAbilityTargetData_Vector GetVectorTargetData(const FGameplayAbilityTargetDataHandle& TargetDataHandle, int32 Index);
+	static FFuAbilityTargetData_Vector GetVectorTargetData(const FGameplayAbilityTargetDataHandle& TargetDataHandle, int32 TargetDataIndex);
 };

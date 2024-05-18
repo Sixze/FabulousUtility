@@ -21,7 +21,7 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 #if UE_WITH_IRIS
-	virtual void RegisterReplicationFragments(UE::Net::FFragmentRegistrationContext& Context,
+	virtual void RegisterReplicationFragments(UE::Net::FFragmentRegistrationContext& RegistrationContext,
 	                                          UE::Net::EFragmentRegistrationFlags RegistrationFlags) override;
 #endif
 

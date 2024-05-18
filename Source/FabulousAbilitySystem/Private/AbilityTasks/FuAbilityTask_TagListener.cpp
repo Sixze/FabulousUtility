@@ -80,11 +80,11 @@ void UFuAbilityTask_TagListener::OnDestroy(const bool bInOwnerFinished)
 	Super::OnDestroy(bInOwnerFinished);
 }
 
-void UFuAbilityTask_TagListener::AbilitySystem_OnTagChanged(const FGameplayTag Tag, const int32 Count) const
+void UFuAbilityTask_TagListener::AbilitySystem_OnTagChanged(const FGameplayTag Tag, const int32 TagCount) const
 {
 	if (ShouldBroadcastAbilityTaskDelegates())
 	{
-		if (Count > 0)
+		if (TagCount > 0)
 		{
 			OnTagAdded.Broadcast(Tag);
 		}

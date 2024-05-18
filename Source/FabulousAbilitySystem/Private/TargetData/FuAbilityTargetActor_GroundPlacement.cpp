@@ -17,14 +17,14 @@ AFuAbilityTargetActor_GroundPlacement::AFuAbilityTargetActor_GroundPlacement()
 }
 
 #if WITH_EDITOR
-void AFuAbilityTargetActor_GroundPlacement::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
+void AFuAbilityTargetActor_GroundPlacement::PostEditChangeProperty(FPropertyChangedEvent& ChangedEvent)
 {
-	if (PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, SlopeAngleThreshold))
+	if (ChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, SlopeAngleThreshold))
 	{
 		SlopeAngleThresholdCos = FMath::Cos(FMath::DegreesToRadians(SlopeAngleThreshold));
 	}
 
-	Super::PostEditChangeProperty(PropertyChangedEvent);
+	Super::PostEditChangeProperty(ChangedEvent);
 }
 #endif
 
@@ -37,15 +37,15 @@ void AFuAbilityTargetActor_GroundPlacement::Tick(const float DeltaTime)
 		return;
 	}
 
-	const auto bNewGroundPlaceValid{PerformGroundPlacement(GroundPlaceLocation, GroundPlaceRotation)};
+	const auto bNewFinalTransformValid{PerformGroundPlacement(FinalLocation, FinalRotation)};
 
-	SetActorLocationAndRotation(GroundPlaceLocation, GroundPlaceRotation);
+	SetActorLocationAndRotation(FinalLocation, FinalRotation);
 
-	if (bGroundPlaceValid != bNewGroundPlaceValid)
+	if (bFinalTransformValid != bNewFinalTransformValid)
 	{
-		bGroundPlaceValid = bNewGroundPlaceValid;
+		bFinalTransformValid = bNewFinalTransformValid;
 
-		OnGroundPlaceValidChanged(bNewGroundPlaceValid);
+		OnFinalTransformValidChanged(bNewFinalTransformValid);
 	}
 }
 
@@ -58,7 +58,7 @@ void AFuAbilityTargetActor_GroundPlacement::StartTargeting(UGameplayAbility* Abi
 
 bool AFuAbilityTargetActor_GroundPlacement::IsConfirmTargetingAllowed()
 {
-	return bGroundPlaceValid;
+	return bFinalTransformValid;
 }
 
 void AFuAbilityTargetActor_GroundPlacement::ConfirmTargeting()
@@ -85,27 +85,27 @@ void AFuAbilityTargetActor_GroundPlacement::ConfirmTargetingAndContinue()
 	{
 		auto* TargetData{new FFuAbilityTargetData_LocationAndRotation{}};
 
-		TargetData->Location = GroundPlaceLocation;
-		TargetData->Rotation = GroundPlaceRotation;
+		TargetData->Location = FinalLocation;
+		TargetData->Rotation = FinalRotation;
 
 		TargetDataReadyDelegate.Broadcast({TargetData});
 	}
 }
 
-bool AFuAbilityTargetActor_GroundPlacement::PerformGroundPlacement(FVector& ResultLocation, FRotator& ResultRotation) const
+bool AFuAbilityTargetActor_GroundPlacement::PerformGroundPlacement(FVector& OutFinalLocation, FRotator& OutFinalRotation) const
 {
 	const auto ActorFeetLocation{UFuActorUtility::GetActorFeetLocation(SourceActor)};
-	const auto ActorForwardVector{SourceActor->GetActorForwardVector()};
+	const auto ActorForwardDirection{SourceActor->GetActorForwardVector()};
 
-	ResultLocation = ActorFeetLocation + ActorForwardVector * TraceHorizontalOffset;
-	ResultRotation = {0.0f, UFuVector::DirectionToAngleXY(ActorForwardVector), 0.0f};
+	OutFinalLocation = ActorFeetLocation + ActorForwardDirection * TraceHorizontalOffset;
+	OutFinalRotation = {0.0f, UFuVector::DirectionToAngleXY(ActorForwardDirection), 0.0f};
 
 	const FVector TraceStart{
-		ResultLocation.X, ResultLocation.Y,
+		OutFinalLocation.X, OutFinalLocation.Y,
 		ActorFeetLocation.Z + SphereSweepHeight.GetMax() + UCharacterMovementComponent::MIN_FLOOR_DIST
 	};
 	const FVector TraceEnd{
-		ResultLocation.X, ResultLocation.Y,
+		OutFinalLocation.X, OutFinalLocation.Y,
 		ActorFeetLocation.Z + SphereSweepHeight.GetMin() - UCharacterMovementComponent::MAX_FLOOR_DIST
 	};
 
@@ -138,8 +138,8 @@ bool AFuAbilityTargetActor_GroundPlacement::PerformGroundPlacement(FVector& Resu
 		return false;
 	}
 
-	ResultLocation = SphereSweepHit.Location;
-	ResultLocation.Z -= SphereSweepRadius;
+	OutFinalLocation = SphereSweepHit.Location;
+	OutFinalLocation.Z -= SphereSweepRadius;
 
 	const FVector3f SlopeVector{SphereSweepHit.Location - SphereSweepHit.ImpactPoint};
 	const auto SlopeVectorLength{SlopeVector.Size()};
@@ -184,4 +184,4 @@ bool AFuAbilityTargetActor_GroundPlacement::PerformGroundPlacement(FVector& Resu
 	return !VisibilityTraceHit.IsValidBlockingHit();
 }
 
-void AFuAbilityTargetActor_GroundPlacement::OnGroundPlaceValidChanged_Implementation(bool bNewLastGroundPlaceValid) {}
+void AFuAbilityTargetActor_GroundPlacement::OnFinalTransformValidChanged_Implementation(bool bNewLastGroundPlaceValid) {}

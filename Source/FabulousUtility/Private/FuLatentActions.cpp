@@ -20,11 +20,11 @@ protected:
 	float TimeRemaining;
 	int32& LoopIndex;
 
-	EFuAdvancedDelayOutputExecs& Output;
+	EFuAdvancedDelayOutputExec& OutputExec;
 
 public:
 	FFuAdvancedDelayLatentAction(const FLatentActionInfo& LatentInfo, float Duration, int32 LoopsCount,
-	                             bool bSkipFirstDelay, int32& LoopIndex, EFuAdvancedDelayOutputExecs& Output);
+	                             bool bSkipFirstDelay, int32& LoopIndex, EFuAdvancedDelayOutputExec& Output);
 
 	virtual void UpdateOperation(FLatentResponse& Response) override;
 
@@ -40,7 +40,7 @@ public:
 
 FFuAdvancedDelayLatentAction::FFuAdvancedDelayLatentAction(const FLatentActionInfo& LatentInfo, const float Duration,
                                                            const int32 LoopsCount, const bool bSkipFirstDelay, int32& LoopIndex,
-                                                           EFuAdvancedDelayOutputExecs& Output) : ExecutionFunction
+                                                           EFuAdvancedDelayOutputExec& Output) : ExecutionFunction
 	{LatentInfo.ExecutionFunction},
 	Linkage{LatentInfo.Linkage},
 	CallbackTarget{LatentInfo.CallbackTarget},
@@ -49,11 +49,11 @@ FFuAdvancedDelayLatentAction::FFuAdvancedDelayLatentAction(const FLatentActionIn
 	bStop{false},
 	TimeRemaining{this->Duration},
 	LoopIndex{LoopIndex},
-	Output{Output}
+	OutputExec{Output}
 {
 	this->TimeRemaining = bSkipFirstDelay ? 0.0f : this->Duration;
 	this->LoopIndex = -1;
-	this->Output = EFuAdvancedDelayOutputExecs::OnLoop;
+	this->OutputExec = EFuAdvancedDelayOutputExec::OnLoop;
 }
 
 void FFuAdvancedDelayLatentAction::UpdateOperation(FLatentResponse& Response)
@@ -74,7 +74,7 @@ void FFuAdvancedDelayLatentAction::UpdateOperation(FLatentResponse& Response)
 	{
 		TimeRemaining = 0.0f;
 		LoopIndex = FMath::Max(0, LoopsCount);
-		Output = EFuAdvancedDelayOutputExecs::OnDelayEnded;
+		OutputExec = EFuAdvancedDelayOutputExec::OnDelayEnded;
 
 		Response.FinishAndTriggerIf(true, ExecutionFunction, Linkage, CallbackTarget);
 		return;
@@ -87,7 +87,7 @@ void FFuAdvancedDelayLatentAction::UpdateOperation(FLatentResponse& Response)
 	{
 		TimeRemaining = 0.0f;
 		LoopIndex = LoopsCount;
-		Output = EFuAdvancedDelayOutputExecs::OnDelayEnded;
+		OutputExec = EFuAdvancedDelayOutputExec::OnDelayEnded;
 
 		Response.FinishAndTriggerIf(true, ExecutionFunction, Linkage, CallbackTarget);
 		return;
@@ -118,7 +118,7 @@ void FFuAdvancedDelayLatentAction::Retrigger(const float NewDuration, const int3
 	TimeRemaining = bSkipFirstDelay ? 0.0f : Duration;
 	LoopIndex = -1;
 
-	Output = EFuAdvancedDelayOutputExecs::OnLoop;
+	OutputExec = EFuAdvancedDelayOutputExec::OnLoop;
 }
 
 void FFuAdvancedDelayLatentAction::Stop()
@@ -127,9 +127,9 @@ void FFuAdvancedDelayLatentAction::Stop()
 }
 
 void UFuLatentActions::AdvancedDelay(const UObject* WorldContext, const FLatentActionInfo LatentInfo,
-                                     const EFuAdvancedDelayInputExecs Input, const float Duration,
+                                     const EFuAdvancedDelayInputExec InputExec, const float Duration,
                                      const int32 LoopsCount, const bool bSkipFirstDelay, const bool bRetriggerable,
-                                     int32& LoopIndex, EFuAdvancedDelayOutputExecs& Output)
+                                     int32& LoopIndex, EFuAdvancedDelayOutputExec& OutputExec)
 {
 	auto* World{IsValid(WorldContext) ? WorldContext->GetWorld() : nullptr};
 	if (!FU_ENSURE(IsValid(World)))
@@ -140,13 +140,13 @@ void UFuLatentActions::AdvancedDelay(const UObject* WorldContext, const FLatentA
 	auto& LatentActionManager{World->GetLatentActionManager()};
 	auto* DelayAction{LatentActionManager.FindExistingAction<FFuAdvancedDelayLatentAction>(LatentInfo.CallbackTarget, LatentInfo.UUID)};
 
-	if (Input == EFuAdvancedDelayInputExecs::Start)
+	if (InputExec == EFuAdvancedDelayInputExec::Start)
 	{
 		if (DelayAction == nullptr)
 		{
 			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID,
 			                                 new FFuAdvancedDelayLatentAction{
-				                                 LatentInfo, Duration, LoopsCount, bSkipFirstDelay, LoopIndex, Output
+				                                 LatentInfo, Duration, LoopsCount, bSkipFirstDelay, LoopIndex, OutputExec
 			                                 });
 		}
 		else if (bRetriggerable)
@@ -154,7 +154,7 @@ void UFuLatentActions::AdvancedDelay(const UObject* WorldContext, const FLatentA
 			DelayAction->Retrigger(Duration, LoopsCount, bSkipFirstDelay);
 		}
 	}
-	else if (Input == EFuAdvancedDelayInputExecs::Stop && DelayAction != nullptr)
+	else if (InputExec == EFuAdvancedDelayInputExec::Stop && DelayAction != nullptr)
 	{
 		DelayAction->Stop();
 	}

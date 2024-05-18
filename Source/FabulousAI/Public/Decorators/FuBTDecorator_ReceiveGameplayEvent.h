@@ -46,5 +46,5 @@ private:
 
 	EBlackboardNotificationResult Blackboard_OnTargetKeyChanged(const UBlackboardComponent& Blackboard, FBlackboard::FKey Key);
 
-	void AbilitySystem_OnEventReceived(const FGameplayEventData* Payload, TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree);
+	void AbilitySystem_OnEventReceived(const FGameplayEventData* EventData, TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree);
 };

@@ -20,7 +20,7 @@ public:
 	UFuEditorSettings();
 
 #if WITH_EDITOR
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& ChangedEvent) override;
 
 	virtual FText GetSectionText() const override;
 #endif

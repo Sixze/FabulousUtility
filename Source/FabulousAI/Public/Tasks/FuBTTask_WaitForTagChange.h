@@ -51,5 +51,5 @@ protected:
 	virtual void OnTaskFinished(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory, EBTNodeResult::Type Result) override;
 
 private:
-	void AbilitySystem_OnTagChanged(FGameplayTag OtherTag, int32 Count, TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree) const;
+	void AbilitySystem_OnTagChanged(FGameplayTag OtherTag, int32 TagCount, TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree) const;
 };

@@ -21,18 +21,18 @@ UFuBTDecorator_RandomizedLoop::UFuBTDecorator_RandomizedLoop()
 }
 
 #if WITH_EDITOR
-void UFuBTDecorator_RandomizedLoop::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
+void UFuBTDecorator_RandomizedLoop::PostEditChangeProperty(FPropertyChangedEvent& ChangedEvent)
 {
-	if (PropertyChangedEvent.GetPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, MinLoopsCount))
+	if (ChangedEvent.GetPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, MinLoopsCount))
 	{
 		MinLoopsCount = FMath::Min(MinLoopsCount, MaxLoopsCount);
 	}
-	else if (PropertyChangedEvent.GetPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, MaxLoopsCount))
+	else if (ChangedEvent.GetPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, MaxLoopsCount))
 	{
 		MaxLoopsCount = FMath::Max(MinLoopsCount, MaxLoopsCount);
 	}
 
-	Super::PostEditChangeProperty(PropertyChangedEvent);
+	Super::PostEditChangeProperty(ChangedEvent);
 }
 #endif
 

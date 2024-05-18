@@ -45,10 +45,10 @@ void UFuAbilityAsync_EventListener::EndAction()
 	Super::EndAction();
 }
 
-void UFuAbilityAsync_EventListener::AbilitySystem_OnEventReceived(const FGameplayEventData* Payload)
+void UFuAbilityAsync_EventListener::AbilitySystem_OnEventReceived(const FGameplayEventData* EventData)
 {
 	if (ShouldBroadcastDelegates())
 	{
-		OnEventReceived.Broadcast(*Payload);
+		OnEventReceived.Broadcast(*EventData);
 	}
 }

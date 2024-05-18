@@ -21,7 +21,7 @@ public:
 	UFuBTDecorator_RandomizedLoop();
 
 #if WITH_EDITOR
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& ChangedEvent) override;
 #endif
 
 	virtual void DescribeRuntimeValues(const UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory,

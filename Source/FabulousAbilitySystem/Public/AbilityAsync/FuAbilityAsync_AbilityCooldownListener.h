@@ -72,7 +72,7 @@ public:
 private:
 	void ProcessAbilitySpecificationChange(const FGameplayAbilitySpec& AbilitySpecification, bool bAddedOrRemoved);
 
-	void RefreshEffectTimeRemainingAndDurationForTag(const FGameplayTag& EffectTag) const;
+	void BroadcastEffectTimeRemainingAndDurationForTag(const FGameplayTag& EffectTag) const;
 
 	void AbilitySystem_OnAbilityGiven(const FGameplayAbilitySpec& AbilitySpecification);
 
@@ -83,7 +83,7 @@ private:
 
 	void AbilitySystem_OnActiveGameplayEffectRemoved(const FActiveGameplayEffect& ActiveEffect) const;
 
-	void AbilitySystem_OnTagChanged(FGameplayTag Tag, int32 Count) const;
+	void AbilitySystem_OnTagChanged(FGameplayTag Tag, int32 TagCount) const;
 
 	void ActiveEffect_OnTimeChanged(FActiveGameplayEffectHandle EffectHandle, float StartTime, float Duration) const;
 };

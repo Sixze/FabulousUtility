@@ -123,7 +123,7 @@ void UFuAbilityAsync_AbilityCooldownListener::Activate()
 
 	for (const auto& EffectTag : EffectTags.GetExplicitGameplayTags())
 	{
-		RefreshEffectTimeRemainingAndDurationForTag(EffectTag);
+		BroadcastEffectTimeRemainingAndDurationForTag(EffectTag);
 	}
 }
 
@@ -184,7 +184,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(
 			AbilitySystem->RegisterGameplayTagEvent(CooldownTag, EGameplayTagEventType::NewOrRemoved)
 			             .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged);
 
-			RefreshEffectTimeRemainingAndDurationForTag(CooldownTag);
+			BroadcastEffectTimeRemainingAndDurationForTag(CooldownTag);
 		}
 		else if (!bAddedOrRemoved && TagCount <= 0)
 		{
@@ -213,7 +213,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(
 	}
 }
 
-void UFuAbilityAsync_AbilityCooldownListener::RefreshEffectTimeRemainingAndDurationForTag(const FGameplayTag& EffectTag) const
+void UFuAbilityAsync_AbilityCooldownListener::BroadcastEffectTimeRemainingAndDurationForTag(const FGameplayTag& EffectTag) const
 {
 	if (!ShouldBroadcastDelegates())
 	{
@@ -285,7 +285,7 @@ void UFuAbilityAsync_AbilityCooldownListener::AbilitySystem_OnActiveGameplayEffe
 			}
 		}
 
-		RefreshEffectTimeRemainingAndDurationForTag(EffectTag);
+		BroadcastEffectTimeRemainingAndDurationForTag(EffectTag);
 	}
 }
 
@@ -294,9 +294,9 @@ void UFuAbilityAsync_AbilityCooldownListener::AbilitySystem_OnActiveGameplayEffe
 	const_cast<FActiveGameplayEffect&>(ActiveEffect).EventSet.OnTimeChanged.RemoveAll(this);
 }
 
-void UFuAbilityAsync_AbilityCooldownListener::AbilitySystem_OnTagChanged(const FGameplayTag Tag, const int32 Count) const
+void UFuAbilityAsync_AbilityCooldownListener::AbilitySystem_OnTagChanged(const FGameplayTag Tag, const int32 TagCount) const
 {
-	if (ShouldBroadcastDelegates() && Count <= 0)
+	if (ShouldBroadcastDelegates() && TagCount <= 0)
 	{
 		OnEffectEnded.Broadcast(Tag, 0.0f, 0.0f, false);
 	}
@@ -315,7 +315,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ActiveEffect_OnTimeChanged(const F
 	{
 		if (UFuEffectSpecificationUtility::HasGrantedTag(ActiveEffect->Spec, EffectTag))
 		{
-			RefreshEffectTimeRemainingAndDurationForTag(EffectTag);
+			BroadcastEffectTimeRemainingAndDurationForTag(EffectTag);
 		}
 	}
 }

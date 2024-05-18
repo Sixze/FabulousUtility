@@ -14,8 +14,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
 		DisplayName = "Try Transform World to Clip Location (Local Player)",
 		Meta = (ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
-	static bool TryTransformWorldToClipLocationLocalPlayer(const ULocalPlayer* LocalPlayer, const FVector& WorldLocation,
-	                                                       FVector4& ClipLocation);
+	static bool TryTransformWorldToClipLocationLocalPlayer(const ULocalPlayer* LocalPlayer,
+	                                                       const FVector& WorldLocation, FVector4& ClipLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
 		DisplayName = "Try Transform World to Clip Location (Player Controller)",
@@ -25,8 +25,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
 		DisplayName = "Try Transform World to Screen Location (Local Player)",
 		Meta = (ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
-	static bool TryTransformWorldToScreenLocationLocalPlayer(const ULocalPlayer* LocalPlayer, const FVector& WorldLocation,
-	                                                         FVector2f& ScreenLocation);
+	static bool TryTransformWorldToScreenLocationLocalPlayer(const ULocalPlayer* LocalPlayer,
+	                                                         const FVector& WorldLocation, FVector2f& ScreenLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
 		DisplayName = "Try Transform World to Screen Location (Player Controller)",

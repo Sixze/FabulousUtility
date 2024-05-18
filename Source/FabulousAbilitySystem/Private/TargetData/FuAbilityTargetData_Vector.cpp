@@ -45,13 +45,14 @@ FGameplayAbilityTargetDataHandle UFuVectorTargetDataUtility::MakeVectorTargetDat
 }
 
 FFuAbilityTargetData_Vector UFuVectorTargetDataUtility::GetVectorTargetData(const FGameplayAbilityTargetDataHandle& TargetDataHandle,
-                                                                            const int32 Index)
+                                                                            const int32 TargetDataIndex)
 {
-	if (!TargetDataHandle.Data.IsValidIndex(Index) ||
-	    !FU_ENSURE(TargetDataHandle.Data[Index].Get()->GetScriptStruct()->IsChildOf(FFuAbilityTargetData_Vector::StaticStruct())))
+	if (!TargetDataHandle.Data.IsValidIndex(TargetDataIndex) ||
+	    !FU_ENSURE(TargetDataHandle.Data[TargetDataIndex].Get()->GetScriptStruct()
+		    ->IsChildOf(FFuAbilityTargetData_Vector::StaticStruct())))
 	{
 		return {};
 	}
 
-	return *static_cast<FFuAbilityTargetData_Vector*>(TargetDataHandle.Data[Index].Get());
+	return *static_cast<FFuAbilityTargetData_Vector*>(TargetDataHandle.Data[TargetDataIndex].Get());
 }

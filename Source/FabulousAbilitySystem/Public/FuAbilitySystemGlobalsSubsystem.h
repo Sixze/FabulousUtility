@@ -9,5 +9,5 @@ class FABULOUSABILITYSYSTEM_API UFuAbilitySystemGlobalsSubsystem : public UEngin
 	GENERATED_BODY()
 
 public:
-	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
+	virtual void Initialize(FSubsystemCollectionBase& SubsystemCollection) override;
 };

@@ -8,14 +8,14 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuSlateNavigationSubsystem)
 
-bool UFuSlateNavigationSubsystem::ShouldCreateSubsystem(UObject* Outer) const
+bool UFuSlateNavigationSubsystem::ShouldCreateSubsystem(UObject* OuterObject) const
 {
-	return !CastChecked<UGameInstance>(Outer)->IsDedicatedServerInstance() && Super::ShouldCreateSubsystem(Outer);
+	return !CastChecked<UGameInstance>(OuterObject)->IsDedicatedServerInstance() && Super::ShouldCreateSubsystem(OuterObject);
 }
 
-void UFuSlateNavigationSubsystem::Initialize(FSubsystemCollectionBase& Collection)
+void UFuSlateNavigationSubsystem::Initialize(FSubsystemCollectionBase& SubsystemCollection)
 {
-	Super::Initialize(Collection);
+	Super::Initialize(SubsystemCollection);
 
 	const auto* Settings{GetDefault<UFuSlateNavigationSettings>()};
 

@@ -13,7 +13,7 @@ protected:
 	TWeakObjectPtr<APlayerController> Player;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	int32 PublicConnections;
+	int32 MaxPublicConnections;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
 	uint8 bLanOnly : 1;
@@ -28,7 +28,7 @@ public:
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Online|Async Actions", BlueprintInternalUseOnly, Meta = (DefaultToSelf = "InPlayer"))
 	static UFuAsyncAction_CreateSession* CreateSession(UPARAM(DisplayName = "Player") APlayerController* InPlayer,
-	                                                   UPARAM(DisplayName = "Public Connections") int32 InPublicConnections,
+	                                                   UPARAM(DisplayName = "Max Public Connections") int32 InMaxPublicConnections,
 	                                                   UPARAM(DisplayName = "Lan Only") bool bInLanOnly);
 
 	virtual void Activate() override;
