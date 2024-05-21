@@ -36,10 +36,10 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability System")
-	static UFuAbilitySystemComponent* GetFuAbilitySystem(const UObject* Object, bool bAllowFindComponent = true);
+	static UFuAbilitySystemComponent* GetFuAbilitySystem(const UObject* Object);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability System", Meta = (ExpandBoolAsExecs = "ReturnValue"))
-	static bool TryGetFuAbilitySystem(const UObject* Object, UFuAbilitySystemComponent*& AbilitySystem, bool bAllowFindComponent = true);
+	static bool TryGetFuAbilitySystem(const UObject* Object, UFuAbilitySystemComponent*& AbilitySystem);
 
 public:
 	virtual void NotifyAbilityActivated(FGameplayAbilitySpecHandle AbilityHandle, UGameplayAbility* Ability) override;

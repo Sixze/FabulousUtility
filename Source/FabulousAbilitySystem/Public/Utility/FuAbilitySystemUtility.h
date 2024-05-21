@@ -12,10 +12,10 @@ class FABULOUSABILITYSYSTEM_API UFuAbilitySystemUtility : public UBlueprintFunct
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability System Utility")
-	static UAbilitySystemComponent* GetAbilitySystem(const UObject* Object, bool bAllowFindComponent = true);
+	static UAbilitySystemComponent* GetAbilitySystem(const UObject* Object);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability System Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
-	static bool TryGetAbilitySystem(const UObject* Object, UAbilitySystemComponent*& AbilitySystem, bool bAllowFindComponent = true);
+	static bool TryGetAbilitySystem(const UObject* Object, UAbilitySystemComponent*& AbilitySystem);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Ability System Utility", Meta = (ReturnDisplayName = "Actor Info"))
 	static const FGameplayAbilityActorInfo& GetActorInfo(const UAbilitySystemComponent* AbilitySystem);
