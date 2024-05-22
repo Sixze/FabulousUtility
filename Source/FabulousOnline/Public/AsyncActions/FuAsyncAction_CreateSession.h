@@ -13,10 +13,10 @@ protected:
 	TWeakObjectPtr<APlayerController> Player;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	int32 MaxPublicConnections;
+	int32 MaxPublicConnections{0};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	uint8 bLanOnly : 1;
+	uint8 bLanOnly : 1 {false};
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Online|Async Actions|Create Session")

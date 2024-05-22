@@ -30,13 +30,13 @@ protected:
 	FCollisionProfileName TraceProfile{UCollisionProfile::Pawn_ProfileName};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	FVector FinalLocation;
+	FVector FinalLocation{ForceInit};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	FRotator FinalRotation;
+	FRotator FinalRotation{ForceInit};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	uint8 bFinalTransformValid : 1;
+	uint8 bFinalTransformValid : 1 {false};
 
 public:
 	AFuAbilityTargetActor_GroundPlacement();

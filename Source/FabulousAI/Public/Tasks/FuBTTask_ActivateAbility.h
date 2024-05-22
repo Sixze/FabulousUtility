@@ -18,7 +18,7 @@ protected:
 	uint8 bWaitForAbilityEnd : 1 {true};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings", Meta = (EditCondition = "bWaitForAbilityEnd"))
-	uint8 bCancelAbilityOnAbort : 1;
+	uint8 bCancelAbilityOnAbort : 1 {false};
 
 public:
 	UFuBTTask_ActivateAbility();

@@ -22,7 +22,7 @@ protected:
 	FBlueprintSessionResult SearchResult;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	uint8 bTravelOnSuccess : 1;
+	uint8 bTravelOnSuccess : 1 {false};
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Online|Async Actions|Join Session")

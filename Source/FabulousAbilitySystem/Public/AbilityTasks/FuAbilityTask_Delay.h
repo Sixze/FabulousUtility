@@ -12,13 +12,13 @@ class FABULOUSABILITYSYSTEM_API UFuAbilityTask_Delay : public UAbilityTask
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, Meta = (ClampMin = 0, ForceUnits = "s"))
-	float Duration;
+	float Duration{0.0f};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	int32 LoopsCount;
+	int32 LoopsCount{0};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	uint8 bSkipFirstDelay : 1;
+	uint8 bSkipFirstDelay : 1 {false};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient, Meta = (ClampMin = 0))
 	int32 LoopIndex{-1};

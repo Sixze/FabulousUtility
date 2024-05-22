@@ -16,7 +16,7 @@ protected:
 	FGameplayTagContainer EffectTags;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
-	uint8 bPredictedTimeAllowed : 1;
+	uint8 bPredictedTimeAllowed : 1 {false};
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Async|Effect Time Listener")

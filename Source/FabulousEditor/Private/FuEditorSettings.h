@@ -10,7 +10,7 @@ class FABULOUSEDITOR_API UFuEditorSettings : public UDeveloperSettings
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Editor", Config)
-	uint8 bApplyEditorScale : 1;
+	uint8 bApplyEditorScale : 1 {false};
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Editor", Config,
 		Meta = (ClampMin = 0.5, ClampMax = 2, EditCondition = "bApplyEditorScale", ForceUnits = "x"))

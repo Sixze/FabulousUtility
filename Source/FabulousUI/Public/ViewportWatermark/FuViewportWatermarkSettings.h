@@ -39,7 +39,7 @@ class FABULOUSUI_API UFuViewportWatermarkSettings : public UDeveloperSettings
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Viewport Watermark", Config)
-	uint8 bEnabled : 1;
+	uint8 bEnabled : 1 {false};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Viewport Watermark", Config, DisplayName = "Z Order")
 	int32 ZOrder{100};

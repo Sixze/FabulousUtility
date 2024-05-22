@@ -13,7 +13,7 @@ class FABULOUSUI_API UFuSlateNavigationSettings : public UDeveloperSettings
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Slate Navigation", Config)
-	uint8 bApplySettings : 1;
+	uint8 bApplySettings : 1 {false};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Key Navigation", Config)
 	uint8 bAllowKeyNavigation : 1 {true};

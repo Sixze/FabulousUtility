@@ -19,7 +19,7 @@ protected:
 	FGameplayTagContainer BlockAbilitiesWithoutAllTags;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Ability")
-	uint8 bAutoActivateWhenGiven : 1;
+	uint8 bAutoActivateWhenGiven : 1 {false};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Ability")
 	uint8 bAllowActivationByInput : 1 {true};
@@ -28,9 +28,9 @@ protected:
 	// See https://github.com/tranek/GASDocumentation#concepts-ga-batching
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Ability",
 		Meta = (EditCondition = "bAllowActivationByInput"))
-	uint8 bBatchActivationByInput : 1;
+	uint8 bBatchActivationByInput : 1 {false};
 
-	uint8 bCheckCostBlueprintImplemented : 1;
+	uint8 bCheckCostBlueprintImplemented : 1 {false};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Ability", Instanced)
 	TObjectPtr<UObject> UserData;
