@@ -8,6 +8,7 @@ public class FabulousEditor : ModuleRules
 		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_3;
 
 		bEnableNonInlinedGenCppWarnings = true;
+		// UnsafeTypeCastWarningLevel = WarningLevel.Warning;
 
 		PrivateDependencyModuleNames.AddRange(new[]
 		{

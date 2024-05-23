@@ -54,7 +54,7 @@ void UFuEffectHandleUtility::RecalculateEffectModifiers(const FActiveGameplayEff
 	const auto* ActiveEffect{ActiveEffects.GetActiveGameplayEffect(EffectHandle)};
 	if (ActiveEffect != nullptr)
 	{
-		ActiveEffects.SetActiveGameplayEffectLevel(EffectHandle, ActiveEffect->Spec.GetLevel());
+		ActiveEffects.SetActiveGameplayEffectLevel(EffectHandle, static_cast<int32>(ActiveEffect->Spec.GetLevel()));
 	}
 }
 
@@ -80,7 +80,7 @@ bool UFuEffectHandleUtility::TryGetEffectTimeRemainingAndDurationByHandle(const 
 
 	TimeRemaining = Duration < 0.0f
 		                ? FGameplayEffectConstants::INFINITE_DURATION
-		                : Duration + ActiveEffect->StartWorldTime - AbilitySystem->GetWorld()->GetTimeSeconds();
+		                : UE_REAL_TO_FLOAT(Duration + ActiveEffect->StartWorldTime - AbilitySystem->GetWorld()->GetTimeSeconds());
 	return true;
 }
 

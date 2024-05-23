@@ -6,7 +6,7 @@
 
 struct FFuRandomizedLoopMemory
 {
-	uint8 RemainingLoopsCount{0};
+	int32 RemainingLoopsCount{0};
 };
 
 UFuBTDecorator_RandomizedLoop::UFuBTDecorator_RandomizedLoop()
