@@ -3,7 +3,7 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuVector.generated.h"
 
-UCLASS()
+UCLASS(Meta = (BlueprintThreadSafe))
 class FABULOUSUTILITY_API UFuVector : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()

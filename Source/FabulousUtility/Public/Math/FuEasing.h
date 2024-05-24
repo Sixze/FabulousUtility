@@ -5,7 +5,7 @@
 
 // https://github.com/warrenm/AHEasing
 
-UCLASS()
+UCLASS(Meta = (BlueprintThreadSafe))
 class FABULOUSUTILITY_API UFuEasing : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()

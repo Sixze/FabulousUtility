@@ -3,7 +3,7 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuQuaternion.generated.h"
 
-UCLASS()
+UCLASS(Meta = (BlueprintThreadSafe))
 class FABULOUSUTILITY_API UFuQuaternion : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()

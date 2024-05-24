@@ -28,7 +28,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)
 	FSlateSound Sound;
 
-	TArray<FUIActionBindingHandle> ActionHandles;
+	TArray<FUIActionBindingHandle, TInlineAllocator<1>> ActionHandles;
 
 public:
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous UI|Async Actions|UI Action Listener by Input Action")

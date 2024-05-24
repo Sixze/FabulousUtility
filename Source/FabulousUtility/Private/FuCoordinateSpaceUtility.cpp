@@ -156,7 +156,7 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocationLocalPl
 	const auto* Viewport{LocalPlayer->ViewportClient.Get()};
 
 	const auto ViewportSize{Viewport->Viewport->GetSizeXY()};
-	if (ViewportSize.X == 0 || ViewportSize.Y == 0)
+	if (ViewportSize.X <= 0 || ViewportSize.Y <= 0)
 	{
 		ViewportWidgetLocation = FVector2f::ZeroVector;
 		return false;
