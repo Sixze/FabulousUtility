@@ -5,7 +5,7 @@ public class FabulousAbilitySystem : ModuleRules
 	public FabulousAbilitySystem(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_3;
+		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_4;
 
 		bEnableNonInlinedGenCppWarnings = true;
 		// UnsafeTypeCastWarningLevel = WarningLevel.Warning;
