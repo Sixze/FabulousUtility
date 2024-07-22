@@ -114,8 +114,8 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocationLocalPlayer(c
 	const auto& ViewRect{ProjectionData.GetConstrainedViewRect()};
 
 	ViewportLocation = {
-		(ScreenLocation.X * 0.5f + 0.5f) * ViewRect.Width(),
-		(1.0f - ScreenLocation.Y * 0.5f - 0.5f) * ViewRect.Height()
+		(ScreenLocation.X * 0.5f + 0.5f) * static_cast<float>(ViewRect.Width()),
+		(1.0f - ScreenLocation.Y * 0.5f - 0.5f) * static_cast<float>(ViewRect.Height())
 	};
 
 	if (!bPlayerViewportRelative)

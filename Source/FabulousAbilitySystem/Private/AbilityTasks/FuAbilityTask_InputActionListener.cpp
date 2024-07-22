@@ -77,7 +77,7 @@ void UFuAbilityTask_InputActionListener::BindActions()
 	{
 		InputBindings.Reserve(InputActions.Num() * 5);
 
-		for (const auto InputAction : InputActions)
+		for (const UInputAction* InputAction : InputActions)
 		{
 			InputBindings.Emplace(Input->BindAction(InputAction, ETriggerEvent::Triggered, this, &ThisClass::Input_OnActionTriggered));
 			InputBindings.Emplace(Input->BindAction(InputAction, ETriggerEvent::Started, this, &ThisClass::Input_OnActionStarted));
