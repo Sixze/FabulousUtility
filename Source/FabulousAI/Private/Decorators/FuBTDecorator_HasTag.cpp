@@ -218,6 +218,7 @@ EBlackboardNotificationResult UFuBTDecorator_HasTag::Blackboard_OnTargetKeyChang
 	return EBlackboardNotificationResult::ContinueObserving;
 }
 
+// ReSharper disable once CppMemberFunctionMayBeConst
 void UFuBTDecorator_HasTag::AbilitySystem_OnTagChanged(const FGameplayTag Tag, const int32 TagCount,
                                                        const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
 {

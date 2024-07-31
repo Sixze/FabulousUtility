@@ -183,6 +183,7 @@ EBlackboardNotificationResult UFuBTDecorator_ReceiveGameplayEvent::Blackboard_On
 	return EBlackboardNotificationResult::ContinueObserving;
 }
 
+// ReSharper disable once CppMemberFunctionMayBeConst
 void UFuBTDecorator_ReceiveGameplayEvent::AbilitySystem_OnEventReceived(const FGameplayEventData* EventData,
                                                                         const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
 {

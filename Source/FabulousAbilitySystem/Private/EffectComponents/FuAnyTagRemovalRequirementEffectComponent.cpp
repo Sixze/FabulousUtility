@@ -77,6 +77,7 @@ void UFuAnyTagRemovalRequirementEffectComponent::RefreshRemovalRequirementTags()
 	RemovalRequirementTags.UpdateInheritedTagProperties(IsValid(ParentComponent) ? &ParentComponent->RemovalRequirementTags : nullptr);
 }
 
+// ReSharper disable once CppMemberFunctionMayBeStatic
 void UFuAnyTagRemovalRequirementEffectComponent::AbilitySystem_OnTagChanged(const FGameplayTag Tag, const int32 TagCount,
                                                                             const FActiveGameplayEffectHandle EffectHandle) const
 {

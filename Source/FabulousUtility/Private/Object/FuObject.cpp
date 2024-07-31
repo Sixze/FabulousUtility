@@ -105,14 +105,7 @@ bool UFuObject::CallRemoteFunction(UFunction* Function, void* Parameters, FOutPa
 // 	}
 // }
 //
-// void UFuObject::PreReplication(IRepChangedPropertyTracker& ChangedPropertyTracker)
-// {
-// 	const auto* BlueprintClass{Cast<UBlueprintGeneratedClass>(GetClass())};
-// 	if (IsValid(BlueprintClass))
-// 	{
-// 		BlueprintClass->InstancePreReplication(this, ChangedPropertyTracker);
-// 	}
-// }
+// void UFuObject::PreReplication(IRepChangedPropertyTracker& ChangedPropertyTracker) {}
 
 void UFuObject::BeginPlay()
 {

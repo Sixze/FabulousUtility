@@ -8,7 +8,7 @@
 
 void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext, const FVector& Location,
                                                     const float Radius, const FCollisionProfileName& CollisionProfile,
-                                                    const TFunctionRef<bool(const FOverlapResult& Overlap)> FilterPredicate,
+                                                    const TFunctionRef<bool(const FOverlapResult& Overlap)>& FilterPredicate,
                                                     TMap<AActor*, TArray<FHitResult>>& ReachableActors, const AActor* IgnoredActor)
 {
 	ECollisionChannel CollisionChannel;
@@ -25,7 +25,7 @@ void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext,
 
 void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext, const FVector& Location, float Radius,
                                                     ECollisionChannel CollisionChannel, const FCollisionResponseParams& CollisionResponses,
-                                                    TFunctionRef<bool(const FOverlapResult& Overlap)> FilterPredicate,
+                                                    const TFunctionRef<bool(const FOverlapResult& Overlap)>& FilterPredicate,
                                                     TMap<AActor*, TArray<FHitResult>>& ReachableActors, const AActor* IgnoredActor)
 {
 	// Based on UGameplayStatics::ApplyRadialDamageWithFalloff().

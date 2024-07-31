@@ -172,6 +172,7 @@ bool UFuBTDecorator_CanActivateAbility::CalculateRawConditionValue(UBehaviorTree
 	return false;
 }
 
+// ReSharper disable once CppMemberFunctionMayBeConst
 void UFuBTDecorator_CanActivateAbility::AbilitySystem_OnAbilityGiven(const FGameplayAbilitySpec& AbilitySpecification,
                                                                      const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
 {
@@ -188,6 +189,7 @@ void UFuBTDecorator_CanActivateAbility::AbilitySystem_OnAbilityGiven(const FGame
 	}
 }
 
+// ReSharper disable once CppMemberFunctionMayBeConst
 void UFuBTDecorator_CanActivateAbility::AbilitySystem_OnAbilityRemoved(const FGameplayAbilitySpec& AbilitySpecification,
                                                                        const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
 {

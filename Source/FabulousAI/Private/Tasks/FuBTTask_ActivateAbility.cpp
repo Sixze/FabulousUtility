@@ -160,6 +160,7 @@ void UFuBTTask_ActivateAbility::OnTaskFinished(UBehaviorTreeComponent& BehaviorT
 	Super::OnTaskFinished(BehaviorTree, NodeMemory, Result);
 }
 
+// ReSharper disable once CppMemberFunctionMayBeConst
 void UFuBTTask_ActivateAbility::AbilitySystem_OnAbilityEnded(const FAbilityEndedData& EndedData,
                                                              const TWeakObjectPtr<UBehaviorTreeComponent> BehaviorTree)
 {
