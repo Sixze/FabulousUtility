@@ -46,11 +46,6 @@
 			"Name": "FabulousOnline",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
-		},
-		{
-			"Name": "FabulousEditor",
-			"Type": "Editor",
-			"LoadingPhase": "PreDefault"
 		}
 	],
 	"Plugins": [
