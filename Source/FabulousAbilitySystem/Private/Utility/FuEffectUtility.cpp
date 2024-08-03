@@ -6,19 +6,6 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuEffectUtility)
 
-const FGameplayTagContainer& UFuEffectUtility::GetGrantedTags(const TSubclassOf<UGameplayEffect> EffectClass)
-{
-	if (FU_ENSURE(IsValid(EffectClass)))
-	{
-		return EffectClass.GetDefaultObject()->GetGrantedTags();
-	}
-
-	static const FGameplayTagContainer None;
-	check(None.IsEmpty())
-
-	return None;
-}
-
 int32 UFuEffectUtility::GetEffectStackCountByClass(const UAbilitySystemComponent* AbilitySystem,
                                                    const TSubclassOf<UGameplayEffect> EffectClass)
 {

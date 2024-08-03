@@ -9,9 +9,6 @@ class FABULOUSABILITYSYSTEM_API UFuEffectUtility : public UBlueprintFunctionLibr
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Effect Utility", Meta = (ReturnDisplayName = "Owned Tags"))
-	static const FGameplayTagContainer& GetGrantedTags(TSubclassOf<UGameplayEffect> EffectClass);
-
 	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Effect Utility", Meta = (ReturnDisplayName = "Stack Count"))
 	static int32 GetEffectStackCountByClass(const UAbilitySystemComponent* AbilitySystem, TSubclassOf<UGameplayEffect> EffectClass);
 
