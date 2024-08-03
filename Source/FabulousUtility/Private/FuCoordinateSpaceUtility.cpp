@@ -48,12 +48,19 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToClipLocation(const APlayerCon
 }
 
 bool UFuCoordinateSpaceUtility::TryTransformWorldToScreenLocationLocalPlayer(const ULocalPlayer* LocalPlayer,
-                                                                             const FVector& WorldLocation, FVector2f& ScreenLocation)
+                                                                             const FVector& WorldLocation, FVector2f& ScreenLocation,
+                                                                             const bool bCalculateOutsideScreenLocation)
 {
-	// Based on SceneView::ProjectWorldToScreen().
+	// Based on FSceneView::ProjectWorldToScreen().
 
 	FVector4 ClipLocation;
 	if (!TryTransformWorldToClipLocationLocalPlayer(LocalPlayer, WorldLocation, ClipLocation))
+	{
+		ScreenLocation = FVector2f::ZeroVector;
+		return false;
+	}
+
+	if (!bCalculateOutsideScreenLocation && ClipLocation.W <= 0.0f)
 	{
 		ScreenLocation = FVector2f::ZeroVector;
 		return false;
@@ -70,7 +77,8 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToScreenLocationLocalPlayer(con
 }
 
 bool UFuCoordinateSpaceUtility::TryTransformWorldToScreenLocation(const APlayerController* Player,
-                                                                  const FVector& WorldLocation, FVector2f& ScreenLocation)
+                                                                  const FVector& WorldLocation, FVector2f& ScreenLocation,
+                                                                  const bool bCalculateOutsideScreenLocation)
 {
 	if (!IsValid(Player))
 	{
@@ -78,12 +86,14 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToScreenLocation(const APlayerC
 		return false;
 	}
 
-	return TryTransformWorldToScreenLocationLocalPlayer(Player->GetLocalPlayer(), WorldLocation, ScreenLocation);
+	return TryTransformWorldToScreenLocationLocalPlayer(Player->GetLocalPlayer(), WorldLocation,
+	                                                    ScreenLocation, bCalculateOutsideScreenLocation);
 }
 
 bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocationLocalPlayer(const ULocalPlayer* LocalPlayer,
                                                                                const FVector& WorldLocation, FVector2f& ViewportLocation,
-                                                                               const bool bPlayerViewportRelative)
+                                                                               const bool bPlayerViewportRelative,
+                                                                               const bool bCalculateOutsideScreenLocation)
 {
 	// Based on APlayerController::ProjectWorldLocationToScreenWithDistance() and FSceneView::ProjectWorldToScreen().
 
@@ -103,6 +113,12 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocationLocalPlayer(c
 
 	const auto ProjectionMatrix{ProjectionData.ComputeViewProjectionMatrix()};
 	const auto ClipLocation{ProjectionMatrix.TransformFVector4({WorldLocation, 1.0f})};
+
+	if (!bCalculateOutsideScreenLocation && ClipLocation.W <= 0.0f)
+	{
+		ViewportLocation = FVector2f::ZeroVector;
+		return false;
+	}
 
 	const auto Scale{
 		FMath::IsNearlyZero(ClipLocation.W)
@@ -127,7 +143,8 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocationLocalPlayer(c
 }
 
 bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocation(const APlayerController* Player, const FVector& WorldLocation,
-                                                                    FVector2f& ViewportLocation, const bool bPlayerViewportRelative)
+                                                                    FVector2f& ViewportLocation, const bool bPlayerViewportRelative,
+                                                                    const bool bCalculateOutsideScreenLocation)
 {
 	if (!IsValid(Player))
 	{
@@ -136,18 +153,20 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocation(const APlaye
 	}
 
 	return TryTransformWorldToViewportLocationLocalPlayer(Player->GetLocalPlayer(), WorldLocation, ViewportLocation,
-	                                                      bPlayerViewportRelative);
+	                                                      bPlayerViewportRelative, bCalculateOutsideScreenLocation);
 }
 
 bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocationLocalPlayer(const ULocalPlayer* LocalPlayer,
                                                                                      const FVector& WorldLocation,
                                                                                      FVector2f& ViewportWidgetLocation,
-                                                                                     const bool bPlayerViewportRelative)
+                                                                                     const bool bPlayerViewportRelative,
+                                                                                     const bool bCalculateOutsideScreenLocation)
 {
 	// Based on USlateBlueprintLibrary::ScreenToWidgetAbsolute().
 
 	FVector2f ViewportLocation;
-	if (!TryTransformWorldToViewportLocationLocalPlayer(LocalPlayer, WorldLocation, ViewportLocation, bPlayerViewportRelative))
+	if (!TryTransformWorldToViewportLocationLocalPlayer(LocalPlayer, WorldLocation, ViewportLocation,
+	                                                    bPlayerViewportRelative, bCalculateOutsideScreenLocation))
 	{
 		ViewportWidgetLocation = FVector2f::ZeroVector;
 		return false;
@@ -175,7 +194,8 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocationLocalPl
 
 bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocation(const APlayerController* Player, const FVector& WorldLocation,
                                                                           FVector2f& ViewportWidgetLocation,
-                                                                          const bool bPlayerViewportRelative)
+                                                                          const bool bPlayerViewportRelative,
+                                                                          const bool bCalculateOutsideScreenLocation)
 {
 	if (!IsValid(Player))
 	{
@@ -183,8 +203,8 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocation(const 
 		return false;
 	}
 
-	return TryTransformWorldToViewportWidgetLocationLocalPlayer(Player->GetLocalPlayer(), WorldLocation,
-	                                                            ViewportWidgetLocation, bPlayerViewportRelative);
+	return TryTransformWorldToViewportWidgetLocationLocalPlayer(Player->GetLocalPlayer(), WorldLocation, ViewportWidgetLocation,
+	                                                            bPlayerViewportRelative, bCalculateOutsideScreenLocation);
 }
 
 bool UFuCoordinateSpaceUtility::TryGetViewportWidgetSize(const UObject* WorldContext, FVector2f& ViewportWidgetSize)
