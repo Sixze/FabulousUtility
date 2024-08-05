@@ -9,9 +9,6 @@
 #define FU_GET_TYPE_STRING(Type) \
 	((void) sizeof UEAsserts_Private::GetMemberNameCheckedJunk(static_cast<Type*>(nullptr)), TEXTVIEW(#Type))
 
-#define FU_GET_ENUM_VALUE_STRING(Enum, EnumValue) \
-	((void) sizeof UEAsserts_Private::GetMemberNameCheckedJunk(Enum::EnumValue), TEXTVIEW(#EnumValue))
-
 // A lightweight version of the ensure() macro that doesn't generate a C++ call stack and doesn't send a
 // crash report, because it doesn't happen instantly and causes the editor to freeze, which can be annoying.
 
