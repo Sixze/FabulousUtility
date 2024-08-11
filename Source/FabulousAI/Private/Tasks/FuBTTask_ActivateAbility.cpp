@@ -22,6 +22,18 @@ UFuBTTask_ActivateAbility::UFuBTTask_ActivateAbility()
 	INIT_TASK_NODE_NOTIFY_FLAGS();
 }
 
+void UFuBTTask_ActivateAbility::InitializeMemory(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory,
+                                                 const EBTMemoryInit::Type InitType) const
+{
+	InitializeNodeMemory<FFuActivateAbilityMemory>(NodeMemory, InitType);
+}
+
+void UFuBTTask_ActivateAbility::CleanupMemory(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory,
+                                              const EBTMemoryClear::Type CleanupType) const
+{
+	CleanupNodeMemory<FFuActivateAbilityMemory>(NodeMemory, CleanupType);
+}
+
 uint16 UFuBTTask_ActivateAbility::GetInstanceMemorySize() const
 {
 	return sizeof(FFuActivateAbilityMemory);

@@ -32,6 +32,18 @@ void UFuBTDecorator_HasTag::InitializeFromAsset(UBehaviorTree& Asset)
 	}
 }
 
+void UFuBTDecorator_HasTag::InitializeMemory(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory,
+                                             const EBTMemoryInit::Type InitType) const
+{
+	InitializeNodeMemory<FFuHasTagMemory>(NodeMemory, InitType);
+}
+
+void UFuBTDecorator_HasTag::CleanupMemory(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory,
+                                          const EBTMemoryClear::Type CleanupType) const
+{
+	CleanupNodeMemory<FFuHasTagMemory>(NodeMemory, CleanupType);
+}
+
 uint16 UFuBTDecorator_HasTag::GetInstanceMemorySize() const
 {
 	return sizeof(FFuHasTagMemory);

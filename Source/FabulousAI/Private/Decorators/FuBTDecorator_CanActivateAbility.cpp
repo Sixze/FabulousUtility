@@ -20,6 +20,18 @@ UFuBTDecorator_CanActivateAbility::UFuBTDecorator_CanActivateAbility()
 	INIT_DECORATOR_NODE_NOTIFY_FLAGS();
 }
 
+void UFuBTDecorator_CanActivateAbility::InitializeMemory(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory,
+                                                         const EBTMemoryInit::Type InitType) const
+{
+	InitializeNodeMemory<FFuCanActivateAbilityMemory>(NodeMemory, InitType);
+}
+
+void UFuBTDecorator_CanActivateAbility::CleanupMemory(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory,
+                                                      const EBTMemoryClear::Type CleanupType) const
+{
+	CleanupNodeMemory<FFuCanActivateAbilityMemory>(NodeMemory, CleanupType);
+}
+
 FString UFuBTDecorator_CanActivateAbility::GetStaticDescription() const
 {
 	TStringBuilder<512> DescriptionBuilder;
