@@ -21,6 +21,15 @@ UFuSlateNavigationSettings::UFuSlateNavigationSettings()
 		{EKeys::Gamepad_DPad_Left, EUINavigation::Left},
 		{EKeys::Gamepad_DPad_Right, EUINavigation::Right}
 	};
+
+	KeyActionMappings = {
+		{EKeys::Enter, EUINavigationAction::Accept},
+		{EKeys::SpaceBar, EUINavigationAction::Accept},
+		{EKeys::Virtual_Accept, EUINavigationAction::Accept},
+
+		{EKeys::Escape, EUINavigationAction::Back},
+		{EKeys::Virtual_Back, EUINavigationAction::Back},
+	};
 }
 
 #if WITH_EDITOR

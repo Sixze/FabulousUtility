@@ -5,6 +5,7 @@
 #include "FuSlateNavigationSettings.generated.h"
 
 enum class EUINavigation : uint8;
+enum class EUINavigationAction : uint8;
 
 UCLASS(Config = "Engine", DefaultConfig)
 class FABULOUSUI_API UFuSlateNavigationSettings : public UDeveloperSettings
@@ -37,6 +38,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Tab Navigation", Config)
 	uint8 bAllowTabNavigation : 1 {true};
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Key Action", Config, Meta = (ForceInlineRow))
+	TMap<FKey, EUINavigationAction> KeyActionMappings;
 
 public:
 	UFuSlateNavigationSettings();
