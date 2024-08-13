@@ -2,12 +2,15 @@
 
 #include "FuMacros.h"
 #include "GameFramework/Actor.h"
+#include "Net/Core/PushModel/PushModelMacros.h"
 #include "FuObject.generated.h"
 
 UCLASS(Blueprintable, BlueprintType, AutoExpandCategories = ("Settings|Fu Object", "State|Fu Object"))
 class FABULOUSUTILITY_API UFuObject : public UObject
 {
 	GENERATED_BODY()
+
+	REPLICATED_BASE_CLASS(UFuObject)
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State|Fu Object", Transient, Meta = (AllowPrivateAccess))

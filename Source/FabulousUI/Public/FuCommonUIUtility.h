@@ -13,7 +13,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous UI|Common UI Utility", Meta = (ReturnDisplayName = "Input Type"))
 	static ECommonInputType GetInputType(const FKey& Key);
 
-	template <typename UserWidgetType = UUserWidget> requires TIsDerivedFrom<UserWidgetType, UUserWidget>::Value
+	template <typename UserWidgetType = UUserWidget> requires std::derived_from<UserWidgetType, UUserWidget>
 	static UserWidgetType* FindRootUserWidget(const UWidget* Widget);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous UI|Common UI Utility", Meta = (DefaultToSelf = "Widget",
@@ -25,7 +25,7 @@ public:
 		DynamicOutputParam = "UserWidget", ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryFindRootUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass, UUserWidget*& UserWidget);
 
-	template <typename UserWidgetType = UUserWidget> requires TIsDerivedFrom<UserWidgetType, UUserWidget>::Value
+	template <typename UserWidgetType = UUserWidget> requires std::derived_from<UserWidgetType, UUserWidget>
 	static UserWidgetType* FindParentUserWidget(const UWidget* Widget);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous UI|Common UI Utility", Meta = (DefaultToSelf = "Widget",
@@ -38,7 +38,7 @@ public:
 	static bool TryFindParentUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass, UUserWidget*& UserWidget);
 };
 
-template <typename UserWidgetType> requires TIsDerivedFrom<UserWidgetType, UUserWidget>::Value
+template <typename UserWidgetType> requires std::derived_from<UserWidgetType, UUserWidget>
 UserWidgetType* UFuCommonUIUtility::FindRootUserWidget(const UWidget* Widget)
 {
 	UserWidgetType* ResultUserWidget{nullptr};
@@ -72,7 +72,7 @@ inline bool UFuCommonUIUtility::TryFindRootUserWidgetByClass(const UWidget* Widg
 	return IsValid(UserWidget);
 }
 
-template <typename UserWidgetType> requires TIsDerivedFrom<UserWidgetType, UUserWidget>::Value
+template <typename UserWidgetType> requires std::derived_from<UserWidgetType, UUserWidget>
 UserWidgetType* UFuCommonUIUtility::FindParentUserWidget(const UWidget* Widget)
 {
 	while (IsValid(Widget))

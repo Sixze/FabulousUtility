@@ -34,6 +34,7 @@ void UFuSlateNavigationSubsystem::Initialize(FSubsystemCollectionBase& Subsystem
 		NavigationConfig->AnalogVerticalKey = Settings->AnalogNavigationVerticalKey;
 
 		NavigationConfig->KeyEventRules = Settings->KeyNavigationMappings;
+		NavigationConfig->KeyActionRules = Settings->KeyActionMappings;
 
 		FSlateApplication::Get().SetNavigationConfig(NavigationConfig);
 	}

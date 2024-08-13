@@ -3,7 +3,6 @@
 #include "CommonUserWidget.h"
 #include "FuMacros.h"
 #include "Framework/Application/SlateApplication.h"
-#include "Input/CommonUIActionRouterBase.h"
 #include "Input/CommonUIInputTypes.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAsyncAction_UIActionListenerByInputAction)
@@ -59,22 +58,10 @@ void UFuAsyncAction_UIActionListenerByInputAction::Activate()
 		return;
 	}
 
-	// Here, it is preferable to use the UCommonUserWidget::RegisterUIActionBinding() and UCommonUserWidget::RemoveActionBinding()
-	// functions to add and remove action bindings, but currently this is not possible because they are protected.
-
-	auto* ActionRouter{UCommonUIActionRouterBase::Get(*Widget.Get())};
-	if (!IsValid(ActionRouter))
-	{
-		SetReadyToDestroy();
-		return;
-	}
-
 	FBindUIActionArgs ActionArgs{InputActions[0], nullptr};
 	ActionArguments.Fill(ActionArgs);
 
 	ActionHandles.Reserve(InputActions.Num());
-
-	auto& WidgetActionHandles{const_cast<TArray<FUIActionBindingHandle>&>(Widget->GetActionBindings())};
 
 	for (UInputAction* InputAction : InputActions)
 	{
@@ -83,11 +70,10 @@ void UFuAsyncAction_UIActionListenerByInputAction::Activate()
 		ActionArgs.OnExecuteAction = FSimpleDelegate::CreateUObject(
 			this, &ThisClass::Widget_OnActionExecuted, TWeakObjectPtr<UInputAction>{InputAction});
 
-		const auto ActionHandle{ActionRouter->RegisterUIActionBinding(*Widget.Get(), ActionArgs)};
+		const auto ActionHandle{Widget->RegisterUIActionBinding(ActionArgs)};
 		if (ActionHandle.IsValid())
 		{
 			ActionHandles.Emplace(ActionHandle);
-			WidgetActionHandles.Emplace(ActionHandle);
 		}
 	}
 

@@ -36,6 +36,18 @@ void UFuBTDecorator_RandomizedLoop::PostEditChangeProperty(FPropertyChangedEvent
 }
 #endif
 
+void UFuBTDecorator_RandomizedLoop::InitializeMemory(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory,
+                                                     const EBTMemoryInit::Type InitType) const
+{
+	InitializeNodeMemory<FFuRandomizedLoopMemory>(NodeMemory, InitType);
+}
+
+void UFuBTDecorator_RandomizedLoop::CleanupMemory(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory,
+                                                  const EBTMemoryClear::Type CleanupType) const
+{
+	CleanupNodeMemory<FFuRandomizedLoopMemory>(NodeMemory, CleanupType);
+}
+
 void UFuBTDecorator_RandomizedLoop::DescribeRuntimeValues(const UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory,
                                                           const EBTDescriptionVerbosity::Type Verbosity, TArray<FString>& Values) const
 {

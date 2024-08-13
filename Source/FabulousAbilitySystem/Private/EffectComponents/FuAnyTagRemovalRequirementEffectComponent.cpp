@@ -65,9 +65,9 @@ bool UFuAnyTagRemovalRequirementEffectComponent::OnActiveGameplayEffectAdded(FAc
 	return true;
 }
 
-void UFuAnyTagRemovalRequirementEffectComponent::OnGameplayEffectChanged() const
+void UFuAnyTagRemovalRequirementEffectComponent::OnGameplayEffectChanged()
 {
-	const_cast<ThisClass*>(this)->RefreshRemovalRequirementTags();
+	RefreshRemovalRequirementTags();
 }
 
 void UFuAnyTagRemovalRequirementEffectComponent::RefreshRemovalRequirementTags()

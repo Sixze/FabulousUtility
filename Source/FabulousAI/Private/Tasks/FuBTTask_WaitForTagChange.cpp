@@ -26,6 +26,18 @@ bool UFuBTTask_WaitForTagChange::CanEditChange(const FProperty* Property) const
 }
 #endif
 
+void UFuBTTask_WaitForTagChange::InitializeMemory(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory,
+                                                  const EBTMemoryInit::Type InitType) const
+{
+	InitializeNodeMemory<FFuTagListenerMemory>(NodeMemory, InitType);
+}
+
+void UFuBTTask_WaitForTagChange::CleanupMemory(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory,
+                                               const EBTMemoryClear::Type CleanupType) const
+{
+	CleanupNodeMemory<FFuTagListenerMemory>(NodeMemory, CleanupType);
+}
+
 uint16 UFuBTTask_WaitForTagChange::GetInstanceMemorySize() const
 {
 	return sizeof(FFuTagListenerMemory);

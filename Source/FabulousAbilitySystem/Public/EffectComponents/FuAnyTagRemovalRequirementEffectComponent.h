@@ -7,7 +7,7 @@
 struct FGameplayEffectRemovalInfo;
 
 // Prevents the application of the effect or removes it if the owner of this effect has ANY of the specified tags.
-UCLASS()
+UCLASS(DisplayName = "Fu Removal Requirement (Any Tag)")
 class FABULOUSABILITYSYSTEM_API UFuAnyTagRemovalRequirementEffectComponent : public UGameplayEffectComponent
 {
 	GENERATED_BODY()
@@ -32,7 +32,7 @@ public:
 	virtual bool OnActiveGameplayEffectAdded(FActiveGameplayEffectsContainer& ActiveEffects,
 	                                         FActiveGameplayEffect& ActiveEffect) const override;
 
-	virtual void OnGameplayEffectChanged() const override;
+	virtual void OnGameplayEffectChanged() override;
 
 private:
 	void RefreshRemovalRequirementTags();

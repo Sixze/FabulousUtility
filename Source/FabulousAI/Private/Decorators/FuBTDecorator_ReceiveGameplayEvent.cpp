@@ -34,6 +34,18 @@ void UFuBTDecorator_ReceiveGameplayEvent::InitializeFromAsset(UBehaviorTree& Ass
 	}
 }
 
+void UFuBTDecorator_ReceiveGameplayEvent::InitializeMemory(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory,
+                                                           const EBTMemoryInit::Type InitType) const
+{
+	InitializeNodeMemory<FFuReceiveGameplayEventMemory>(NodeMemory, InitType);
+}
+
+void UFuBTDecorator_ReceiveGameplayEvent::CleanupMemory(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory,
+                                                        const EBTMemoryClear::Type CleanupType) const
+{
+	CleanupNodeMemory<FFuReceiveGameplayEventMemory>(NodeMemory, CleanupType);
+}
+
 uint16 UFuBTDecorator_ReceiveGameplayEvent::GetInstanceMemorySize() const
 {
 	return sizeof(FFuReceiveGameplayEventMemory);

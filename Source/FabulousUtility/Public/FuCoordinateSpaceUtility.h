@@ -26,26 +26,30 @@ public:
 		DisplayName = "Try Transform World to Screen Location (Local Player)",
 		Meta = (ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
 	static bool TryTransformWorldToScreenLocationLocalPlayer(const ULocalPlayer* LocalPlayer,
-	                                                         const FVector& WorldLocation, FVector2f& ScreenLocation);
+	                                                         const FVector& WorldLocation, FVector2f& ScreenLocation,
+	                                                         bool bCalculateOutsideScreenLocation = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
 		DisplayName = "Try Transform World to Screen Location (Player Controller)",
 		Meta = (DefaultToSelf = "Player", ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
-	static bool TryTransformWorldToScreenLocation(const APlayerController* Player, const FVector& WorldLocation, FVector2f& ScreenLocation);
+	static bool TryTransformWorldToScreenLocation(const APlayerController* Player, const FVector& WorldLocation,
+	                                              FVector2f& ScreenLocation, bool bCalculateOutsideScreenLocation = true);
 
 	// Same as UGameplayStatics::ProjectWorldToScreen() but simplified.
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
 		DisplayName = "Try Transform World to Viewport Location (Local Player)",
 		Meta = (ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
 	static bool TryTransformWorldToViewportLocationLocalPlayer(const ULocalPlayer* LocalPlayer, const FVector& WorldLocation,
-	                                                           FVector2f& ViewportLocation, bool bPlayerViewportRelative);
+	                                                           FVector2f& ViewportLocation, bool bPlayerViewportRelative,
+	                                                           bool bCalculateOutsideScreenLocation = true);
 
 	// Same as UGameplayStatics::ProjectWorldToScreen() but simplified.
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
 		DisplayName = "Try Transform World to Viewport Location (Player Controller)",
 		Meta = (DefaultToSelf = "Player", ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
 	static bool TryTransformWorldToViewportLocation(const APlayerController* Player, const FVector& WorldLocation,
-	                                                FVector2f& ViewportLocation, bool bPlayerViewportRelative);
+	                                                FVector2f& ViewportLocation, bool bPlayerViewportRelative,
+	                                                bool bCalculateOutsideScreenLocation = true);
 
 	// Same as UWidgetLayoutLibrary::ProjectWorldLocationToWidgetPosition() or UGameplayStatics::ProjectWorldToScreen()
 	// with USlateBlueprintLibrary::ScreenToViewport(), but simplified and without rounding.
@@ -53,7 +57,8 @@ public:
 		DisplayName = "Try Transform World to Viewport Widget Location (Local Player)",
 		Meta = (xpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
 	static bool TryTransformWorldToViewportWidgetLocationLocalPlayer(const ULocalPlayer* LocalPlayer, const FVector& WorldLocation,
-	                                                                 FVector2f& ViewportWidgetLocation, bool bPlayerViewportRelative);
+	                                                                 FVector2f& ViewportWidgetLocation, bool bPlayerViewportRelative,
+	                                                                 bool bCalculateOutsideScreenLocation = true);
 
 	// Same as UWidgetLayoutLibrary::ProjectWorldLocationToWidgetPosition() or UGameplayStatics::ProjectWorldToScreen()
 	// with USlateBlueprintLibrary::ScreenToViewport(), but simplified and without rounding.
@@ -61,7 +66,8 @@ public:
 		DisplayName = "Try Transform World to Viewport Widget Location (Player Controller)",
 		Meta = (DefaultToSelf = "Player", ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
 	static bool TryTransformWorldToViewportWidgetLocation(const APlayerController* Player, const FVector& WorldLocation,
-	                                                      FVector2f& ViewportWidgetLocation, bool bPlayerViewportRelative);
+	                                                      FVector2f& ViewportWidgetLocation, bool bPlayerViewportRelative,
+	                                                      bool bCalculateOutsideScreenLocation = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
 		Meta = (WorldContext = "WorldContext", ExpandBoolAsExecs = "ReturnValue"))

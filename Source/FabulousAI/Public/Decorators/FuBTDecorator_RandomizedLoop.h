@@ -24,6 +24,10 @@ public:
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& ChangedEvent) override;
 #endif
 
+	virtual void InitializeMemory(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory, EBTMemoryInit::Type InitType) const override;
+
+	virtual void CleanupMemory(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory, EBTMemoryClear::Type CleanupType) const override;
+
 	virtual void DescribeRuntimeValues(const UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory,
 	                                   EBTDescriptionVerbosity::Type Verbosity, TArray<FString>& Values) const override;
 

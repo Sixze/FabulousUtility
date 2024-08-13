@@ -17,6 +17,10 @@ protected:
 public:
 	UFuBTDecorator_CanActivateAbility();
 
+	virtual void InitializeMemory(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory, EBTMemoryInit::Type InitType) const override;
+
+	virtual void CleanupMemory(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory, EBTMemoryClear::Type CleanupType) const override;
+
 	virtual uint16 GetInstanceMemorySize() const override;
 
 	virtual FString GetStaticDescription() const override;

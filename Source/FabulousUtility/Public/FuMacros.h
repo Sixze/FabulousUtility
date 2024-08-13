@@ -9,9 +9,6 @@
 #define FU_GET_TYPE_STRING(Type) \
 	((void) sizeof UEAsserts_Private::GetMemberNameCheckedJunk(static_cast<Type*>(nullptr)), TEXTVIEW(#Type))
 
-#define FU_GET_ENUM_VALUE_STRING(Enum, EnumValue) \
-	((void) sizeof UEAsserts_Private::GetMemberNameCheckedJunk(Enum::EnumValue), TEXTVIEW(#EnumValue))
-
 // A lightweight version of the ensure() macro that doesn't generate a C++ call stack and doesn't send a
 // crash report, because it doesn't happen instantly and causes the editor to freeze, which can be annoying.
 
@@ -19,7 +16,7 @@
 
 namespace FuEnsure
 {
-	FABULOUSUTILITY_API bool UE_DEBUG_SECTION VARARGS Execute(bool& bExecuted, bool bEnsureAlways, const ANSICHAR* Expression,
+	FABULOUSUTILITY_API bool UE_DEBUG_SECTION VARARGS Execute(std::atomic<bool>& bExecuted, bool bEnsureAlways, const ANSICHAR* Expression,
 	                                                          const TCHAR* StaticMessage, const TCHAR* Format, ...);
 }
 
@@ -27,9 +24,9 @@ namespace FuEnsure
 	(LIKELY(Expression) || [Capture]() UE_DEBUG_SECTION \
 	{ \
 		static constexpr auto StaticMessage{TEXT("Ensure failed: " #Expression ", File: " __FILE__ ", Line: " FU_STRINGIFY(__LINE__) ".")}; \
- 		static auto bExecuted{false}; \
+ 		static std::atomic<bool> bExecuted{false}; \
  		\
-		FValidateArgsInternal(__VA_ARGS__); \
+		UE_VALIDATE_FORMAT_STRING(Format, ##__VA_ARGS__); \
 		\
 		if (FuEnsure::Execute(bExecuted, bEnsureAlways, #Expression, StaticMessage, Format, ##__VA_ARGS__)) \
 		{ \

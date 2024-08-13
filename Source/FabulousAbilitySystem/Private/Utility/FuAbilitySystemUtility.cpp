@@ -57,8 +57,7 @@ FGameplayTag UFuAbilitySystemUtility::FindFirstOwnedDescendantTag(const UAbility
 		return FGameplayTag::EmptyTag;
 	}
 
-	FGameplayTagContainer Tags;
-	AbilitySystem->GetOwnedGameplayTags(Tags);
+	const auto& Tags{AbilitySystem->GetOwnedGameplayTags()};
 
 	return UFuGameplayTagUtility::FindFirstDescendantTag(Tags, ParentTag);
 }

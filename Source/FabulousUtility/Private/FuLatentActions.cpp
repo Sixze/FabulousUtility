@@ -93,7 +93,7 @@ void FFuAdvancedDelayLatentAction::UpdateOperation(FLatentResponse& Response)
 		return;
 	}
 
-	TimeRemaining += Duration * PassedLoops;
+	TimeRemaining += Duration * static_cast<float>(PassedLoops);
 
 	Response.TriggerLink(ExecutionFunction, Linkage, CallbackTarget);
 }
