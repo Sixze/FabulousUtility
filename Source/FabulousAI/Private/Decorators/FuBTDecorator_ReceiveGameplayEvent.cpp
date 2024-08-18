@@ -18,7 +18,7 @@ UFuBTDecorator_ReceiveGameplayEvent::UFuBTDecorator_ReceiveGameplayEvent()
 	NodeName = TEXTVIEW("Fu Receive Gameplay Event");
 
 	TargetKey.AllowNoneAsValue(true);
-	TargetKey.AddObjectFilter(this, GET_MEMBER_NAME_CHECKED(ThisClass, TargetKey), AActor::StaticClass());
+	TargetKey.AddObjectFilter(this, FName{GET_MEMBER_NAME_STRING_VIEW_CHECKED(ThisClass, TargetKey)}, AActor::StaticClass());
 
 	INIT_DECORATOR_NODE_NOTIFY_FLAGS();
 }

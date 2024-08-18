@@ -19,7 +19,7 @@ AFuAbilityTargetActor_GroundPlacement::AFuAbilityTargetActor_GroundPlacement()
 #if WITH_EDITOR
 void AFuAbilityTargetActor_GroundPlacement::PostEditChangeProperty(FPropertyChangedEvent& ChangedEvent)
 {
-	if (ChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, SlopeAngleThreshold))
+	if (ChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_STRING_VIEW_CHECKED(ThisClass, SlopeAngleThreshold))
 	{
 		SlopeAngleThresholdCos = FMath::Cos(FMath::DegreesToRadians(SlopeAngleThreshold));
 	}

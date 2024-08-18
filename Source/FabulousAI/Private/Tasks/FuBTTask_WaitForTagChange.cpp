@@ -22,7 +22,7 @@ UFuBTTask_WaitForTagChange::UFuBTTask_WaitForTagChange()
 bool UFuBTTask_WaitForTagChange::CanEditChange(const FProperty* Property) const
 {
 	return Super::CanEditChange(Property) &&
-	       Property->GetFName() != GET_MEMBER_NAME_CHECKED(ThisClass, bIgnoreRestartSelf);
+	       Property->GetFName() != GET_MEMBER_NAME_STRING_VIEW_CHECKED(ThisClass, bIgnoreRestartSelf);
 }
 #endif
 

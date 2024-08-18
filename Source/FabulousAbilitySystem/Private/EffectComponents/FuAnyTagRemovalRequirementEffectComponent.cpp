@@ -22,7 +22,7 @@ void UFuAnyTagRemovalRequirementEffectComponent::PostInitProperties()
 #if WITH_EDITOR
 void UFuAnyTagRemovalRequirementEffectComponent::PostEditChangeProperty(FPropertyChangedEvent& ChangedEvent)
 {
-	if (ChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, RemovalRequirementTags))
+	if (ChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_STRING_VIEW_CHECKED(ThisClass, RemovalRequirementTags))
 	{
 		RefreshRemovalRequirementTags();
 	}
@@ -61,6 +61,7 @@ bool UFuAnyTagRemovalRequirementEffectComponent::OnActiveGameplayEffectAdded(FAc
 	}
 
 	ActiveEffect.EventSet.OnEffectRemoved.AddUObject(this, &ThisClass::Effect_OnRemoved,
+	                                                 // ReSharper disable once CppBoundToDelegateMethodIsNotMarkedAsUFunction
 	                                                 AbilitySystem, MoveTemp(TagChangedDelegateHandles));
 	return true;
 }

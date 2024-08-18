@@ -6,7 +6,7 @@
 #define FU_ATTRIBUTE_ACCESSORS(AttributeName) \
 	static const FGameplayAttribute& Get##AttributeName##Attribute() \
 	{ \
-		static const FGameplayAttribute Attribute{FindFieldChecked<FProperty>(StaticClass(), GET_MEMBER_NAME_CHECKED(ThisClass, AttributeName))}; \
+		static const FGameplayAttribute Attribute{FindFieldChecked<FProperty>(StaticClass(), FName{GET_MEMBER_NAME_STRING_VIEW_CHECKED(ThisClass, AttributeName)})}; \
 		return Attribute; \
 	} \
 	\
