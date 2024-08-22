@@ -52,9 +52,10 @@ UUserWidget* UFuCommonUIUtility::FindRootUserWidgetByClass(const UWidget* Widget
 	return ResultUserWidget;
 }
 
-UUserWidget* UFuCommonUIUtility::FindParentUserWidgetByClass(const UWidget* Widget, const TSubclassOf<UUserWidget> UserWidgetClass)
+UUserWidget* UFuCommonUIUtility::FindAncestorUserWidgetByClass(const UWidget* Widget,
+                                                               const TSubclassOf<UUserWidget> AncestorUserWidgetClass)
 {
-	if (!IsValid(UserWidgetClass))
+	if (!IsValid(AncestorUserWidgetClass))
 	{
 		return nullptr;
 	}
@@ -70,7 +71,7 @@ UUserWidget* UFuCommonUIUtility::FindParentUserWidgetByClass(const UWidget* Widg
 		}
 
 		auto* UserWidget{Cast<UUserWidget>(WidgetTree->GetOuter())};
-		if (IsValid(UserWidget) && UserWidget->IsA(UserWidgetClass))
+		if (IsValid(UserWidget) && UserWidget->IsA(AncestorUserWidgetClass))
 		{
 			return UserWidget;
 		}

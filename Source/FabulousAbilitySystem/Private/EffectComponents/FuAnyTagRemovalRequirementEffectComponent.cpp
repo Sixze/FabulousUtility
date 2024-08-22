@@ -2,6 +2,7 @@
 
 #include "AbilitySystemComponent.h"
 #include "FuMacros.h"
+#include "Misc/EnumerateRange.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAnyTagRemovalRequirementEffectComponent)
 
@@ -94,9 +95,9 @@ void UFuAnyTagRemovalRequirementEffectComponent::Effect_OnRemoved(const FGamepla
                                                                   UAbilitySystemComponent* AbilitySystem,
                                                                   TArray<FDelegateHandle> TagChangedDelegateHandles) const
 {
-	for (auto i{0}; i < TagChangedDelegateHandles.Num(); i++)
+	for (const auto DelegateHandle : EnumerateRange(TagChangedDelegateHandles))
 	{
-		FU_ENSURE(AbilitySystem->UnregisterGameplayTagEvent(TagChangedDelegateHandles[i],
-			RemovalRequirementTags.CombinedTags.GetGameplayTagArray()[i], EGameplayTagEventType::NewOrRemoved));
+		FU_ENSURE(AbilitySystem->UnregisterGameplayTagEvent(*DelegateHandle,
+			RemovalRequirementTags.CombinedTags.GetGameplayTagArray()[DelegateHandle.GetIndex()], EGameplayTagEventType::NewOrRemoved));
 	}
 }

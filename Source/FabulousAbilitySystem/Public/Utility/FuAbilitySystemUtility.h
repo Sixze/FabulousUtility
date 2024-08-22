@@ -24,8 +24,8 @@ public:
 	static AActor* GetAvatar(const UAbilitySystemComponent* AbilitySystem);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Ability System Utility",
-		Meta = (AutoCreateRefTerm = "ParentTag", ReturnDisplayName = "Descendant Tag"))
-	static FGameplayTag FindFirstOwnedDescendantTag(const UAbilitySystemComponent* AbilitySystem, const FGameplayTag& ParentTag);
+		Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Descendant Tag"))
+	static FGameplayTag FindFirstOwnedDescendantTag(const UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability System Utility",
 		Meta = (AutoCreateRefTerm = "Tags", ReturnDisplayName = "Ability Handle"))

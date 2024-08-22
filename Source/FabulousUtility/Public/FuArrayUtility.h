@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "Misc/EnumerateRange.h"
 #include "FuArrayUtility.generated.h"
 
 DECLARE_DYNAMIC_DELEGATE_RetVal_TwoParams(bool, FFuSortByPredicatObjectDelegate, const UObject*, A, const UObject*, B);
@@ -124,13 +125,13 @@ int32 UFuArrayUtility::GetWeightedRandomIndexByPredicate(const TArray<ValueType>
 	const auto RandomWeight{FMath::FRand() * TotalWeight};
 	auto ActualWeight{0.0f};
 
-	for (auto i{0}; i < Array.Num(); i++)
+	for (const auto Weight : EnumerateRange(Array))
 	{
-		ActualWeight += Invoke(WeightPredicate, Array[i]);
+		ActualWeight += Invoke(WeightPredicate, *Weight);
 
 		if (RandomWeight <= ActualWeight)
 		{
-			return i;
+			return Weight.GetIndex();
 		}
 	}
 

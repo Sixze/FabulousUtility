@@ -50,16 +50,16 @@ bool UFuAbilitySystemUtility::TryGetAbilitySystem(const UObject* Object, UAbilit
 }
 
 FGameplayTag UFuAbilitySystemUtility::FindFirstOwnedDescendantTag(const UAbilitySystemComponent* AbilitySystem,
-                                                                  const FGameplayTag& ParentTag)
+                                                                  const FGameplayTag& Tag)
 {
-	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(ParentTag.IsValid()))
+	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(Tag.IsValid()))
 	{
 		return FGameplayTag::EmptyTag;
 	}
 
 	const auto& Tags{AbilitySystem->GetOwnedGameplayTags()};
 
-	return UFuGameplayTagUtility::FindFirstDescendantTag(Tags, ParentTag);
+	return UFuGameplayTagUtility::FindFirstDescendantTag(Tags, Tag);
 }
 
 FGameplayAbilitySpecHandle UFuAbilitySystemUtility::GiveAbilityWithDynamicTags(UAbilitySystemComponent* AbilitySystem,

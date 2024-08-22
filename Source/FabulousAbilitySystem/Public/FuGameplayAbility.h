@@ -3,7 +3,7 @@
 #include "Abilities/GameplayAbility.h"
 #include "FuGameplayAbility.generated.h"
 
-UCLASS(AutoExpandCategories = ("Settings|Fu Gameplay Ability", "State|Fu Gameplay Ability"))
+UCLASS(AutoExpandCategories = ("Settings|Fu Gameplay Ability"))
 class FABULOUSABILITYSYSTEM_API UFuGameplayAbility : public UGameplayAbility
 {
 	GENERATED_BODY()

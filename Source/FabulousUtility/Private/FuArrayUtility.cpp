@@ -22,13 +22,13 @@ int32 UFuArrayUtility::GetWeightedRandomIndex(const TArray<float>& Array)
 	const auto RandomWeight{FMath::FRand() * TotalWeight};
 	auto ActualWeight{0.0f};
 
-	for (auto i{0}; i < Array.Num(); i++)
+	for (const auto Weight : EnumerateRange(Array))
 	{
-		ActualWeight += Array[i];
+		ActualWeight += *Weight;
 
 		if (RandomWeight <= ActualWeight)
 		{
-			return i;
+			return Weight.GetIndex();
 		}
 	}
 

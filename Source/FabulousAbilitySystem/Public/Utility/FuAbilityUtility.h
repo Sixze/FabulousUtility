@@ -39,8 +39,8 @@ public:
 	static bool IsInputPressedExpanded(const UGameplayAbility* Ability);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Ability Utility",
-		Meta = (DefaultToSelf = "Ability", AutoCreateRefTerm = "ParentTag", ReturnDisplayName = "Descendant Tag"))
-	static FGameplayTag FindFirstDescendantAbilityTag(const UGameplayAbility* Ability, const FGameplayTag& ParentTag);
+		Meta = (DefaultToSelf = "Ability", AutoCreateRefTerm = "Tag", ReturnDisplayName = "Descendant Tag"))
+	static FGameplayTag FindFirstDescendantAbilityTag(const UGameplayAbility* Ability, const FGameplayTag& Tag);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Ability Utility",
 		Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Value"))
@@ -53,9 +53,9 @@ public:
 	                                     TSubclassOf<UObject> SourceObjectClass, UObject*& SourceObject);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Ability Utility",
-		Meta = (AutoCreateRefTerm = "ParentTag", ReturnDisplayName = "Descendant Tag"))
+		Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Descendant Tag"))
 	static FGameplayTag FindFirstDescendantAbilityTagByHandle(const UAbilitySystemComponent* AbilitySystem,
-	                                                          FGameplayAbilitySpecHandle AbilityHandle, const FGameplayTag& ParentTag);
+	                                                          FGameplayAbilitySpecHandle AbilityHandle, const FGameplayTag& Tag);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Ability Utility",
 		Meta = (DefaultToSelf = "Ability", ReturnDisplayName = "Effect Handle"))

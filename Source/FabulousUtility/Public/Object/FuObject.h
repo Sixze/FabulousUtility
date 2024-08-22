@@ -5,7 +5,7 @@
 #include "Net/Core/PushModel/PushModelMacros.h"
 #include "FuObject.generated.h"
 
-UCLASS(Blueprintable, BlueprintType, AutoExpandCategories = ("Settings|Fu Object", "State|Fu Object"))
+UCLASS(Blueprintable, BlueprintType, AutoExpandCategories = ("Settings|Fu Object"))
 class FABULOUSUTILITY_API UFuObject : public UObject
 {
 	GENERATED_BODY()

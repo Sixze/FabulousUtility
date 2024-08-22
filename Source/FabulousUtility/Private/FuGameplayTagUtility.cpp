@@ -39,18 +39,18 @@ FGameplayTagContainer UFuGameplayTagUtility::GetChildTagsWithoutDescendants(cons
 	return Tags;
 }
 
-const FGameplayTag& UFuGameplayTagUtility::FindFirstDescendantTag(const FGameplayTagContainer& Tags, const FGameplayTag& ParentTag)
+const FGameplayTag& UFuGameplayTagUtility::FindFirstDescendantTag(const FGameplayTagContainer& Tags, const FGameplayTag& Tag)
 {
-	if (!ParentTag.IsValid())
+	if (!Tag.IsValid())
 	{
 		return FGameplayTag::EmptyTag;
 	}
 
-	for (const auto& Tag : Tags)
+	for (const auto& DescendantTag : Tags)
 	{
-		if (Tag.MatchesTag(ParentTag))
+		if (DescendantTag.MatchesTag(Tag))
 		{
-			return Tag;
+			return DescendantTag;
 		}
 	}
 

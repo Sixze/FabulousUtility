@@ -23,19 +23,21 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Fabulous UI|Common UI Utility", Meta = (DefaultToSelf = "Widget",
 		UserWidgetClass = "/Script/UMG.UserWidget", DeterminesOutputType = "UserWidgetClass",
 		DynamicOutputParam = "UserWidget", ExpandBoolAsExecs = "ReturnValue"))
-	static bool TryFindRootUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass, UUserWidget*& UserWidget);
+	static bool TryFindRootUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> RootUserWidgetClass,
+	                                         UUserWidget*& RootUserWidget);
 
 	template <typename UserWidgetType = UUserWidget> requires std::derived_from<UserWidgetType, UUserWidget>
-	static UserWidgetType* FindParentUserWidget(const UWidget* Widget);
+	static UserWidgetType* FindAncestorUserWidget(const UWidget* Widget);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous UI|Common UI Utility", Meta = (DefaultToSelf = "Widget",
 		UserWidgetClass = "/Script/UMG.UserWidget", DeterminesOutputType = "UserWidgetClass", ReturnDisplayName = "Root Widget"))
-	static UUserWidget* FindParentUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass);
+	static UUserWidget* FindAncestorUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> AncestorUserWidgetClass);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous UI|Common UI Utility", Meta = (DefaultToSelf = "Widget",
 		UserWidgetClass = "/Script/UMG.UserWidget", DeterminesOutputType = "UserWidgetClass",
 		DynamicOutputParam = "UserWidget", ExpandBoolAsExecs = "ReturnValue"))
-	static bool TryFindParentUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> UserWidgetClass, UUserWidget*& UserWidget);
+	static bool TryFindAncestorUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> AncestorUserWidgetClass,
+	                                             UUserWidget*& AncestorUserWidget);
 };
 
 template <typename UserWidgetType> requires std::derived_from<UserWidgetType, UUserWidget>
@@ -65,15 +67,15 @@ UserWidgetType* UFuCommonUIUtility::FindRootUserWidget(const UWidget* Widget)
 	return ResultUserWidget;
 }
 
-inline bool UFuCommonUIUtility::TryFindRootUserWidgetByClass(const UWidget* Widget, const TSubclassOf<UUserWidget> UserWidgetClass,
-                                                             UUserWidget*& UserWidget)
+inline bool UFuCommonUIUtility::TryFindRootUserWidgetByClass(const UWidget* Widget, const TSubclassOf<UUserWidget> RootUserWidgetClass,
+                                                             UUserWidget*& RootUserWidget)
 {
-	UserWidget = FindRootUserWidgetByClass(Widget, UserWidgetClass);
-	return IsValid(UserWidget);
+	RootUserWidget = FindRootUserWidgetByClass(Widget, RootUserWidgetClass);
+	return IsValid(RootUserWidget);
 }
 
 template <typename UserWidgetType> requires std::derived_from<UserWidgetType, UUserWidget>
-UserWidgetType* UFuCommonUIUtility::FindParentUserWidget(const UWidget* Widget)
+UserWidgetType* UFuCommonUIUtility::FindAncestorUserWidget(const UWidget* Widget)
 {
 	while (IsValid(Widget))
 	{
@@ -97,9 +99,10 @@ UserWidgetType* UFuCommonUIUtility::FindParentUserWidget(const UWidget* Widget)
 	return nullptr;
 }
 
-inline bool UFuCommonUIUtility::TryFindParentUserWidgetByClass(const UWidget* Widget, const TSubclassOf<UUserWidget> UserWidgetClass,
-                                                               UUserWidget*& UserWidget)
+inline bool UFuCommonUIUtility::TryFindAncestorUserWidgetByClass(const UWidget* Widget,
+                                                                 const TSubclassOf<UUserWidget> AncestorUserWidgetClass,
+                                                                 UUserWidget*& AncestorUserWidget)
 {
-	UserWidget = FindParentUserWidgetByClass(Widget, UserWidgetClass);
-	return IsValid(UserWidget);
+	AncestorUserWidget = FindAncestorUserWidgetByClass(Widget, AncestorUserWidgetClass);
+	return IsValid(AncestorUserWidget);
 }

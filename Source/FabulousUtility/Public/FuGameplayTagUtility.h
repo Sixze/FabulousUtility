@@ -22,6 +22,7 @@ public:
 	static FGameplayTagContainer GetChildTagsWithoutDescendants(const FGameplayTag& Tag);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Gameplay Tag Utility",
-		Meta = (AutoCreateRefTerm = "ParentTag", ReturnDisplayName = "Descendant Tag"))
-	static const FGameplayTag& FindFirstDescendantTag(const FGameplayTagContainer& Tags, const FGameplayTag& ParentTag);
+		Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Descendant Tag"))
+	static const FGameplayTag& FindFirstDescendantTag(const FGameplayTagContainer& Tags,
+	                                                  const FGameplayTag& Tag);
 };
