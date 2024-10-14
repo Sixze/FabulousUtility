@@ -12,7 +12,7 @@ FGameplayTag UFuAbilityUtility::FindFirstDescendantAbilityTag(const UGameplayAbi
 		return FGameplayTag::EmptyTag;
 	}
 
-	const auto DescendantTag{UFuGameplayTagUtility::FindFirstDescendantTag(Ability->AbilityTags, Tag)};
+	const auto DescendantTag{UFuGameplayTagUtility::FindFirstDescendantTag(Ability->GetAssetTags(), Tag)};
 	if (DescendantTag.IsValid())
 	{
 		return DescendantTag;
@@ -24,7 +24,7 @@ FGameplayTag UFuAbilityUtility::FindFirstDescendantAbilityTag(const UGameplayAbi
 		return FGameplayTag::EmptyTag;
 	}
 
-	return UFuGameplayTagUtility::FindFirstDescendantTag(AbilitySpecification->DynamicAbilityTags, Tag);
+	return UFuGameplayTagUtility::FindFirstDescendantTag(AbilitySpecification->GetDynamicSpecSourceTags(), Tag);
 }
 
 bool UFuAbilityUtility::HasAbilityTag(const UAbilitySystemComponent* AbilitySystem, const FGameplayAbilitySpecHandle AbilityHandle,
@@ -38,8 +38,8 @@ bool UFuAbilityUtility::HasAbilityTag(const UAbilitySystemComponent* AbilitySyst
 	const auto* AbilitySpecification{AbilitySystem->FindAbilitySpecFromHandle(AbilityHandle)};
 
 	return FU_ENSURE(AbilitySpecification != nullptr) &&
-	       (AbilitySpecification->DynamicAbilityTags.HasTag(Tag) ||
-	        AbilitySpecification->Ability->AbilityTags.HasTag(Tag));
+	       (AbilitySpecification->GetDynamicSpecSourceTags().HasTag(Tag) ||
+	        AbilitySpecification->Ability->GetAssetTags().HasTag(Tag));
 }
 
 bool UFuAbilityUtility::TryGetSourceObjectCasted(const UAbilitySystemComponent* AbilitySystem,
@@ -80,13 +80,13 @@ FGameplayTag UFuAbilityUtility::FindFirstDescendantAbilityTagByHandle(const UAbi
 		return FGameplayTag::EmptyTag;
 	}
 
-	const auto DescendantTag{UFuGameplayTagUtility::FindFirstDescendantTag(AbilitySpecification->DynamicAbilityTags, Tag)};
+	const auto DescendantTag{UFuGameplayTagUtility::FindFirstDescendantTag(AbilitySpecification->GetDynamicSpecSourceTags(), Tag)};
 	if (DescendantTag.IsValid())
 	{
 		return DescendantTag;
 	}
 
-	return UFuGameplayTagUtility::FindFirstDescendantTag(AbilitySpecification->Ability->AbilityTags, Tag);
+	return UFuGameplayTagUtility::FindFirstDescendantTag(AbilitySpecification->Ability->GetAssetTags(), Tag);
 }
 
 bool UFuAbilityUtility::TryCommitAbility(UGameplayAbility* Ability, const bool bCancelOnFailure)
@@ -118,8 +118,8 @@ bool UFuAbilityUtility::HasAbilitiesWithTag(const UAbilitySystemComponent* Abili
 
 	for (const auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
 	{
-		if (AbilitySpecification.DynamicAbilityTags.HasTag(Tag) ||
-		    AbilitySpecification.Ability->AbilityTags.HasTag(Tag))
+		if (AbilitySpecification.GetDynamicSpecSourceTags().HasTag(Tag) ||
+		    AbilitySpecification.Ability->GetAssetTags().HasTag(Tag))
 		{
 			return true;
 		}
@@ -137,8 +137,8 @@ bool UFuAbilityUtility::CanActivateAbilityByTag(const UAbilitySystemComponent* A
 
 	for (const auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
 	{
-		if ((AbilitySpecification.DynamicAbilityTags.HasTag(Tag) ||
-		     AbilitySpecification.Ability->AbilityTags.HasTag(Tag)) &&
+		if ((AbilitySpecification.GetDynamicSpecSourceTags().HasTag(Tag) ||
+		     AbilitySpecification.Ability->GetAssetTags().HasTag(Tag)) &&
 		    AbilitySpecification.Ability->CanActivateAbility(AbilitySpecification.Handle, AbilitySystem->AbilityActorInfo.Get()))
 		{
 			return true;
@@ -220,18 +220,11 @@ bool UFuAbilityUtility::BatchRpcActivateAbility(UAbilitySystemComponent* Ability
 	// auto* Ability{Cast<UFuGameplayAbility>(AbilitySpecification->GetPrimaryInstance())};
 	// Ability->BatchRpcEndAbility();
 
-	if (AbilitySpecification->Ability->GetInstancingPolicy() == EGameplayAbilityInstancingPolicy::NonInstanced)
+	for (auto* Ability : AbilitySpecification->GetAbilityInstances())
 	{
-		Cast<UFuGameplayAbility>(AbilitySpecification->Ability)->BatchRpcEndAbility();
-	}
-	else
-	{
-		for (auto* Ability : AbilitySpecification->GetAbilityInstances())
+		if (IsValid(Ability))
 		{
-			if (IsValid(Ability))
-			{
-				Cast<UFuGameplayAbility>(Ability)->BatchRpcEndAbility();
-			}
+			Cast<UFuGameplayAbility>(Ability)->BatchRpcEndAbility();
 		}
 	}
 
@@ -251,8 +244,8 @@ void UFuAbilityUtility::RemoveAbilitiesWithAnyTags(UAbilitySystemComponent* Abil
 	for (auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
 	{
 		if (AbilitySpecification.Handle != IgnoreAbilityHandle &&
-		    (AbilitySpecification.DynamicAbilityTags.HasAny(Tags) ||
-		     AbilitySpecification.Ability->AbilityTags.HasAny(Tags)))
+		    (AbilitySpecification.GetDynamicSpecSourceTags().HasAny(Tags) ||
+		     AbilitySpecification.Ability->GetAssetTags().HasAny(Tags)))
 		{
 			AbilitySystem->CancelAbilityHandle(AbilitySpecification.Handle);
 			AbilitySystem->ClearAbility(AbilitySpecification.Handle);

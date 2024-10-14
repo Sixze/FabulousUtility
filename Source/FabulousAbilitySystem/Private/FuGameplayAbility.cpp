@@ -19,8 +19,7 @@ UFuGameplayAbility::UFuGameplayAbility()
 
 void UFuGameplayAbility::SetShouldBlockOtherAbilities(const bool bShouldBlockAbilities)
 {
-	if (!bIsActive || GetInstancingPolicy() == EGameplayAbilityInstancingPolicy::NonInstanced ||
-	    bShouldBlockAbilities == bIsBlockingOtherAbilities)
+	if (!bIsActive || bShouldBlockAbilities == bIsBlockingOtherAbilities)
 	{
 		return;
 	}
@@ -112,8 +111,7 @@ void UFuGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle AbilityHand
                                     const FGameplayAbilityActivationInfo ActivationInfo,
                                     const bool bReplicateEndAbility, const bool bCanceled)
 {
-	if (IsEndAbilityValid(AbilityHandle, ActorInfo) &&
-	    (bIsActive || GetInstancingPolicy() == EGameplayAbilityInstancingPolicy::NonInstanced))
+	if (bIsActive && IsEndAbilityValid(AbilityHandle, ActorInfo))
 	{
 		auto* FuAbilitySystem{Cast<UFuAbilitySystemComponent>(ActorInfo->AbilitySystemComponent)};
 

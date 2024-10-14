@@ -96,8 +96,8 @@ void UFuAbilityAsync_AbilityCooldownListener::Activate()
 	for (const auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
 	{
 		if ((InputId >= 0 && AbilitySpecification.InputID == InputId) ||
-		    AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||
-		    AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags))
+		    AbilitySpecification.GetDynamicSpecSourceTags().HasAny(AbilityTags) ||
+		    AbilitySpecification.Ability->GetAssetTags().HasAny(AbilityTags))
 		{
 			const auto* CooldownTags{AbilitySpecification.Ability->GetCooldownTags()};
 			if (CooldownTags != nullptr)
@@ -156,8 +156,8 @@ void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(
                                                                                 const bool bAddedOrRemoved)
 {
 	if ((InputId < 0 || AbilitySpecification.InputID != InputId) &&
-	    !AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) &&
-	    !AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags))
+	    !AbilitySpecification.GetDynamicSpecSourceTags().HasAny(AbilityTags) &&
+	    !AbilitySpecification.Ability->GetAssetTags().HasAny(AbilityTags))
 	{
 		return;
 	}
