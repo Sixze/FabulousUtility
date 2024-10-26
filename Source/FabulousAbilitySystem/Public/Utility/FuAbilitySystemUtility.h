@@ -11,7 +11,7 @@ class FABULOUSABILITYSYSTEM_API UFuAbilitySystemUtility : public UBlueprintFunct
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability System Utility")
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Ability System Utility")
 	static UAbilitySystemComponent* GetAbilitySystem(const UObject* Object);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability System Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))

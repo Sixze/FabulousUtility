@@ -2,6 +2,7 @@
 
 #if !UE_SERVER
 
+#include "Engine/GameInstance.h"
 #include "Engine/GameViewportClient.h"
 #include "ViewportWatermark/FuViewportWatermarkSettings.h"
 #include "ViewportWatermark/SFuViewportWatermark.h"
