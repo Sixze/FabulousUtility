@@ -2,10 +2,6 @@
 
 #include "Misc/AssertionMacros.h"
 
-#define FU_STRINGIFY_IMPLEMENTATION(Value) #Value
-
-#define FU_STRINGIFY(Value) FU_STRINGIFY_IMPLEMENTATION(Value)
-
 #define FU_GET_TYPE_STRING(Type) \
 	((void) sizeof UEAsserts_Private::GetMemberNameCheckedJunk(static_cast<Type*>(nullptr)), TEXTVIEW(#Type))
 
