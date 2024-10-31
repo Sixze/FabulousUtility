@@ -12,19 +12,41 @@
 
 namespace FuEnsure
 {
-	FABULOUSUTILITY_API bool UE_DEBUG_SECTION VARARGS Execute(std::atomic<bool>& bExecuted, bool bEnsureAlways, const ANSICHAR* Expression,
-	                                                          const TCHAR* StaticMessage, const TCHAR* Format, ...);
+	struct FFuEnsureInfo
+	{
+	public:
+		const ANSICHAR* Expression{nullptr};
+
+		const ANSICHAR* FilePath{nullptr};
+
+		int32 LineNumber{0};
+
+		uint8 bEnsureAlways : 1 {false};
+
+	public:
+		constexpr FFuEnsureInfo(
+			const ANSICHAR* InExpression,
+			const ANSICHAR* InFilePath,
+			const int32 InLineNumber,
+			const bool bInEnsureAlways) : Expression(InExpression)
+			                              , FilePath(InFilePath)
+			                              , LineNumber(InLineNumber)
+			                              , bEnsureAlways(bInEnsureAlways) {}
+	};
+
+	FABULOUSUTILITY_API bool UE_COLD UE_DEBUG_SECTION VARARGS
+	Execute(std::atomic<bool>& bExecuted, const FFuEnsureInfo& EnsureInfo, const TCHAR* Format, ...);
 }
 
 #define FU_ENSURE_IMPLEMENTATION(Capture, bEnsureAlways, Expression, Format, ...) \
-	(LIKELY(Expression) || [Capture]() UE_DEBUG_SECTION \
+	(LIKELY(Expression) || [Capture]() UE_COLD UE_DEBUG_SECTION \
 	{ \
-		static constexpr auto StaticMessage{TEXT("Ensure failed: " #Expression ", File: " __FILE__ ", Line: " FU_STRINGIFY(__LINE__) ".")}; \
+		static constexpr FuEnsure::FFuEnsureInfo EnsureInfo{#Expression, __builtin_FILE(), __builtin_LINE(), bEnsureAlways}; \
  		static std::atomic<bool> bExecuted{false}; \
  		\
 		UE_VALIDATE_FORMAT_STRING(Format, ##__VA_ARGS__); \
 		\
-		if (FuEnsure::Execute(bExecuted, bEnsureAlways, #Expression, StaticMessage, Format, ##__VA_ARGS__)) \
+		if (FuEnsure::Execute(bExecuted, EnsureInfo, Format, ##__VA_ARGS__)) \
 		{ \
 			PLATFORM_BREAK(); \
 		} \
