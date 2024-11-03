@@ -8,6 +8,19 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTTask_SendGameplayEvent)
 
+namespace FuSendGameplayEventBehaviorTreeTaskUtility
+{
+	const auto* AllowPredictiveEffectsConsoleVariable{
+		IConsoleManager::Get().FindConsoleVariable(TEXT("AbilitySystem.Fix.AllowPredictiveGEFlags"))
+	};
+
+	bool IsPredictiveApplyEffectsByEventAllowed()
+	{
+		return AllowPredictiveEffectsConsoleVariable != nullptr &&
+		       (AllowPredictiveEffectsConsoleVariable->GetInt() & 4) > 0;
+	}
+}
+
 UFuBTTask_SendGameplayEvent::UFuBTTask_SendGameplayEvent()
 {
 	NodeName = TEXTVIEW("Fu Send Gameplay Event");
@@ -71,9 +84,15 @@ EBTNodeResult::Type UFuBTTask_SendGameplayEvent::ExecuteTask(UBehaviorTreeCompon
 
 	const auto EventData{UFuEventDataUtility::MakeEventDataFromAvatarAndAbilitySystem(Pawn, TargetAbilitySystem)};
 
+	if (FuSendGameplayEventBehaviorTreeTaskUtility::IsPredictiveApplyEffectsByEventAllowed())
 	{
+		// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 		FScopedPredictionWindow PredictionWindow{TargetAbilitySystem, true};
 
+		TargetAbilitySystem->HandleGameplayEvent(EventTag, &EventData);
+	}
+	else
+	{
 		TargetAbilitySystem->HandleGameplayEvent(EventTag, &EventData);
 	}
 

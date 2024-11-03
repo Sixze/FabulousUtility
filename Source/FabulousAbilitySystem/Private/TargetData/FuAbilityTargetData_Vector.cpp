@@ -49,7 +49,7 @@ FFuAbilityTargetData_Vector UFuVectorTargetDataUtility::GetVectorTargetData(cons
 {
 	if (!TargetDataHandle.Data.IsValidIndex(TargetDataIndex) ||
 	    !FU_ENSURE(TargetDataHandle.Data[TargetDataIndex].Get()->GetScriptStruct()
-		    ->IsChildOf(FFuAbilityTargetData_Vector::StaticStruct())))
+		    ->IsChildOf<FFuAbilityTargetData_Vector>()))
 	{
 		return {};
 	}

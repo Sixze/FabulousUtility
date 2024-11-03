@@ -56,7 +56,7 @@ FFuAbilityTargetData_LocationAndRotation UFuLocationAndRotationTargetDataUtility
 {
 	if (!TargetDataHandle.Data.IsValidIndex(TargetDataIndex) ||
 	    !FU_ENSURE(TargetDataHandle.Data[TargetDataIndex].Get()->GetScriptStruct()
-		    ->IsChildOf(FFuAbilityTargetData_LocationAndRotation::StaticStruct())))
+		    ->IsChildOf<FFuAbilityTargetData_LocationAndRotation>()))
 	{
 		return {};
 	}
