@@ -135,8 +135,15 @@ void UFuAbilitySystemComponent::AbilityLocalInputPressed(const int32 InputId)
 
 			AbilitySpecInputPressed(*AbilitySpecification);
 
-			InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputPressed, AbilitySpecification->Handle,
-			                      AbilitySpecification->ActivationInfo.GetActivationPredictionKey());
+			const auto Abilities{AbilitySpecification->GetAbilityInstances()};
+			if (FU_ENSURE(!Abilities.IsEmpty()))
+			{
+				const auto& ActivationInfo{Abilities.Last()->GetCurrentActivationInfoRef()};
+
+				InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputPressed, AbilitySpecification->Handle,
+				                      ActivationInfo.GetActivationPredictionKey());
+			}
+
 			continue;
 		}
 
@@ -185,8 +192,14 @@ void UFuAbilitySystemComponent::AbilityLocalInputReleased(const int32 InputId)
 
 			AbilitySpecInputReleased(*AbilitySpecification);
 
-			InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputReleased, AbilitySpecification->Handle,
-			                      AbilitySpecification->ActivationInfo.GetActivationPredictionKey());
+			const auto Abilities{AbilitySpecification->GetAbilityInstances()};
+			if (FU_ENSURE(!Abilities.IsEmpty()))
+			{
+				const auto& ActivationInfo{Abilities.Last()->GetCurrentActivationInfoRef()};
+
+				InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputReleased, AbilitySpecification->Handle,
+				                      ActivationInfo.GetActivationPredictionKey());
+			}
 		}
 	}
 }
@@ -219,8 +232,8 @@ void UFuAbilitySystemComponent::InputTagPressed(const FGameplayTag& InputTag)
 	for (auto& AbilitySpecification : GetActivatableAbilities())
 	{
 		if (IsValid(AbilitySpecification.Ability) &&
-		    (AbilitySpecification.DynamicAbilityTags.HasTag(InputTag) ||
-		     AbilitySpecification.Ability->AbilityTags.HasTag(InputTag)))
+		    (AbilitySpecification.GetDynamicSpecSourceTags().HasTag(InputTag) ||
+		     AbilitySpecification.Ability->GetAssetTags().HasTag(InputTag)))
 		{
 			AbilitySpecification.InputPressed = true;
 
@@ -239,8 +252,15 @@ void UFuAbilitySystemComponent::InputTagPressed(const FGameplayTag& InputTag)
 
 			AbilitySpecInputPressed(*AbilitySpecification);
 
-			InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputPressed, AbilitySpecification->Handle,
-			                      AbilitySpecification->ActivationInfo.GetActivationPredictionKey());
+			const auto Abilities{AbilitySpecification->GetAbilityInstances()};
+			if (FU_ENSURE(!Abilities.IsEmpty()))
+			{
+				const auto& ActivationInfo{Abilities.Last()->GetCurrentActivationInfoRef()};
+
+				InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputPressed, AbilitySpecification->Handle,
+				                      ActivationInfo.GetActivationPredictionKey());
+			}
+
 			continue;
 		}
 
@@ -276,8 +296,8 @@ void UFuAbilitySystemComponent::InputTagReleased(const FGameplayTag& InputTag)
 	for (auto& AbilitySpecification : GetActivatableAbilities())
 	{
 		if (IsValid(AbilitySpecification.Ability) &&
-		    (AbilitySpecification.DynamicAbilityTags.HasTag(InputTag) ||
-		     AbilitySpecification.Ability->AbilityTags.HasTag(InputTag)))
+		    (AbilitySpecification.GetDynamicSpecSourceTags().HasTag(InputTag) ||
+		     AbilitySpecification.Ability->GetAssetTags().HasTag(InputTag)))
 		{
 			AbilitySpecification.InputPressed = false;
 
@@ -296,8 +316,14 @@ void UFuAbilitySystemComponent::InputTagReleased(const FGameplayTag& InputTag)
 
 			AbilitySpecInputReleased(*AbilitySpecification);
 
-			InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputReleased, AbilitySpecification->Handle,
-			                      AbilitySpecification->ActivationInfo.GetActivationPredictionKey());
+			const auto Abilities{AbilitySpecification->GetAbilityInstances()};
+			if (FU_ENSURE(!Abilities.IsEmpty()))
+			{
+				const auto& ActivationInfo{Abilities.Last()->GetCurrentActivationInfoRef()};
+
+				InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputReleased, AbilitySpecification->Handle,
+				                      ActivationInfo.GetActivationPredictionKey());
+			}
 		}
 	}
 }

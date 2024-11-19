@@ -82,7 +82,7 @@ FGameplayAbilitySpecHandle UFuAbilitySystemUtility::GiveAbilityWithDynamicTags(U
 	{
 		if (Tag.IsValid())
 		{
-			AbilitySpecification.DynamicAbilityTags.AddTag(Tag);
+			AbilitySpecification.GetDynamicSpecSourceTags().AddTag(Tag);
 		}
 	}
 

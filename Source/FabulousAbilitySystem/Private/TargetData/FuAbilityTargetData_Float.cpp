@@ -38,7 +38,7 @@ FFuAbilityTargetData_Float UFuFloatTargetDataUtility::GetFloatTargetData(const F
 {
 	if (!TargetDataHandle.Data.IsValidIndex(TargetDataIndex) ||
 	    !FU_ENSURE(TargetDataHandle.Data[TargetDataIndex].Get()->GetScriptStruct()
-		    ->IsChildOf(FFuAbilityTargetData_Float::StaticStruct())))
+		    ->IsChildOf<FFuAbilityTargetData_Float>()))
 	{
 		return {};
 	}

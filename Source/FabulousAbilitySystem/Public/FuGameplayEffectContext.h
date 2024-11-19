@@ -3,8 +3,6 @@
 #include "Abilities/GameplayAbilityTargetTypes.h"
 #include "FuGameplayEffectContext.generated.h"
 
-// TODO Create a custom NetSerializer to properly replicate this structure via Iris, or wait until Epic provides a way to avoid it.
-
 USTRUCT()
 struct FABULOUSABILITYSYSTEM_API FFuGameplayEffectContext : public FGameplayEffectContext
 {

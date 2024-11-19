@@ -25,7 +25,7 @@ public:
 
 	// Not the same as AActor::GetActorEyesViewPoint(), since this function
 	// returns the exact location and rotation of the camera, if possible.
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Actor Utility")
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Actor Utility")
 	static void GetPlayerViewPoint(const AActor* Actor, FVector& Location, FRotator& Rotation);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Actor Utility",
@@ -46,7 +46,7 @@ public:
 	static bool IsEncroachingBlockingGeometryExpanded(const UObject* WorldContext, TSubclassOf<AActor> ActorClass,
 	                                                  const FVector& Location, const FRotator& Rotation);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Actor Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Actor Utility",
 		Meta = (WorldContext = "WorldContext", AutoCreateRefTerm = "Location, Rotation", ReturnDisplayName = "Value"))
 	static bool IsEncroachingBlockingGeometryWithAdjustment(const UObject* WorldContext, TSubclassOf<AActor> ActorClass,
 	                                                        const FVector& Location, const FRotator& Rotation,

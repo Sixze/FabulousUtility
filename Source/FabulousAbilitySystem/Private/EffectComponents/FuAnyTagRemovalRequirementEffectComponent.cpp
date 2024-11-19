@@ -6,6 +6,19 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAnyTagRemovalRequirementEffectComponent)
 
+namespace FuAnyTagRemovalRequirementEffectComponentUtility
+{
+	const auto* AllowPredictiveEffectsConsoleVariable{
+		IConsoleManager::Get().FindConsoleVariable(TEXT("AbilitySystem.Fix.AllowPredictiveGEFlags"))
+	};
+
+	bool IsPredictiveRemovalByTagRequirementsAllowed()
+	{
+		return AllowPredictiveEffectsConsoleVariable != nullptr &&
+		       (AllowPredictiveEffectsConsoleVariable->GetInt() & 2) > 0;
+	}
+}
+
 UFuAnyTagRemovalRequirementEffectComponent::UFuAnyTagRemovalRequirementEffectComponent()
 {
 #if WITH_EDITORONLY_DATA
@@ -35,13 +48,17 @@ void UFuAnyTagRemovalRequirementEffectComponent::PostEditChangeProperty(FPropert
 bool UFuAnyTagRemovalRequirementEffectComponent::CanGameplayEffectApply(const FActiveGameplayEffectsContainer& ActiveEffects,
                                                                         const FGameplayEffectSpec& EffectSpecification) const
 {
-	return !ActiveEffects.Owner->HasAnyMatchingGameplayTags(RemovalRequirementTags.CombinedTags);
+	return (ActiveEffects.IsNetAuthority() ||
+	        FuAnyTagRemovalRequirementEffectComponentUtility::IsPredictiveRemovalByTagRequirementsAllowed()) &&
+	       !ActiveEffects.Owner->HasAnyMatchingGameplayTags(RemovalRequirementTags.CombinedTags);
 }
 
 bool UFuAnyTagRemovalRequirementEffectComponent::OnActiveGameplayEffectAdded(FActiveGameplayEffectsContainer& ActiveEffects,
                                                                              FActiveGameplayEffect& ActiveEffect) const
 {
-	if (RemovalRequirementTags.CombinedTags.IsEmpty())
+	if (RemovalRequirementTags.CombinedTags.IsEmpty() ||
+	    (!ActiveEffects.IsNetAuthority() &&
+	     !FuAnyTagRemovalRequirementEffectComponentUtility::IsPredictiveRemovalByTagRequirementsAllowed()))
 	{
 		return true;
 	}

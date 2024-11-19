@@ -25,7 +25,7 @@ public:
 		Meta = (AutoCreateRefTerm = "Tags", ReturnDisplayName = "Value"))
 	static bool HasAnyGrantedTags(const FGameplayEffectSpec& EffectSpecification, const FGameplayTagContainer& Tags);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Effect Specification Utility",
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Effect Specification Utility",
 		Meta = (AutoCreateRefTerm = "SetByCallerTag", GameplayTagFilter = "SetByCaller", ReturnDisplayName = "Magnitude"))
 	static float FindSetByCallerMagnitude(const FGameplayEffectSpecHandle& EffectHandle, const FGameplayTag& SetByCallerTag);
 };

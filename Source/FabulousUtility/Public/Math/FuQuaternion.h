@@ -51,7 +51,7 @@ inline FQuat UFuQuaternion::AddWorldDeltaQuaternion(const FQuat& Quaternion, con
 
 inline FQuat UFuQuaternion::AddRelativeDeltaQuaternion(const FQuat& Quaternion, const FQuat& RelativeDelta)
 {
-	return TransformRelativeToWorldQuaternion(RelativeDelta, Quaternion);
+	return Quaternion * RelativeDelta;
 }
 
 inline FQuat UFuQuaternion::GetTwist(const FQuat& Quaternion, const FVector& TwistAxis)

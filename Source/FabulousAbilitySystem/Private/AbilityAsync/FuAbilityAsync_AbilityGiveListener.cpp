@@ -71,8 +71,8 @@ void UFuAbilityAsync_AbilityGiveListener::Activate()
 	for (const auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())
 	{
 		if (AbilityTags.IsEmpty() ||
-		    AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||
-		    AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags))
+		    AbilitySpecification.GetDynamicSpecSourceTags().HasAny(AbilityTags) ||
+		    AbilitySpecification.Ability->GetAssetTags().HasAny(AbilityTags))
 		{
 			OnAbilityGiven.Broadcast(AbilitySpecification.Handle);
 		}
@@ -95,8 +95,8 @@ void UFuAbilityAsync_AbilityGiveListener::AbilitySystem_OnAbilityGiven(const FGa
 {
 	if (ShouldBroadcastDelegates() &&
 	    (AbilityTags.IsEmpty() ||
-	     AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||
-	     AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags)))
+	     AbilitySpecification.GetDynamicSpecSourceTags().HasAny(AbilityTags) ||
+	     AbilitySpecification.Ability->GetAssetTags().HasAny(AbilityTags)))
 	{
 		OnAbilityGiven.Broadcast(AbilitySpecification.Handle);
 	}
@@ -106,8 +106,8 @@ void UFuAbilityAsync_AbilityGiveListener::AbilitySystem_OnAbilityRemoved(const F
 {
 	if (ShouldBroadcastDelegates() &&
 	    (AbilityTags.IsEmpty() ||
-	     AbilitySpecification.DynamicAbilityTags.HasAny(AbilityTags) ||
-	     AbilitySpecification.Ability->AbilityTags.HasAny(AbilityTags)))
+	     AbilitySpecification.GetDynamicSpecSourceTags().HasAny(AbilityTags) ||
+	     AbilitySpecification.Ability->GetAssetTags().HasAny(AbilityTags)))
 	{
 		OnAbilityRemoved.Broadcast(AbilitySpecification.Handle);
 	}

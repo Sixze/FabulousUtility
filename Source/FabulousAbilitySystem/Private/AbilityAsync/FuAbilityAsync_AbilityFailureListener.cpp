@@ -99,8 +99,8 @@ void UFuAbilityAsync_AbilityFailureListener::AbilitySystem_OnAbilityFailed(const
 	const auto* AbilitySpecification{GetAbilitySystemComponent()->FindAbilitySpecFromHandle(AbilityHandle)};
 
 	if (ActivationFailureTags.HasAny(FailureTags) &&
-	    (Ability->AbilityTags.HasAny(AbilityTags) ||
-	     (AbilitySpecification != nullptr && AbilitySpecification->DynamicAbilityTags.HasAny(AbilityTags))))
+	    (Ability->GetAssetTags().HasAny(AbilityTags) ||
+	     (AbilitySpecification != nullptr && AbilitySpecification->GetDynamicSpecSourceTags().HasAny(AbilityTags))))
 	{
 		OnAbilityFailed.Broadcast(AbilityHandle, FailureTags);
 	}
