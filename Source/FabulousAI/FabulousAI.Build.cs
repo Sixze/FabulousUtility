@@ -17,7 +17,7 @@ public class FabulousAI : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new[]
 		{
-			"GameplayAbilities", "NavigationSystem", "FabulousUtility", "FabulousAbilitySystem"
+			"GameplayAbilities", "FabulousUtility", "FabulousAbilitySystem"
 		});
 	}
 }

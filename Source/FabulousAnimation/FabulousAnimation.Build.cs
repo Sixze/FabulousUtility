@@ -17,7 +17,7 @@ public class FabulousAnimation : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new[]
 		{
-			"GameplayTags", "GameplayAbilities", "FabulousUtility", "FabulousAbilitySystem"
+			"GameplayTags", "AnimGraphRuntime", "GameplayAbilities", "FabulousUtility", "FabulousAbilitySystem"
 		});
 	}
 }
