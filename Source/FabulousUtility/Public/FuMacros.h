@@ -14,7 +14,6 @@ namespace FuEnsure
 {
 	struct FFuEnsureInfo
 	{
-	public:
 		const ANSICHAR* Expression{nullptr};
 
 		const ANSICHAR* FilePath{nullptr};
@@ -22,16 +21,6 @@ namespace FuEnsure
 		int32 LineNumber{0};
 
 		uint8 bEnsureAlways : 1 {false};
-
-	public:
-		constexpr FFuEnsureInfo(
-			const ANSICHAR* InExpression,
-			const ANSICHAR* InFilePath,
-			const int32 InLineNumber,
-			const bool bInEnsureAlways) : Expression(InExpression)
-			                              , FilePath(InFilePath)
-			                              , LineNumber(InLineNumber)
-			                              , bEnsureAlways(bInEnsureAlways) {}
 	};
 
 	FABULOUSUTILITY_API bool UE_COLD UE_DEBUG_SECTION VARARGS
