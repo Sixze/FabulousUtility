@@ -80,7 +80,7 @@ EBTNodeResult::Type UFuBTTask_SendGameplayEvent::ExecuteTask(UBehaviorTreeCompon
 	}
 
 	const auto* Controller{BehaviorTree.GetAIOwner()};
-	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn() : nullptr};
+	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn().Get() : nullptr};
 
 	const auto EventData{UFuEventDataUtility::MakeEventDataFromAvatarAndAbilitySystem(Pawn, TargetAbilitySystem)};
 

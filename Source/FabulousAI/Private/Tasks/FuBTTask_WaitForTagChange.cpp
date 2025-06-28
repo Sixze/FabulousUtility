@@ -89,7 +89,7 @@ EBTNodeResult::Type UFuBTTask_WaitForTagChange::ExecuteTask(UBehaviorTreeCompone
 	check(!Memory.AbilitySystem.IsValid())
 
 	const auto* Controller{BehaviorTree.GetAIOwner()};
-	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn() : nullptr};
+	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn().Get() : nullptr};
 	Memory.AbilitySystem = UFuAbilitySystemUtility::GetAbilitySystem(Pawn);
 
 	if (!FU_ENSURE(Memory.AbilitySystem.IsValid()))

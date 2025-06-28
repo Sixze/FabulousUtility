@@ -82,7 +82,7 @@ void UFuBTDecorator_CanActivateAbility::OnBecomeRelevant(UBehaviorTreeComponent&
 	auto& Memory{*CastInstanceNodeMemory<FFuCanActivateAbilityMemory>(NodeMemory)};
 
 	const auto* Controller{BehaviorTree.GetAIOwner()};
-	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn() : nullptr};
+	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn().Get() : nullptr};
 	Memory.AbilitySystem = UFuAbilitySystemComponent::GetFuAbilitySystem(Pawn);
 
 	if (!FU_ENSURE(Memory.AbilitySystem.IsValid()))
@@ -163,7 +163,7 @@ bool UFuBTDecorator_CanActivateAbility::CalculateRawConditionValue(UBehaviorTree
 	}
 
 	const auto* Controller{BehaviorTree.GetAIOwner()};
-	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn() : nullptr};
+	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn().Get() : nullptr};
 	const auto* AbilitySystem{UFuAbilitySystemUtility::GetAbilitySystem(Pawn)};
 
 	if (!FU_ENSURE(IsValid(AbilitySystem)))

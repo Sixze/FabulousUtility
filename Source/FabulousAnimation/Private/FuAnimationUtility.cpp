@@ -102,7 +102,9 @@ FTransform UFuAnimationUtility::GetBoneTransform(const UAnimMontage* Montage, co
 	while (BoneIndex > 0)
 	{
 		auto LocalTransform{FTransform::Identity};
-		Sequence->GetBoneTransform(LocalTransform, FSkeletonPoseBoneIndex{BoneIndex}, SequenceTime, false);
+		const FAnimExtractContext ExtractionContext{static_cast<double>(SequenceTime)};
+
+		Sequence->GetBoneTransform(LocalTransform, FSkeletonPoseBoneIndex{BoneIndex}, ExtractionContext, false);
 
 		ResultTransform *= LocalTransform;
 		BoneIndex = ReferenceSkeleton.GetParentIndex(BoneIndex);
