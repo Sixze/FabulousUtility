@@ -2,24 +2,22 @@ using UnrealBuildTool;
 
 public class FabulousUtility : ModuleRules
 {
-	public FabulousUtility(ReadOnlyTargetRules Target) : base(Target)
+	public FabulousUtility(ReadOnlyTargetRules target) : base(target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_6;
 
-		bEnableNonInlinedGenCppWarnings = true;
-		// UnsafeTypeCastWarningLevel = WarningLevel.Warning;
+		// CppCompileWarningSettings.UnsafeTypeCastWarningLevel = WarningLevel.Warning;
+		CppCompileWarningSettings.NonInlinedGenCppWarningLevel = WarningLevel.Warning;
 
-		PublicDependencyModuleNames.AddRange(new[]
-		{
+		PublicDependencyModuleNames.AddRange([
 			"Core", "CoreUObject", "Engine"
-		});
+		]);
 
-		PrivateDependencyModuleNames.AddRange(new[]
-		{
+		PrivateDependencyModuleNames.AddRange([
 			"EngineSettings", "NetCore", "SlateCore", "GameplayTags"
-		});
+		]);
 
-		SetupIrisSupport(Target);
+		SetupIrisSupport(target);
 	}
 }
