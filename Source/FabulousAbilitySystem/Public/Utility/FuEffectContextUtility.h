@@ -42,7 +42,7 @@ inline FGameplayAbilityTargetDataHandle UFuEffectContextUtility::GetTargetDataHa
 		return {};
 	}
 
-	return static_cast<const FFuGameplayEffectContext*>(EffectContext.Get())->GetTargetDataHandle();
+	return static_cast<const FFuGameplayEffectContext*>(EffectContext.Get())->GetTargetDataHandle(); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
 }
 
 inline FGameplayEffectContextHandle& UFuEffectContextUtility::AppendTargetData(FGameplayEffectContextHandle& EffectContext,
@@ -51,7 +51,7 @@ inline FGameplayEffectContextHandle& UFuEffectContextUtility::AppendTargetData(F
 	if (FU_ENSURE(EffectContext.IsValid()) &&
 	    FU_ENSURE(EffectContext.Get()->GetScriptStruct()->IsChildOf<FFuGameplayEffectContext>()))
 	{
-		static_cast<FFuGameplayEffectContext*>(EffectContext.Get())->AppendTargetDataHandle(TargetDataHandle);
+		static_cast<FFuGameplayEffectContext*>(EffectContext.Get())->AppendTargetDataHandle(TargetDataHandle); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
 	}
 
 	return EffectContext;
@@ -63,7 +63,7 @@ inline FGameplayEffectContextHandle& UFuEffectContextUtility::SetTargetData(FGam
 	if (FU_ENSURE(EffectContext.IsValid()) &&
 	    FU_ENSURE(EffectContext.Get()->GetScriptStruct()->IsChildOf<FFuGameplayEffectContext>()))
 	{
-		static_cast<FFuGameplayEffectContext*>(EffectContext.Get())->SetTargetDataHandle(TargetDataHandle);
+		static_cast<FFuGameplayEffectContext*>(EffectContext.Get())->SetTargetDataHandle(TargetDataHandle); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
 	}
 
 	return EffectContext;
@@ -74,7 +74,7 @@ inline FGameplayEffectContextHandle& UFuEffectContextUtility::ClearTargetData(FG
 	if (FU_ENSURE(EffectContext.IsValid()) &&
 	    FU_ENSURE(EffectContext.Get()->GetScriptStruct()->IsChildOf<FFuGameplayEffectContext>()))
 	{
-		static_cast<FFuGameplayEffectContext*>(EffectContext.Get())->ClearTargetDataHandle();
+		static_cast<FFuGameplayEffectContext*>(EffectContext.Get())->ClearTargetDataHandle(); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
 	}
 
 	return EffectContext;

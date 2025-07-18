@@ -58,7 +58,7 @@ FString UFuBTTask_WaitForTagChange::GetStaticDescription() const
 			break;
 
 		default:
-			FU_ENSURE(false);
+			FU_ENSURE(false); // NOLINT(clang-diagnostic-unused-value)
 			return Super::GetStaticDescription();
 	}
 
@@ -106,7 +106,7 @@ EBTNodeResult::Type UFuBTTask_WaitForTagChange::ExecuteTask(UBehaviorTreeCompone
 	}
 
 	Memory.AbilitySystem->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved)
-	      .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged, TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
+	      .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged, TWeakObjectPtr{&BehaviorTree});
 
 	return EBTNodeResult::InProgress;
 }

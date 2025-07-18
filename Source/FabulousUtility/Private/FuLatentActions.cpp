@@ -18,9 +18,9 @@ protected:
 	uint8 bStop : 1;
 
 	float TimeRemaining;
-	int32& LoopIndex;
+	int32& LoopIndex; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
 
-	EFuAdvancedDelayOutputExec& OutputExec;
+	EFuAdvancedDelayOutputExec& OutputExec; // NOLINT(cppcoreguidelines-avoid-const-or-ref-data-members)
 
 public:
 	FFuAdvancedDelayLatentAction(const FLatentActionInfo& LatentInfo, float Duration, int32 LoopsCount,

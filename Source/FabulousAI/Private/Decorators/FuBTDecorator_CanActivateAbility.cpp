@@ -91,10 +91,10 @@ void UFuBTDecorator_CanActivateAbility::OnBecomeRelevant(UBehaviorTreeComponent&
 	}
 
 	Memory.AbilitySystem->OnAbilityGiven.AddUObject(this, &ThisClass::AbilitySystem_OnAbilityGiven,
-	                                                TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
+	                                                TWeakObjectPtr{&BehaviorTree});
 
 	Memory.AbilitySystem->OnAbilityRemoved.AddUObject(this, &ThisClass::AbilitySystem_OnAbilityRemoved,
-	                                                  TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
+	                                                  TWeakObjectPtr{&BehaviorTree});
 
 	for (const auto& AbilitySpecification : Memory.AbilitySystem->GetActivatableAbilities())
 	{

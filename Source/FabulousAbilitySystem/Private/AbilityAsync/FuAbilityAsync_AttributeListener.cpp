@@ -104,7 +104,7 @@ void UFuAbilityAsync_AttributeListener::EndAction()
 
 void UFuAbilityAsync_AttributeListener::AbilitySystem_OnAttributeChanged(const FOnAttributeChangeData& ChangeData) const
 {
-	if (ShouldBroadcastDelegates() && (ChangeData.NewValue != ChangeData.OldValue || !bSkipEqualValuesOnServer ||
+	if (ShouldBroadcastDelegates() && (ChangeData.NewValue != ChangeData.OldValue || !bSkipEqualValuesOnServer || // NOLINT(clang-diagnostic-float-equal)
 	                                   GetAbilitySystemComponent()->GetOwnerRole() <= ROLE_AutonomousProxy))
 	{
 		OnAttributeChanged.Broadcast(ChangeData.Attribute, ChangeData.NewValue, ChangeData.OldValue);

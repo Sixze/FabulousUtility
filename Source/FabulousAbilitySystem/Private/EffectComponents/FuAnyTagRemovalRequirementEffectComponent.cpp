@@ -6,13 +6,13 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAnyTagRemovalRequirementEffectComponent)
 
-namespace FuAnyTagRemovalRequirementEffectComponentUtility
+namespace FuAnyTagRemovalRequirementEffectComponent
 {
 	const auto* AllowPredictiveEffectsConsoleVariable{
 		IConsoleManager::Get().FindConsoleVariable(TEXT("AbilitySystem.Fix.AllowPredictiveGEFlags"))
 	};
 
-	bool IsPredictiveRemovalByTagRequirementsAllowed()
+	static bool IsPredictiveRemovalByTagRequirementsAllowed()
 	{
 		return AllowPredictiveEffectsConsoleVariable != nullptr &&
 		       (AllowPredictiveEffectsConsoleVariable->GetInt() & 2) > 0;
@@ -49,7 +49,7 @@ bool UFuAnyTagRemovalRequirementEffectComponent::CanGameplayEffectApply(const FA
                                                                         const FGameplayEffectSpec& EffectSpecification) const
 {
 	return (ActiveEffects.IsNetAuthority() ||
-	        FuAnyTagRemovalRequirementEffectComponentUtility::IsPredictiveRemovalByTagRequirementsAllowed()) &&
+	        FuAnyTagRemovalRequirementEffectComponent::IsPredictiveRemovalByTagRequirementsAllowed()) &&
 	       !ActiveEffects.Owner->HasAnyMatchingGameplayTags(RemovalRequirementTags.CombinedTags);
 }
 
@@ -58,7 +58,7 @@ bool UFuAnyTagRemovalRequirementEffectComponent::OnActiveGameplayEffectAdded(FAc
 {
 	if (RemovalRequirementTags.CombinedTags.IsEmpty() ||
 	    (!ActiveEffects.IsNetAuthority() &&
-	     !FuAnyTagRemovalRequirementEffectComponentUtility::IsPredictiveRemovalByTagRequirementsAllowed()))
+	     !FuAnyTagRemovalRequirementEffectComponent::IsPredictiveRemovalByTagRequirementsAllowed()))
 	{
 		return true;
 	}
@@ -79,7 +79,6 @@ bool UFuAnyTagRemovalRequirementEffectComponent::OnActiveGameplayEffectAdded(FAc
 	}
 
 	ActiveEffect.EventSet.OnEffectRemoved.AddUObject(this, &ThisClass::Effect_OnRemoved,
-	                                                 // ReSharper disable once CppBoundToDelegateMethodIsNotMarkedAsUFunction
 	                                                 AbilitySystem, MoveTemp(TagChangedDelegateHandles));
 	return true;
 }

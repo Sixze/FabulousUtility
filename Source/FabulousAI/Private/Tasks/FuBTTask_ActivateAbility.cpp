@@ -100,6 +100,7 @@ EBTNodeResult::Type UFuBTTask_ActivateAbility::ExecuteTask(UBehaviorTreeComponen
 	};
 
 	{
+		// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 		FScopedAbilityListLock AbilityScopeLock{*Memory.AbilitySystem};
 
 		for (const auto& AbilitySpecification : Memory.AbilitySystem->GetActivatableAbilities())
@@ -134,7 +135,7 @@ EBTNodeResult::Type UFuBTTask_ActivateAbility::ExecuteTask(UBehaviorTreeComponen
 	}
 
 	Memory.AbilitySystem->OnAbilityEnded.AddUObject(this, &ThisClass::AbilitySystem_OnAbilityEnded,
-	                                                TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
+	                                                TWeakObjectPtr{&BehaviorTree});
 
 	return EBTNodeResult::InProgress;
 }

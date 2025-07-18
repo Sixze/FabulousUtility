@@ -34,9 +34,9 @@ public:
 template <>
 struct TStructOpsTypeTraits<FFuGameplayEffectContext> : public TStructOpsTypeTraitsBase2<FFuGameplayEffectContext>
 {
-	enum
+	enum // NOLINT(performance-enum-size)
 	{
-		WithNetSerializer = true,
+		WithNetSerializer = true
 	};
 };
 

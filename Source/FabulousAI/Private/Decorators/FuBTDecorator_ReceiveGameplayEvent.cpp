@@ -156,7 +156,7 @@ void UFuBTDecorator_ReceiveGameplayEvent::ReInitializeDecoratorMemory(UBehaviorT
 		if (FU_ENSURE(Tag.IsValid()))
 		{
 			Memory.AbilitySystem->GenericGameplayEventCallbacks.FindOrAdd(Tag)
-			      .AddUObject(this, &ThisClass::AbilitySystem_OnEventReceived, TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
+			      .AddUObject(this, &ThisClass::AbilitySystem_OnEventReceived, TWeakObjectPtr{&BehaviorTree});
 		}
 	}
 }

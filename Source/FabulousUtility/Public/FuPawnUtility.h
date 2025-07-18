@@ -19,5 +19,5 @@ public:
 
 inline APlayerController* UFuPawnUtility::GetPlayerControllerFromPawn(const APawn* Pawn)
 {
-	return FU_ENSURE(IsValid(Pawn)) ? Cast<APlayerController>(Pawn->Controller) : nullptr;
+	return FU_ENSURE(IsValid(Pawn)) ? Cast<APlayerController>(Pawn->GetController()) : nullptr;
 }

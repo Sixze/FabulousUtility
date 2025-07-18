@@ -54,5 +54,5 @@ FFuAbilityTargetData_Vector UFuVectorTargetDataUtility::GetVectorTargetData(cons
 		return {};
 	}
 
-	return *static_cast<FFuAbilityTargetData_Vector*>(TargetDataHandle.Data[TargetDataIndex].Get());
+	return *static_cast<FFuAbilityTargetData_Vector*>(TargetDataHandle.Data[TargetDataIndex].Get()); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
 }

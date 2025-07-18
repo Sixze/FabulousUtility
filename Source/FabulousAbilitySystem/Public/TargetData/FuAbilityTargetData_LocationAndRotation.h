@@ -32,7 +32,7 @@ template <>
 struct TStructOpsTypeTraits<FFuAbilityTargetData_LocationAndRotation>
 	: public TStructOpsTypeTraitsBase2<FFuAbilityTargetData_LocationAndRotation>
 {
-	enum
+	enum // NOLINT(performance-enum-size)
 	{
 		WithNetSerializer = true
 	};

@@ -68,7 +68,7 @@ void UFuAsyncAction_UIActionListenerByInputAction::Activate()
 		ActionArgs.InputAction = InputAction;
 
 		ActionArgs.OnExecuteAction = FSimpleDelegate::CreateUObject(
-			this, &ThisClass::Widget_OnActionExecuted, TWeakObjectPtr<UInputAction>{InputAction});
+			this, &ThisClass::Widget_OnActionExecuted, TWeakObjectPtr{InputAction});
 
 		const auto ActionHandle{Widget->RegisterUIActionBinding(ActionArgs)};
 		if (ActionHandle.IsValid())

@@ -28,6 +28,7 @@ void UFuAbilityTask_TargetDataSender::Activate()
 		return;
 	}
 
+	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 	FScopedPredictionWindow PredictionWindow{
 		AbilitySystemComponent.Get(),
 		!Ability->GetCurrentActorInfo()->IsNetAuthority() && !AbilitySystemComponent->ScopedPredictionKey.IsValidForMorePrediction()
@@ -60,7 +61,7 @@ void UFuAbilityTask_TargetDataSender::OnDestroy(const bool bInOwnerFinished)
 void UFuAbilityTask_TargetDataSender::AbilitySystem_OnAbilityTargetDataSet(const FGameplayAbilityTargetDataHandle& NewTargetData,
                                                                            FGameplayTag ActivationTag)
 {
-	const auto TargetDataCopy{NewTargetData};
+	const auto TargetDataCopy{NewTargetData}; // NOLINT(performance-unnecessary-copy-initialization)
 
 	AbilitySystemComponent->ConsumeClientReplicatedTargetData(GetAbilitySpecHandle(), GetActivationPredictionKey());
 

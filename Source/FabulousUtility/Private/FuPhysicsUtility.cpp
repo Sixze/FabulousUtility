@@ -25,8 +25,9 @@ void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext,
 	                                   ReachableActors, IgnoredActor);
 }
 
-void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext, const FVector& Location, float Radius,
-                                                    ECollisionChannel CollisionChannel, const FCollisionResponseParams& CollisionResponses,
+void UFuPhysicsUtility::FindReachableActorsInRadius(const UObject* WorldContext, const FVector& Location,
+                                                    const float Radius, const ECollisionChannel CollisionChannel,
+                                                    const FCollisionResponseParams& CollisionResponses,
                                                     const TFunctionRef<bool(const FOverlapResult& Overlap)>& FilterPredicate,
                                                     TMap<AActor*, TArray<FHitResult>>& ReachableActors, const AActor* IgnoredActor)
 {
