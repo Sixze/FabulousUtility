@@ -8,13 +8,13 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuBTTask_SendGameplayEvent)
 
-namespace FuSendGameplayEventBehaviorTreeTaskUtility
+namespace FuSendGameplayEventBehaviorTreeTask
 {
 	const auto* AllowPredictiveEffectsConsoleVariable{
 		IConsoleManager::Get().FindConsoleVariable(TEXT("AbilitySystem.Fix.AllowPredictiveGEFlags"))
 	};
 
-	bool IsPredictiveApplyEffectsByEventAllowed()
+	static bool IsPredictiveApplyEffectsByEventAllowed()
 	{
 		return AllowPredictiveEffectsConsoleVariable != nullptr &&
 		       (AllowPredictiveEffectsConsoleVariable->GetInt() & 4) > 0;
@@ -80,11 +80,11 @@ EBTNodeResult::Type UFuBTTask_SendGameplayEvent::ExecuteTask(UBehaviorTreeCompon
 	}
 
 	const auto* Controller{BehaviorTree.GetAIOwner()};
-	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn() : nullptr};
+	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn().Get() : nullptr};
 
 	const auto EventData{UFuEventDataUtility::MakeEventDataFromAvatarAndAbilitySystem(Pawn, TargetAbilitySystem)};
 
-	if (FuSendGameplayEventBehaviorTreeTaskUtility::IsPredictiveApplyEffectsByEventAllowed())
+	if (FuSendGameplayEventBehaviorTreeTask::IsPredictiveApplyEffectsByEventAllowed())
 	{
 		// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 		FScopedPredictionWindow PredictionWindow{TargetAbilitySystem, true};

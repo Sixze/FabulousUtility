@@ -7,13 +7,13 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAnimNotifyState_GameplayEvent)
 
-namespace FuGameplayEventStateAnimationNotifyUtility
+namespace FuGameplayEventStateAnimationNotify
 {
 	const auto* AllowPredictiveEffectsConsoleVariable{
 		IConsoleManager::Get().FindConsoleVariable(TEXT("AbilitySystem.Fix.AllowPredictiveGEFlags"))
 	};
 
-	bool IsPredictiveApplyEffectsByEventAllowed()
+	static bool IsPredictiveApplyEffectsByEventAllowed()
 	{
 		return AllowPredictiveEffectsConsoleVariable != nullptr &&
 		       (AllowPredictiveEffectsConsoleVariable->GetInt() & 4) > 0;
@@ -61,7 +61,7 @@ void UFuAnimNotifyState_GameplayEvent::NotifyBegin(USkeletalMeshComponent* Mesh,
 	auto EventData{UFuEventDataUtility::MakeEventDataFromAbilitySystems(AbilitySystem, AbilitySystem)};
 	EventData.OptionalObject = Sequence;
 
-	if (FuGameplayEventStateAnimationNotifyUtility::IsPredictiveApplyEffectsByEventAllowed())
+	if (FuGameplayEventStateAnimationNotify::IsPredictiveApplyEffectsByEventAllowed())
 	{
 		// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 		FScopedPredictionWindow PredictionWindow{AbilitySystem, true};
@@ -90,7 +90,7 @@ void UFuAnimNotifyState_GameplayEvent::NotifyEnd(USkeletalMeshComponent* Mesh, U
 	auto EventData{UFuEventDataUtility::MakeEventDataFromAbilitySystems(AbilitySystem, AbilitySystem)};
 	EventData.OptionalObject = Sequence;
 
-	if (FuGameplayEventStateAnimationNotifyUtility::IsPredictiveApplyEffectsByEventAllowed())
+	if (FuGameplayEventStateAnimationNotify::IsPredictiveApplyEffectsByEventAllowed())
 	{
 		// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 		FScopedPredictionWindow PredictionWindow{AbilitySystem, true};

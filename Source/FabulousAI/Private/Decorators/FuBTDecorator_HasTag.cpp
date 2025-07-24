@@ -147,11 +147,10 @@ bool UFuBTDecorator_HasTag::CalculateRawConditionValue(UBehaviorTreeComponent& B
 
 		case EFuTagMatchMode::AllTags:
 			return AbilitySystem->HasAllMatchingGameplayTags(Tags);
-
-		default:
-			FU_ENSURE(false);
-			return false;
 	}
+
+	FU_ENSURE(false); // NOLINT(clang-diagnostic-unused-value)
+	return false;
 }
 
 void UFuBTDecorator_HasTag::ReInitializeDecoratorMemory(UBehaviorTreeComponent& BehaviorTree, FFuHasTagMemory& Memory)
@@ -181,7 +180,7 @@ void UFuBTDecorator_HasTag::ReInitializeDecoratorMemory(UBehaviorTreeComponent& 
 		if (FU_ENSURE(Tag.IsValid()))
 		{
 			Memory.AbilitySystem->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved)
-			      .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged, TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
+			      .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged, TWeakObjectPtr{&BehaviorTree});
 		}
 	}
 }
@@ -205,7 +204,7 @@ void UFuBTDecorator_HasTag::ClearDecoratorMemory(FFuHasTagMemory& Memory)
 }
 
 EBlackboardNotificationResult UFuBTDecorator_HasTag::Blackboard_OnTargetKeyChanged(const UBlackboardComponent& Blackboard,
-                                                                                   FBlackboard::FKey Key)
+                                                                                   const FBlackboard::FKey Key)
 {
 	auto* BehaviorTree{Cast<UBehaviorTreeComponent>(Blackboard.GetBrainComponent())};
 	if (!FU_ENSURE(IsValid(BehaviorTree)))

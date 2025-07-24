@@ -107,7 +107,7 @@ void UFuAbilitySystemComponent::AbilityLocalInputPressed(const int32 InputId)
 		return;
 	}
 
-	ABILITYLIST_SCOPE_LOCK();
+	ABILITYLIST_SCOPE_LOCK()
 
 	TArray<FGameplayAbilitySpec*> AcceptedAbilitySpecifications;
 
@@ -167,7 +167,7 @@ void UFuAbilitySystemComponent::AbilityLocalInputReleased(const int32 InputId)
 {
 	// Based on UAbilitySystemComponent::AbilityLocalInputReleased().
 
-	ABILITYLIST_SCOPE_LOCK();
+	ABILITYLIST_SCOPE_LOCK()
 
 	TArray<FGameplayAbilitySpec*> AcceptedAbilitySpecifications;
 
@@ -225,7 +225,7 @@ void UFuAbilitySystemComponent::InputTagPressed(const FGameplayTag& InputTag)
 		return;
 	}
 
-	ABILITYLIST_SCOPE_LOCK();
+	ABILITYLIST_SCOPE_LOCK()
 
 	TArray<FGameplayAbilitySpec*> AcceptedAbilitySpecifications;
 
@@ -289,7 +289,7 @@ void UFuAbilitySystemComponent::InputTagReleased(const FGameplayTag& InputTag)
 		return;
 	}
 
-	ABILITYLIST_SCOPE_LOCK();
+	ABILITYLIST_SCOPE_LOCK()
 
 	TArray<FGameplayAbilitySpec*> AcceptedAbilitySpecifications;
 

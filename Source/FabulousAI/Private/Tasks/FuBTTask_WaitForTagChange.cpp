@@ -58,7 +58,7 @@ FString UFuBTTask_WaitForTagChange::GetStaticDescription() const
 			break;
 
 		default:
-			FU_ENSURE(false);
+			FU_ENSURE(false); // NOLINT(clang-diagnostic-unused-value)
 			return Super::GetStaticDescription();
 	}
 
@@ -89,7 +89,7 @@ EBTNodeResult::Type UFuBTTask_WaitForTagChange::ExecuteTask(UBehaviorTreeCompone
 	check(!Memory.AbilitySystem.IsValid())
 
 	const auto* Controller{BehaviorTree.GetAIOwner()};
-	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn() : nullptr};
+	const auto* Pawn{IsValid(Controller) ? Controller->GetPawn().Get() : nullptr};
 	Memory.AbilitySystem = UFuAbilitySystemUtility::GetAbilitySystem(Pawn);
 
 	if (!FU_ENSURE(Memory.AbilitySystem.IsValid()))
@@ -106,7 +106,7 @@ EBTNodeResult::Type UFuBTTask_WaitForTagChange::ExecuteTask(UBehaviorTreeCompone
 	}
 
 	Memory.AbilitySystem->RegisterGameplayTagEvent(Tag, EGameplayTagEventType::NewOrRemoved)
-	      .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged, TWeakObjectPtr<UBehaviorTreeComponent>{&BehaviorTree});
+	      .AddUObject(this, &ThisClass::AbilitySystem_OnTagChanged, TWeakObjectPtr{&BehaviorTree});
 
 	return EBTNodeResult::InProgress;
 }

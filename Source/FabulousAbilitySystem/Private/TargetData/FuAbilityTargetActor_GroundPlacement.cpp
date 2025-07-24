@@ -114,7 +114,7 @@ bool AFuAbilityTargetActor_GroundPlacement::PerformGroundPlacement(FVector& OutF
 	auto* NavigationSystem{FNavigationSystem::GetCurrent<UNavigationSystemV1>(GetWorld())};
 	if (IsValid(NavigationSystem))
 	{
-		auto* NavigationData{NavigationSystem->GetDefaultNavDataInstance(FNavigationSystem::DontCreate)};
+		const auto* NavigationData{NavigationSystem->GetDefaultNavDataInstance(FNavigationSystem::DontCreate)};
 		FVector NavigationHitLocation;
 
 		if (IsValid(NavigationData) && NavigationData->Raycast(TraceStart, TraceEnd, NavigationHitLocation, {}))

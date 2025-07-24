@@ -61,5 +61,5 @@ FFuAbilityTargetData_LocationAndRotation UFuLocationAndRotationTargetDataUtility
 		return {};
 	}
 
-	return *static_cast<FFuAbilityTargetData_LocationAndRotation*>(TargetDataHandle.Data[TargetDataIndex].Get());
+	return *static_cast<FFuAbilityTargetData_LocationAndRotation*>(TargetDataHandle.Data[TargetDataIndex].Get()); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
 }

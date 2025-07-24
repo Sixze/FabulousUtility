@@ -200,6 +200,7 @@ bool UFuAbilityUtility::BatchRpcActivateAbility(UAbilitySystemComponent* Ability
 		return false;
 	}
 
+	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 	FScopedServerAbilityRPCBatcher RpcBatcher{AbilitySystem, AbilityHandle};
 
 	const auto bAbilityActivated{AbilitySystem->TryActivateAbility(AbilityHandle)};
@@ -239,6 +240,7 @@ void UFuAbilityUtility::RemoveAbilitiesWithAnyTags(UAbilitySystemComponent* Abil
 		return;
 	}
 
+	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 	FScopedAbilityListLock AbilityScopeLock{*AbilitySystem};
 
 	for (auto& AbilitySpecification : AbilitySystem->GetActivatableAbilities())

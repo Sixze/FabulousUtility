@@ -54,6 +54,7 @@ void UFuAbilityTask_EffectListener::Activate()
 		return;
 	}
 
+	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 	FScopedActiveGameplayEffectLock EffectScopeLock{
 		const_cast<FActiveGameplayEffectsContainer&>(AbilitySystemComponent->GetActiveGameplayEffects())
 	};

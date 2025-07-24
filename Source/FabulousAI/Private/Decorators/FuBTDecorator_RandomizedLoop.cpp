@@ -84,7 +84,7 @@ void UFuBTDecorator_RandomizedLoop::OnNodeActivation(FBehaviorTreeSearchData& Se
 	auto& Memory{*GetNodeMemory<FFuRandomizedLoopMemory>(SearchData)};
 
 	if ((bParentIsSpecialNode && ParentMemory.CurrentChild == BTSpecialChild::NotInitialized) ||
-	    (!bParentIsSpecialNode && ParentMemory.CurrentChild != ChildIndex))
+	    (!bParentIsSpecialNode && static_cast<uint8>(ParentMemory.CurrentChild) != ChildIndex))
 	{
 		Memory.RemainingLoopsCount = FMath::RandRange(MinLoopsCount, MaxLoopsCount);
 	}
@@ -93,7 +93,7 @@ void UFuBTDecorator_RandomizedLoop::OnNodeActivation(FBehaviorTreeSearchData& Se
 
 	if (Memory.RemainingLoopsCount > 0)
 	{
-		GetParentNode()->SetChildOverride(SearchData, ChildIndex);
+		GetParentNode()->SetChildOverride(SearchData, static_cast<int8>(ChildIndex));
 	}
 }
 

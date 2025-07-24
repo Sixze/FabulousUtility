@@ -28,7 +28,7 @@ public:
 template <>
 struct TStructOpsTypeTraits<FFuAbilityTargetData_Vector> : public TStructOpsTypeTraitsBase2<FFuAbilityTargetData_Vector>
 {
-	enum
+	enum // NOLINT(performance-enum-size)
 	{
 		WithNetSerializer = true
 	};

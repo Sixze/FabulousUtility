@@ -44,7 +44,7 @@ void UFuAbilityTask_TargetDataReceiver::OnDestroy(const bool bInOwnerFinished)
 void UFuAbilityTask_TargetDataReceiver::AbilitySystem_OnAbilityTargetDataSet(const FGameplayAbilityTargetDataHandle& TargetData,
                                                                              const FGameplayTag ActivationTag)
 {
-	const auto TargetDataCopy{TargetData};
+	const auto TargetDataCopy{TargetData}; // NOLINT(performance-unnecessary-copy-initialization)
 
 	AbilitySystemComponent->ConsumeClientReplicatedTargetData(GetAbilitySpecHandle(), GetActivationPredictionKey());
 

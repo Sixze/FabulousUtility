@@ -43,5 +43,5 @@ FFuAbilityTargetData_Float UFuFloatTargetDataUtility::GetFloatTargetData(const F
 		return {};
 	}
 
-	return *static_cast<FFuAbilityTargetData_Float*>(TargetDataHandle.Data[TargetDataIndex].Get());
+	return *static_cast<FFuAbilityTargetData_Float*>(TargetDataHandle.Data[TargetDataIndex].Get()); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
 }

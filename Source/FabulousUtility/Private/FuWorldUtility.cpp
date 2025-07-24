@@ -5,7 +5,7 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuWorldUtility)
 
-namespace FuWorldUtilityConstants
+namespace FuWorldUtility
 {
 	constexpr FStringView WorldTypeStrings[]
 	{
@@ -23,7 +23,7 @@ namespace FuWorldUtilityConstants
 constexpr FStringView UFuWorldUtility::WorldTypeToString(const EWorldType::Type WorldType)
 {
 	return WorldType >= EWorldType::None && WorldType <= EWorldType::Inactive
-		       ? FuWorldUtilityConstants::WorldTypeStrings[WorldType]
+		       ? FuWorldUtility::WorldTypeStrings[WorldType]
 		       : TEXTVIEW("Unknown World Type");
 }
 

@@ -11,8 +11,7 @@ UUserWidget* UFuUIUtility::CreateWidgetWithOwningWidget(const TSubclassOf<UUserW
 
 void UFuUIUtility::InvalidatePaint(UWidget* Widget)
 {
-	const auto SlateWidget{FU_ENSURE(IsValid(Widget)) ? Widget->GetCachedWidget().Get() : nullptr};
-
+	auto* SlateWidget{FU_ENSURE(IsValid(Widget)) ? Widget->GetCachedWidget().Get() : nullptr};
 	if (SlateWidget != nullptr)
 	{
 		SlateWidget->Invalidate(EInvalidateWidgetReason::Paint);

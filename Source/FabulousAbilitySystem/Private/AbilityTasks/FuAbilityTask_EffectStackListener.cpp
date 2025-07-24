@@ -50,6 +50,7 @@ void UFuAbilityTask_EffectStackListener::Activate()
 	const auto bDelegatesBroadcastAllowed{ShouldBroadcastAbilityTaskDelegates()};
 	auto bAnyEffectValid{false};
 
+	// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
 	FScopedActiveGameplayEffectLock EffectScopeLock{
 		const_cast<FActiveGameplayEffectsContainer&>(AbilitySystemComponent->GetActiveGameplayEffects())
 	};

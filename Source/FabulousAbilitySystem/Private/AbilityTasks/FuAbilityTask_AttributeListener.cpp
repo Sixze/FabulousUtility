@@ -83,7 +83,7 @@ void UFuAbilityTask_AttributeListener::OnDestroy(const bool bInOwnerFinished)
 
 void UFuAbilityTask_AttributeListener::AbilitySystem_OnAttributeChanged(const FOnAttributeChangeData& ChangeData) const
 {
-	if (ShouldBroadcastAbilityTaskDelegates() && ChangeData.NewValue != ChangeData.OldValue)
+	if (ShouldBroadcastAbilityTaskDelegates() && ChangeData.NewValue != ChangeData.OldValue) // NOLINT(clang-diagnostic-float-equal)
 	{
 		OnAttributeChanged.Broadcast(ChangeData.Attribute, ChangeData.NewValue, ChangeData.OldValue);
 	}
