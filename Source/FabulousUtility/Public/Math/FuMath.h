@@ -9,57 +9,38 @@ class FABULOUSUTILITY_API UFuMath : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+	static constexpr auto Ln2{0.6931471805599453f}; // FMath::Loge(2.0f).
+
+public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Math Utility", Meta = (ReturnDisplayName = "Value"))
 	static float Clamp01(float Value);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Math Utility", Meta = (ReturnDisplayName = "Interpolation Ammount"))
-	static float Damp(float DeltaTime, float Smoothing);
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Math Utility", Meta = (ReturnDisplayName = "Alpha"))
+	static float DamperExactAlpha(float DeltaTime, float HalfLife);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Math Utility", Meta = (ReturnDisplayName = "Interpolation Ammount"))
-	static float ExponentialDecay(float DeltaTime, float Lambda);
-
+	// HalfLife is the time it takes for the distance to the target to be reduced by half.
 	template <typename ValueType>
-	static ValueType Damp(const ValueType& Current, const ValueType& Target, float DeltaTime, float Smoothing);
-
-	template <typename ValueType>
-	static ValueType ExponentialDecay(const ValueType& Current, const ValueType& Target, float DeltaTime, float Lambda);
+	static ValueType DamperExact(const ValueType& Current, const ValueType& Target, float DeltaTime, float HalfLife);
 };
 
 inline float UFuMath::Clamp01(const float Value)
 {
-	return Value <= 0.0f
-		       ? 0.0f
-		       : Value >= 1.0f
-		       ? 1.0f
-		       : Value;
+	return Value > 0.0f
+		       ? Value < 1.0f
+			         ? Value
+			         : 1.0f
+		       : 0.0f;
 }
 
-inline float UFuMath::Damp(const float DeltaTime, const float Smoothing)
+inline float UFuMath::DamperExactAlpha(const float DeltaTime, const float HalfLife)
 {
-	// https://www.rorydriscoll.com/2016/03/07/frame-rate-independent-damping-using-lerp/
+	// https://theorangeduck.com/page/spring-roll-call#exactdamper
 
-	return 1.0f - FMath::Pow(Smoothing, DeltaTime);
-}
-
-inline float UFuMath::ExponentialDecay(const float DeltaTime, const float Lambda)
-{
-	// https://www.rorydriscoll.com/2016/03/07/frame-rate-independent-damping-using-lerp/
-
-	return 1.0f - FMath::InvExpApprox(Lambda * DeltaTime);
+	return 1.0f - FMath::InvExpApprox(Ln2 * DeltaTime / (HalfLife + UE_SMALL_NUMBER));
 }
 
 template <typename ValueType>
-ValueType UFuMath::Damp(const ValueType& Current, const ValueType& Target, const float DeltaTime, const float Smoothing)
+ValueType UFuMath::DamperExact(const ValueType& Current, const ValueType& Target, const float DeltaTime, const float HalfLife)
 {
-	return Smoothing > 0.0f
-		       ? FMath::Lerp(Current, Target, Damp(DeltaTime, Smoothing))
-		       : Target;
-}
-
-template <typename ValueType>
-ValueType UFuMath::ExponentialDecay(const ValueType& Current, const ValueType& Target, const float DeltaTime, const float Lambda)
-{
-	return Lambda > 0.0f
-		       ? FMath::Lerp(Current, Target, ExponentialDecay(DeltaTime, Lambda))
-		       : Target;
+	return FMath::Lerp(Current, Target, DamperExactAlpha(DeltaTime, HalfLife));
 }
