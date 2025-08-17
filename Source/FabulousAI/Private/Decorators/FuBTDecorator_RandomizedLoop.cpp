@@ -20,22 +20,6 @@ UFuBTDecorator_RandomizedLoop::UFuBTDecorator_RandomizedLoop()
 	INIT_DECORATOR_NODE_NOTIFY_FLAGS();
 }
 
-#if WITH_EDITOR
-void UFuBTDecorator_RandomizedLoop::PostEditChangeProperty(FPropertyChangedEvent& ChangedEvent)
-{
-	if (ChangedEvent.GetPropertyName() == GET_MEMBER_NAME_STRING_VIEW_CHECKED(ThisClass, MinLoopsCount))
-	{
-		MinLoopsCount = FMath::Min(MinLoopsCount, MaxLoopsCount);
-	}
-	else if (ChangedEvent.GetPropertyName() == GET_MEMBER_NAME_STRING_VIEW_CHECKED(ThisClass, MaxLoopsCount))
-	{
-		MaxLoopsCount = FMath::Max(MinLoopsCount, MaxLoopsCount);
-	}
-
-	Super::PostEditChangeProperty(ChangedEvent);
-}
-#endif
-
 void UFuBTDecorator_RandomizedLoop::InitializeMemory(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory,
                                                      const EBTMemoryInit::Type InitType) const
 {
@@ -68,7 +52,7 @@ uint16 UFuBTDecorator_RandomizedLoop::GetInstanceMemorySize() const
 FString UFuBTDecorator_RandomizedLoop::GetStaticDescription() const
 {
 	TStringBuilder<64> DescriptionBuilder{
-		InPlace, TEXTVIEW("Randomized Loop: "), MinLoopsCount, TEXT('-'), MaxLoopsCount, TEXTVIEW(" loops")
+		InPlace, TEXTVIEW("Randomized Loop: "), LoopsCount.Min, TEXT('-'), LoopsCount.Max, TEXTVIEW(" loops")
 	};
 
 	return FString{DescriptionBuilder};
@@ -86,7 +70,7 @@ void UFuBTDecorator_RandomizedLoop::OnNodeActivation(FBehaviorTreeSearchData& Se
 	if ((bParentIsSpecialNode && ParentMemory.CurrentChild == BTSpecialChild::NotInitialized) ||
 	    (!bParentIsSpecialNode && static_cast<uint8>(ParentMemory.CurrentChild) != ChildIndex))
 	{
-		Memory.RemainingLoopsCount = FMath::RandRange(MinLoopsCount, MaxLoopsCount);
+		Memory.RemainingLoopsCount = FMath::RandRange(LoopsCount.Min, LoopsCount.Max);
 	}
 
 	Memory.RemainingLoopsCount -= 1;

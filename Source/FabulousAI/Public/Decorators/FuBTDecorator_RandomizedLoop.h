@@ -12,17 +12,10 @@ class FABULOUSAI_API UFuBTDecorator_RandomizedLoop : public UBTDecorator
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings", Meta = (ClampMin = 1))
-	int32 MinLoopsCount{1};
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings", Meta = (ClampMin = 1))
-	int32 MaxLoopsCount{3};
+	FInt32Interval LoopsCount{1, 3};
 
 public:
 	UFuBTDecorator_RandomizedLoop();
-
-#if WITH_EDITOR
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& ChangedEvent) override;
-#endif
 
 	virtual void InitializeMemory(UBehaviorTreeComponent& BehaviorTree, uint8* NodeMemory, EBTMemoryInit::Type InitType) const override;
 
