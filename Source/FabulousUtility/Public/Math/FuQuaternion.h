@@ -27,6 +27,20 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Quaternion Utility",
 		Meta = (AutoCreateRefTerm = "TwistAxis", ReturnDisplayName = "Twist"))
 	static FQuat GetTwist(const FQuat& Quaternion, const FVector& TwistAxis = FVector::UpVector);
+
+	// Same as FQuat::FindBetweenVectors(FVector::ForwardVector, Vector), but faster. Does not preserve
+	// the up vector (roll can be non-zero), so if it is important, use FVector::ToOrientationQuat() instead.
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Quaternion Utility",
+		Meta = (AutoCreateRefTerm = "Vector", ReturnDisplayName = "Quaternion"))
+	static FQuat VectorToQuaternion(const FVector& Vector);
+
+	// Same as FQuat::FindBetweenNormals(FVector::ForwardVector, Vector), but faster. Does not preserve
+	// the up vector (roll can be non-zero), so if it is important, use FVector::ToOrientationQuat() instead.
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Quaternion Utility",
+		Meta = (AutoCreateRefTerm = "Direction", ReturnDisplayName = "Quaternion"))
+	static FQuat DirectionToQuaternion(const FVector& Direction);
+
+	static FQuat VectorToQuaternion(const FVector& Vector, double VectorLength);
 };
 
 inline FQuat UFuQuaternion::DeltaQuaternion(const FQuat& From, const FQuat& To)
@@ -61,4 +75,14 @@ inline FQuat UFuQuaternion::GetTwist(const FQuat& Quaternion, const FVector& Twi
 	const auto Projection{(TwistAxis | FVector{Quaternion.X, Quaternion.Y, Quaternion.Z}) * TwistAxis};
 
 	return FQuat{Projection.X, Projection.Y, Projection.Z, Quaternion.W}.GetNormalized();
+}
+
+inline FQuat UFuQuaternion::VectorToQuaternion(const FVector& Vector)
+{
+	return VectorToQuaternion(Vector, Vector.Size());
+}
+
+inline FQuat UFuQuaternion::DirectionToQuaternion(const FVector& Direction)
+{
+	return VectorToQuaternion(Direction, 1.0f);
 }
