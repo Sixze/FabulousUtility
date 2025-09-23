@@ -35,7 +35,11 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Vector Utility", DisplayName = "Slerp (Skip Normalization)",
 		Meta = (AutoCreateRefTerm = "From, To", ReturnDisplayName = "Direction"))
-	static FVector SlerpSkipNormalization(const FVector& From, const FVector& To, float Angle);
+	static FVector SlerpSkipNormalization(const FVector& From, const FVector& To, float Ratio);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Vector Utility", DisplayName = "Slerp by Angle (Skip Normalization)",
+		Meta = (AutoCreateRefTerm = "From, To", ReturnDisplayName = "Direction"))
+	static FVector SlerpByAngleSkipNormalization(const FVector& From, const FVector& To, float Angle);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Vector Utility", Meta = (ReturnDisplayName = "Direction"))
 	static FVector RandomDirection();

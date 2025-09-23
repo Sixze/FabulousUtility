@@ -22,11 +22,19 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Animation|Utility",
 		Meta = (AutoCreateRefTerm = "BoneName", ReturnDisplayName = "Transform"))
-	static FTransform GetBoneTransform(const UAnimMontage* Montage, const FName& BoneName, float Time);
+	static FTransform GetBoneTransformFromMontage(const UAnimMontage* Montage, const FName& BoneName, float Time);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous Animation|Utility",
+		Meta = (AutoCreateRefTerm = "BoneName", ReturnDisplayName = "Transform"))
+	static FTransform GetBoneTransformFromSequence(const UAnimSequence* Sequence, const FName& BoneName, float Time);
 
 	static FTransform GetBoneTransformInComponentSpace(const FReferenceSkeleton& ReferenceSkeleton, int32 BoneIndex);
 
 	static FTransform GetBoneTransformInComponentSpace(const FBoneContainer& BoneContainer, FCompactPoseBoneIndex BoneIndex);
+
+	// Stops all active animation montages that use the specified slot.
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Animation|Utility")
+	static void StopMontagesWithSlot(UAnimInstance* AnimationInstance, const FName& SlotName, float BlendOutDuration = -1.0f);
 
 	// Stops all active animation montages that share at least one slot with the reference montage.
 	UFUNCTION(BlueprintCallable, Category="Fabulous Animation|Utility")

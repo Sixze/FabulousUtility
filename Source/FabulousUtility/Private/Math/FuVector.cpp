@@ -2,9 +2,33 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuVector)
 
-FVector UFuVector::SlerpSkipNormalization(const FVector& From, const FVector& To, float Angle)
+FVector UFuVector::SlerpSkipNormalization(const FVector& From, const FVector& To, const float Ratio)
 {
-	// https://allenchou.net/2018/05/game-math-deriving-the-slerp-formula/
+	// http://number-none.com/product/Understanding%20Slerp,%20Then%20Not%20Using%20It/
+
+	auto Dot{From | To};
+
+	if (Dot > 0.9995f)
+	{
+		return FMath::Lerp(From, To, Ratio).GetSafeNormal();
+	}
+
+	Dot = FMath::Max(-1.0f, Dot);
+
+	const auto Theta{UE_REAL_TO_FLOAT(FMath::Acos(Dot)) * Ratio};
+
+	float Sin, Cos;
+	FMath::SinCos(&Sin, &Cos, Theta);
+
+	auto FromPerpendicular{To - From * Dot};
+	FromPerpendicular.Normalize();
+
+	return From * Cos + FromPerpendicular * Sin;
+}
+
+FVector UFuVector::SlerpByAngleSkipNormalization(const FVector& From, const FVector& To, float Angle)
+{
+	// http://number-none.com/product/Understanding%20Slerp,%20Then%20Not%20Using%20It/
 
 	Angle = FMath::DegreesToRadians(FMath::Max(0.0f, Angle));
 
@@ -18,7 +42,8 @@ FVector UFuVector::SlerpSkipNormalization(const FVector& From, const FVector& To
 	float Sin, Cos;
 	FMath::SinCos(&Sin, &Cos, Angle);
 
-	const auto FromPerpendicular{(To - From * Dot).GetSafeNormal()};
+	auto FromPerpendicular{To - From * Dot};
+	FromPerpendicular.Normalize();
 
 	return From * Cos + FromPerpendicular * Sin;
 }

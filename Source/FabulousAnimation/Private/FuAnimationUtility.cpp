@@ -49,38 +49,12 @@ bool UFuAnimationUtility::TryFindMontageNotifyEventByName(const UAnimMontage* Mo
 	return false;
 }
 
-FTransform UFuAnimationUtility::GetBoneTransform(const UAnimMontage* Montage, const FName& BoneName, const float Time)
+FTransform UFuAnimationUtility::GetBoneTransformFromMontage(const UAnimMontage* Montage, const FName& BoneName, const float Time)
 {
 	if (!FU_ENSURE(IsValid(Montage)) || !FU_ENSURE(!Montage->SlotAnimTracks.IsEmpty()))
 	{
 		return FTransform::Identity;
 	}
-
-	auto ResultTransform{FTransform::Identity};
-
-	const auto* Skeleton{Montage->GetSkeleton()};
-	const auto& ReferenceSkeleton{Skeleton->GetReferenceSkeleton()};
-
-	auto BoneIndex = ReferenceSkeleton.FindBoneIndex(BoneName);
-	if (BoneIndex <= INDEX_NONE)
-	{
-		const auto* Socket{Skeleton->FindSocket(BoneName)};
-		if (!IsValid(Socket))
-		{
-			return FTransform::Identity;
-		}
-
-		BoneIndex = ReferenceSkeleton.FindBoneIndex(Socket->BoneName);
-		if (BoneIndex <= INDEX_NONE)
-		{
-			return FTransform::Identity;
-		}
-
-		ResultTransform = Socket->GetSocketLocalTransform();
-	}
-
-	const UAnimSequence* Sequence = nullptr;
-	auto SequenceTime = 0.0f;
 
 	for (const auto& SlotTrack : Montage->SlotAnimTracks)
 	{
@@ -90,23 +64,54 @@ FTransform UFuAnimationUtility::GetBoneTransform(const UAnimMontage* Montage, co
 			continue;
 		}
 
-		const auto* OtherSequence{Cast<UAnimSequence>(Segment->GetAnimReference())};
-		if (IsValid(OtherSequence))
+		const auto* Sequence{Cast<UAnimSequence>(Segment->GetAnimReference())};
+		if (IsValid(Sequence))
 		{
-			Sequence = OtherSequence;
-			SequenceTime = Segment->ConvertTrackPosToAnimPos(Time);
-			break;
+			return GetBoneTransformFromSequence(Sequence, BoneName, Segment->ConvertTrackPosToAnimPos(Time));
 		}
 	}
 
-	while (BoneIndex > 0)
+	return FTransform::Identity;
+}
+
+FTransform UFuAnimationUtility::GetBoneTransformFromSequence(const UAnimSequence* Sequence, const FName& BoneName, const float Time)
+{
+	if (!FU_ENSURE(IsValid(Sequence)))
 	{
-		auto LocalTransform{FTransform::Identity};
-		const FAnimExtractContext ExtractionContext{static_cast<double>(SequenceTime)};
+		return FTransform::Identity;
+	}
 
-		Sequence->GetBoneTransform(LocalTransform, FSkeletonPoseBoneIndex{BoneIndex}, ExtractionContext, false);
+	const auto* Skeleton{Sequence->GetSkeleton()};
+	const auto& ReferenceSkeleton{Skeleton->GetReferenceSkeleton()};
 
-		ResultTransform *= LocalTransform;
+	auto BoneIndex{ReferenceSkeleton.FindBoneIndex(BoneName)};
+	auto ResultTransform{FTransform::Identity};
+
+	if (!ReferenceSkeleton.IsValidIndex(BoneIndex))
+	{
+		const auto* Socket{Skeleton->FindSocket(BoneName)};
+		if (!IsValid(Socket))
+		{
+			return FTransform::Identity;
+		}
+
+		BoneIndex = ReferenceSkeleton.FindBoneIndex(Socket->BoneName);
+		if (!ReferenceSkeleton.IsValidIndex(BoneIndex))
+		{
+			return FTransform::Identity;
+		}
+
+		ResultTransform = Socket->GetSocketLocalTransform();
+	}
+
+	while (ReferenceSkeleton.IsValidIndex(BoneIndex))
+	{
+		auto RelativeTransform{FTransform::Identity};
+		const FAnimExtractContext ExtractionContext{static_cast<double>(Time)};
+
+		Sequence->GetBoneTransform(RelativeTransform, FSkeletonPoseBoneIndex{BoneIndex}, ExtractionContext, false);
+
+		ResultTransform *= RelativeTransform;
 		BoneIndex = ReferenceSkeleton.GetParentIndex(BoneIndex);
 	}
 
@@ -152,6 +157,45 @@ FTransform UFuAnimationUtility::GetBoneTransformInComponentSpace(const FBoneCont
 	}
 
 	return ResultTransform;
+}
+
+void UFuAnimationUtility::StopMontagesWithSlot(UAnimInstance* AnimationInstance, const FName& SlotName, const float BlendOutDuration)
+{
+	if (!FU_ENSURE(IsValid(AnimationInstance)) || !FU_ENSURE(!SlotName.IsNone()))
+	{
+		return;
+	}
+
+	for (auto* MontageInstance : AnimationInstance->MontageInstances)
+	{
+		if (MontageInstance == nullptr || !MontageInstance->IsActive())
+		{
+			continue;
+		}
+
+		const auto* Montage{MontageInstance->Montage.Get()};
+
+		for (const auto& SlotTrack : Montage->SlotAnimTracks)
+		{
+			if (SlotTrack.SlotName == SlotName)
+			{
+				continue;
+			}
+
+			FMontageBlendSettings BlendOutSettings{Montage->BlendOut};
+
+			if (BlendOutDuration >= 0.0f)
+			{
+				BlendOutSettings.Blend.BlendTime = BlendOutDuration;
+			}
+
+			BlendOutSettings.BlendMode = Montage->BlendModeOut;
+			BlendOutSettings.BlendProfile = Montage->BlendProfileOut;
+
+			MontageInstance->Stop(BlendOutSettings);
+			break;
+		}
+	}
 }
 
 void UFuAnimationUtility::StopMontagesWithAnySharedSlots(UAnimInstance* AnimationInstance, const UAnimMontage* ReferenceMontage,
