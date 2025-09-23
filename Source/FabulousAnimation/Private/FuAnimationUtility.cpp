@@ -129,13 +129,12 @@ FTransform UFuAnimationUtility::GetBoneTransformInComponentSpace(const FReferenc
 	const auto& BoneInfos{ReferenceSkeleton.GetRefBoneInfo()};
 
 	auto ResultTransform{BonePoses[BoneIndex]};
+	BoneIndex = BoneInfos[BoneIndex].ParentIndex;
 
-	while (BoneIndex > 0)
+	while (BoneIndex >= 0)
 	{
-		const auto ParentBoneIndex{BoneInfos[BoneIndex].ParentIndex};
-
-		ResultTransform *= BonePoses[ParentBoneIndex];
-		BoneIndex = ParentBoneIndex;
+		ResultTransform *= BonePoses[BoneIndex];
+		BoneIndex = BoneInfos[BoneIndex].ParentIndex;
 	}
 
 	return ResultTransform;
@@ -143,12 +142,13 @@ FTransform UFuAnimationUtility::GetBoneTransformInComponentSpace(const FReferenc
 
 FTransform UFuAnimationUtility::GetBoneTransformInComponentSpace(const FBoneContainer& BoneContainer, FCompactPoseBoneIndex BoneIndex)
 {
-	if (BoneIndex >= BoneContainer.GetCompactPoseNumBones())
+	if (!BoneIndex.IsValid() || BoneIndex >= BoneContainer.GetCompactPoseNumBones())
 	{
 		return FTransform::Identity;
 	}
 
-	auto ResultTransform{FTransform::Identity};
+	auto ResultTransform{BoneContainer.GetRefPoseTransform(BoneIndex)};
+	BoneIndex = BoneContainer.GetParentBoneIndex(BoneIndex);
 
 	while (BoneIndex.IsValid())
 	{

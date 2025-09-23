@@ -37,7 +37,7 @@ public:
 	static void StopMontagesWithSlot(UAnimInstance* AnimationInstance, const FName& SlotName, float BlendOutDuration = -1.0f);
 
 	// Stops all active animation montages that share at least one slot with the reference montage.
-	UFUNCTION(BlueprintCallable, Category="Fabulous Animation|Utility")
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Animation|Utility")
 	static void StopMontagesWithAnySharedSlots(UAnimInstance* AnimationInstance, const UAnimMontage* ReferenceMontage,
 	                                           float BlendOutDuration = -1.0f);
 };

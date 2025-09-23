@@ -75,8 +75,11 @@ inline double UFuVector::AngleBetweenXY(const FVector& From, const FVector& To)
 
 inline double UFuVector::AngleBetweenSignedXY(const FVector& From, const FVector& To)
 {
-	const auto FromXY{FVector2D{From}.GetSafeNormal()};
-	const auto ToXY{FVector2D{To}.GetSafeNormal()};
+	FVector2D FromXY{From};
+	FromXY.Normalize();
+
+	FVector2D ToXY{To};
+	ToXY.Normalize();
 
 	// return FMath::RadiansToDegrees(FMath::Atan2(FromXY ^ ToXY, FromXY | ToXY));
 

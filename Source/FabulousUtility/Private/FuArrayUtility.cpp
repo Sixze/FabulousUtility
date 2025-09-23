@@ -19,6 +19,11 @@ int32 UFuArrayUtility::GetWeightedRandomIndex(const TArray<float>& Array)
 		TotalWeight += Weight;
 	}
 
+	if (TotalWeight <= 0.0f)
+	{
+		return FMath::RandHelper(Array.Num());
+	}
+
 	const auto RandomWeight{FMath::FRand() * TotalWeight};
 	auto ActualWeight{0.0f};
 

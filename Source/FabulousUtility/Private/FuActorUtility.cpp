@@ -69,12 +69,12 @@ FVector UFuActorUtility::GetActorFeetOffset(const AActor* Actor)
 
 	if (IsValid(MovementComponent))
 	{
-		return FVector{0.0f, 0.0f, MovementComponent->UpdatedComponent->Bounds.BoxExtent.Z};
+		return {0.0f, 0.0f, MovementComponent->UpdatedComponent->Bounds.BoxExtent.Z};
 	}
 
 	if (FU_ENSURE(IsValid(Actor)) && IsValid(Actor->GetRootComponent()))
 	{
-		return FVector{0.0f, 0.0f, Actor->GetRootComponent()->Bounds.BoxExtent.Z};
+		return {0.0f, 0.0f, Actor->GetRootComponent()->Bounds.BoxExtent.Z};
 	}
 
 	return FVector::ZeroVector;
