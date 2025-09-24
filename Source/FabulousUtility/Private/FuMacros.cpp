@@ -10,23 +10,37 @@
 
 #if DO_ENSURE && !USING_CODE_ANALYSIS
 
-namespace FuEnsure
+namespace 
 {
-	static bool CanExecute(std::atomic<bool>& bExecuted, const FFuEnsureInfo& EnsureInfo)
+    int32 GEnsureResetState = 1;
+    FAutoConsoleVariableRef CVarResetEnsureState(
+        TEXT("FuEnsure.ResetEnsureState"),
+        GEnsureResetState,
+        TEXT("Reset all ensures so they will fire again"),
+        FConsoleVariableDelegate::CreateLambda([](IConsoleVariable*)
+            {
+                ++GEnsureResetState;
+            }));
+}
+
+namespace FuEnsure
+{    
+	static bool CanExecute(std::atomic<uint8>& bExecuted, const FFuEnsureInfo& EnsureInfo)
 	{
 		static const auto* EnsureAlwaysEnabledConsoleVariable{
 			IConsoleManager::Get().FindConsoleVariable(TEXT("core.EnsureAlwaysEnabled"))
 		};
 		check(EnsureAlwaysEnabledConsoleVariable != nullptr)
-
-		if ((bExecuted.load(std::memory_order_relaxed) &&
+	    
+		if ((bExecuted.load(std::memory_order_relaxed) == GEnsureResetState &&
 		     (!EnsureInfo.bEnsureAlways || !EnsureAlwaysEnabledConsoleVariable->GetBool())) ||
 		    !FPlatformMisc::IsEnsureAllowed())
 		{
 			return false;
 		}
 
-		return !bExecuted.exchange(true, std::memory_order_release) || EnsureInfo.bEnsureAlways;
+        // UE::Assert::Private::CheckEnsureFailed(EnsureInfo.bEnsureAlways, bExecuted);
+		return GEnsureResetState != bExecuted.exchange(GEnsureResetState, std::memory_order_release) || EnsureInfo.bEnsureAlways;
 	}
 
 	static bool ExecuteInternal(const FFuEnsureInfo& EnsureInfo, const TCHAR* Message)
@@ -76,12 +90,12 @@ namespace FuEnsure
 #endif
 	}
 
-	bool UE_COLD UE_DEBUG_SECTION Execute(std::atomic<bool>& bExecuted, const FFuEnsureInfo& EnsureInfo)
+	bool UE_COLD UE_DEBUG_SECTION Execute(std::atomic<uint8>& bExecuted, const FFuEnsureInfo& EnsureInfo)
 	{
 		return CanExecute(bExecuted, EnsureInfo) && ExecuteInternal(EnsureInfo, TEXT(""));
 	}
 
-	bool UE_COLD UE_DEBUG_SECTION ExecuteFormat(std::atomic<bool>& bExecuted, const FFuEnsureInfo& EnsureInfo,
+	bool UE_COLD UE_DEBUG_SECTION ExecuteFormat(std::atomic<uint8>& bExecuted, const FFuEnsureInfo& EnsureInfo,
 	                                            const TCHAR* Format, ...)
 	{
 		if (!CanExecute(bExecuted, EnsureInfo))
