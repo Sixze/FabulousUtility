@@ -128,13 +128,8 @@ bool UFuAbilitySystemUtility::AddLooseTag(UAbilitySystemComponent* AbilitySystem
 		return false;
 	}
 
-	AbilitySystem->AddLooseGameplayTag(Tag);
-
-	if (bReplicate)
-	{
-		AbilitySystem->AddReplicatedLooseGameplayTag(Tag);
-	}
-
+	AbilitySystem->AddLooseGameplayTag(Tag, 1, bReplicate ? EGameplayTagReplicationState::TagOnly : EGameplayTagReplicationState::None);
+    
 	return true;
 }
 
@@ -146,11 +141,6 @@ bool UFuAbilitySystemUtility::RemoveLooseTag(UAbilitySystemComponent* AbilitySys
 	}
 
 	AbilitySystem->RemoveLooseGameplayTag(Tag);
-
-	if (bReplicate)
-	{
-		AbilitySystem->RemoveReplicatedLooseGameplayTag(Tag);
-	}
 
 	return true;
 }
@@ -167,7 +157,7 @@ bool UFuAbilitySystemUtility::AddLooseTags(UAbilitySystemComponent* AbilitySyste
 
 	if (bReplicate)
 	{
-		AbilitySystem->AddReplicatedLooseGameplayTags(Tags);
+	    AbilitySystem->AddLooseGameplayTags(Tags, 1, bReplicate ? EGameplayTagReplicationState::TagOnly : EGameplayTagReplicationState::None);
 	}
 
 	return true;
@@ -182,11 +172,6 @@ bool UFuAbilitySystemUtility::RemoveLooseTags(UAbilitySystemComponent* AbilitySy
 	}
 
 	AbilitySystem->RemoveLooseGameplayTags(Tags);
-
-	if (bReplicate)
-	{
-		AbilitySystem->RemoveReplicatedLooseGameplayTags(Tags);
-	}
-
+    
 	return true;
 }

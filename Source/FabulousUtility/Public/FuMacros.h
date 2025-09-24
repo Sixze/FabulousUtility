@@ -24,22 +24,22 @@ namespace FuEnsure
 	};
 
 	FABULOUSUTILITY_API bool UE_COLD UE_DEBUG_SECTION VARARGS
-	Execute(std::atomic<bool>& bExecuted, const FFuEnsureInfo& EnsureInfo);
+	Execute(std::atomic<uint8>& bExecuted, const FFuEnsureInfo& EnsureInfo);
 
 	FABULOUSUTILITY_API bool UE_COLD UE_DEBUG_SECTION VARARGS
-	ExecuteFormat(std::atomic<bool>& bExecuted, const FFuEnsureInfo& EnsureInfo, const TCHAR* Format, ...);
+	ExecuteFormat(std::atomic<uint8>& bExecuted, const FFuEnsureInfo& EnsureInfo, const TCHAR* Format, ...);
 }
 
-#if UE_USE_LITE_ENSURES
+#if defined(UE_USE_LITE_ENSURES) && UE_USE_LITE_ENSURES
 #define FU_ENSURE_IMPLEMENTATION(bEnsureAlways, Expression) \
 	(LIKELY(Expression) || \
-	 (FuEnsure::Execute(::bGEnsureHasExecuted<static_cast<uint64>(FileHashForEnsure(__FILE__)) << 32 | static_cast<uint64>(__LINE__)>, \
+	 (FuEnsure::Execute(::bGEnsureHasExecuted<static_cast<uint64>(FileLineHashForEnsure(__FILE__, __LINE__))>, \
 	                    FuEnsure::FFuEnsureInfo{#Expression, __FILE__, __LINE__, bEnsureAlways}) && \
 	  BreakAndReturnFalse()))
 #else
 #define FU_ENSURE_IMPLEMENTATION(bEnsureAlways, Expression) \
 	(LIKELY(Expression) || \
-	 (FuEnsure::Execute(::bGEnsureHasExecuted<static_cast<uint64>(FileHashForEnsure(__FILE__)) << 32 | static_cast<uint64>(__LINE__)>, \
+	 (FuEnsure::Execute(::bGEnsureHasExecuted<static_cast<uint64>(FileLineHashForEnsure(__FILE__, __LINE__))>, \
 	                    FuEnsure::FFuEnsureInfo{#Expression, __FILE__, __LINE__, bEnsureAlways}) && \
 	  [] \
 	  { \
@@ -52,7 +52,7 @@ namespace FuEnsure
 	(LIKELY(Expression) || [Capture]() UE_COLD UE_DEBUG_SECTION \
 	{ \
 		static constexpr FuEnsure::FFuEnsureInfo EnsureInfo{#Expression, __builtin_FILE(), __builtin_LINE(), bEnsureAlways}; \
- 		static std::atomic<bool> bExecuted{false}; \
+ 		static std::atomic<uint8> bExecuted{false}; \
  		\
 		UE_VALIDATE_FORMAT_STRING(Format, ##__VA_ARGS__); \
 		\
