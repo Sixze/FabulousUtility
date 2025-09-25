@@ -50,7 +50,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Utility",
 		Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Success"))
-	static bool RemoveLooseTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag, bool bReplicate = false);
+	static bool RemoveLooseTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Utility",
 		Meta = (AutoCreateRefTerm = "Tags", ReturnDisplayName = "Success"))
@@ -58,7 +58,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Utility",
 		Meta = (AutoCreateRefTerm = "Tags", ReturnDisplayName = "Success"))
-	static bool RemoveLooseTags(UAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer& Tags, bool bReplicate = false);
+	static bool RemoveLooseTags(UAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer& Tags);
 };
 
 inline const FGameplayAbilityActorInfo& UFuAbilitySystemUtility::GetActorInfo(const UAbilitySystemComponent* AbilitySystem)
