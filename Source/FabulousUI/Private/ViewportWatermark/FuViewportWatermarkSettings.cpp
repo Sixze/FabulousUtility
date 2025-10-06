@@ -2,6 +2,7 @@
 
 #include "HardwareInfo.h"
 #include "RHI.h"
+#include "Components/Widget.h"
 #include "Engine/Font.h"
 #include "GenericPlatform/GenericPlatformDriver.h"
 #include "Runtime/Launch/Resources/Version.h"
@@ -45,19 +46,19 @@ UFuViewportWatermarkSettings::UFuViewportWatermarkSettings()
 	TitleSettings.VerticalAlignment = VAlign_Top;
 	TitleSettings.Padding = {0.0f, 100.0f};
 
-	CopyrightSettings.VerticalAlignment = VAlign_Bottom;
 	CopyrightSettings.HorizontalAlignment = HAlign_Left;
+	CopyrightSettings.VerticalAlignment = VAlign_Bottom;
 
-	SystemInfoSettings.VerticalAlignment = VAlign_Bottom;
 	SystemInfoSettings.HorizontalAlignment = HAlign_Right;
+	SystemInfoSettings.VerticalAlignment = VAlign_Bottom;
 
 	if (!IsRunningDedicatedServer())
 	{
-		static const ConstructorHelpers::FObjectFinder<UFont> RobotoFont{TEXT("/Engine/EngineFonts/Roboto")};
+		static const ConstructorHelpers::FObjectFinder<UFont> DefaultFont{*UWidget::GetDefaultFontName()};
 
-		TitleSettings.Font = FSlateFontInfo{RobotoFont.Object, 32, FName{TEXTVIEW("Bold")}};
-		CopyrightSettings.Font = FSlateFontInfo{RobotoFont.Object, 24, FName{TEXTVIEW("Bold")}};
-		SystemInfoSettings.Font = FSlateFontInfo{RobotoFont.Object, 24, FName{TEXTVIEW("Bold")}};
+		TitleSettings.Font = FSlateFontInfo{DefaultFont.Object, 32, FName{TEXTVIEW("Bold")}};
+		CopyrightSettings.Font = FSlateFontInfo{DefaultFont.Object, 24, FName{TEXTVIEW("Bold")}};
+		SystemInfoSettings.Font = FSlateFontInfo{DefaultFont.Object, 24, FName{TEXTVIEW("Bold")}};
 	}
 }
 
