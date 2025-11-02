@@ -38,6 +38,10 @@ public:
 		DynamicOutputParam = "UserWidget", ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryFindAncestorUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> AncestorUserWidgetClass,
 	                                             UUserWidget*& AncestorUserWidget);
+
+	// Allows the selected state to be set regardless of selectability or toggleability.
+	UFUNCTION(BlueprintCallable, Category = "Fabulous UI|Common UI Utility")
+	static void SetSelectedForce(UCommonButtonBase* Button, bool bSelected, bool bAllowSound = true, bool bBroadcastEvents = true);
 };
 
 template <typename UserWidgetType> requires std::derived_from<UserWidgetType, UUserWidget>

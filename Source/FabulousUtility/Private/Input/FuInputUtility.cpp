@@ -3,8 +3,19 @@
 #include "FuMacros.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/PlayerController.h"
+#include "Misc/ConfigCacheIni.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuInputUtility)
+
+float UFuInputUtility::GetInitialButtonRepeatDelay()
+{
+	return GConfig->GetFloatOrDefault(TEXT("/Script/Engine.InputSettings"), TEXT("InitialButtonRepeatDelay"), 0.0f, GInputIni);
+}
+
+float UFuInputUtility::GetButtonRepeatDelay()
+{
+	return GConfig->GetFloatOrDefault(TEXT("/Script/Engine.InputSettings"), TEXT("ButtonRepeatDelay"), 0.0f, GInputIni);
+}
 
 void UFuInputUtility::SetBlockInput(AActor* Actor, const bool bBlockInput)
 {
