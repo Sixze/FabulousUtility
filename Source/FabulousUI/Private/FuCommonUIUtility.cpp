@@ -92,6 +92,6 @@ void UFuCommonUIUtility::SetSelectedForce(UCommonButtonBase* Button, bool bSelec
 {
 	if (FU_ENSURE(IsValid(Button)))
 	{
-		FuSetSelectedInternalAccessor::Invoke(*Button, bSelected, bAllowSound, bBroadcastEvents);
+		FuSetSelectedInternalAccessor::Access(Button, bSelected, bAllowSound, bBroadcastEvents);
 	}
 }
