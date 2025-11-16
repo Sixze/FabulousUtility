@@ -162,14 +162,17 @@ bool UFuAbilitySystemUtility::AddLooseTags(UAbilitySystemComponent* AbilitySyste
 	return true;
 }
 
-bool UFuAbilitySystemUtility::RemoveLooseTags(UAbilitySystemComponent* AbilitySystem, const FGameplayTagContainer& Tags)
+bool UFuAbilitySystemUtility::RemoveLooseTags(UAbilitySystemComponent* AbilitySystem,
+                                              const FGameplayTagContainer& Tags, const bool bReplicate)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)))
 	{
 		return false;
 	}
 
-	AbilitySystem->RemoveLooseGameplayTags(Tags);
+	AbilitySystem->RemoveLooseGameplayTags(Tags, 1, bReplicate
+		                                                ? EGameplayTagReplicationState::CountToOwner
+		                                                : EGameplayTagReplicationState::None);
 
 	return true;
 }
