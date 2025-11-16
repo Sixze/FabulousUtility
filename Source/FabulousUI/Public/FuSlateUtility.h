@@ -3,6 +3,8 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuSlateUtility.generated.h"
 
+class SWidget;
+
 UCLASS()
 class FABULOUSUI_API UFuSlateUtility : public UBlueprintFunctionLibrary
 {
@@ -14,4 +16,6 @@ public:
 
 	UFUNCTION(BlueprintPure, BlueprintCosmetic, Category = "Fabulous UI|Slate Utility", Meta = (ReturnDisplayName = "Dpi Scale"))
 	static float GetViewportDpiScale(FVector2D ViewportSize);
+
+	static void GetFocusableDescendantWidgets(SWidget& ParentWidget, TArray<TSharedRef<SWidget>>& DescendantWidgets);
 };

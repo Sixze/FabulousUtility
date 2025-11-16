@@ -9,7 +9,6 @@
 SFuViewportWatermark::SFuViewportWatermark()
 {
 	bCanSupportFocus = false;
-
 	SetCanTick(false);
 }
 

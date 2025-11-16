@@ -1,8 +1,14 @@
 #include "FuCommonUIUtility.h"
 
+#include "CommonButtonBase.h"
 #include "CommonInputSubsystem.h"
+#include "FuMacros.h"
+#include "FuPrivateMemberAccessor.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuCommonUIUtility)
+
+FU_DEFINE_PRIVATE_MEMBER_ACCESSOR(FuSetSelectedInternalAccessor, &UCommonButtonBase::SetSelectedInternal,
+                                  void (UCommonButtonBase::*)(bool, bool, bool))
 
 ECommonInputType UFuCommonUIUtility::GetInputType(const FKey& Key)
 {
@@ -80,4 +86,12 @@ UUserWidget* UFuCommonUIUtility::FindAncestorUserWidgetByClass(const UWidget* Wi
 	}
 
 	return nullptr;
+}
+
+void UFuCommonUIUtility::SetSelectedForce(UCommonButtonBase* Button, bool bSelected, bool bAllowSound, bool bBroadcastEvents)
+{
+	if (FU_ENSURE(IsValid(Button)))
+	{
+		FuSetSelectedInternalAccessor::Access(Button, bSelected, bAllowSound, bBroadcastEvents);
+	}
 }

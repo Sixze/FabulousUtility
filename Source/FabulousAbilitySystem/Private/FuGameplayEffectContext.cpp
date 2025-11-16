@@ -1,22 +1,17 @@
 #include "FuGameplayEffectContext.h"
 
 #include "FuMacros.h"
-
-// #if UE_WITH_IRIS
 // #include "Iris/ReplicationState/PropertyNetSerializerInfoRegistry.h"
 // #include "Serialization/GameplayEffectContextNetSerializer.h"
-// #endif
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuGameplayEffectContext)
 
 // TODO Create a custom NetSerializer to properly replicate this structure via Iris, or wait until Epic provides a way to avoid it.
 
-// #if UE_WITH_IRIS
 // namespace UE::Net
 // {
 // 	UE_NET_IMPLEMENT_FORWARDING_NETSERIALIZER_AND_REGISTRY_DELEGATES(FuGameplayEffectContext, FGameplayEffectContextNetSerializer);
 // }
-// #endif
 
 UScriptStruct* FFuGameplayEffectContext::GetScriptStruct() const
 {

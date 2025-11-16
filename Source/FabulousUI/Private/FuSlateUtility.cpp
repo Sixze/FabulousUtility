@@ -50,3 +50,26 @@ float UFuSlateUtility::GetViewportDpiScale(FVector2D ViewportSize)
 
 	return UserInterfaceSettings->GetDPIScaleBasedOnSize(FIntPoint::ZeroValue);
 }
+
+void UFuSlateUtility::GetFocusableDescendantWidgets(SWidget& ParentWidget, TArray<TSharedRef<SWidget>>& DescendantWidgets)
+{
+	auto* Children{ParentWidget.GetChildren()};
+
+	for (auto i{0}; i < Children->Num(); i++)
+	{
+		auto Child{Children->GetChildAt(i)};
+		if (!Child->GetVisibility().IsVisible())
+		{
+			continue;
+		}
+
+		if (Child->SupportsKeyboardFocus())
+		{
+			DescendantWidgets.Add(Child);
+		}
+		else
+		{
+			GetFocusableDescendantWidgets(*Child, DescendantWidgets);
+		}
+	}
+}

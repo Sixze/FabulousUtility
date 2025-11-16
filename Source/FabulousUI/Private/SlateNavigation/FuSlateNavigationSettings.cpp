@@ -25,10 +25,10 @@ UFuSlateNavigationSettings::UFuSlateNavigationSettings()
 	KeyActionMappings = {
 		{EKeys::Enter, EUINavigationAction::Accept},
 		{EKeys::SpaceBar, EUINavigationAction::Accept},
-		{EKeys::Virtual_Accept, EUINavigationAction::Accept},
+		{EKeys::Virtual_Gamepad_Accept.GetVirtualKey(), EUINavigationAction::Accept},
 
 		{EKeys::Escape, EUINavigationAction::Back},
-		{EKeys::Virtual_Back, EUINavigationAction::Back},
+		{EKeys::Virtual_Gamepad_Back.GetVirtualKey(), EUINavigationAction::Back},
 	};
 }
 

@@ -9,9 +9,6 @@ class FABULOUSUTILITY_API UFuMath : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	static constexpr auto Ln2{0.6931471805599453f}; // FMath::Loge(2.0f).
-
-public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Math Utility", Meta = (ReturnDisplayName = "Value"))
 	static float Clamp01(float Value);
 
@@ -36,7 +33,7 @@ inline float UFuMath::DamperExactAlpha(const float DeltaTime, const float HalfLi
 {
 	// https://theorangeduck.com/page/spring-roll-call#exactdamper
 
-	return 1.0f - FMath::InvExpApprox(Ln2 * DeltaTime / (HalfLife + UE_SMALL_NUMBER));
+	return 1.0f - FMath::InvExpApprox(UE_LN2 * DeltaTime / (HalfLife + UE_SMALL_NUMBER));
 }
 
 template <typename ValueType>

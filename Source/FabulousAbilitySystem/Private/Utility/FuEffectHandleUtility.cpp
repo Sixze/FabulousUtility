@@ -8,6 +8,8 @@
 
 bool UFuEffectHandleUtility::IsActive(const FActiveGameplayEffectHandle EffectHandle)
 {
+	// TODO Replace with UAbilitySystemBlueprintLibrary::IsActiveGameplayEffectHandleActive() in future engine versions.
+
 	const auto* AbilitySystem{EffectHandle.GetOwningAbilitySystemComponent()};
 
 	return IsValid(AbilitySystem) && AbilitySystem->GetActiveGameplayEffect(EffectHandle) != nullptr;

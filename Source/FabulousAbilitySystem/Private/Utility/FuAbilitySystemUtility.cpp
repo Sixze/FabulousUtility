@@ -128,17 +128,14 @@ bool UFuAbilitySystemUtility::AddLooseTag(UAbilitySystemComponent* AbilitySystem
 		return false;
 	}
 
-	AbilitySystem->AddLooseGameplayTag(Tag);
-
-	if (bReplicate)
-	{
-		AbilitySystem->AddReplicatedLooseGameplayTag(Tag);
-	}
+	AbilitySystem->AddLooseGameplayTag(Tag, 1, bReplicate
+		                                           ? EGameplayTagReplicationState::CountToOwner
+		                                           : EGameplayTagReplicationState::None);
 
 	return true;
 }
 
-bool UFuAbilitySystemUtility::RemoveLooseTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag, const bool bReplicate)
+bool UFuAbilitySystemUtility::RemoveLooseTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)))
 	{
@@ -146,11 +143,6 @@ bool UFuAbilitySystemUtility::RemoveLooseTag(UAbilitySystemComponent* AbilitySys
 	}
 
 	AbilitySystem->RemoveLooseGameplayTag(Tag);
-
-	if (bReplicate)
-	{
-		AbilitySystem->RemoveReplicatedLooseGameplayTag(Tag);
-	}
 
 	return true;
 }
@@ -163,12 +155,9 @@ bool UFuAbilitySystemUtility::AddLooseTags(UAbilitySystemComponent* AbilitySyste
 		return false;
 	}
 
-	AbilitySystem->AddLooseGameplayTags(Tags);
-
-	if (bReplicate)
-	{
-		AbilitySystem->AddReplicatedLooseGameplayTags(Tags);
-	}
+	AbilitySystem->AddLooseGameplayTags(Tags, 1, bReplicate
+		                                             ? EGameplayTagReplicationState::CountToOwner
+		                                             : EGameplayTagReplicationState::None);
 
 	return true;
 }
@@ -181,12 +170,9 @@ bool UFuAbilitySystemUtility::RemoveLooseTags(UAbilitySystemComponent* AbilitySy
 		return false;
 	}
 
-	AbilitySystem->RemoveLooseGameplayTags(Tags);
-
-	if (bReplicate)
-	{
-		AbilitySystem->RemoveReplicatedLooseGameplayTags(Tags);
-	}
+	AbilitySystem->RemoveLooseGameplayTags(Tags, 1, bReplicate
+		                                                ? EGameplayTagReplicationState::CountToOwner
+		                                                : EGameplayTagReplicationState::None);
 
 	return true;
 }

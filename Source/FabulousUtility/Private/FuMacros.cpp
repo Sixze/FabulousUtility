@@ -12,21 +12,33 @@
 
 namespace FuEnsure
 {
-	static bool CanExecute(std::atomic<bool>& bExecuted, const FFuEnsureInfo& EnsureInfo)
+	static uint8 GEnsureResetState{1};
+
+	// TODO Use "core.ResetEnsureState" instead.
+	static FAutoConsoleCommand ConsoleCommandResetEnsureState{
+		TEXT("fu.ResetEnsureState"),
+		TEXT("Reset all ensures so they will fire again."),
+		FConsoleCommandDelegate::CreateLambda([]
+		{
+			GEnsureResetState += 1;
+		})
+	};
+
+	static bool CanExecute(std::atomic<uint8>& bExecuted, const FFuEnsureInfo& EnsureInfo)
 	{
 		static const auto* EnsureAlwaysEnabledConsoleVariable{
 			IConsoleManager::Get().FindConsoleVariable(TEXT("core.EnsureAlwaysEnabled"))
 		};
 		check(EnsureAlwaysEnabledConsoleVariable != nullptr)
 
-		if ((bExecuted.load(std::memory_order_relaxed) &&
+		if ((bExecuted.load(std::memory_order_relaxed) == GEnsureResetState &&
 		     (!EnsureInfo.bEnsureAlways || !EnsureAlwaysEnabledConsoleVariable->GetBool())) ||
 		    !FPlatformMisc::IsEnsureAllowed())
 		{
 			return false;
 		}
 
-		return !bExecuted.exchange(true, std::memory_order_release) || EnsureInfo.bEnsureAlways;
+		return bExecuted.exchange(GEnsureResetState, std::memory_order_release) != GEnsureResetState || EnsureInfo.bEnsureAlways;
 	}
 
 	static bool ExecuteInternal(const FFuEnsureInfo& EnsureInfo, const TCHAR* Message)
@@ -47,14 +59,14 @@ namespace FuEnsure
 			if (EnsuresAreErrorsConsoleVariable->GetBool())
 			{
 				UE_LOG(LogOutputDevice, Error, TEXT("Ensure failed: %hs, File: %hs, Line: %d."),
-				       EnsureInfo.Expression, EnsureInfo.FilePath, EnsureInfo.LineNumber)
+				       EnsureInfo.Expression, EnsureInfo.FilePath ? EnsureInfo.FilePath : "Unknown", EnsureInfo.LineNumber)
 
 				UE_LOG(LogOutputDevice, Error, TEXT("%s"), Message)
 			}
 			else
 			{
 				UE_LOG(LogOutputDevice, Error, TEXT("Ensure failed: %hs, File: %hs, Line: %d."),
-				       EnsureInfo.Expression, EnsureInfo.FilePath, EnsureInfo.LineNumber)
+				       EnsureInfo.Expression, EnsureInfo.FilePath ? EnsureInfo.FilePath : "Unknown", EnsureInfo.LineNumber)
 
 				UE_LOG(LogOutputDevice, Warning, TEXT("%s"), Message)
 			}
@@ -76,12 +88,12 @@ namespace FuEnsure
 #endif
 	}
 
-	bool UE_COLD UE_DEBUG_SECTION Execute(std::atomic<bool>& bExecuted, const FFuEnsureInfo& EnsureInfo)
+	bool UE_COLD UE_DEBUG_SECTION Execute(std::atomic<uint8>& bExecuted, const FFuEnsureInfo& EnsureInfo)
 	{
 		return CanExecute(bExecuted, EnsureInfo) && ExecuteInternal(EnsureInfo, TEXT(""));
 	}
 
-	bool UE_COLD UE_DEBUG_SECTION ExecuteFormat(std::atomic<bool>& bExecuted, const FFuEnsureInfo& EnsureInfo,
+	bool UE_COLD UE_DEBUG_SECTION ExecuteFormat(std::atomic<uint8>& bExecuted, const FFuEnsureInfo& EnsureInfo,
 	                                            const TCHAR* Format, ...)
 	{
 		if (!CanExecute(bExecuted, EnsureInfo))
@@ -90,7 +102,7 @@ namespace FuEnsure
 		}
 
 		static UE::FWordMutex FormatMutex;
-		static constexpr auto MessageSize{65535};
+		static constexpr auto MessageSize{std::numeric_limits<uint16>::max()};
 		static TStaticArray<TCHAR, MessageSize> Message;
 
 		// ReSharper disable once CppLocalVariableWithNonTrivialDtorIsNeverUsed
