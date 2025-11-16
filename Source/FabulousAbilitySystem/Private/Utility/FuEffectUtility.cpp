@@ -9,11 +9,16 @@
 int32 UFuEffectUtility::GetEffectStackCountByClass(const UAbilitySystemComponent* AbilitySystem,
                                                    const TSubclassOf<UGameplayEffect> EffectClass)
 {
+	// TODO Replace StackingType with UGameplayEffect::GetStackingType() in future engine versions.
+	PRAGMA_DISABLE_DEPRECATION_WARNINGS
+
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(IsValid(EffectClass)) ||
 	    !FU_ENSURE(EffectClass.GetDefaultObject()->StackingType != EGameplayEffectStackingType::None))
 	{
 		return 0;
 	}
+
+	PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 	auto MaxCount{0};
 
