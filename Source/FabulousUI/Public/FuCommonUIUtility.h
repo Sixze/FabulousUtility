@@ -13,7 +13,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous UI|Common UI Utility", Meta = (ReturnDisplayName = "Input Type"))
 	static ECommonInputType GetInputType(const FKey& Key);
 
-	template <typename UserWidgetType = UUserWidget> requires std::derived_from<UserWidgetType, UUserWidget>
+	template <typename UserWidgetType = UUserWidget> requires UE::CDerivedFrom<UserWidgetType, UUserWidget>
 	static UserWidgetType* FindRootUserWidget(const UWidget* Widget);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous UI|Common UI Utility", Meta = (DefaultToSelf = "Widget",
@@ -26,7 +26,7 @@ public:
 	static bool TryFindRootUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> RootUserWidgetClass,
 	                                         UUserWidget*& RootUserWidget);
 
-	template <typename UserWidgetType = UUserWidget> requires std::derived_from<UserWidgetType, UUserWidget>
+	template <typename UserWidgetType = UUserWidget> requires UE::CDerivedFrom<UserWidgetType, UUserWidget>
 	static UserWidgetType* FindAncestorUserWidget(const UWidget* Widget);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous UI|Common UI Utility", Meta = (DefaultToSelf = "Widget",
@@ -44,7 +44,7 @@ public:
 	static void SetSelectedForce(UCommonButtonBase* Button, bool bSelected, bool bAllowSound = true, bool bBroadcastEvents = true);
 };
 
-template <typename UserWidgetType> requires std::derived_from<UserWidgetType, UUserWidget>
+template <typename UserWidgetType> requires UE::CDerivedFrom<UserWidgetType, UUserWidget>
 UserWidgetType* UFuCommonUIUtility::FindRootUserWidget(const UWidget* Widget)
 {
 	UserWidgetType* ResultUserWidget{nullptr};
@@ -78,7 +78,7 @@ inline bool UFuCommonUIUtility::TryFindRootUserWidgetByClass(const UWidget* Widg
 	return IsValid(RootUserWidget);
 }
 
-template <typename UserWidgetType> requires std::derived_from<UserWidgetType, UUserWidget>
+template <typename UserWidgetType> requires UE::CDerivedFrom<UserWidgetType, UUserWidget>
 UserWidgetType* UFuCommonUIUtility::FindAncestorUserWidget(const UWidget* Widget)
 {
 	while (IsValid(Widget))

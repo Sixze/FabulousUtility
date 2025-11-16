@@ -31,7 +31,7 @@ public:
 
 	// This is not the same function as UAbilitySystemComponent::FindAbilitySpecFromClass(), because that
 	// function performs a direct class comparison, while this function checks the parent-child class relationship.
-	template <typename AbilityType = UGameplayAbility> requires std::derived_from<AbilityType, UGameplayAbility>
+	template <typename AbilityType = UGameplayAbility> requires UE::CDerivedFrom<AbilityType, UGameplayAbility>
 	static const FGameplayAbilitySpec* FindAbilitySpecificationByClass(const UAbilitySystemComponent* AbilitySystem);
 };
 
@@ -60,7 +60,7 @@ inline bool UFuAbilitySpecificationUtility::IsActiveExpanded(const FGameplayAbil
 	return AbilitySpecification.IsActive();
 }
 
-template <typename AbilityType> requires std::derived_from<AbilityType, UGameplayAbility>
+template <typename AbilityType> requires UE::CDerivedFrom<AbilityType, UGameplayAbility>
 const FGameplayAbilitySpec* UFuAbilitySpecificationUtility::FindAbilitySpecificationByClass(const UAbilitySystemComponent* AbilitySystem)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)))
