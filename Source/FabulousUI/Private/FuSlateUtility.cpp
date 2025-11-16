@@ -53,11 +53,11 @@ float UFuSlateUtility::GetViewportDpiScale(FVector2D ViewportSize)
 
 void UFuSlateUtility::GetFocusableDescendantWidgets(SWidget& ParentWidget, TArray<TSharedRef<SWidget>>& DescendantWidgets)
 {
-	auto* Children = ParentWidget.GetChildren();
+	auto* Children{ParentWidget.GetChildren()};
 
 	for (auto i{0}; i < Children->Num(); i++)
 	{
-		auto Child = Children->GetChildAt(i);
+		auto Child{Children->GetChildAt(i)};
 		if (!Child->GetVisibility().IsVisible())
 		{
 			continue;
