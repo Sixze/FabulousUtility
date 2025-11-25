@@ -17,4 +17,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous UI|Utility")
 	static void InvalidatePaint(UWidget* Widget);
+
+	UFUNCTION(BlueprintCallable, Category = "Fabulous UI|Utility")
+	static UScrollBoxSlot* AddChildToScrollBox(UScrollBox* ScrollBox, UWidget* Content);
 };

@@ -1,6 +1,8 @@
 #include "FuUIUtility.h"
 
 #include "FuMacros.h"
+#include "Components/ScrollBox.h"
+#include "Components/ScrollBoxSlot.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuUIUtility)
 
@@ -16,4 +18,11 @@ void UFuUIUtility::InvalidatePaint(UWidget* Widget)
 	{
 		SlateWidget->Invalidate(EInvalidateWidgetReason::Paint);
 	}
+}
+
+UScrollBoxSlot* UFuUIUtility::AddChildToScrollBox(UScrollBox* ScrollBox, UWidget* Content)
+{
+	return FU_ENSURE(IsValid(ScrollBox))
+		       ? Cast<UScrollBoxSlot>(ScrollBox->AddChild(Content))
+		       : nullptr;
 }
