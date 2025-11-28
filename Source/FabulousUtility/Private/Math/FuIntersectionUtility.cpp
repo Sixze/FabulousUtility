@@ -2,6 +2,21 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuIntersectionUtility)
 
+bool UFuIntersectionUtility::DoSegmentsIntersect1D(float SegmentStartA, float SegmentEndA, float SegmentStartB, float SegmentEndB)
+{
+	if (SegmentEndA < SegmentStartA)
+	{
+		Swap(SegmentStartA, SegmentEndA);
+	}
+
+	if (SegmentEndB < SegmentStartB)
+	{
+		Swap(SegmentStartB, SegmentEndB);
+	}
+
+	return SegmentStartB <= SegmentEndA && SegmentStartA <= SegmentEndB;
+}
+
 bool UFuIntersectionUtility::LineSegmentIntersection2D(const FVector2D& LineOrigin, const FVector2D& LineDirection,
                                                        const FVector2D& SegmentStart, const FVector2D& SegmentEnd,
                                                        FVector2D& Intersection)
