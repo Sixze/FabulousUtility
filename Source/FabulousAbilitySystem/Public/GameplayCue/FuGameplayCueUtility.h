@@ -3,6 +3,11 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuGameplayCueUtility.generated.h"
 
+struct FGameplayCueParameters;
+struct FGameplayTag;
+struct FGameplayTagContainer;
+class UAbilitySystemComponent;
+
 UCLASS()
 class FABULOUSABILITYSYSTEM_API UFuGameplayCueUtility : public UBlueprintFunctionLibrary
 {
@@ -13,17 +18,17 @@ public:
 	static TArray<AActor*> GetActors(const FGameplayCueParameters& Parameters);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Gameplay Cue Utility",
-		Meta = (AutoCreateRefTerm = "CueTag, Parameters", GameplayTagFilter = "GameplayCue"))
-	static void ExecuteLocalGameplayCueOnActor(AActor* Actor, const FGameplayTag& CueTag,
+		Meta = (AutoCreateRefTerm = "Parameters", GameplayTagFilter = "GameplayCue"))
+	static void ExecuteLocalGameplayCueOnActor(AActor* Actor, FGameplayTag CueTag,
 	                                           const FGameplayCueParameters& Parameters);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Gameplay Cue Utility",
-		Meta = (AutoCreateRefTerm = "CueTag, Parameters", GameplayTagFilter = "GameplayCue"))
-	static void AddLocalGameplayCueToActor(AActor* Actor, const FGameplayTag& CueTag, const FGameplayCueParameters& Parameters);
+		Meta = (AutoCreateRefTerm = "Parameters", GameplayTagFilter = "GameplayCue"))
+	static void AddLocalGameplayCueToActor(AActor* Actor, FGameplayTag CueTag, const FGameplayCueParameters& Parameters);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Gameplay Cue Utility",
-		Meta = (AutoCreateRefTerm = "CueTag, Parameters", GameplayTagFilter = "GameplayCue"))
-	static void RemoveLocalGameplayCueFromActor(AActor* Actor, const FGameplayTag& CueTag, const FGameplayCueParameters& Parameters);
+		Meta = (AutoCreateRefTerm = "Parameters", GameplayTagFilter = "GameplayCue"))
+	static void RemoveLocalGameplayCueFromActor(AActor* Actor, FGameplayTag CueTag, const FGameplayCueParameters& Parameters);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Gameplay Cue Utility",
 		Meta = (AutoCreateRefTerm = "CueTags, Parameters", GameplayTagFilter = "GameplayCue"))
@@ -41,18 +46,18 @@ public:
 	                                             const FGameplayCueParameters& Parameters);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Gameplay Cue Utility",
-		Meta = (AutoCreateRefTerm = "CueTag, Parameters", GameplayTagFilter = "GameplayCue"))
-	static void ExecuteLocalGameplayCue(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& CueTag,
+		Meta = (AutoCreateRefTerm = "Parameters", GameplayTagFilter = "GameplayCue"))
+	static void ExecuteLocalGameplayCue(UAbilitySystemComponent* AbilitySystem, FGameplayTag CueTag,
 	                                    const FGameplayCueParameters& Parameters);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Gameplay Cue Utility",
-		Meta = (AutoCreateRefTerm = "CueTag, Parameters", GameplayTagFilter = "GameplayCue"))
-	static void AddLocalGameplayCue(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& CueTag,
+		Meta = (AutoCreateRefTerm = "Parameters", GameplayTagFilter = "GameplayCue"))
+	static void AddLocalGameplayCue(UAbilitySystemComponent* AbilitySystem, FGameplayTag CueTag,
 	                                const FGameplayCueParameters& Parameters);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Gameplay Cue Utility",
-		Meta = (AutoCreateRefTerm = "CueTag, Parameters", GameplayTagFilter = "GameplayCue"))
-	static void RemoveLocalGameplayCue(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& CueTag,
+		Meta = (AutoCreateRefTerm = "Parameters", GameplayTagFilter = "GameplayCue"))
+	static void RemoveLocalGameplayCue(UAbilitySystemComponent* AbilitySystem, FGameplayTag CueTag,
 	                                   const FGameplayCueParameters& Parameters);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Gameplay Cue Utility",

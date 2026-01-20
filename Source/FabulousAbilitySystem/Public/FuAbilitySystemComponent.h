@@ -62,9 +62,9 @@ public:
 	virtual void AbilityLocalInputReleased(int32 InputId) override;
 
 public:
-	void InputTagPressed(const FGameplayTag& InputTag);
+	void InputTagPressed(FGameplayTag InputTag);
 
-	void InputTagReleased(const FGameplayTag& InputTag);
+	void InputTagReleased(FGameplayTag InputTag);
 
 	void BlockAbilitiesWithoutAllTags(const FGameplayTagContainer& Tags);
 

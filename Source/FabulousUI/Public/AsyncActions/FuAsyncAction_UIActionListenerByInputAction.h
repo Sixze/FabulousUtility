@@ -6,6 +6,7 @@
 #include "Sound/SlateSound.h"
 #include "FuAsyncAction_UIActionListenerByInputAction.generated.h"
 
+class UInputAction;
 class UCommonUserWidget;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuUIActionListenerByInputActionDelegate, const UInputAction*, InputAction);

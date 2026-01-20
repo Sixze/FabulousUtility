@@ -4,21 +4,21 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuGameplayTagUtility)
 
-FName UFuGameplayTagUtility::GetSimpleTagName(const FGameplayTag& Tag)
+FName UFuGameplayTagUtility::GetSimpleTagName(const FGameplayTag Tag)
 {
 	const auto TagNode{UGameplayTagsManager::Get().FindTagNode(Tag)};
 
 	return TagNode.IsValid() ? TagNode->GetSimpleTagName() : NAME_None;
 }
 
-bool UFuGameplayTagUtility::HasChildTags(const FGameplayTag& Tag)
+bool UFuGameplayTagUtility::HasChildTags(const FGameplayTag Tag)
 {
 	const auto TagNode{UGameplayTagsManager::Get().FindTagNode(Tag)};
 
 	return TagNode.IsValid() && !TagNode->GetChildTagNodes().IsEmpty();
 }
 
-FGameplayTagContainer UFuGameplayTagUtility::GetChildTagsWithoutDescendants(const FGameplayTag& Tag)
+FGameplayTagContainer UFuGameplayTagUtility::GetChildTagsWithoutDescendants(const FGameplayTag Tag)
 {
 	const auto TagNode{UGameplayTagsManager::Get().FindTagNode(Tag)};
 	if (!TagNode.IsValid())
@@ -39,7 +39,7 @@ FGameplayTagContainer UFuGameplayTagUtility::GetChildTagsWithoutDescendants(cons
 	return Tags;
 }
 
-const FGameplayTag& UFuGameplayTagUtility::FindFirstDescendantTag(const FGameplayTagContainer& Tags, const FGameplayTag& Tag)
+FGameplayTag UFuGameplayTagUtility::FindFirstDescendantTag(const FGameplayTagContainer& Tags, const FGameplayTag Tag)
 {
 	if (!Tag.IsValid())
 	{

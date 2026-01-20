@@ -204,7 +204,7 @@ void UFuAbilitySystemComponent::AbilityLocalInputReleased(const int32 InputId)
 	}
 }
 
-void UFuAbilitySystemComponent::InputTagPressed(const FGameplayTag& InputTag)
+void UFuAbilitySystemComponent::InputTagPressed(const FGameplayTag InputTag)
 {
 	// Based on UAbilitySystemComponent::AbilityLocalInputPressed().
 
@@ -280,7 +280,7 @@ void UFuAbilitySystemComponent::InputTagPressed(const FGameplayTag& InputTag)
 	}
 }
 
-void UFuAbilitySystemComponent::InputTagReleased(const FGameplayTag& InputTag)
+void UFuAbilitySystemComponent::InputTagReleased(const FGameplayTag InputTag)
 {
 	// Based on UAbilitySystemComponent::AbilityLocalInputReleased().
 

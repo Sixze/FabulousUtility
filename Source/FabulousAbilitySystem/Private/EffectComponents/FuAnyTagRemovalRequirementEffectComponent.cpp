@@ -8,7 +8,7 @@
 
 namespace FuAnyTagRemovalRequirementEffectComponent
 {
-	const auto* AllowPredictiveEffectsConsoleVariable{
+	static const auto* AllowPredictiveEffectsConsoleVariable{
 		IConsoleManager::Get().FindConsoleVariable(TEXT("AbilitySystem.Fix.AllowPredictiveGEFlags"))
 	};
 

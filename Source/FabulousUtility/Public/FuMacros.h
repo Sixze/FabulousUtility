@@ -23,8 +23,7 @@ namespace FuEnsure
 		uint8 bEnsureAlways : 1 {false};
 	};
 
-	FABULOUSUTILITY_API bool UE_COLD UE_DEBUG_SECTION VARARGS
-	Execute(std::atomic<uint8>& bExecuted, const FFuEnsureInfo& EnsureInfo);
+	FABULOUSUTILITY_API bool UE_COLD UE_DEBUG_SECTION Execute(std::atomic<uint8>& bExecuted, const FFuEnsureInfo& EnsureInfo);
 
 	FABULOUSUTILITY_API bool UE_COLD UE_DEBUG_SECTION VARARGS
 	ExecuteFormat(std::atomic<uint8>& bExecuted, const FFuEnsureInfo& EnsureInfo, const TCHAR* Format, ...);

@@ -6,6 +6,7 @@
 enum ECollisionChannel : int;
 struct FCollisionProfileName;
 struct FOverlapResult;
+struct FHitResult;
 struct FCollisionResponseParams;
 
 UCLASS()
@@ -15,13 +16,13 @@ class FABULOUSUTILITY_API UFuPhysicsUtility : public UBlueprintFunctionLibrary
 
 public:
 	static void FindReachableActorsInRadius(const UObject* WorldContext, const FVector& Location,
-	                                        float Radius, const FCollisionProfileName& CollisionProfile,
-	                                        const TFunctionRef<bool(const FOverlapResult& Overlap)>& FilterPredicate,
+	                                        float Radius, FCollisionProfileName CollisionProfile,
+	                                        TFunctionRef<bool(const FOverlapResult& Overlap)> FilterPredicate,
 	                                        TMap<AActor*, TArray<FHitResult>>& ReachableActors, const AActor* IgnoredActor = nullptr);
 
 	static void FindReachableActorsInRadius(const UObject* WorldContext, const FVector& Location, float Radius,
 	                                        ECollisionChannel CollisionChannel, const FCollisionResponseParams& CollisionResponses,
-	                                        const TFunctionRef<bool(const FOverlapResult& Overlap)>& FilterPredicate,
+	                                        TFunctionRef<bool(const FOverlapResult& Overlap)> FilterPredicate,
 	                                        TMap<AActor*, TArray<FHitResult>>& ReachableActors, const AActor* IgnoredActor = nullptr);
 
 	static bool IsComponentReachableFromLocation(UPrimitiveComponent* Component, const FVector& Location,

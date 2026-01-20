@@ -26,7 +26,7 @@ TArray<AActor*> UFuGameplayCueUtility::GetActors(const FGameplayCueParameters& P
 	return Actors;
 }
 
-void UFuGameplayCueUtility::ExecuteLocalGameplayCueOnActor(AActor* Actor, const FGameplayTag& CueTag,
+void UFuGameplayCueUtility::ExecuteLocalGameplayCueOnActor(AActor* Actor, const FGameplayTag CueTag,
                                                            const FGameplayCueParameters& Parameters)
 {
 	UAbilitySystemComponent* AbilitySystem;
@@ -41,7 +41,7 @@ void UFuGameplayCueUtility::ExecuteLocalGameplayCueOnActor(AActor* Actor, const 
 	}
 }
 
-void UFuGameplayCueUtility::AddLocalGameplayCueToActor(AActor* Actor, const FGameplayTag& CueTag,
+void UFuGameplayCueUtility::AddLocalGameplayCueToActor(AActor* Actor, const FGameplayTag CueTag,
                                                        const FGameplayCueParameters& Parameters)
 {
 	UAbilitySystemComponent* AbilitySystem;
@@ -58,7 +58,7 @@ void UFuGameplayCueUtility::AddLocalGameplayCueToActor(AActor* Actor, const FGam
 	}
 }
 
-void UFuGameplayCueUtility::RemoveLocalGameplayCueFromActor(AActor* Actor, const FGameplayTag& CueTag,
+void UFuGameplayCueUtility::RemoveLocalGameplayCueFromActor(AActor* Actor, const FGameplayTag CueTag,
                                                             const FGameplayCueParameters& Parameters)
 {
 	UAbilitySystemComponent* AbilitySystem;
@@ -120,7 +120,7 @@ void UFuGameplayCueUtility::RemoveLocalGameplayCuesFromActor(AActor* Actor, cons
 	}
 }
 
-void UFuGameplayCueUtility::ExecuteLocalGameplayCue(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& CueTag,
+void UFuGameplayCueUtility::ExecuteLocalGameplayCue(UAbilitySystemComponent* AbilitySystem, const FGameplayTag CueTag,
                                                     const FGameplayCueParameters& Parameters)
 {
 	auto* Avatar{IsValid(AbilitySystem) ? AbilitySystem->GetAvatarActor_Direct() : nullptr};
@@ -145,7 +145,7 @@ void UFuGameplayCueUtility::ExecuteLocalGameplayCue(UAbilitySystemComponent* Abi
 	}
 }
 
-void UFuGameplayCueUtility::AddLocalGameplayCue(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& CueTag,
+void UFuGameplayCueUtility::AddLocalGameplayCue(UAbilitySystemComponent* AbilitySystem, const FGameplayTag CueTag,
                                                 const FGameplayCueParameters& Parameters)
 {
 	auto* Avatar{IsValid(AbilitySystem) ? AbilitySystem->GetAvatarActor_Direct() : nullptr};
@@ -174,7 +174,7 @@ void UFuGameplayCueUtility::AddLocalGameplayCue(UAbilitySystemComponent* Ability
 	}
 }
 
-void UFuGameplayCueUtility::RemoveLocalGameplayCue(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& CueTag,
+void UFuGameplayCueUtility::RemoveLocalGameplayCue(UAbilitySystemComponent* AbilitySystem, const FGameplayTag CueTag,
                                                    const FGameplayCueParameters& Parameters)
 {
 	auto* Avatar{IsValid(AbilitySystem) ? AbilitySystem->GetAvatarActor_Direct() : nullptr};

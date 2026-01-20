@@ -3,6 +3,13 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuEffectUtility.generated.h"
 
+struct FGameplayEffectQuery;
+struct FActiveGameplayEffect;
+struct FGameplayTag;
+struct FGameplayTagContainer;
+class UAbilitySystemComponent;
+class UGameplayEffect;
+
 UCLASS()
 class FABULOUSABILITYSYSTEM_API UFuEffectUtility : public UBlueprintFunctionLibrary
 {
@@ -25,20 +32,18 @@ public:
 	static void FindActiveEffectsByQuery(const UAbilitySystemComponent* AbilitySystem, const FGameplayEffectQuery& EffectQuery,
 	                                     TArray<FActiveGameplayEffect>& ActiveEffects);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Effect Utility",
-		Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Value"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Effect Utility", Meta = (ReturnDisplayName = "Value"))
 	static bool HasActiveEffectsWithTag(const UAbilitySystemComponent* AbilitySystem,
-	                                    const FGameplayTag& Tag, bool bIgnoreInhibitedEffects = false);
+	                                    FGameplayTag Tag, bool bIgnoreInhibitedEffects = false);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Effect Utility",
 		Meta = (AutoCreateRefTerm = "Tags", ReturnDisplayName = "Value"))
 	static bool HasActiveEffectsWithAnyTags(const UAbilitySystemComponent* AbilitySystem,
 	                                        const FGameplayTagContainer& Tags, bool bIgnoreInhibitedEffects = false);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Effect Utility",
-		Meta = (AutoCreateRefTerm = "Tag", ReturnDisplayName = "Effects Count"))
+	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Effect Utility", Meta = (ReturnDisplayName = "Effects Count"))
 	static int32 GetEffectsCountByTag(const UAbilitySystemComponent* AbilitySystem,
-	                                  const FGameplayTag& Tag, bool bIgnoreInhibitedEffects = false);
+	                                  FGameplayTag Tag, bool bIgnoreInhibitedEffects = false);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Ability System|Effect Utility",
 		Meta = (AutoCreateRefTerm = "Tags", ReturnDisplayName = "Effects Count"))
@@ -46,10 +51,9 @@ public:
 	                                        const FGameplayTagContainer& Tags, bool bIgnoreInhibitedEffects = false);
 
 	static const FActiveGameplayEffect* GetActiveEffectTimeRemainingAndDurationByTag(
-		const UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag, float& TimeRemaining, float& Duration);
+		const UAbilitySystemComponent* AbilitySystem, FGameplayTag Tag, float& TimeRemaining, float& Duration);
 
-	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Effect Utility",
-		Meta = (AutoCreateRefTerm = "Tag", ExpandBoolAsExecs = "ReturnValue"))
+	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Effect Utility", Meta = (ExpandBoolAsExecs = "ReturnValue"))
 	static bool TryGetEffectTimeRemainingAndDurationByTag(const UAbilitySystemComponent* AbilitySystem,
-	                                                      const FGameplayTag& Tag, float& TimeRemaining, float& Duration);
+	                                                      FGameplayTag Tag, float& TimeRemaining, float& Duration);
 };

@@ -4,6 +4,9 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuUIUtility.generated.h"
 
+class UScrollBoxSlot;
+class UScrollBox;
+
 UCLASS(DisplayName = "Fu UI Utility")
 class FABULOUSUI_API UFuUIUtility : public UBlueprintFunctionLibrary
 {

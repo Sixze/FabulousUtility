@@ -111,7 +111,7 @@ void UFuAbilityAsync_EffectTimeListener::EndAction()
 	Super::EndAction();
 }
 
-void UFuAbilityAsync_EffectTimeListener::BroadcastEffectTimeRemainingAndDurationForTag(const FGameplayTag& EffectTag) const
+void UFuAbilityAsync_EffectTimeListener::BroadcastEffectTimeRemainingAndDurationForTag(const FGameplayTag EffectTag) const
 {
 	if (!ShouldBroadcastDelegates())
 	{

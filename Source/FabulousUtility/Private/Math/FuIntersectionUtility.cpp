@@ -14,11 +14,11 @@ bool UFuIntersectionUtility::DoSegmentsIntersect1D(float SegmentStartA, float Se
 		Swap(SegmentStartB, SegmentEndB);
 	}
 
-	return SegmentStartB <= SegmentEndA && SegmentStartA <= SegmentEndB;
+	return SegmentEndA >= SegmentStartB && SegmentStartA <= SegmentEndB;
 }
 
-bool UFuIntersectionUtility::LineSegmentIntersection2D(const FVector2D& LineOrigin, const FVector2D& LineDirection,
-                                                       const FVector2D& SegmentStart, const FVector2D& SegmentEnd,
+bool UFuIntersectionUtility::LineSegmentIntersection2D(const FVector2D LineOrigin, const FVector2D LineDirection,
+                                                       const FVector2D SegmentStart, const FVector2D SegmentEnd,
                                                        FVector2D& Intersection)
 {
 	// https://stackoverflow.com/questions/2931573/determining-if-two-rays-intersect

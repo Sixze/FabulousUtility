@@ -12,9 +12,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Intersection Utility", Meta = (ReturnDisplayName = "Value"))
 	static bool DoSegmentsIntersect1D(float SegmentStartA, float SegmentEndA, float SegmentStartB, float SegmentEndB);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Intersection Utility",
-		Meta = (AutoCreateRefTerm = "LineOrigin, LineDirection, SegmentStart, SegmentEnd", ReturnDisplayName = "Success"))
-	static bool LineSegmentIntersection2D(const FVector2D& LineOrigin, const FVector2D& LineDirection,
-	                                      const FVector2D& SegmentStart, const FVector2D& SegmentEnd,
-	                                      FVector2D& Intersection);
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Intersection Utility", Meta = (ReturnDisplayName = "Success"))
+	static bool LineSegmentIntersection2D(FVector2D LineOrigin, FVector2D LineDirection,
+	                                      FVector2D SegmentStart, FVector2D SegmentEnd, FVector2D& Intersection);
 };

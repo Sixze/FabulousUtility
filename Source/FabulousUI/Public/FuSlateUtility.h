@@ -3,6 +3,7 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuSlateUtility.generated.h"
 
+struct FSlateSound;
 class SWidget;
 
 UENUM(BlueprintType)

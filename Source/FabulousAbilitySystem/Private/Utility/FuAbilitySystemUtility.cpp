@@ -50,7 +50,7 @@ bool UFuAbilitySystemUtility::TryGetAbilitySystem(const UObject* Object, UAbilit
 }
 
 FGameplayTag UFuAbilitySystemUtility::FindFirstOwnedDescendantTag(const UAbilitySystemComponent* AbilitySystem,
-                                                                  const FGameplayTag& Tag)
+                                                                  const FGameplayTag Tag)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(Tag.IsValid()))
 	{
@@ -121,7 +121,7 @@ FActiveGameplayEffectHandle UFuAbilitySystemUtility::ApplyEffectWithSetByCallerM
 	return AbilitySystem->ApplyGameplayEffectSpecToSelf(EffectSpecification);
 }
 
-bool UFuAbilitySystemUtility::AddLooseTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag, const bool bReplicate)
+bool UFuAbilitySystemUtility::AddLooseTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag Tag, const bool bReplicate)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(Tag.IsValid()))
 	{
@@ -135,7 +135,7 @@ bool UFuAbilitySystemUtility::AddLooseTag(UAbilitySystemComponent* AbilitySystem
 	return true;
 }
 
-bool UFuAbilitySystemUtility::RemoveLooseTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag)
+bool UFuAbilitySystemUtility::RemoveLooseTag(UAbilitySystemComponent* AbilitySystem, const FGameplayTag Tag)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)))
 	{

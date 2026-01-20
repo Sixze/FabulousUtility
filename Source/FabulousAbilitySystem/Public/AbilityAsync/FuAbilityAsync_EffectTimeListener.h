@@ -3,7 +3,9 @@
 #include "Abilities/Async/AbilityAsync.h"
 #include "FuAbilityAsync_EffectTimeListener.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FFuEffectTimeListenerDelegate, const FGameplayTag&, EffectTag,
+class UFuAbilitySystemComponent;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FFuEffectTimeListenerDelegate, FGameplayTag, EffectTag,
                                               float, TimeRemaining, float, Duration, bool, bPredictedTime);
 
 UCLASS(DisplayName = "Fu Effect Time Listener Ability Async")
@@ -56,7 +58,7 @@ public:
 	virtual void EndAction() override;
 
 private:
-	void BroadcastEffectTimeRemainingAndDurationForTag(const FGameplayTag& EffectTag) const;
+	void BroadcastEffectTimeRemainingAndDurationForTag(FGameplayTag EffectTag) const;
 
 	void AbilitySystem_OnActiveGameplayEffectAdded(UAbilitySystemComponent* AbilitySystem, const FGameplayEffectSpec& EffectSpecification,
 	                                               FActiveGameplayEffectHandle EffectHandle) const;

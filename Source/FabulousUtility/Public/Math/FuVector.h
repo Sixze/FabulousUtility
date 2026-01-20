@@ -9,9 +9,8 @@ class FABULOUSUTILITY_API UFuVector : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Vector Utility",
-		Meta = (AutoCreateRefTerm = "Direction", ReturnDisplayName = "Angle"))
-	static double DirectionToAngle(const FVector2D& Direction);
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Vector Utility", Meta = (ReturnDisplayName = "Angle"))
+	static double DirectionToAngle(FVector2D Direction);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Vector Utility",
 		Meta = (AutoCreateRefTerm = "Direction", ReturnDisplayName = "Angle"))
@@ -53,7 +52,7 @@ public:
 	static double DistanceToSegmentXY(const FVector& SegmentStart, const FVector& SegmentEnd, const FVector& Point);
 };
 
-inline double UFuVector::DirectionToAngle(const FVector2D& Direction)
+inline double UFuVector::DirectionToAngle(const FVector2D Direction)
 {
 	return FMath::RadiansToDegrees(FMath::Atan2(Direction.Y, Direction.X));
 }

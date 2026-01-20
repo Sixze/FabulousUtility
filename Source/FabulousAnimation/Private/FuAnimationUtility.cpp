@@ -21,7 +21,7 @@ float UFuAnimationUtility::GetScaledPlayLength(const UAnimSequenceBase* Sequence
 	return PlayRate > UE_SMALL_NUMBER ? Sequence->GetPlayLength() / PlayRate : 0.0f;
 }
 
-bool UFuAnimationUtility::TryFindMontageNotifyEventByName(const UAnimMontage* Montage, const FName& NotifyName,
+bool UFuAnimationUtility::TryFindMontageNotifyEventByName(const UAnimMontage* Montage, const FName NotifyName,
                                                           FAnimNotifyEvent& NotifyEvent)
 {
 	if (!FU_ENSURE(IsValid(Montage)))
@@ -49,7 +49,7 @@ bool UFuAnimationUtility::TryFindMontageNotifyEventByName(const UAnimMontage* Mo
 	return false;
 }
 
-FTransform UFuAnimationUtility::GetBoneTransformFromMontage(const UAnimMontage* Montage, const FName& BoneName, const float Time)
+FTransform UFuAnimationUtility::GetBoneTransformFromMontage(const UAnimMontage* Montage, const FName BoneName, const float Time)
 {
 	if (!FU_ENSURE(IsValid(Montage)) || !FU_ENSURE(!Montage->SlotAnimTracks.IsEmpty()))
 	{
@@ -74,31 +74,32 @@ FTransform UFuAnimationUtility::GetBoneTransformFromMontage(const UAnimMontage* 
 	return FTransform::Identity;
 }
 
-FTransform UFuAnimationUtility::GetBoneTransformFromSequence(const UAnimSequence* Sequence, const FName& BoneName, const float Time)
+FTransform UFuAnimationUtility::GetBoneTransformFromSequence(const UAnimSequence* Sequence, const FName BoneName, const float Time)
 {
+	auto ResultTransform{FTransform::Identity};
+
 	if (!FU_ENSURE(IsValid(Sequence)))
 	{
-		return FTransform::Identity;
+		return ResultTransform;
 	}
 
 	const auto* Skeleton{Sequence->GetSkeleton()};
 	const auto& ReferenceSkeleton{Skeleton->GetReferenceSkeleton()};
 
 	auto BoneIndex{ReferenceSkeleton.FindBoneIndex(BoneName)};
-	auto ResultTransform{FTransform::Identity};
 
 	if (!ReferenceSkeleton.IsValidIndex(BoneIndex))
 	{
 		const auto* Socket{Skeleton->FindSocket(BoneName)};
 		if (!IsValid(Socket))
 		{
-			return FTransform::Identity;
+			return ResultTransform;
 		}
 
 		BoneIndex = ReferenceSkeleton.FindBoneIndex(Socket->BoneName);
 		if (!ReferenceSkeleton.IsValidIndex(BoneIndex))
 		{
-			return FTransform::Identity;
+			return ResultTransform;
 		}
 
 		ResultTransform = Socket->GetSocketLocalTransform();
@@ -159,7 +160,7 @@ FTransform UFuAnimationUtility::GetBoneTransformInComponentSpace(const FBoneCont
 	return ResultTransform;
 }
 
-void UFuAnimationUtility::StopMontagesWithSlot(UAnimInstance* AnimationInstance, const FName& SlotName, const float BlendOutDuration)
+void UFuAnimationUtility::StopMontagesWithSlot(UAnimInstance* AnimationInstance, const FName SlotName, const float BlendOutDuration)
 {
 	if (!FU_ENSURE(IsValid(AnimationInstance)) || !FU_ENSURE(!SlotName.IsNone()))
 	{

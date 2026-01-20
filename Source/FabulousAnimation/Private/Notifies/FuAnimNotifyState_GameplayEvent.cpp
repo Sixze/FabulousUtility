@@ -9,7 +9,7 @@
 
 namespace FuGameplayEventStateAnimationNotify
 {
-	const auto* AllowPredictiveEffectsConsoleVariable{
+	static const auto* AllowPredictiveEffectsConsoleVariable{
 		IConsoleManager::Get().FindConsoleVariable(TEXT("AbilitySystem.Fix.AllowPredictiveGEFlags"))
 	};
 
@@ -31,16 +31,23 @@ UFuAnimNotifyState_GameplayEvent::UFuAnimNotifyState_GameplayEvent()
 
 FString UFuAnimNotifyState_GameplayEvent::GetNotifyName_Implementation() const
 {
-#if WITH_EDITOR
-	if (!NotifyName.IsNone())
-	{
-		return NotifyName.ToString();
-	}
-#endif
+	TStringBuilder<192> NotifyNameBuilder{InPlace, TEXTVIEW("Fu Gameplay Event: ")};
 
-	TStringBuilder<256> NotifyNameBuilder{
-		InPlace, TEXTVIEW("Fu Gameplay Event: "), BeginEventTag.GetTagName(), TEXTVIEW(" - "), EndEventTag.GetTagName()
-	};
+#if WITH_EDITOR
+	if (!CustomDescription.IsNone())
+	{
+		NotifyNameBuilder << CustomDescription;
+	}
+	else
+#endif
+	{
+		NotifyNameBuilder << BeginEventTag.GetTagName() << TEXTVIEW(" - ") << EndEventTag.GetTagName();
+	}
+
+	// For some reason editor cuts off some characters at the end of the string, so to avoid this we insert a bunch of spaces.
+	// TODO Check the need for this hack in future engine versions.
+
+	NotifyNameBuilder << TEXTVIEW("                                ");
 
 	return FString{NotifyNameBuilder};
 }

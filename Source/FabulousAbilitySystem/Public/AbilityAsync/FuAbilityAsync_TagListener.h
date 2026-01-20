@@ -3,7 +3,7 @@
 #include "Abilities/Async/AbilityAsync.h"
 #include "FuAbilityAsync_TagListener.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuTagListenerDelegate, const FGameplayTag&, Tag);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuTagListenerDelegate, FGameplayTag, Tag);
 
 UCLASS(DisplayName = "Fu Tag Listener Ability Async")
 class FABULOUSABILITYSYSTEM_API UFuAbilityAsync_TagListener : public UAbilityAsync

@@ -72,7 +72,7 @@ public:
 private:
 	void ProcessAbilitySpecificationChange(const FGameplayAbilitySpec& AbilitySpecification, bool bAddedOrRemoved);
 
-	void BroadcastEffectTimeRemainingAndDurationForTag(const FGameplayTag& EffectTag) const;
+	void BroadcastEffectTimeRemainingAndDurationForTag(FGameplayTag EffectTag) const;
 
 	void AbilitySystem_OnAbilityGiven(const FGameplayAbilitySpec& AbilitySpecification);
 

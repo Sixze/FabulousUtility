@@ -213,7 +213,7 @@ void UFuAbilityAsync_AbilityCooldownListener::ProcessAbilitySpecificationChange(
 	}
 }
 
-void UFuAbilityAsync_AbilityCooldownListener::BroadcastEffectTimeRemainingAndDurationForTag(const FGameplayTag& EffectTag) const
+void UFuAbilityAsync_AbilityCooldownListener::BroadcastEffectTimeRemainingAndDurationForTag(const FGameplayTag EffectTag) const
 {
 	if (!ShouldBroadcastDelegates())
 	{

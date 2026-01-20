@@ -22,8 +22,8 @@ public:
 	static FString GetObjectNameSoft(const TSoftObjectPtr<UObject>& Object);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Object Utility",
-		Meta = (AutoCreateRefTerm = "Name", DeterminesOutputType = "Object", ReturnDisplayName = "Object"))
-	static UObject* DuplicateObject(const UObject* Object, UObject* OuterObject, const FName& Name = NAME_None);
+		Meta = (DeterminesOutputType = "Object", ReturnDisplayName = "Object"))
+	static UObject* DuplicateObject(const UObject* Object, UObject* OuterObject, FName Name = NAME_None);
 
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Object Utility",
 		DisplayName = "Does Implement Interface (Expanded)", Meta = (ExpandBoolAsExecs = "ReturnValue"))
@@ -44,7 +44,7 @@ inline FString UFuObjectUtility::GetObjectNameSoft(const TSoftObjectPtr<UObject>
 	return FPackageName::ObjectPathToObjectName(Object.ToString());
 }
 
-inline UObject* UFuObjectUtility::DuplicateObject(const UObject* Object, UObject* OuterObject, const FName& Name)
+inline UObject* UFuObjectUtility::DuplicateObject(const UObject* Object, UObject* OuterObject, const FName Name)
 {
 	return ::DuplicateObject(Object, OuterObject, Name);
 }

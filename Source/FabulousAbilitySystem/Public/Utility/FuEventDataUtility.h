@@ -1,9 +1,8 @@
 #pragma once
 
+#include "Abilities/GameplayAbilityTypes.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuEventDataUtility.generated.h"
-
-struct FGameplayEffectModCallbackData;
 
 UCLASS()
 class FABULOUSABILITYSYSTEM_API UFuEventDataUtility : public UBlueprintFunctionLibrary

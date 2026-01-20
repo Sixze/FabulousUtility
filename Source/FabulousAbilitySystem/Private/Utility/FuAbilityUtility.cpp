@@ -5,30 +5,32 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuAbilityUtility)
 
-FGameplayTag UFuAbilityUtility::FindFirstDescendantAbilityTag(const UGameplayAbility* Ability, const FGameplayTag& Tag)
+FGameplayTag UFuAbilityUtility::FindFirstDescendantAbilityTag(const UGameplayAbility* Ability, const FGameplayTag Tag)
 {
+	FGameplayTag DescendantTag;
+
 	if (!FU_ENSURE(IsValid(Ability)) || !FU_ENSURE(Tag.IsValid()))
 	{
-		return FGameplayTag::EmptyTag;
+		return DescendantTag;
 	}
 
-	const auto DescendantTag{UFuGameplayTagUtility::FindFirstDescendantTag(Ability->GetAssetTags(), Tag)};
+	DescendantTag = UFuGameplayTagUtility::FindFirstDescendantTag(Ability->GetAssetTags(), Tag);
 	if (DescendantTag.IsValid())
 	{
 		return DescendantTag;
 	}
 
 	const auto* AbilitySpecification{IsValid(Ability) ? Ability->GetCurrentAbilitySpec() : nullptr};
-	if (!FU_ENSURE(AbilitySpecification != nullptr))
+	if (FU_ENSURE(AbilitySpecification != nullptr))
 	{
-		return FGameplayTag::EmptyTag;
+		DescendantTag = UFuGameplayTagUtility::FindFirstDescendantTag(AbilitySpecification->GetDynamicSpecSourceTags(), Tag);
 	}
 
-	return UFuGameplayTagUtility::FindFirstDescendantTag(AbilitySpecification->GetDynamicSpecSourceTags(), Tag);
+	return DescendantTag;
 }
 
 bool UFuAbilityUtility::HasAbilityTag(const UAbilitySystemComponent* AbilitySystem, const FGameplayAbilitySpecHandle AbilityHandle,
-                                      const FGameplayTag& Tag)
+                                      const FGameplayTag Tag)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(AbilityHandle.IsValid()) || !FU_ENSURE(Tag.IsValid()))
 	{
@@ -67,26 +69,28 @@ bool UFuAbilityUtility::TryGetSourceObjectCasted(const UAbilitySystemComponent* 
 
 FGameplayTag UFuAbilityUtility::FindFirstDescendantAbilityTagByHandle(const UAbilitySystemComponent* AbilitySystem,
                                                                       const FGameplayAbilitySpecHandle AbilityHandle,
-                                                                      const FGameplayTag& Tag)
+                                                                      const FGameplayTag Tag)
 {
+	FGameplayTag DescendantTag;
+
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(AbilityHandle.IsValid()) || !FU_ENSURE(Tag.IsValid()))
 	{
-		return FGameplayTag::EmptyTag;
+		return DescendantTag;
 	}
 
 	const auto* AbilitySpecification{AbilitySystem->FindAbilitySpecFromHandle(AbilityHandle)};
 	if (!FU_ENSURE(AbilitySpecification != nullptr))
 	{
-		return FGameplayTag::EmptyTag;
-	}
-
-	const auto DescendantTag{UFuGameplayTagUtility::FindFirstDescendantTag(AbilitySpecification->GetDynamicSpecSourceTags(), Tag)};
-	if (DescendantTag.IsValid())
-	{
 		return DescendantTag;
 	}
 
-	return UFuGameplayTagUtility::FindFirstDescendantTag(AbilitySpecification->Ability->GetAssetTags(), Tag);
+	DescendantTag = UFuGameplayTagUtility::FindFirstDescendantTag(AbilitySpecification->GetDynamicSpecSourceTags(), Tag);
+	if (!DescendantTag.IsValid())
+	{
+		DescendantTag = UFuGameplayTagUtility::FindFirstDescendantTag(AbilitySpecification->Ability->GetAssetTags(), Tag);
+	}
+
+	return DescendantTag;
 }
 
 bool UFuAbilityUtility::TryCommitAbility(UGameplayAbility* Ability, const bool bCancelOnFailure)
@@ -109,7 +113,7 @@ bool UFuAbilityUtility::TryCommitAbility(UGameplayAbility* Ability, const bool b
 	return false;
 }
 
-bool UFuAbilityUtility::HasAbilitiesWithTag(const UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag)
+bool UFuAbilityUtility::HasAbilitiesWithTag(const UAbilitySystemComponent* AbilitySystem, const FGameplayTag Tag)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(Tag.IsValid()))
 	{
@@ -128,7 +132,7 @@ bool UFuAbilityUtility::HasAbilitiesWithTag(const UAbilitySystemComponent* Abili
 	return false;
 }
 
-bool UFuAbilityUtility::CanActivateAbilityByTag(const UAbilitySystemComponent* AbilitySystem, const FGameplayTag& Tag)
+bool UFuAbilityUtility::CanActivateAbilityByTag(const UAbilitySystemComponent* AbilitySystem, const FGameplayTag Tag)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(Tag.IsValid()))
 	{

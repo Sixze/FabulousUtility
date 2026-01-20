@@ -5,6 +5,8 @@
 
 // https://dev.epicgames.com/documentation/unreal-engine/coordinate-space-terminology-in-unreal-engine?application_version=5.3
 
+class ULocalPlayer;
+
 UCLASS()
 class FABULOUSUTILITY_API UFuCoordinateSpaceUtility : public UBlueprintFunctionLibrary
 {

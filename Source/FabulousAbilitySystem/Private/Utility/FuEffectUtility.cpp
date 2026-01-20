@@ -88,7 +88,7 @@ void UFuEffectUtility::FindActiveEffectsByQuery(const UAbilitySystemComponent* A
 }
 
 bool UFuEffectUtility::HasActiveEffectsWithTag(const UAbilitySystemComponent* AbilitySystem,
-                                               const FGameplayTag& Tag, const bool bIgnoreInhibitedEffects)
+                                               const FGameplayTag Tag, const bool bIgnoreInhibitedEffects)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(Tag.IsValid()))
 	{
@@ -128,7 +128,7 @@ bool UFuEffectUtility::HasActiveEffectsWithAnyTags(const UAbilitySystemComponent
 }
 
 int32 UFuEffectUtility::GetEffectsCountByTag(const UAbilitySystemComponent* AbilitySystem,
-                                             const FGameplayTag& Tag, const bool bIgnoreInhibitedEffects)
+                                             const FGameplayTag Tag, const bool bIgnoreInhibitedEffects)
 {
 	if (!FU_ENSURE(IsValid(AbilitySystem)) || !FU_ENSURE(Tag.IsValid()))
 	{
@@ -176,7 +176,7 @@ int32 UFuEffectUtility::GetEffectsCountWithAnyTags(const UAbilitySystemComponent
 }
 
 const FActiveGameplayEffect* UFuEffectUtility::GetActiveEffectTimeRemainingAndDurationByTag(const UAbilitySystemComponent* AbilitySystem,
-                                                                                            const FGameplayTag& Tag,
+                                                                                            const FGameplayTag Tag,
                                                                                             float& TimeRemaining, float& Duration)
 {
 	TimeRemaining = -1.0f;
@@ -227,7 +227,7 @@ const FActiveGameplayEffect* UFuEffectUtility::GetActiveEffectTimeRemainingAndDu
 }
 
 bool UFuEffectUtility::TryGetEffectTimeRemainingAndDurationByTag(const UAbilitySystemComponent* AbilitySystem,
-                                                                 const FGameplayTag& Tag, float& TimeRemaining, float& Duration)
+                                                                 const FGameplayTag Tag, float& TimeRemaining, float& Duration)
 {
 	if (!IsValid(AbilitySystem))
 	{

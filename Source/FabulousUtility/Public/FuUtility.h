@@ -3,6 +3,8 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuUtility.generated.h"
 
+class UGameInstance;
+
 UCLASS()
 class FABULOUSUTILITY_API UFuUtility : public UBlueprintFunctionLibrary
 {

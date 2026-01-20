@@ -9,7 +9,7 @@
 
 class UCommonUserWidget;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuUIActionListenerByTagDelegate, const FGameplayTag&, ActionTag, float, HeldPercent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFuUIActionListenerByTagDelegate, FGameplayTag, ActionTag, float, HeldPercent);
 
 UCLASS(DisplayName = "Fu UI Action Listener by Tag Async Action")
 class FABULOUSUI_API UFuAsyncAction_UIActionListenerByTag : public UCancellableAsyncAction
