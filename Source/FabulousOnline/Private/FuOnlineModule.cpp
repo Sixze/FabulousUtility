@@ -1,4 +1,4 @@
-#include "FabulousOnlineModule.h"
+#include "FuOnlineModule.h"
 
 #include "Modules/ModuleManager.h"
 

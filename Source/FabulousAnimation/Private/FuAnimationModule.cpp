@@ -1,4 +1,4 @@
-#include "FabulousAnimationModule.h"
+#include "FuAnimationModule.h"
 
 #include "Modules/ModuleManager.h"
 

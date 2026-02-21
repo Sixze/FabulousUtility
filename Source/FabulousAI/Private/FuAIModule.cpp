@@ -1,4 +1,4 @@
-#include "FabulousAIModule.h"
+#include "FuAIModule.h"
 
 #include "Modules/ModuleManager.h"
 
