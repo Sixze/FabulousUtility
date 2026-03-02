@@ -9,7 +9,7 @@ void UFuTickableObject::Tick(const float DeltaTime)
 
 ETickableTickType UFuTickableObject::GetTickableTickType() const
 {
-	return ETickableTickType::Always;
+	return IsTemplate() ? ETickableTickType::Never : ETickableTickType::Always;
 }
 
 TStatId UFuTickableObject::GetStatId() const

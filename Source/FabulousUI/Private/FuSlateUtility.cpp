@@ -55,7 +55,7 @@ namespace FuSlateUtility
 				{
 					if (Child->SupportsKeyboardFocus())
 					{
-						FoundWidgets.RemoveAtSwap(FoundWidgets.Num() - 1, EAllowShrinking::No);
+						FoundWidgets.RemoveAtSwap(FoundWidgets.Num() - 1);
 						FoundWidgets.Emplace(Child);
 						ResultWidgetsCount += 1;
 					}

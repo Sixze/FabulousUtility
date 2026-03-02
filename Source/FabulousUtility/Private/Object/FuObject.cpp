@@ -21,7 +21,7 @@ void UFuObject::PostInitProperties()
 
 UWorld* UFuObject::GetWorld() const
 {
-	return !HasAllFlags(RF_ClassDefaultObject) ? GetOuter()->GetWorld() : nullptr;
+	return !IsTemplate() ? GetOuter()->GetWorld() : nullptr;
 }
 
 void UFuObject::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -48,7 +48,7 @@ bool UFuObject::IsSupportedForNetworking() const
 
 int32 UFuObject::GetFunctionCallspace(UFunction* Function, FFrame* Stack)
 {
-	return HasAnyFlags(RF_ClassDefaultObject) || Function->FunctionFlags & FUNC_Static
+	return IsTemplate() || Function->FunctionFlags & FUNC_Static
 		       ? GEngine->GetGlobalFunctionCallspace(Function, this, Stack)
 		       : GetOuter()->GetFunctionCallspace(Function, Stack);
 }

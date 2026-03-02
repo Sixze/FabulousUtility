@@ -34,8 +34,8 @@ if "%EngineDirectory%" == "" (
 )
 
 set AutomationToolPath=%EngineDirectory%\Engine\Build\BatchFiles\RunUAT.bat
-set PluginPath=%cd%\FabulousUtility.uplugin
-set OutputPath=%cd%\Build
+set PluginPath=%~dp0FabulousUtility.uplugin
+set OutputPath=%~dp0Build
 
 echo Automation Tool Path: %AutomationToolPath%
 echo:

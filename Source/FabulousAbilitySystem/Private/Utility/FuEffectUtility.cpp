@@ -192,7 +192,7 @@ const FActiveGameplayEffect* UFuEffectUtility::GetActiveEffectTimeRemainingAndDu
 	const FActiveGameplayEffect* Result{nullptr};
 	const auto Time{ActiveEffects.GetWorldTime()};
 
-	for (auto& ActiveEffect : &ActiveEffects)
+	for (const auto& ActiveEffect : &ActiveEffects)
 	{
 		if (!UFuEffectSpecificationUtility::HasGrantedTag(ActiveEffect.Spec, Tag))
 		{
