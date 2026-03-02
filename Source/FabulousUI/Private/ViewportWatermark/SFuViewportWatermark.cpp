@@ -43,7 +43,7 @@ void SFuViewportWatermark::Construct(const FArguments& Arguments)
 		[
 			SNew(STextBlock)
 			.Text(ViewportWatermarkSettings->bAddEngineVersionToCopyright
-				      ? FText::Format(FText::AsCultureInvariant(FString{TEXTVIEW("{0}") LINE_TERMINATOR TEXTVIEW("{1}")}), {
+				      ? FText::Format(INVTEXT("{0}" LINE_TERMINATOR "{1}"), {
 					                      {ViewportWatermarkSettings->CopyrightText},
 					                      {ViewportWatermarkSettings->EngineVersionText}
 				                      })
