@@ -18,7 +18,7 @@ void UFuViewportWatermarkSubsystem::Initialize(FSubsystemCollectionBase& Subsyst
 {
 	Super::Initialize(SubsystemCollection);
 
-	if (!GetDefault<UFuViewportWatermarkSettings>()->bEnabled)
+	if (!UFuViewportWatermarkSettings::Get()->bEnabled)
 	{
 		return;
 	}
@@ -47,7 +47,7 @@ void UFuViewportWatermarkSubsystem::GameViewport_OnViewportCreated() const
 	{
 		UGameViewportClient::OnViewportCreated().RemoveAll(this);
 
-		Viewport->AddViewportWidgetContent(SNew(SFuViewportWatermark), GetDefault<UFuViewportWatermarkSettings>()->ZOrder);
+		Viewport->AddViewportWidgetContent(SNew(SFuViewportWatermark), UFuViewportWatermarkSettings::Get()->ZOrder);
 	}
 }
 

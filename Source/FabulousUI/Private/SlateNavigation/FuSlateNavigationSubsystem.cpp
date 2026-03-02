@@ -18,7 +18,7 @@ void UFuSlateNavigationSubsystem::Initialize(FSubsystemCollectionBase& Subsystem
 {
 	Super::Initialize(SubsystemCollection);
 
-	const auto* Settings{GetDefault<UFuSlateNavigationSettings>()};
+	const auto* Settings{UFuSlateNavigationSettings::Get()};
 
 	if (FSlateApplication::IsInitialized() && Settings->bApplySettings)
 	{
@@ -44,7 +44,7 @@ void UFuSlateNavigationSubsystem::Initialize(FSubsystemCollectionBase& Subsystem
 void UFuSlateNavigationSubsystem::Deinitialize()
 {
 #if WITH_EDITOR
-	if (FSlateApplication::IsInitialized() && GetDefault<UFuSlateNavigationSettings>()->bApplySettings)
+	if (FSlateApplication::IsInitialized() && UFuSlateNavigationSettings::Get()->bApplySettings)
 	{
 		FSlateApplication::Get().SetNavigationConfig(MakeShared<FNavigationConfig>());
 	}

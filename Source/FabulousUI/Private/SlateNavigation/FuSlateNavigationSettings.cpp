@@ -6,6 +6,11 @@
 
 #define LOCTEXT_NAMESPACE "FuSlateNavigationSettings"
 
+const UFuSlateNavigationSettings* UFuSlateNavigationSettings::Get()
+{
+	return GetDefault<ThisClass>();
+}
+
 UFuSlateNavigationSettings::UFuSlateNavigationSettings()
 {
 	CategoryName = FName{TEXTVIEW("Fabulous Utility")};

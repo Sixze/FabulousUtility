@@ -14,7 +14,7 @@ SFuViewportWatermark::SFuViewportWatermark()
 
 void SFuViewportWatermark::Construct(const FArguments& Arguments)
 {
-	const auto* ViewportWatermarkSettings{GetDefault<UFuViewportWatermarkSettings>()};
+	const auto* ViewportWatermarkSettings{UFuViewportWatermarkSettings::Get()};
 
 	const auto Overlay{SNew(SOverlay)};
 

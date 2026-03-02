@@ -12,6 +12,11 @@
 
 #define LOCTEXT_NAMESPACE "FuViewportWatermarkSettings"
 
+const UFuViewportWatermarkSettings* UFuViewportWatermarkSettings::Get()
+{
+	return GetDefault<ThisClass>();
+}
+
 UFuViewportWatermarkSettings::UFuViewportWatermarkSettings()
 {
 	CategoryName = FName{TEXTVIEW("Fabulous Utility")};

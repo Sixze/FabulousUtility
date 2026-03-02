@@ -78,6 +78,9 @@ public:
 	FFuViewportWatermarkTextSettings SystemInfoSettings;
 
 public:
+	static const UFuViewportWatermarkSettings* Get();
+
+public:
 	UFuViewportWatermarkSettings();
 
 #if WITH_EDITOR

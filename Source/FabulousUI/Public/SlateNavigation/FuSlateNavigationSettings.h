@@ -43,6 +43,9 @@ public:
 	TMap<FKey, EUINavigationAction> KeyActionMappings;
 
 public:
+	static const UFuSlateNavigationSettings* Get();
+
+public:
 	UFuSlateNavigationSettings();
 
 #if WITH_EDITOR
