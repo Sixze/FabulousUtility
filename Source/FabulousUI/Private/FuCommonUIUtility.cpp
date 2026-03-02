@@ -4,6 +4,7 @@
 #include "CommonInputSubsystem.h"
 #include "FuMacros.h"
 #include "FuPrivateMemberAccessor.h"
+#include "Input/UIActionBinding.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuCommonUIUtility)
 
@@ -25,6 +26,13 @@ ECommonInputType UFuCommonUIUtility::GetInputType(const FKey& Key)
 	}
 
 	return ECommonInputType::Touch;
+}
+
+const UInputAction* UFuCommonUIUtility::GetInputAction(const FUIActionBindingHandle& ActionHandle)
+{
+	const auto* ActionBinding{FUIActionBinding::FindBinding(ActionHandle).Get()};
+
+	return ActionBinding != nullptr ? ActionBinding->InputAction.Get() : nullptr;
 }
 
 UUserWidget* UFuCommonUIUtility::FindRootUserWidgetByClass(const UWidget* Widget, const TSubclassOf<UUserWidget> UserWidgetClass)

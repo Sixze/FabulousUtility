@@ -5,6 +5,8 @@
 #include "FuCommonUIUtility.generated.h"
 
 enum class ECommonInputType : uint8;
+struct FUIActionBindingHandle;
+class UInputAction;
 class UCommonButtonBase;
 
 UCLASS(DisplayName = "Fu Common UI Utility")
@@ -15,6 +17,9 @@ class FABULOUSUI_API UFuCommonUIUtility : public UBlueprintFunctionLibrary
 public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous UI|Common UI Utility", Meta = (ReturnDisplayName = "Input Type"))
 	static ECommonInputType GetInputType(const FKey& Key);
+
+	UFUNCTION(BlueprintPure, Category = "Fabulous UI|Common UI Utility", Meta = (ReturnDisplayName = "Input Action"))
+	static const UInputAction* GetInputAction(const FUIActionBindingHandle& ActionHandle);
 
 	template <typename UserWidgetType = UUserWidget> requires UE::CDerivedFrom<UserWidgetType, UUserWidget>
 	static UserWidgetType* FindRootUserWidget(const UWidget* Widget);
