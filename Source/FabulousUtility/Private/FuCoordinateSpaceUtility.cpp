@@ -156,6 +156,52 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportLocation(const APlaye
 	                                                      bPlayerViewportRelative, bCalculateOutsideScreenLocation);
 }
 
+bool UFuCoordinateSpaceUtility::TryTransformWorldToNormalizedViewportLocationLocalPlayer(const ULocalPlayer* LocalPlayer,
+                                                                                         const FVector& WorldLocation,
+                                                                                         FVector2f& NormalizedViewportLocation,
+                                                                                         const bool bPlayerViewportRelative,
+                                                                                         const bool bCalculateOutsideScreenLocation)
+{
+	// Based on USlateBlueprintLibrary::ScreenToWidgetAbsolute().
+
+	FVector2f ViewportLocation;
+	if (!TryTransformWorldToViewportLocationLocalPlayer(LocalPlayer, WorldLocation, ViewportLocation,
+	                                                    bPlayerViewportRelative, bCalculateOutsideScreenLocation))
+	{
+		NormalizedViewportLocation = FVector2f::ZeroVector;
+		return false;
+	}
+
+	const auto* Viewport{LocalPlayer->ViewportClient.Get()};
+	const auto ViewportSize{Viewport->Viewport->GetSizeXY()};
+
+	if (ViewportSize.X <= 0 || ViewportSize.Y <= 0)
+	{
+		NormalizedViewportLocation = FVector2f::ZeroVector;
+		return false;
+	}
+
+	NormalizedViewportLocation = ViewportLocation / ViewportSize;
+	return true;
+}
+
+bool UFuCoordinateSpaceUtility::TryTransformWorldToNormalizedViewportLocation(const APlayerController* Player,
+                                                                              const FVector& WorldLocation,
+                                                                              FVector2f& NormalizedViewportLocation,
+                                                                              const bool bPlayerViewportRelative,
+                                                                              const bool bCalculateOutsideScreenLocation)
+{
+	if (!IsValid(Player))
+	{
+		NormalizedViewportLocation = FVector2f::ZeroVector;
+		return false;
+	}
+
+	return TryTransformWorldToNormalizedViewportLocationLocalPlayer(Player->GetLocalPlayer(), WorldLocation,
+	                                                                NormalizedViewportLocation,
+	                                                                bPlayerViewportRelative, bCalculateOutsideScreenLocation);
+}
+
 bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocationLocalPlayer(const ULocalPlayer* LocalPlayer,
                                                                                      const FVector& WorldLocation,
                                                                                      FVector2f& ViewportWidgetLocation,
@@ -164,31 +210,24 @@ bool UFuCoordinateSpaceUtility::TryTransformWorldToViewportWidgetLocationLocalPl
 {
 	// Based on USlateBlueprintLibrary::ScreenToWidgetAbsolute().
 
-	FVector2f ViewportLocation;
-	if (!TryTransformWorldToViewportLocationLocalPlayer(LocalPlayer, WorldLocation, ViewportLocation,
-	                                                    bPlayerViewportRelative, bCalculateOutsideScreenLocation))
+	FVector2f NormalizedViewportLocation;
+	if (!TryTransformWorldToNormalizedViewportLocationLocalPlayer(LocalPlayer, WorldLocation, NormalizedViewportLocation,
+	                                                              bPlayerViewportRelative, bCalculateOutsideScreenLocation))
 	{
 		ViewportWidgetLocation = FVector2f::ZeroVector;
 		return false;
 	}
 
 	const auto* Viewport{LocalPlayer->ViewportClient.Get()};
-
-	const auto ViewportSize{Viewport->Viewport->GetSizeXY()};
-	if (ViewportSize.X <= 0 || ViewportSize.Y <= 0)
-	{
-		ViewportWidgetLocation = FVector2f::ZeroVector;
-		return false;
-	}
-
 	const auto LayerManager{Viewport->GetGameLayerManager()};
+
 	if (!LayerManager.IsValid())
 	{
 		ViewportWidgetLocation = FVector2f::ZeroVector;
 		return false;
 	}
 
-	ViewportWidgetLocation = LayerManager->GetViewportWidgetHostGeometry().GetLocalSize() * ViewportLocation / ViewportSize;
+	ViewportWidgetLocation = LayerManager->GetViewportWidgetHostGeometry().GetLocalSize() * NormalizedViewportLocation;
 	return true;
 }
 
