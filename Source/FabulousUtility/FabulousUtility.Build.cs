@@ -4,8 +4,15 @@ public class FabulousUtility : ModuleRules
 {
 	public FabulousUtility(ReadOnlyTargetRules target) : base(target)
 	{
-		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_7;
+
+		// if (Target.bBuildEditor)
+		// {
+		// 	// Verify that all source files include all required dependencies.
+		//
+		// 	bUseUnity = false;
+		// 	PCHUsage = PCHUsageMode.NoPCHs;
+		// }
 
 		// CppCompileWarningSettings.UnsafeTypeCastWarningLevel = WarningLevel.Warning;
 		CppCompileWarningSettings.NonInlinedGenCppWarningLevel = WarningLevel.Warning;
@@ -18,6 +25,6 @@ public class FabulousUtility : ModuleRules
 			"EngineSettings", "NetCore", "SlateCore", "GameplayTags"
 		]);
 
-		SetupIrisSupport(target);
+		SetupIrisSupport(Target);
 	}
 }

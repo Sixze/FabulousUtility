@@ -4,18 +4,25 @@ public class FabulousUI : ModuleRules
 {
 	public FabulousUI(ReadOnlyTargetRules target) : base(target)
 	{
-		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_7;
+
+		// if (Target.bBuildEditor)
+		// {
+		// 	// Verify that all source files include all required dependencies.
+		//
+		// 	bUseUnity = false;
+		// 	PCHUsage = PCHUsageMode.NoPCHs;
+		// }
 
 		// CppCompileWarningSettings.UnsafeTypeCastWarningLevel = WarningLevel.Warning;
 		CppCompileWarningSettings.NonInlinedGenCppWarningLevel = WarningLevel.Warning;
 
 		PublicDependencyModuleNames.AddRange([
-			"Core", "CoreUObject", "Engine", "InputCore", "SlateCore", "UMG", "CommonInput", "CommonUI", "DeveloperSettings"
+			"Core", "CoreUObject", "Engine", "DeveloperSettings", "InputCore", "SlateCore", "UMG", "CommonInput", "CommonUI"
 		]);
 
 		PrivateDependencyModuleNames.AddRange([
-			"EnhancedInput", "RHI", "Slate", "GameplayTags", "FabulousUtility"
+			"GameplayTags", "RHI", "Slate", "EnhancedInput", "FabulousUtility"
 		]);
 	}
 }

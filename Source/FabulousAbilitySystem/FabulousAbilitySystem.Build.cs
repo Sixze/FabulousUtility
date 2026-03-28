@@ -4,8 +4,15 @@ public class FabulousAbilitySystem : ModuleRules
 {
 	public FabulousAbilitySystem(ReadOnlyTargetRules target) : base(target)
 	{
-		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_7;
+
+		// if (Target.bBuildEditor)
+		// {
+		// 	// Verify that all source files include all required dependencies.
+		//
+		// 	bUseUnity = false;
+		// 	PCHUsage = PCHUsageMode.NoPCHs;
+		// }
 
 		// CppCompileWarningSettings.UnsafeTypeCastWarningLevel = WarningLevel.Warning;
 		CppCompileWarningSettings.NonInlinedGenCppWarningLevel = WarningLevel.Warning;
@@ -15,9 +22,7 @@ public class FabulousAbilitySystem : ModuleRules
 		]);
 
 		PrivateDependencyModuleNames.AddRange([
-			"EnhancedInput", "NetCore", "GameplayTasks", "NavigationSystem"
+			"NetCore", "NavigationSystem", "GameplayTasks", "EnhancedInput"
 		]);
-
-		SetupIrisSupport(target);
 	}
 }
