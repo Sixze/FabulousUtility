@@ -29,8 +29,8 @@ public:
 		DisplayName = "Is Active (Expanded)", Meta = (ExpandBoolAsExecs = "ReturnValue"))
 	static bool IsActiveExpanded(const FGameplayAbilitySpec& AbilitySpecification);
 
-	// This is not the same function as UAbilitySystemComponent::FindAbilitySpecFromClass(), because that
-	// function performs a direct class comparison, while this function checks the parent-child class relationship.
+	/// Unlike the UAbilitySystemComponent::FindAbilitySpecFromClass() function, which performs
+	/// a direct class comparison, this function checks the parent-child class relationship.
 	template <typename AbilityType = UGameplayAbility> requires UE::CDerivedFrom<AbilityType, UGameplayAbility>
 	static const FGameplayAbilitySpec* FindAbilitySpecificationByClass(const UAbilitySystemComponent* AbilitySystem);
 };

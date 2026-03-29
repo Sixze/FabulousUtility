@@ -3,8 +3,7 @@
 #include "BehaviorTree/BTDecorator.h"
 #include "FuBTDecorator_RandomizedLoop.generated.h"
 
-// Randomized loop decorator node.
-// A decorator node that bases its condition on whether its loop counter has been exceeded.
+/// Randomized loop decorator node. This decorator node bases its condition on whether the loop counter has been exceeded.
 UCLASS(DisplayName = "Fu Randomized Loop", HideCategories = ("Condition"), Meta = (ShowWorldContextPin))
 class FABULOUSAI_API UFuBTDecorator_RandomizedLoop : public UBTDecorator
 {

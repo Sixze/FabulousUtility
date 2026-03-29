@@ -16,7 +16,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
 	FVector2f SphereSweepHeight{-100.0f, 100.0f};
 
-	// Prevents placement on surfaces whose slope angle exceeds this value.
+	/// Prevents placement on surfaces with a slope angle greater than this value.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings", Meta = (ClampMin = 0, ClampMax = 90, ForceUnits = "deg"))
 	float SlopeAngleThreshold{20.0f};
 

@@ -37,7 +37,7 @@ public:
 	static bool TryTransformWorldToScreenLocation(const APlayerController* Player, const FVector& WorldLocation,
 	                                              FVector2f& ScreenLocation, bool bCalculateOutsideScreenLocation = true);
 
-	// Same as UGameplayStatics::ProjectWorldToScreen() but simplified.
+	/// Same as UGameplayStatics::ProjectWorldToScreen() but simplified.
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
 		DisplayName = "Try Transform World to Viewport Location (Local Player)",
 		Meta = (ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
@@ -45,7 +45,7 @@ public:
 	                                                           FVector2f& ViewportLocation, bool bPlayerViewportRelative = false,
 	                                                           bool bCalculateOutsideScreenLocation = true);
 
-	// Same as UGameplayStatics::ProjectWorldToScreen() but simplified.
+	/// Same as UGameplayStatics::ProjectWorldToScreen() but simplified.
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
 		DisplayName = "Try Transform World to Viewport Location (Player Controller)",
 		Meta = (DefaultToSelf = "Player", ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
@@ -53,8 +53,8 @@ public:
 	                                                FVector2f& ViewportLocation, bool bPlayerViewportRelative = false,
 	                                                bool bCalculateOutsideScreenLocation = true);
 
-	/// Useful in conjunction with Dear ImGui. To get the final location in
-	/// Dear ImGui coordinate space, you can use the following code snippet:
+	/// Useful in conjunction with Dear ImGui. To get the final location
+	/// within the Dear ImGui coordinate space, use the following code snippet:
 	/// @code
 	/// const auto* Viewport{ImGui::GetMainViewport()};
 	///	const auto Position{NormalizedViewportLocation * Viewport->Size + Viewport->Pos};
@@ -68,8 +68,8 @@ public:
 	                                                                     bool bPlayerViewportRelative = false,
 	                                                                     bool bCalculateOutsideScreenLocation = true);
 
-	/// Useful in conjunction with Dear ImGui. To get the final location in
-	/// Dear ImGui coordinate space, you can use the following code snippet:
+	/// Useful in conjunction with Dear ImGui. To get the final location
+	/// within the Dear ImGui coordinate space, use the following code snippet:
 	/// @code
 	/// const auto* Viewport{ImGui::GetMainViewport()};
 	///	const auto Position{FVector2f{Viewport->Pos} + NormalizedViewportLocation * FVector2f{Viewport->Size}};
@@ -83,8 +83,8 @@ public:
 	                                                          bool bPlayerViewportRelative = false,
 	                                                          bool bCalculateOutsideScreenLocation = true);
 
-	// Same as UWidgetLayoutLibrary::ProjectWorldLocationToWidgetPosition() or UGameplayStatics::ProjectWorldToScreen()
-	// with USlateBlueprintLibrary::ScreenToViewport(), but simplified and without rounding.
+	/// Same as UWidgetLayoutLibrary::ProjectWorldLocationToWidgetPosition() or UGameplayStatics::ProjectWorldToScreen()
+	/// with USlateBlueprintLibrary::ScreenToViewport(), but simplified and without rounding.
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
 		DisplayName = "Try Transform World to Viewport Widget Location (Local Player)",
 		Meta = (xpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))
@@ -94,8 +94,8 @@ public:
 	                                                                 bool bPlayerViewportRelative = false,
 	                                                                 bool bCalculateOutsideScreenLocation = true);
 
-	// Same as UWidgetLayoutLibrary::ProjectWorldLocationToWidgetPosition() or UGameplayStatics::ProjectWorldToScreen()
-	// with USlateBlueprintLibrary::ScreenToViewport(), but simplified and without rounding.
+	/// Same as UWidgetLayoutLibrary::ProjectWorldLocationToWidgetPosition() or UGameplayStatics::ProjectWorldToScreen()
+	/// with USlateBlueprintLibrary::ScreenToViewport(), but simplified and without rounding.
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Utility|Coordinate Space Utility",
 		DisplayName = "Try Transform World to Viewport Widget Location (Player Controller)",
 		Meta = (DefaultToSelf = "Player", ExpandBoolAsExecs = "ReturnValue", AutoCreateRefTerm = "WorldLocation"))

@@ -47,7 +47,7 @@ public:
 	static bool TryFindAncestorUserWidgetByClass(const UWidget* Widget, TSubclassOf<UUserWidget> AncestorUserWidgetClass,
 	                                             UUserWidget*& AncestorUserWidget);
 
-	// Allows the selected state to be set regardless of selectability or toggleability.
+	/// Changes the selected state, even if the button cannot be selected or toggled.
 	UFUNCTION(BlueprintCallable, Category = "Fabulous UI|Common UI Utility")
 	static void SetSelectedForce(UCommonButtonBase* Button, bool bSelected, bool bAllowSound = true, bool bBroadcastEvents = true);
 };
@@ -59,7 +59,7 @@ UserWidgetType* UFuCommonUIUtility::FindRootUserWidget(const UWidget* Widget)
 
 	while (IsValid(Widget))
 	{
-		// The outer of every widget is the UWidgetTree it's in, and the outer of every UWidgetTree is the UUserWidget that owns it.
+		// The outer of every widget is the UWidgetTree it's in. The outer of every UWidgetTree is the UUserWidget that owns it.
 
 		const auto* WidgetTree{Cast<UWidgetTree>(Widget->GetOuter())};
 		if (!IsValid(WidgetTree))
@@ -91,7 +91,7 @@ UserWidgetType* UFuCommonUIUtility::FindAncestorUserWidget(const UWidget* Widget
 {
 	while (IsValid(Widget))
 	{
-		// The outer of every widget is the UWidgetTree it's in, and the outer of every UWidgetTree is the UUserWidget that owns it.
+		// The outer of every widget is the UWidgetTree it's in. The outer of every UWidgetTree is the UUserWidget that owns it.
 
 		const auto* WidgetTree{Cast<UWidgetTree>(Widget->GetOuter())};
 		if (!IsValid(WidgetTree))

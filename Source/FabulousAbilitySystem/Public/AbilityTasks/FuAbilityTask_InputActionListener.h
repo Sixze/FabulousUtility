@@ -26,40 +26,40 @@ protected:
 	TArray<FInputBindingHandle> InputBindings;
 
 public:
-	// Triggering occurred after one or more processing ticks.
-	// ETriggerState (None -> Triggered, Ongoing -> Triggered, Triggered -> Triggered).
+	/// Triggering occurred after one or more processing ticks.
+	/// ETriggerState (None -> Triggered, Ongoing -> Triggered, Triggered -> Triggered).
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Tasks|Input Action Listener")
 	FFuInputActionListenerDelegate OnActionTriggered;
 
-	// An event has occurred that has begun Trigger evaluation. Triggered may also occur this frame.
-	// ETriggerState (None -> Ongoing, None -> Triggered).
+	/// An event has occurred that has begun Trigger evaluation. Triggered may also occur this frame.
+	/// ETriggerState (None -> Ongoing, None -> Triggered).
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Tasks|Input Action Listener")
 	FFuInputActionListenerDelegate OnActionStarted;
 
-	// Triggering is still being processed.
-	// ETriggerState (Ongoing -> Ongoing).
+	/// Triggering is still being processed.
+	/// ETriggerState (Ongoing -> Ongoing).
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Tasks|InputAction Listener")
 	FFuInputActionListenerDelegate OnActionOngoing;
 
-	// Triggering has been canceled.
-	// ETriggerState (Ongoing -> None).
+	/// Triggering has been canceled.
+	/// ETriggerState (Ongoing -> None).
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Tasks|Input Action Listener")
 	FFuInputActionListenerDelegate OnActionCanceled;
 
-	// The trigger state has transitioned from Triggered to None this frame, i.e. Triggering has finished.
-	// ETriggerState (Triggered -> None).
+	/// The trigger state has transitioned from Triggered to None this frame, i.e. Triggering has finished.
+	/// ETriggerState (Triggered -> None).
 	UPROPERTY(BlueprintAssignable, Category = "Fabulous Ability System|Ability Tasks|Input Action Listener")
 	FFuInputActionListenerDelegate OnActionCompleted;
 
 public:
-	// Warning! This task only works locally, its events will never be called on the server!
+	/// Warning! This task only works locally. Its events will never be called on the server.
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Tasks",
 		BlueprintInternalUseOnly, Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_InputActionListener* WaitForInputAction(
 		UGameplayAbility* OwningAbility,
 		UPARAM(DisplayName = "Input Action") UInputAction* InInputAction);
 
-	// Warning! This task only works locally, its events will never be called on the server!
+	/// Warning! This task only works locally. Its events will never be called on the server.
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Tasks",
 		BlueprintInternalUseOnly, Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_InputActionListener* WaitForInputActions(

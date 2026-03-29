@@ -15,7 +15,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Math Utility", Meta = (ReturnDisplayName = "Alpha"))
 	static float DamperExactAlpha(float DeltaTime, float HalfLife);
 
-	// HalfLife is the time it takes for the distance to the target to be reduced by half.
+	/// HalfLife is the time it takes for the distance to the target to be reduced by half.
 	template <typename ValueType>
 	static ValueType DamperExact(const ValueType& Current, const ValueType& Target, float DeltaTime, float HalfLife);
 };

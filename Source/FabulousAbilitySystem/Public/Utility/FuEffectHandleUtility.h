@@ -31,8 +31,8 @@ public:
 	static bool TryGetEffectTimeRemainingAndDurationByHandle(FActiveGameplayEffectHandle EffectHandle,
 	                                                         float& TimeRemaining, float& Duration);
 
-	// This function will also restart the effect timer from the beginning. If you just want to modify the remaining
-	// effect time, use UFuEffectHandleUtility::SetEffectTimeRemaining() or UFuEffectHandleUtility::IncreaseEffectTimeRemaining().
+	/// This function also restarts the effect timer from the beginning. To modify the remaining effect time, use
+	/// UFuEffectHandleUtility::SetEffectTimeRemaining() or UFuEffectHandleUtility::IncreaseEffectTimeRemaining().
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Effect Handle Utility")
 	static void SetEffectDuration(FActiveGameplayEffectHandle EffectHandle, float Duration);
 

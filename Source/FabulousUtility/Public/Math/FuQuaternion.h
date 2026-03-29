@@ -28,14 +28,14 @@ public:
 		Meta = (AutoCreateRefTerm = "TwistAxis", ReturnDisplayName = "Twist"))
 	static FQuat GetTwist(const FQuat& Quaternion, const FVector& TwistAxis = FVector::UpVector);
 
-	// Same as FQuat::FindBetweenVectors(FVector::ForwardVector, Vector), but faster. Does not preserve
-	// the up vector (roll can be non-zero), so if it is important, use FVector::ToOrientationQuat() instead.
+	/// Same as FQuat::FindBetweenVectors(FVector::ForwardVector, Vector), but faster. Does not preserve the
+	/// up vector (roll can be non-zero), so if that is important, use FVector::ToOrientationQuat() instead.
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Quaternion Utility",
 		Meta = (AutoCreateRefTerm = "Vector", ReturnDisplayName = "Quaternion"))
 	static FQuat VectorToQuaternion(const FVector& Vector);
 
-	// Same as FQuat::FindBetweenNormals(FVector::ForwardVector, Vector), but faster. Does not preserve
-	// the up vector (roll can be non-zero), so if it is important, use FVector::ToOrientationQuat() instead.
+	/// Same as FQuat::FindBetweenNormals(FVector::ForwardVector, Vector), but faster. Does not preserve the
+	/// up vector (roll can be non-zero), so if that  is important, use FVector::ToOrientationQuat() instead.
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Quaternion Utility",
 		Meta = (AutoCreateRefTerm = "Direction", ReturnDisplayName = "Quaternion"))
 	static FQuat DirectionToQuaternion(const FVector& Direction);

@@ -24,8 +24,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Ability")
 	uint8 bAllowActivationByInput : 1 {true};
 
-	// If checked, RPC batching will be used during activation of this ability by input.
-	// See https://github.com/tranek/GASDocumentation#concepts-ga-batching
+	/// Use RPC batching during activation of this ability by input.
+	/// See https://github.com/tranek/GASDocumentation#concepts-ga-batching
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings|Fu Gameplay Ability",
 		Meta = (EditCondition = "bAllowActivationByInput"))
 	uint8 bBatchActivationByInput : 1 {false};

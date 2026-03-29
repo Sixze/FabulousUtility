@@ -17,9 +17,9 @@ public:
 	FFuTargetDataSenderDelegate OnTargetDataReceived;
 
 public:
-	// In most cases, you probably don't need to use UFuAbilityTask_TargetDataReceiver because
-	// UFuAbilityTask_TargetDataSender also handles receiving target data on the server. Also,
-	// this task works only on the server and does nothing in the standalone game or on clients.
+	/// In most cases, you probably don't need to use UFuAbilityTask_TargetDataReceiver, as
+	/// UFuAbilityTask_TargetDataSender also handles receiving target data on the server. Additionally,
+	/// this task only works on the server and does nothing in the standalone game or on clients.
 	UFUNCTION(BlueprintCallable, Category = "Fabulous Ability System|Ability Tasks",
 		BlueprintInternalUseOnly, Meta = (HidePin = "OwningAbility", DefaultToSelf = "OwningAbility"))
 	static UFuAbilityTask_TargetDataReceiver* ReceiveTargetData(UGameplayAbility* OwningAbility,

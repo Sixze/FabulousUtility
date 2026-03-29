@@ -6,14 +6,14 @@
 
 struct FGameplayEffectRemovalInfo;
 
-// Prevents the application of the effect or removes it if the owner of this effect has ANY of the specified tags.
+/// Prevents application of the effect or removes it if the owner of this effect has ANY of the specified tags.
 UCLASS(DisplayName = "Fu Removal Requirement (Any Tag)")
 class FABULOUSABILITYSYSTEM_API UFuAnyTagRemovalRequirementEffectComponent : public UGameplayEffectComponent
 {
 	GENERATED_BODY()
 
 public:
-	// Effect will be removed if the owner of this effect has ANY of these tags. Also prevents effect application.
+	/// Prevents application of the effect or removes it if the owner of this effect has ANY of the specified tags.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
 	FInheritedTagContainer RemovalRequirementTags;
 
