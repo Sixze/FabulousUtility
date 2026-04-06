@@ -6,6 +6,7 @@
 
 struct FAnimNotifyEvent;
 struct FReferenceSkeleton;
+struct FSkelMeshRefPoseOverride;
 struct FBoneContainer;
 class UAnimSequenceBase;
 class UAnimMontage;
@@ -30,7 +31,17 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Fabulous Animation|Utility", Meta = (ReturnDisplayName = "Transform"))
 	static FTransform GetBoneTransformFromSequence(const UAnimSequence* Sequence, FName BoneName, float Time);
 
-	static FTransform GetBoneTransformInComponentSpace(const FReferenceSkeleton& ReferenceSkeleton, int32 BoneIndex);
+	/// The result of the USkinnedMeshComponent::GetRefPoseOverride() function
+	/// can be used as the ReferencePoseOverride argument in this function.
+	static FTransform GetBoneTransformInComponentSpace(const FReferenceSkeleton& ReferenceSkeleton, FName BoneName,
+	                                                   const FSkelMeshRefPoseOverride* ReferencePoseOverride = nullptr);
+
+	/// The result of the USkinnedMeshComponent::GetRefPoseOverride() function
+	/// can be used as the ReferencePoseOverride argument in this function.
+	static FTransform GetBoneTransformInComponentSpace(const FReferenceSkeleton& ReferenceSkeleton, int32 BoneIndex,
+	                                                   const FSkelMeshRefPoseOverride* ReferencePoseOverride = nullptr);
+
+	static FTransform GetBoneTransformInComponentSpace(const FBoneContainer& BoneContainer, FName BoneName);
 
 	static FTransform GetBoneTransformInComponentSpace(const FBoneContainer& BoneContainer, FCompactPoseBoneIndex BoneIndex);
 
