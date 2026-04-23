@@ -107,26 +107,26 @@ FTransform UFuAnimationUtility::GetBoneTransformFromSequence(const UAnimSequence
 
 	while (ReferenceSkeleton.IsValidIndex(BoneIndex))
 	{
-		auto RelativeTransform{FTransform::Identity};
+		auto BoneTransform{FTransform::Identity};
 		const FAnimExtractContext ExtractionContext{static_cast<double>(Time)};
 
-		Sequence->GetBoneTransform(RelativeTransform, FSkeletonPoseBoneIndex{BoneIndex}, ExtractionContext, false);
+		Sequence->GetBoneTransform(BoneTransform, FSkeletonPoseBoneIndex{BoneIndex}, ExtractionContext, false);
 
-		ResultTransform *= RelativeTransform;
+		ResultTransform *= BoneTransform;
 		BoneIndex = ReferenceSkeleton.GetParentIndex(BoneIndex);
 	}
 
 	return ResultTransform;
 }
 
-FTransform UFuAnimationUtility::GetBoneTransformInComponentSpace(const FReferenceSkeleton& ReferenceSkeleton, const FName BoneName,
-                                                                 const FSkelMeshRefPoseOverride* ReferencePoseOverride)
+FTransform UFuAnimationUtility::GetReferenceBoneTransform(const FReferenceSkeleton& ReferenceSkeleton, const FName BoneName,
+                                                          const FSkelMeshRefPoseOverride* ReferencePoseOverride)
 {
-	return GetBoneTransformInComponentSpace(ReferenceSkeleton, ReferenceSkeleton.FindBoneIndex(BoneName), ReferencePoseOverride);
+	return GetReferenceBoneTransform(ReferenceSkeleton, ReferenceSkeleton.FindBoneIndex(BoneName), ReferencePoseOverride);
 }
 
-FTransform UFuAnimationUtility::GetBoneTransformInComponentSpace(const FReferenceSkeleton& ReferenceSkeleton, int32 BoneIndex,
-                                                                 const FSkelMeshRefPoseOverride* ReferencePoseOverride)
+FTransform UFuAnimationUtility::GetReferenceBoneTransform(const FReferenceSkeleton& ReferenceSkeleton, int32 BoneIndex,
+                                                          const FSkelMeshRefPoseOverride* ReferencePoseOverride)
 {
 	if (!ReferenceSkeleton.IsValidIndex(BoneIndex))
 	{
@@ -148,15 +148,15 @@ FTransform UFuAnimationUtility::GetBoneTransformInComponentSpace(const FReferenc
 	return ResultTransform;
 }
 
-FTransform UFuAnimationUtility::GetBoneTransformInComponentSpace(const FBoneContainer& BoneContainer, const FName BoneName)
+FTransform UFuAnimationUtility::GetReferenceBoneTransform(const FBoneContainer& BoneContainer, const FName BoneName)
 {
 	const auto MeshBoneIndex{BoneContainer.GetPoseBoneIndexForBoneName(BoneName)};
 	const auto BoneIndex{BoneContainer.MakeCompactPoseIndex(FMeshPoseBoneIndex{MeshBoneIndex})};
 
-	return GetBoneTransformInComponentSpace(BoneContainer, BoneIndex);
+	return GetReferenceBoneTransform(BoneContainer, BoneIndex);
 }
 
-FTransform UFuAnimationUtility::GetBoneTransformInComponentSpace(const FBoneContainer& BoneContainer, FCompactPoseBoneIndex BoneIndex)
+FTransform UFuAnimationUtility::GetReferenceBoneTransform(const FBoneContainer& BoneContainer, FCompactPoseBoneIndex BoneIndex)
 {
 	if (!BoneIndex.IsValid() || BoneIndex >= BoneContainer.GetCompactPoseNumBones())
 	{

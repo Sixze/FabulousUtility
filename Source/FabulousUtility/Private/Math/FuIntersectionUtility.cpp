@@ -35,10 +35,10 @@ bool UFuIntersectionUtility::LineSegmentIntersection2D(const FVector2D LineOrigi
 	}
 
 	const auto DotInverse{1.0f / Dot};
-	const auto SegmentStartRelative{SegmentStart - LineOrigin};
+	const auto SegmentStartLineSpace{SegmentStart - LineOrigin};
 
-	// const auto LineTime{(SegmentStartRelative ^ SegmentVector) * DotInverse};
-	const auto SegmentTime{(SegmentStartRelative ^ LineDirection) * DotInverse};
+	// const auto LineTime{(SegmentStartLineSpace ^ SegmentVector) * DotInverse};
+	const auto SegmentTime{(SegmentStartLineSpace ^ LineDirection) * DotInverse};
 
 	if (SegmentTime < 0.0f || SegmentTime > 1.0f)
 	{

@@ -13,16 +13,16 @@ public:
 	static FQuat DeltaQuaternion(const FQuat& From, const FQuat& To);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Quaternion Utility", Meta = (ReturnDisplayName = "World"))
-	static FQuat TransformRelativeToWorldQuaternion(const FQuat& Relative, const FQuat& Parent);
+	static FQuat TransformLocalToWorldQuaternion(const FQuat& Local, const FQuat& Parent);
 
-	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Quaternion Utility", Meta = (ReturnDisplayName = "Relative"))
-	static FQuat TransformWorldToRelativeQuaternion(const FQuat& World, const FQuat& Parent);
+	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Quaternion Utility", Meta = (ReturnDisplayName = "Local"))
+	static FQuat TransformWorldToLocalQuaternion(const FQuat& World, const FQuat& Parent);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Quaternion Utility", Meta = (ReturnDisplayName = "Quaternion"))
 	static FQuat AddWorldDeltaQuaternion(const FQuat& Quaternion, const FQuat& WorldDelta);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Quaternion Utility", Meta = (ReturnDisplayName = "Quaternion"))
-	static FQuat AddRelativeDeltaQuaternion(const FQuat& Quaternion, const FQuat& RelativeDelta);
+	static FQuat AddLocalDeltaQuaternion(const FQuat& Quaternion, const FQuat& LocalDelta);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|Quaternion Utility",
 		Meta = (AutoCreateRefTerm = "TwistAxis", ReturnDisplayName = "Twist"))
@@ -48,12 +48,12 @@ inline FQuat UFuQuaternion::DeltaQuaternion(const FQuat& From, const FQuat& To)
 	return To * From.Inverse();
 }
 
-inline FQuat UFuQuaternion::TransformRelativeToWorldQuaternion(const FQuat& Relative, const FQuat& Parent)
+inline FQuat UFuQuaternion::TransformLocalToWorldQuaternion(const FQuat& Local, const FQuat& Parent)
 {
-	return Parent * Relative;
+	return Parent * Local;
 }
 
-inline FQuat UFuQuaternion::TransformWorldToRelativeQuaternion(const FQuat& World, const FQuat& Parent)
+inline FQuat UFuQuaternion::TransformWorldToLocalQuaternion(const FQuat& World, const FQuat& Parent)
 {
 	return Parent.Inverse() * World;
 }
@@ -63,9 +63,9 @@ inline FQuat UFuQuaternion::AddWorldDeltaQuaternion(const FQuat& Quaternion, con
 	return WorldDelta * Quaternion;
 }
 
-inline FQuat UFuQuaternion::AddRelativeDeltaQuaternion(const FQuat& Quaternion, const FQuat& RelativeDelta)
+inline FQuat UFuQuaternion::AddLocalDeltaQuaternion(const FQuat& Quaternion, const FQuat& LocalDelta)
 {
-	return Quaternion * RelativeDelta;
+	return Quaternion * LocalDelta;
 }
 
 inline FQuat UFuQuaternion::GetTwist(const FQuat& Quaternion, const FVector& TwistAxis)
