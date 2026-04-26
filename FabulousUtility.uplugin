@@ -68,6 +68,11 @@
 		{
 			"Name": "OnlineSubsystemUtils",
 			"Enabled": true
+		},
+		{
+			"Name": "ImGui",
+			"Enabled": false,
+			"Optional": true
 		}
 	]
 }
