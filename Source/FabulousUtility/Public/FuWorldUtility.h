@@ -10,7 +10,7 @@ class FABULOUSUTILITY_API UFuWorldUtility : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	static constexpr FStringView WorldTypeToString(EWorldType::Type WorldType);
+	static constexpr FAnsiStringView WorldTypeToString(EWorldType::Type WorldType);
 
 	UFUNCTION(BlueprintPure, Category = "Fabulous Utility|World Utility",
 		Meta = (WorldContext = "WorldContext", ReturnDisplayName = "Gravity Z"))

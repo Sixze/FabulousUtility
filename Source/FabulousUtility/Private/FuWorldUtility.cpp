@@ -7,24 +7,24 @@
 
 namespace FuWorldUtility
 {
-	constexpr FStringView WorldTypeStrings[]
+	constexpr FAnsiStringView WorldTypeStrings[]
 	{
-		TEXTVIEW("None"),
-		TEXTVIEW("Game"),
-		TEXTVIEW("Editor"),
-		TEXTVIEW("PIE"),
-		TEXTVIEW("Editor Preview"),
-		TEXTVIEW("Game Preview"),
-		TEXTVIEW("Game RPC"),
-		TEXTVIEW("Inactive")
+		ANSITEXTVIEW("None"),
+		ANSITEXTVIEW("Game"),
+		ANSITEXTVIEW("Editor"),
+		ANSITEXTVIEW("PIE"),
+		ANSITEXTVIEW("Editor Preview"),
+		ANSITEXTVIEW("Game Preview"),
+		ANSITEXTVIEW("Game RPC"),
+		ANSITEXTVIEW("Inactive")
 	};
 }
 
-constexpr FStringView UFuWorldUtility::WorldTypeToString(const EWorldType::Type WorldType)
+constexpr FAnsiStringView UFuWorldUtility::WorldTypeToString(const EWorldType::Type WorldType)
 {
 	return WorldType >= EWorldType::None && WorldType <= EWorldType::Inactive
 		       ? FuWorldUtility::WorldTypeStrings[WorldType]
-		       : TEXTVIEW("Unknown World Type");
+		       : ANSITEXTVIEW("Unknown");
 }
 
 float UFuWorldUtility::GetWorldGravityZ(const UObject* WorldContext)

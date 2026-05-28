@@ -53,10 +53,10 @@ void UFuAbilityTask_Delay::Activate()
 
 FString UFuAbilityTask_Delay::GetDebugString() const
 {
-	TStringBuilder<256> DebugStringBuilder{InPlace, GetFName(), TEXTVIEW(" ("), InstanceName, TEXTVIEW("): Time Remaining: ")};
+	TStringBuilder<256> DebugStringBuilder{InPlace, GetFName(), ANSITEXTVIEW(" ("), InstanceName, ANSITEXTVIEW("): Time Remaining: ")};
 
 	DebugStringBuilder.Appendf(TEXT("%.2f"), Duration - GetWorld()->GetTimerManager().GetTimerRemaining(TimerHandle));
-	DebugStringBuilder << TEXTVIEW(", Loop Index: ") << LoopIndex;
+	DebugStringBuilder << ANSITEXTVIEW(", Loop Index: ") << LoopIndex;
 
 	return FString{DebugStringBuilder};
 }

@@ -13,7 +13,7 @@ const UFuSlateNavigationSettings* UFuSlateNavigationSettings::Get()
 
 UFuSlateNavigationSettings::UFuSlateNavigationSettings()
 {
-	CategoryName = FName{TEXTVIEW("Fabulous Utility")};
+	CategoryName = FName{ANSITEXTVIEW("Fabulous Utility")};
 
 	KeyNavigationMappings = {
 		{EKeys::Up, EUINavigation::Up},

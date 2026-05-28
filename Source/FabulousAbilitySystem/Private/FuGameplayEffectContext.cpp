@@ -20,7 +20,7 @@ UScriptStruct* FFuGameplayEffectContext::GetScriptStruct() const
 
 FString FFuGameplayEffectContext::ToString() const
 {
-	return FString{FU_GET_TYPE_STRING(FFuGameplayEffectContext)};
+	return FString{FU_GET_TYPE_STRING_ANSI(FFuGameplayEffectContext)};
 }
 
 FGameplayEffectContext* FFuGameplayEffectContext::Duplicate() const

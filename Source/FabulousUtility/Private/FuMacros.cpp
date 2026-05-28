@@ -47,8 +47,8 @@ namespace FuEnsure
 		if (FPlatformTime::GetSecondsPerCycle() != 0.0f)
 		{
 			TStringBuilder<512> EnsureBuilder{
-				InPlace, TEXTVIEW("Ensure failed: "), EnsureInfo.Expression, TEXTVIEW(", File: "),
-				EnsureInfo.FilePath ? EnsureInfo.FilePath : "Unknown", TEXTVIEW(", Line: "), EnsureInfo.LineNumber, TEXTVIEW(".")
+				InPlace, ANSITEXTVIEW("Ensure failed: "), EnsureInfo.Expression, ANSITEXTVIEW(", File: "),
+				EnsureInfo.FilePath ? EnsureInfo.FilePath : "Unknown", ANSITEXTVIEW(", Line: "), EnsureInfo.LineNumber, ANSITEXTVIEW(".")
 			};
 
 			FCoreDelegates::OnEnsureFailed.Broadcast(EnsureInfo.Expression, EnsureInfo.FilePath,

@@ -12,7 +12,7 @@ struct FFuTagListenerMemory
 
 UFuBTTask_WaitForTagChange::UFuBTTask_WaitForTagChange()
 {
-	NodeName = TEXTVIEW("Fu Wait for Tag Change");
+	NodeName = FString{ANSITEXTVIEW("Fu Wait for Tag Change")};
 	bIgnoreRestartSelf = false;
 
 	INIT_TASK_NODE_NOTIFY_FLAGS();
@@ -22,7 +22,7 @@ UFuBTTask_WaitForTagChange::UFuBTTask_WaitForTagChange()
 bool UFuBTTask_WaitForTagChange::CanEditChange(const FProperty* Property) const
 {
 	return Super::CanEditChange(Property) &&
-	       Property->GetFName() != GET_MEMBER_NAME_STRING_VIEW_CHECKED(ThisClass, bIgnoreRestartSelf);
+	       Property->GetFName() != GET_MEMBER_NAME_ANSI_STRING_VIEW_CHECKED(ThisClass, bIgnoreRestartSelf);
 }
 #endif
 
@@ -50,11 +50,11 @@ FString UFuBTTask_WaitForTagChange::GetStaticDescription() const
 	switch (WaitMode)
 	{
 		case EFuTagWaitMode::WaitForTagAdd:
-			DescriptionBuilder << TEXTVIEW("Wait for Tag Add: ");
+			DescriptionBuilder << ANSITEXTVIEW("Wait for Tag Add: ");
 			break;
 
 		case EFuTagWaitMode::WaitForTagRemove:
-			DescriptionBuilder << TEXTVIEW("Wait for Tag Remove: ");
+			DescriptionBuilder << ANSITEXTVIEW("Wait for Tag Remove: ");
 			break;
 
 		default:
@@ -73,7 +73,7 @@ FString UFuBTTask_WaitForTagChange::GetStaticDescription() const
 #if WITH_EDITOR
 FName UFuBTTask_WaitForTagChange::GetNodeIconName() const
 {
-	return FName{TEXTVIEW("BTEditor.Graph.BTNode.Task.Wait.Icon")};
+	return FName{ANSITEXTVIEW("BTEditor.Graph.BTNode.Task.Wait.Icon")};
 }
 #endif
 

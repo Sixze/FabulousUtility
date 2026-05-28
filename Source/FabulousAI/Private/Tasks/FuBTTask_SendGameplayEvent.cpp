@@ -23,10 +23,10 @@ namespace FuSendGameplayEventBehaviorTreeTask
 
 UFuBTTask_SendGameplayEvent::UFuBTTask_SendGameplayEvent()
 {
-	NodeName = TEXTVIEW("Fu Send Gameplay Event");
+	NodeName = FString{ANSITEXTVIEW("Fu Send Gameplay Event")};
 
 	TargetKey.AllowNoneAsValue(true);
-	TargetKey.AddObjectFilter(this, FName{GET_MEMBER_NAME_STRING_VIEW_CHECKED(ThisClass, TargetKey)}, AActor::StaticClass());
+	TargetKey.AddObjectFilter(this, FName{GET_MEMBER_NAME_ANSI_STRING_VIEW_CHECKED(ThisClass, TargetKey)}, AActor::StaticClass());
 
 	INIT_TASK_NODE_NOTIFY_FLAGS();
 }
@@ -44,14 +44,14 @@ void UFuBTTask_SendGameplayEvent::InitializeFromAsset(UBehaviorTree& Asset)
 
 FString UFuBTTask_SendGameplayEvent::GetStaticDescription() const
 {
-	TStringBuilder<256> DescriptionBuilder{InPlace, TEXTVIEW("Send Gameplay Event: ")};
+	TStringBuilder<256> DescriptionBuilder{InPlace, ANSITEXTVIEW("Send Gameplay Event: ")};
 
 	if (EventTag.IsValid())
 	{
 		DescriptionBuilder << EventTag.GetTagName();
 	}
 
-	DescriptionBuilder << LINE_TERMINATOR TEXTVIEW("Target: ") << TargetKey.SelectedKeyName;
+	DescriptionBuilder << LINE_TERMINATOR_ANSI << ANSITEXTVIEW("Target: ") << TargetKey.SelectedKeyName;
 
 	return FString{DescriptionBuilder};
 }
@@ -59,7 +59,7 @@ FString UFuBTTask_SendGameplayEvent::GetStaticDescription() const
 #if WITH_EDITOR
 FName UFuBTTask_SendGameplayEvent::GetNodeIconName() const
 {
-	return FName{TEXTVIEW("BTEditor.Graph.BTNode.Task.RunEQSQuery.Icon")};
+	return FName{ANSITEXTVIEW("BTEditor.Graph.BTNode.Task.RunEQSQuery.Icon")};
 }
 #endif
 

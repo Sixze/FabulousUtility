@@ -101,10 +101,10 @@ void FFuAdvancedDelayLatentAction::UpdateOperation(FLatentResponse& Response)
 #if WITH_EDITOR
 FString FFuAdvancedDelayLatentAction::GetDescription() const
 {
-	TStringBuilder<128> DescriptionBuilder{InPlace, TEXTVIEW("Time Remaining: ")};
+	TStringBuilder<128> DescriptionBuilder{InPlace, ANSITEXTVIEW("Time Remaining: ")};
 
 	DescriptionBuilder.Appendf(TEXT("%.2f"), TimeRemaining);
-	DescriptionBuilder << TEXTVIEW(", Loop Index: ") << LoopIndex;
+	DescriptionBuilder << ANSITEXTVIEW(", Loop Index: ") << LoopIndex;
 
 	return FString{DescriptionBuilder};
 }

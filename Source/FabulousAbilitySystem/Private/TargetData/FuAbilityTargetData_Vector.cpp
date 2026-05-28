@@ -21,7 +21,7 @@ UScriptStruct* FFuAbilityTargetData_Vector::GetScriptStruct() const
 
 FString FFuAbilityTargetData_Vector::ToString() const
 {
-	return FString{FU_GET_TYPE_STRING(FFuAbilityTargetData_Vector)};
+	return FString{FU_GET_TYPE_STRING_ANSI(FFuAbilityTargetData_Vector)};
 }
 
 bool FFuAbilityTargetData_Vector::NetSerialize(FArchive& Archive, UPackageMap* Map, bool& bSuccess)

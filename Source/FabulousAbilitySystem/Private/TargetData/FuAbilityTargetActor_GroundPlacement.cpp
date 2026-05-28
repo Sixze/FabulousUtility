@@ -19,7 +19,7 @@ AFuAbilityTargetActor_GroundPlacement::AFuAbilityTargetActor_GroundPlacement()
 #if WITH_EDITOR
 void AFuAbilityTargetActor_GroundPlacement::PostEditChangeProperty(FPropertyChangedEvent& ChangedEvent)
 {
-	if (ChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_STRING_VIEW_CHECKED(ThisClass, SlopeAngleThreshold))
+	if (ChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_ANSI_STRING_VIEW_CHECKED(ThisClass, SlopeAngleThreshold))
 	{
 		SlopeAngleThresholdCos = FMath::Cos(FMath::DegreesToRadians(SlopeAngleThreshold));
 	}
@@ -125,7 +125,7 @@ bool AFuAbilityTargetActor_GroundPlacement::PerformGroundPlacement(FVector& OutF
 
 	// Sphere sweep.
 
-	static const FName SphereSweepTagName{FString::Printf(TEXT("%hs (Sphere Sweep)"), __FUNCTION__)};
+	static const FName SphereSweepTagName{TStringView{FAnsiString::Printf("%s (Sphere Sweep)", __FUNCTION__)}};
 
 	FHitResult SphereSweepHit;
 	GetWorld()->SweepSingleByProfile(SphereSweepHit, {TraceStart.X, TraceStart.Y, TraceStart.Z + SphereSweepRadius},
@@ -152,7 +152,7 @@ bool AFuAbilityTargetActor_GroundPlacement::PerformGroundPlacement(FVector& OutF
 
 	// Slope trace.
 
-	static const FName SlopeTraceTagName{FString::Printf(TEXT("%hs (Slope Trace)"), __FUNCTION__)};
+	static const FName SlopeTraceTagName{TStringView{FAnsiString::Printf("%s (Slope Trace)", __FUNCTION__)}};
 
 	FHitResult SlopeTraceHit;
 	GetWorld()->LineTraceSingleByProfile(SlopeTraceHit,
@@ -170,7 +170,7 @@ bool AFuAbilityTargetActor_GroundPlacement::PerformGroundPlacement(FVector& OutF
 
 	// Visibility trace.
 
-	static const FName VisibilityTraceTagName{FString::Printf(TEXT("%hs (Visibility Trace)"), __FUNCTION__)};
+	static const FName VisibilityTraceTagName{TStringView{FAnsiString::Printf("%s (Visibility Trace)", __FUNCTION__)}};
 
 	FHitResult VisibilityTraceHit;
 	GetWorld()->LineTraceSingleByProfile(VisibilityTraceHit,

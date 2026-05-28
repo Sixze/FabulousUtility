@@ -31,7 +31,7 @@ UFuAnimNotify_GameplayEvent::UFuAnimNotify_GameplayEvent()
 
 FString UFuAnimNotify_GameplayEvent::GetNotifyName_Implementation() const
 {
-	TStringBuilder<128> NotifyNameBuilder{InPlace, TEXTVIEW("Fu Gameplay Event: ")};
+	TStringBuilder<128> NotifyNameBuilder{InPlace, ANSITEXTVIEW("Fu Gameplay Event: ")};
 
 #if WITH_EDITOR
 	if (!CustomDescription.IsNone())
@@ -47,7 +47,7 @@ FString UFuAnimNotify_GameplayEvent::GetNotifyName_Implementation() const
 	// For some reason editor cuts off some characters at the end of the string, so to avoid this we insert a bunch of spaces.
 	// TODO Check the need for this hack in future engine versions.
 
-	NotifyNameBuilder << TEXTVIEW("                ");
+	NotifyNameBuilder << ANSITEXTVIEW("                ");
 
 	return FString{NotifyNameBuilder};
 }

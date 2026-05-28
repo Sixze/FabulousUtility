@@ -22,7 +22,7 @@ namespace FuAnyTagRemovalRequirementEffectComponent
 UFuAnyTagRemovalRequirementEffectComponent::UFuAnyTagRemovalRequirementEffectComponent()
 {
 #if WITH_EDITORONLY_DATA
-	EditorFriendlyName = FString{TEXTVIEW("Removal Requirement (Any Tag)")};
+	EditorFriendlyName = FString{ANSITEXTVIEW("Removal Requirement (Any Tag)")};
 #endif
 }
 
@@ -36,7 +36,7 @@ void UFuAnyTagRemovalRequirementEffectComponent::PostInitProperties()
 #if WITH_EDITOR
 void UFuAnyTagRemovalRequirementEffectComponent::PostEditChangeProperty(FPropertyChangedEvent& ChangedEvent)
 {
-	if (ChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_STRING_VIEW_CHECKED(ThisClass, RemovalRequirementTags))
+	if (ChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_ANSI_STRING_VIEW_CHECKED(ThisClass, RemovalRequirementTags))
 	{
 		RefreshRemovalRequirementTags();
 	}
