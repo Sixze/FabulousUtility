@@ -15,7 +15,7 @@ struct FFuCanActivateAbilityMemory
 
 UFuBTDecorator_CanActivateAbility::UFuBTDecorator_CanActivateAbility()
 {
-	NodeName = TEXTVIEW("Fu Can Activate Ability");
+	NodeName = FString{ANSITEXTVIEW("Fu Can Activate Ability")};
 
 	INIT_DECORATOR_NODE_NOTIFY_FLAGS();
 }
@@ -41,29 +41,29 @@ FString UFuBTDecorator_CanActivateAbility::GetStaticDescription() const
 
 	if (bAborts)
 	{
-		DescriptionBuilder << TEXTVIEW("( aborts ") << *UBehaviorTreeTypes::DescribeFlowAbortMode(FlowAbortMode).ToLower()
-			<< (bInversed ? TEXTVIEW(", inversed )") LINE_TERMINATOR : TEXTVIEW(" )") LINE_TERMINATOR);
+		DescriptionBuilder << ANSITEXTVIEW("( aborts ") << *UBehaviorTreeTypes::DescribeFlowAbortMode(FlowAbortMode).ToLower()
+			<< (bInversed ? ANSITEXTVIEW(", inversed )") : ANSITEXTVIEW(" )")) << LINE_TERMINATOR_ANSI;
 	}
 	else if (bInversed)
 	{
-		DescriptionBuilder << TEXTVIEW("( inversed )") LINE_TERMINATOR;
+		DescriptionBuilder << ANSITEXTVIEW("( inversed )") << LINE_TERMINATOR_ANSI;
 	}
 
 	if (AbilityTags.IsEmpty())
 	{
-		DescriptionBuilder << TEXTVIEW("Can Activate Ability:");
+		DescriptionBuilder << ANSITEXTVIEW("Can Activate Ability:");
 	}
 	else if (AbilityTags.Num() == 1)
 	{
-		DescriptionBuilder << TEXTVIEW("Can Activate Ability: ") << AbilityTags.First().GetTagName();
+		DescriptionBuilder << ANSITEXTVIEW("Can Activate Ability: ") << AbilityTags.First().GetTagName();
 	}
 	else
 	{
-		DescriptionBuilder << TEXTVIEW("Can Activate Any Ability: ");
+		DescriptionBuilder << ANSITEXTVIEW("Can Activate Any Ability: ");
 
 		for (const auto& Tag : AbilityTags)
 		{
-			DescriptionBuilder << LINE_TERMINATOR << Tag.GetTagName();
+			DescriptionBuilder << LINE_TERMINATOR_ANSI << Tag.GetTagName();
 		}
 	}
 

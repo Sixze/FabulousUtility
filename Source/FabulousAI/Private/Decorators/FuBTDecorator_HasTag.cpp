@@ -13,10 +13,10 @@ struct FFuHasTagMemory
 
 UFuBTDecorator_HasTag::UFuBTDecorator_HasTag()
 {
-	NodeName = TEXTVIEW("Fu Has Tag");
+	NodeName = FString{ANSITEXTVIEW("Fu Has Tag")};
 
 	TargetKey.AllowNoneAsValue(true);
-	TargetKey.AddObjectFilter(this, FName{GET_MEMBER_NAME_STRING_VIEW_CHECKED(ThisClass, TargetKey)}, AActor::StaticClass());
+	TargetKey.AddObjectFilter(this, FName{GET_MEMBER_NAME_ANSI_STRING_VIEW_CHECKED(ThisClass, TargetKey)}, AActor::StaticClass());
 
 	INIT_DECORATOR_NODE_NOTIFY_FLAGS();
 }
@@ -58,33 +58,33 @@ FString UFuBTDecorator_HasTag::GetStaticDescription() const
 
 	if (bAborts)
 	{
-		DescriptionBuilder << TEXTVIEW("( aborts ") << *UBehaviorTreeTypes::DescribeFlowAbortMode(FlowAbortMode).ToLower()
-			<< (bInversed ? TEXTVIEW(", inversed )") LINE_TERMINATOR : TEXTVIEW(" )") LINE_TERMINATOR);
+		DescriptionBuilder << ANSITEXTVIEW("( aborts ") << *UBehaviorTreeTypes::DescribeFlowAbortMode(FlowAbortMode).ToLower()
+			<< (bInversed ? ANSITEXTVIEW(", inversed )") : ANSITEXTVIEW(" )")) << LINE_TERMINATOR_ANSI;
 	}
 	else if (bInversed)
 	{
-		DescriptionBuilder << TEXTVIEW("( inversed )") LINE_TERMINATOR;
+		DescriptionBuilder << ANSITEXTVIEW("( inversed )") << LINE_TERMINATOR_ANSI;
 	}
 
 	if (Tags.IsEmpty())
 	{
-		DescriptionBuilder << TEXTVIEW("Has Tag:");
+		DescriptionBuilder << ANSITEXTVIEW("Has Tag:");
 	}
 	else if (Tags.Num() == 1)
 	{
-		DescriptionBuilder << TEXTVIEW("Has Tag: ") << Tags.First().GetTagName();
+		DescriptionBuilder << ANSITEXTVIEW("Has Tag: ") << Tags.First().GetTagName();
 	}
 	else
 	{
-		DescriptionBuilder << (MatchMode == EFuTagMatchMode::AnyTag ? TEXTVIEW("Has Any Tag:") : TEXTVIEW("Has All Tags:"));
+		DescriptionBuilder << (MatchMode == EFuTagMatchMode::AnyTag ? ANSITEXTVIEW("Has Any Tag:") : ANSITEXTVIEW("Has All Tags:"));
 
 		for (const auto& Tag : Tags)
 		{
-			DescriptionBuilder << LINE_TERMINATOR << Tag.GetTagName();
+			DescriptionBuilder << LINE_TERMINATOR_ANSI << Tag.GetTagName();
 		}
 	}
 
-	DescriptionBuilder << LINE_TERMINATOR TEXTVIEW("Target: ") << TargetKey.SelectedKeyName;
+	DescriptionBuilder << LINE_TERMINATOR_ANSI << ANSITEXTVIEW("Target: ") << TargetKey.SelectedKeyName;
 
 	return FString{DescriptionBuilder};
 }

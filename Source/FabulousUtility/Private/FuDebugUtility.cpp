@@ -26,12 +26,12 @@ FString UFuDebugUtility::GetCurrentCallstackInternal(const EFuCallstackType Call
 			const auto ScriptStack{ContextTracker->GetCurrentScriptStack()};
 			if (!ScriptStack.IsEmpty())
 			{
-				CallstackBuilder << TEXTVIEW("Script Callstack:") LINE_TERMINATOR;
+				CallstackBuilder << ANSITEXTVIEW("Script Callstack:") << LINE_TERMINATOR_ANSI;
 
 				for (auto i = ScriptStack.Num() - 1; i >= 0; i--)
 				{
 					ScriptStack[i]->GetStackDescription(CallstackBuilder);
-					CallstackBuilder << LINE_TERMINATOR;
+					CallstackBuilder << LINE_TERMINATOR_ANSI;
 				}
 			}
 		}

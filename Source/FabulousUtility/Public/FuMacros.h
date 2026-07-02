@@ -5,6 +5,9 @@
 #define FU_GET_TYPE_STRING(Type) \
 	((void) sizeof UEAsserts_Private::GetMemberNameCheckedJunk(static_cast<Type*>(nullptr)), TEXTVIEW(#Type))
 
+#define FU_GET_TYPE_STRING_ANSI(Type) \
+	((void) sizeof UEAsserts_Private::GetMemberNameCheckedJunk(static_cast<Type*>(nullptr)), ANSITEXTVIEW(#Type))
+
 /// Lightweight version of the ensure() macro. It doesn't generate a C++ call stack or send a crash report
 /// because those things do not happen instantly and cause the editor to freeze, which can be annoying.
 

@@ -16,7 +16,7 @@ struct FFuActivateAbilityMemory
 
 UFuBTTask_ActivateAbility::UFuBTTask_ActivateAbility()
 {
-	NodeName = TEXTVIEW("Fu Activate Ability");
+	NodeName = FString{ANSITEXTVIEW("Fu Activate Ability")};
 	bIgnoreRestartSelf = true;
 
 	INIT_TASK_NODE_NOTIFY_FLAGS();
@@ -46,11 +46,11 @@ FString UFuBTTask_ActivateAbility::GetStaticDescription() const
 	if (bWaitForAbilityEnd)
 	{
 		DescriptionBuilder << (bCancelAbilityOnAbort
-			                       ? TEXTVIEW("( wait for end, cancel on abort )") LINE_TERMINATOR
-			                       : TEXTVIEW("( wait for end )") LINE_TERMINATOR);
+			                       ? ANSITEXTVIEW("( wait for end, cancel on abort )")
+			                       : ANSITEXTVIEW("( wait for end )")) << LINE_TERMINATOR_ANSI;
 	}
 
-	DescriptionBuilder << TEXTVIEW("Activate Ability:");
+	DescriptionBuilder << ANSITEXTVIEW("Activate Ability:");
 
 	if (AbilityTag.IsValid())
 	{
@@ -63,7 +63,7 @@ FString UFuBTTask_ActivateAbility::GetStaticDescription() const
 #if WITH_EDITOR
 FName UFuBTTask_ActivateAbility::GetNodeIconName() const
 {
-	return FName{TEXTVIEW("BTEditor.Graph.BTNode.Task.RunEQSQuery.Icon")};
+	return FName{ANSITEXTVIEW("BTEditor.Graph.BTNode.Task.RunEQSQuery.Icon")};
 }
 #endif
 

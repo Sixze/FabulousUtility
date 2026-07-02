@@ -19,7 +19,7 @@ const UFuViewportWatermarkSettings* UFuViewportWatermarkSettings::Get()
 
 UFuViewportWatermarkSettings::UFuViewportWatermarkSettings()
 {
-	CategoryName = FName{TEXTVIEW("Fabulous Utility")};
+	CategoryName = FName{ANSITEXTVIEW("Fabulous Utility")};
 
 	TitleText = LOCTEXT("Title", "WORK IN PROGRESS - DOES NOT REPRESENT THE FINAL LOOK OF THE GAME");
 
@@ -27,22 +27,22 @@ UFuViewportWatermarkSettings::UFuViewportWatermarkSettings()
 
 	EngineVersionText = FText::Format(LOCTEXT("EngineVersion", "Built using Unreal Engine {EngineVersion}"),
 	                                  {
-		                                  {FString{TEXTVIEW("EngineVersion")}, FText::AsCultureInvariant(ENGINE_VERSION_STRING)}
+		                                  {FString{ANSITEXTVIEW("EngineVersion")}, FText::AsCultureInvariant(ENGINE_VERSION_STRING)}
 	                                  });
 
 	SystemInfoText =
 		FText::Format(
 			LOCTEXT("SystemInfo",
-			        "{CpuBrand} ({CpuCores} Cores)" LINE_TERMINATOR
-			        "{GpuBrand}" LINE_TERMINATOR
+			        "{CpuBrand} ({CpuCores} Cores)" LINE_TERMINATOR_ANSI
+			        "{GpuBrand}" LINE_TERMINATOR_ANSI
 			        "RHI: {Rhi} Driver: {GpuDriver}"),
 			{
-				{FString{TEXTVIEW("CpuBrand")}, FText::AsCultureInvariant(FPlatformMisc::GetCPUBrand())},
-				{FString{TEXTVIEW("CpuCores")}, FText::AsNumber(FPlatformMisc::NumberOfCores())},
-				{FString{TEXTVIEW("GpuBrand")}, FText::AsCultureInvariant(GRHIAdapterName)},
-				{FString{TEXTVIEW("Rhi")}, FText::AsCultureInvariant(FHardwareInfo::GetHardwareInfo(NAME_RHI))},
+				{FString{ANSITEXTVIEW("CpuBrand")}, FText::AsCultureInvariant(FPlatformMisc::GetCPUBrand())},
+				{FString{ANSITEXTVIEW("CpuCores")}, FText::AsNumber(FPlatformMisc::NumberOfCores())},
+				{FString{ANSITEXTVIEW("GpuBrand")}, FText::AsCultureInvariant(GRHIAdapterName)},
+				{FString{ANSITEXTVIEW("Rhi")}, FText::AsCultureInvariant(FHardwareInfo::GetHardwareInfo(NAME_RHI))},
 				{
-					FString{TEXTVIEW("GpuDriver")},
+					FString{ANSITEXTVIEW("GpuDriver")},
 					FText::AsCultureInvariant(FPlatformMisc::GetGPUDriverInfo(GRHIAdapterName).UserDriverVersion)
 				}
 			});
@@ -61,9 +61,9 @@ UFuViewportWatermarkSettings::UFuViewportWatermarkSettings()
 	{
 		static const ConstructorHelpers::FObjectFinder<UFont> DefaultFont{*UWidget::GetDefaultFontName()};
 
-		TitleSettings.Font = FSlateFontInfo{DefaultFont.Object, 32, FName{TEXTVIEW("Bold")}};
-		CopyrightSettings.Font = FSlateFontInfo{DefaultFont.Object, 24, FName{TEXTVIEW("Bold")}};
-		SystemInfoSettings.Font = FSlateFontInfo{DefaultFont.Object, 24, FName{TEXTVIEW("Bold")}};
+		TitleSettings.Font = FSlateFontInfo{DefaultFont.Object, 32, FName{ANSITEXTVIEW("Bold")}};
+		CopyrightSettings.Font = FSlateFontInfo{DefaultFont.Object, 24, FName{ANSITEXTVIEW("Bold")}};
+		SystemInfoSettings.Font = FSlateFontInfo{DefaultFont.Object, 24, FName{ANSITEXTVIEW("Bold")}};
 	}
 }
 

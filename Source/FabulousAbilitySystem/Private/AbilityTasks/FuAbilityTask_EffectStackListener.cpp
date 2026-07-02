@@ -36,16 +36,11 @@ void UFuAbilityTask_EffectStackListener::Activate()
 {
 	Super::Activate();
 
-	// TODO Replace StackingType with UGameplayEffect::GetStackingType() in future engine versions.
-	PRAGMA_DISABLE_DEPRECATION_WARNINGS
-
-	if (!IsValid(EffectClass) || !FU_ENSURE(EffectClass.GetDefaultObject()->StackingType != EGameplayEffectStackingType::None))
+	if (!IsValid(EffectClass) || !FU_ENSURE(EffectClass.GetDefaultObject()->GetStackingType() != EGameplayEffectStackingType::None))
 	{
 		EndTask();
 		return;
 	}
-
-	PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 	AbilitySystemComponent->OnActiveGameplayEffectAddedDelegateToSelf
 	                      .AddUObject(this, &ThisClass::AbilitySystem_OnActiveGameplayEffectAdded);

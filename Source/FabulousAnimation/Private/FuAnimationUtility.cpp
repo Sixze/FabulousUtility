@@ -108,7 +108,7 @@ FTransform UFuAnimationUtility::GetBoneTransformFromSequence(const UAnimSequence
 	while (ReferenceSkeleton.IsValidIndex(BoneIndex))
 	{
 		auto BoneTransform{FTransform::Identity};
-		const FAnimExtractContext ExtractionContext{static_cast<double>(Time)};
+		const FAnimExtractContext ExtractionContext{Time};
 
 		Sequence->GetBoneTransform(BoneTransform, FSkeletonPoseBoneIndex{BoneIndex}, ExtractionContext, false);
 

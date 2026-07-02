@@ -4,7 +4,7 @@ public class FabulousAnimation : ModuleRules
 {
 	public FabulousAnimation(ReadOnlyTargetRules target) : base(target)
 	{
-		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_7;
+		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_8;
 
 		// if (Target.bBuildEditor)
 		// {

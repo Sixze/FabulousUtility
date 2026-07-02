@@ -15,10 +15,10 @@ struct FFuReceiveGameplayEventMemory
 
 UFuBTDecorator_ReceiveGameplayEvent::UFuBTDecorator_ReceiveGameplayEvent()
 {
-	NodeName = TEXTVIEW("Fu Receive Gameplay Event");
+	NodeName = FString{ANSITEXTVIEW("Fu Receive Gameplay Event")};
 
 	TargetKey.AllowNoneAsValue(true);
-	TargetKey.AddObjectFilter(this, FName{GET_MEMBER_NAME_STRING_VIEW_CHECKED(ThisClass, TargetKey)}, AActor::StaticClass());
+	TargetKey.AddObjectFilter(this, FName{GET_MEMBER_NAME_ANSI_STRING_VIEW_CHECKED(ThisClass, TargetKey)}, AActor::StaticClass());
 
 	INIT_DECORATOR_NODE_NOTIFY_FLAGS();
 }
@@ -57,29 +57,29 @@ FString UFuBTDecorator_ReceiveGameplayEvent::GetStaticDescription() const
 
 	if (FlowAbortMode != EBTFlowAbortMode::None)
 	{
-		DescriptionBuilder << TEXTVIEW("( aborts ") << *UBehaviorTreeTypes::DescribeFlowAbortMode(FlowAbortMode).ToLower()
-			<< TEXTVIEW(" )") LINE_TERMINATOR;
+		DescriptionBuilder << ANSITEXTVIEW("( aborts ") << *UBehaviorTreeTypes::DescribeFlowAbortMode(FlowAbortMode).ToLower()
+			<< ANSITEXTVIEW(" )") << LINE_TERMINATOR_ANSI;
 	}
 
 	if (EventTags.IsEmpty())
 	{
-		DescriptionBuilder << TEXTVIEW("Receive Gameplay Event: ");
+		DescriptionBuilder << ANSITEXTVIEW("Receive Gameplay Event: ");
 	}
 	else if (EventTags.Num() == 1)
 	{
-		DescriptionBuilder << TEXTVIEW("Receive Gameplay Event: ") << EventTags.First().GetTagName();
+		DescriptionBuilder << ANSITEXTVIEW("Receive Gameplay Event: ") << EventTags.First().GetTagName();
 	}
 	else
 	{
-		DescriptionBuilder << TEXTVIEW("Receive Any Gameplay Event: ");
+		DescriptionBuilder << ANSITEXTVIEW("Receive Any Gameplay Event: ");
 
 		for (const auto& Tag : EventTags)
 		{
-			DescriptionBuilder << LINE_TERMINATOR << Tag.GetTagName();
+			DescriptionBuilder << LINE_TERMINATOR_ANSI << Tag.GetTagName();
 		}
 	}
 
-	DescriptionBuilder << LINE_TERMINATOR TEXTVIEW("Target: ") << TargetKey.SelectedKeyName;
+	DescriptionBuilder << LINE_TERMINATOR_ANSI << ANSITEXTVIEW("Target: ") << TargetKey.SelectedKeyName;
 
 	return FString{DescriptionBuilder};
 }

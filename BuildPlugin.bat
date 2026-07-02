@@ -2,8 +2,8 @@
 
 title Build Plugin
 
-set SourceBuildVersion=5.7
-set InstalledBuildVersion=5.7
+set SourceBuildVersion=5.8
+set InstalledBuildVersion=5.8
 
 for /f "skip=2 tokens=2*" %%a in ('reg query "HKEY_CURRENT_USER\Software\Epic Games\Unreal Engine\Builds" /v "%SourceBuildVersion%"') do (
     set EngineDirectory=%%b
