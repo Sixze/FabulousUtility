@@ -45,7 +45,8 @@ FString UFuDebugUtility::GetCurrentCallstackInternal(const EFuCallstackType Call
 
 		if (NativeCallstackString != nullptr)
 		{
-			FCStringAnsi::Strcpy(NativeCallstackString, "Native Callstack:" LINE_TERMINATOR_ANSI);
+			NativeCallstackString[0] = '\0';
+			FCStringAnsi::StrncatTruncateDest(NativeCallstackString, NativeCallstackSize, "Native Callstack:" LINE_TERMINATOR_ANSI);
 
 			FPlatformStackWalk::StackWalkAndDump(NativeCallstackString, NativeCallstackSize, ProgramCounter);
 

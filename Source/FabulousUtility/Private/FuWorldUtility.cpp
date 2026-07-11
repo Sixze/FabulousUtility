@@ -7,7 +7,7 @@
 
 namespace FuWorldUtility
 {
-	constexpr FAnsiStringView WorldTypeStrings[]
+	static constexpr FAnsiStringView WorldTypeStrings[]
 	{
 		ANSITEXTVIEW("None"),
 		ANSITEXTVIEW("Game"),
