@@ -39,9 +39,7 @@ void UFuBTDecorator_RandomizedLoop::DescribeRuntimeValues(const UBehaviorTreeCom
 
 	const auto& Memory{*CastInstanceNodeMemory<FFuRandomizedLoopMemory>(NodeMemory)};
 
-	TStringBuilder<32> RuntimeValuesBuilder{InPlace, ANSITEXTVIEW("Loops remaining: "), Memory.RemainingLoopsCount};
-
-	Values.Emplace(FString{RuntimeValuesBuilder});
+	Values.Emplace(WriteToString<32>(ANSITEXTVIEW("Loops remaining: "), Memory.RemainingLoopsCount));
 }
 
 uint16 UFuBTDecorator_RandomizedLoop::GetInstanceMemorySize() const
@@ -51,11 +49,7 @@ uint16 UFuBTDecorator_RandomizedLoop::GetInstanceMemorySize() const
 
 FString UFuBTDecorator_RandomizedLoop::GetStaticDescription() const
 {
-	TStringBuilder<64> DescriptionBuilder{
-		InPlace, ANSITEXTVIEW("Randomized Loop: "), LoopsCount.Min, '-', LoopsCount.Max, ANSITEXTVIEW(" loops")
-	};
-
-	return FString{DescriptionBuilder};
+	return FString{WriteToString<64>(ANSITEXTVIEW("Randomized Loop: "), LoopsCount.Min, '-', LoopsCount.Max, ANSITEXTVIEW(" loops"))};
 }
 
 void UFuBTDecorator_RandomizedLoop::OnNodeActivation(FBehaviorTreeSearchData& SearchData)

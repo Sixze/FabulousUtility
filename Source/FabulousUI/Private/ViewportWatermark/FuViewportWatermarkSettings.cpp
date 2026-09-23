@@ -21,16 +21,16 @@ UFuViewportWatermarkSettings::UFuViewportWatermarkSettings()
 {
 	CategoryName = FName{ANSITEXTVIEW("Fabulous Utility")};
 
-	TitleText = LOCTEXT("Title", "WORK IN PROGRESS - DOES NOT REPRESENT THE FINAL LOOK OF THE GAME");
+	Title = LOCTEXT("Title", "WORK IN PROGRESS - DOES NOT REPRESENT THE FINAL LOOK OF THE GAME");
 
-	CopyrightText = LOCTEXT("Copyright", "Created by <Name>");
+	Copyright = LOCTEXT("Copyright", "Created by <Name>");
 
-	EngineVersionText = FText::Format(LOCTEXT("EngineVersion", "Built using Unreal Engine {EngineVersion}"),
-	                                  {
-		                                  {FString{ANSITEXTVIEW("EngineVersion")}, FText::AsCultureInvariant(ENGINE_VERSION_STRING)}
-	                                  });
+	EngineVersion = FText::Format(LOCTEXT("EngineVersion", "Built using Unreal Engine {EngineVersion}"),
+	                              {
+		                              {FString{ANSITEXTVIEW("EngineVersion")}, FText::AsCultureInvariant(ENGINE_VERSION_STRING)}
+	                              });
 
-	SystemInfoText =
+	SystemInfo =
 		FText::Format(
 			LOCTEXT("SystemInfo",
 			        "{CpuBrand} ({CpuCores} Cores)" LINE_TERMINATOR_ANSI

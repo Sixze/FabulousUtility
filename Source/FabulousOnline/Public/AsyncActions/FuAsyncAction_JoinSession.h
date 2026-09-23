@@ -4,7 +4,7 @@
 #include "Interfaces/OnlineSessionInterface.h"
 #include "FuAsyncAction_JoinSession.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuJoinSessionDelegate, const FString&, FailureString);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FFuJoinSessionDelegate, const FString&, FailureMessage);
 
 UCLASS(DisplayName = "Fu Join Session Async Action")
 class FABULOUSONLINE_API UFuAsyncAction_JoinSession : public UOnlineBlueprintCallProxyBase
@@ -12,7 +12,7 @@ class FABULOUSONLINE_API UFuAsyncAction_JoinSession : public UOnlineBlueprintCal
 	GENERATED_BODY()
 
 public:
-	static inline const FString UnknownFailureString{ANSITEXTVIEW("Failed to Join Session")};
+	static inline const FString UnknownFailureMessage{ANSITEXTVIEW("Failed to Join Session")};
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", Transient)

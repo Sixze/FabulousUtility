@@ -26,7 +26,7 @@ void SFuViewportWatermark::Construct(const FArguments& Arguments)
 		       .Padding(ViewportWatermarkSettings->TitleSettings.Padding)
 		[
 			SNew(STextBlock)
-			.Text(ViewportWatermarkSettings->TitleText)
+			.Text(ViewportWatermarkSettings->Title)
 			.Font(ViewportWatermarkSettings->TitleSettings.Font)
 			.ColorAndOpacity(ViewportWatermarkSettings->TitleSettings.ColorAndOpacity)
 			.ShadowOffset(ViewportWatermarkSettings->TitleSettings.ShadowOffset)
@@ -44,10 +44,10 @@ void SFuViewportWatermark::Construct(const FArguments& Arguments)
 			SNew(STextBlock)
 			.Text(ViewportWatermarkSettings->bAddEngineVersionToCopyright
 				      ? FText::Format(INVTEXT("{0}" LINE_TERMINATOR_ANSI "{1}"), {
-					                      {ViewportWatermarkSettings->CopyrightText},
-					                      {ViewportWatermarkSettings->EngineVersionText}
+					                      {ViewportWatermarkSettings->Copyright},
+					                      {ViewportWatermarkSettings->EngineVersion}
 				                      })
-				      : ViewportWatermarkSettings->CopyrightText)
+				      : ViewportWatermarkSettings->Copyright)
 			.Font(ViewportWatermarkSettings->CopyrightSettings.Font)
 			.ColorAndOpacity(ViewportWatermarkSettings->CopyrightSettings.ColorAndOpacity)
 			.ShadowOffset(ViewportWatermarkSettings->CopyrightSettings.ShadowOffset)
@@ -63,7 +63,7 @@ void SFuViewportWatermark::Construct(const FArguments& Arguments)
 		       .Padding(ViewportWatermarkSettings->SystemInfoSettings.Padding)
 		[
 			SNew(STextBlock)
-			.Text(ViewportWatermarkSettings->SystemInfoText)
+			.Text(ViewportWatermarkSettings->SystemInfo)
 			.Font(ViewportWatermarkSettings->SystemInfoSettings.Font)
 			.ColorAndOpacity(ViewportWatermarkSettings->SystemInfoSettings.ColorAndOpacity)
 			.ShadowOffset(ViewportWatermarkSettings->SystemInfoSettings.ShadowOffset)

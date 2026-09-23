@@ -5,26 +5,37 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuWorldUtility)
 
-namespace FuWorldUtility
-{
-	static constexpr FAnsiStringView WorldTypeStrings[]
-	{
-		ANSITEXTVIEW("None"),
-		ANSITEXTVIEW("Game"),
-		ANSITEXTVIEW("Editor"),
-		ANSITEXTVIEW("PIE"),
-		ANSITEXTVIEW("Editor Preview"),
-		ANSITEXTVIEW("Game Preview"),
-		ANSITEXTVIEW("Game RPC"),
-		ANSITEXTVIEW("Inactive")
-	};
-}
-
 constexpr FAnsiStringView UFuWorldUtility::WorldTypeToString(const EWorldType::Type WorldType)
 {
-	return WorldType >= EWorldType::None && WorldType <= EWorldType::Inactive
-		       ? FuWorldUtility::WorldTypeStrings[WorldType]
-		       : ANSITEXTVIEW("Unknown");
+	switch (WorldType)
+	{
+		case EWorldType::None:
+			return ANSITEXTVIEW("None");
+
+		case EWorldType::Game:
+			return ANSITEXTVIEW("Game");
+
+		case EWorldType::Editor:
+			return ANSITEXTVIEW("Editor");
+
+		case EWorldType::PIE:
+			return ANSITEXTVIEW("PIE");
+
+		case EWorldType::EditorPreview:
+			return ANSITEXTVIEW("Editor Preview");
+
+		case EWorldType::GamePreview:
+			return ANSITEXTVIEW("Game Preview");
+
+		case EWorldType::GameRPC:
+			return ANSITEXTVIEW("Game RPC");
+
+		case EWorldType::Inactive:
+			return ANSITEXTVIEW("Inactive");
+
+		default:
+			return ANSITEXTVIEW("Unknown");
+	}
 }
 
 float UFuWorldUtility::GetWorldGravityZ(const UObject* WorldContext)

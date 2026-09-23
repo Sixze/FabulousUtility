@@ -41,25 +41,25 @@ FString UFuDebugUtility::GetCurrentCallstackInternal(const EFuCallstackType Call
 	if (EnumHasAnyFlags(CallstackType, EFuCallstackType::NativeCallstack))
 	{
 		static constexpr auto NativeCallstackSize{std::numeric_limits<uint16>::max()};
-		auto* NativeCallstackString{static_cast<ANSICHAR*>(FMemory::SystemMalloc(NativeCallstackSize))};
+		auto* NativeCallstack{static_cast<ANSICHAR*>(FMemory::SystemMalloc(NativeCallstackSize))};
 
-		if (NativeCallstackString != nullptr)
+		if (NativeCallstack != nullptr)
 		{
-			NativeCallstackString[0] = '\0';
-			FCStringAnsi::StrncatTruncateDest(NativeCallstackString, NativeCallstackSize, "Native Callstack:" LINE_TERMINATOR_ANSI);
+			NativeCallstack[0] = '\0';
+			FCStringAnsi::StrncatTruncateDest(NativeCallstack, NativeCallstackSize, "Native Callstack:" LINE_TERMINATOR_ANSI);
 
-			FPlatformStackWalk::StackWalkAndDump(NativeCallstackString, NativeCallstackSize, ProgramCounter);
+			FPlatformStackWalk::StackWalkAndDump(NativeCallstack, NativeCallstackSize, ProgramCounter);
 
 			if (CallstackBuilder.Len() <= 0)
 			{
-				ResultString = NativeCallstackString;
-				FMemory::SystemFree(NativeCallstackString);
+				ResultString = NativeCallstack;
+				FMemory::SystemFree(NativeCallstack);
 
 				return ResultString;
 			}
 
-			CallstackBuilder << NativeCallstackString;
-			FMemory::SystemFree(NativeCallstackString);
+			CallstackBuilder << NativeCallstack;
+			FMemory::SystemFree(NativeCallstack);
 		}
 	}
 

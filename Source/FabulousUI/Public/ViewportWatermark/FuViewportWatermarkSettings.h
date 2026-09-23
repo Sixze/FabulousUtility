@@ -48,7 +48,7 @@ public:
 	uint8 bShowTitle : 1 {true};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Title", Config, Meta = (MultiLine = true, EditCondition = "bShowTitle"))
-	FText TitleText;
+	FText Title;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Title", Config, Meta = (EditCondition = "bShowTitle"))
 	FFuViewportWatermarkTextSettings TitleSettings;
@@ -57,13 +57,13 @@ public:
 	uint8 bShowCopyright : 1 {true};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Copyright", Config, Meta = (MultiLine = true, EditCondition = "bShowCopyright"))
-	FText CopyrightText;
+	FText Copyright;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Copyright", Config, Meta = (EditCondition = "bShowCopyright"))
 	uint8 bAddEngineVersionToCopyright : 1 {true};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Copyright", Transient, Meta = (MultiLine = true))
-	FText EngineVersionText;
+	FText EngineVersion;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Copyright", Config, Meta = (EditCondition = "bShowCopyright"))
 	FFuViewportWatermarkTextSettings CopyrightSettings;
@@ -72,7 +72,7 @@ public:
 	uint8 bShowSystemInfo : 1 {true};
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "System Info", Transient, Meta = (MultiLine = true))
-	FText SystemInfoText;
+	FText SystemInfo;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "System Info", Config, Meta = (EditCondition = "bShowSystemInfo"))
 	FFuViewportWatermarkTextSettings SystemInfoSettings;
