@@ -41,5 +41,11 @@ public:
 	static bool TryTransformWorldToMainViewportPosition(const APlayerController* Player, const FVector& WorldLocation,
 	                                                    ImVec2& ViewportPosition, bool bPlayerViewportRelative = false,
 	                                                    bool bCalculateOutsideScreenLocation = true);
+
+	/// Draws a search box of the requested width, with a button clearing it displayed inside it, at its right
+	/// end, and returns whether the text of the filter has changed, in which case that filter has already
+	/// been rebuilt. A width of zero or less requests all the free horizontal space left in the current
+	/// window or child. Use instead of ImGuiTextFilter::Draw(), which draws nothing but a plain input field.
+	static bool SearchBox(ImGuiTextFilter& TextFilter, const char* Label = nullptr, const char* Hint = nullptr, float Width = 0.0f);
 #endif
 };
