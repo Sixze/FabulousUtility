@@ -8,8 +8,7 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FuCommonUIUtility)
 
-FU_DEFINE_PRIVATE_MEMBER_ACCESSOR(FuSetSelectedInternalAccessor, &UCommonButtonBase::SetSelectedInternal,
-                                  void (UCommonButtonBase::*)(bool, bool, bool))
+FU_DEFINE_PRIVATE_MEMBER_ACCESSOR(FuSetSelectedInternalAccessor, UCommonButtonBase, SetSelectedInternal, void(bool, bool, bool))
 
 ECommonInputType UFuCommonUIUtility::GetInputType(const FKey& Key)
 {

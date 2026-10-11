@@ -8,7 +8,7 @@ namespace FuPrivateMemberAccessor
 	template <typename AccessorName>
 	AccessorName::MemberType TMemberPointer;
 
-	/// Struct that is used to initialize TPointer.
+	/// Struct that is used to initialize TMemberPointer.
 	template <typename AccessorName, typename AccessorName::MemberType MemberPointer>
 	struct TPointerInitializer
 	{
@@ -53,11 +53,11 @@ namespace FuPrivateMemberAccessor
 	}
 }
 
-/// Alternative to UE_DEFINE_PRIVATE_MEMBER_PTR() that works with overloaded functions.
-#define FU_DEFINE_PRIVATE_MEMBER_ACCESSOR(AccessorName, MemberPointer, ...) \
+/// Alternative to UE_DEFINE_PRIVATE_MEMBER_PTR() that works with overloaded functions. Type is written in the plain or function type form.
+#define FU_DEFINE_PRIVATE_MEMBER_ACCESSOR(AccessorName, Class, Member, ...) \
 	struct AccessorName \
 	{ \
-		using MemberType = __VA_ARGS__; \
+		using MemberType = TIdentity_T<__VA_ARGS__> Class::*; \
 		\
 		template <typename ThisType, typename... ArgumentsType> \
 		static decltype(auto) Access(ThisType&& This, ArgumentsType&&... Arguments) \
@@ -66,4 +66,4 @@ namespace FuPrivateMemberAccessor
 		} \
 	}; \
 	\
-	template struct FuPrivateMemberAccessor::TPointerInitializer<AccessorName, MemberPointer>;
+	template struct FuPrivateMemberAccessor::TPointerInitializer<AccessorName, &Class::Member>;
