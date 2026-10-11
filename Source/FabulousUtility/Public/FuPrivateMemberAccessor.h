@@ -1,20 +1,17 @@
 ﻿#pragma once
 
-#include "Concepts/Pointer.h"
+#include "Templates/Invoke.h"
+#include "Templates/UnrealTemplate.h"
 
 namespace FuPrivateMemberAccessor
 {
-	/// Global pointer to a data member or method.
-	template <typename AccessorName>
-	AccessorName::MemberType TMemberPointer;
-
-	/// Struct that is used to initialize TMemberPointer.
+	/// Writes MemberPointer into AccessorName::Pointer when its Instance is initialized.
 	template <typename AccessorName, typename AccessorName::MemberType MemberPointer>
 	struct TPointerInitializer
 	{
 		TPointerInitializer()
 		{
-			TMemberPointer<AccessorName> = MemberPointer;
+			AccessorName::Pointer = MemberPointer;
 		}
 
 		static TPointerInitializer Instance;
@@ -24,46 +21,83 @@ namespace FuPrivateMemberAccessor
 	template <typename AccessorName, typename AccessorName::MemberType MemberPointer>
 	TPointerInitializer<AccessorName, MemberPointer> TPointerInitializer<AccessorName, MemberPointer>::Instance;
 
-	/// Returns the value of the referenced data member or invokes the referenced member function.
-	template <typename AccessorName, typename ThisType, typename... ArgumentsType>
-	decltype(auto) Access(ThisType&& This, ArgumentsType&&... Arguments)
+	/// Base class of an accessor struct that provides Access(). The primary template is the generic fallback for member pointer forms
+	/// without a typed specialization. Typed specializations exist for data members and for non-const and const member functions.
+	template <typename AccessorName, typename MemberType>
+	struct TAccessorBase
 	{
-		if constexpr (UE::CPointer<std::remove_reference_t<ThisType>>)
+		template <typename ThisType, typename... ArgumentsType>
+		static decltype(auto) Access(ThisType&& This, ArgumentsType&&... Arguments)
 		{
-			if constexpr (std::is_member_function_pointer_v<typename AccessorName::MemberType>)
-			{
-				return (Forward<ThisType>(This)->*TMemberPointer<AccessorName>)(Forward<ArgumentsType>(Arguments)...);
-			}
-			else
-			{
-				return Forward<ThisType>(This)->*TMemberPointer<AccessorName>;
-			}
+			return Invoke(AccessorName::Pointer, Forward<ThisType>(This), Forward<ArgumentsType>(Arguments)...);
 		}
-		else
+	};
+
+	/// Typed Access() for data members. The requires clause keeps member function pointers that match no
+	/// other specialization, such as ref-qualified ones, on the generic fallback of the primary template.
+	template <typename AccessorName, typename ClassType, typename ResultType> requires
+		(!std::is_member_function_pointer_v<ResultType ClassType::*>)
+	struct TAccessorBase<AccessorName, ResultType ClassType::*>
+	{
+		static ResultType& Access(ClassType& This)
 		{
-			if constexpr (std::is_member_function_pointer_v<typename AccessorName::MemberType>)
-			{
-				return (Forward<ThisType>(This).*TMemberPointer<AccessorName>)(Forward<ArgumentsType>(Arguments)...);
-			}
-			else
-			{
-				return Forward<ThisType>(This).*TMemberPointer<AccessorName>;
-			}
+			return Invoke(AccessorName::Pointer, This);
 		}
-	}
+
+		static const ResultType& Access(const ClassType& This)
+		{
+			return Invoke(AccessorName::Pointer, This);
+		}
+
+		static ResultType& Access(ClassType* This)
+		{
+			return Invoke(AccessorName::Pointer, This);
+		}
+
+		static const ResultType& Access(const ClassType* This)
+		{
+			return Invoke(AccessorName::Pointer, This);
+		}
+	};
+
+	/// Typed Access() for non-const member functions.
+	template <typename AccessorName, typename ClassType, typename ResultType, typename... ArgumentsType>
+	struct TAccessorBase<AccessorName, ResultType (ClassType::*)(ArgumentsType...)>
+	{
+		static ResultType Access(ClassType& This, ArgumentsType... Arguments)
+		{
+			return Invoke(AccessorName::Pointer, This, Forward<ArgumentsType>(Arguments)...);
+		}
+
+		static ResultType Access(ClassType* This, ArgumentsType... Arguments)
+		{
+			return Invoke(AccessorName::Pointer, This, Forward<ArgumentsType>(Arguments)...);
+		}
+	};
+
+	/// Typed Access() for const member functions.
+	template <typename AccessorName, typename ClassType, typename ResultType, typename... ArgumentsType>
+	struct TAccessorBase<AccessorName, ResultType (ClassType::*)(ArgumentsType...) const>
+	{
+		static ResultType Access(const ClassType& This, ArgumentsType... Arguments)
+		{
+			return Invoke(AccessorName::Pointer, This, Forward<ArgumentsType>(Arguments)...);
+		}
+
+		static ResultType Access(const ClassType* This, ArgumentsType... Arguments)
+		{
+			return Invoke(AccessorName::Pointer, This, Forward<ArgumentsType>(Arguments)...);
+		}
+	};
 }
 
 /// Alternative to UE_DEFINE_PRIVATE_MEMBER_PTR() that works with overloaded functions. Type is written in the plain or function type form.
 #define FU_DEFINE_PRIVATE_MEMBER_ACCESSOR(AccessorName, Class, Member, ...) \
-	struct AccessorName \
+	struct AccessorName : public FuPrivateMemberAccessor::TAccessorBase<AccessorName, TIdentity_T<__VA_ARGS__> Class::*> \
 	{ \
 		using MemberType = TIdentity_T<__VA_ARGS__> Class::*; \
 		\
-		template <typename ThisType, typename... ArgumentsType> \
-		static decltype(auto) Access(ThisType&& This, ArgumentsType&&... Arguments) \
-		{ \
-			return FuPrivateMemberAccessor::Access<AccessorName>(Forward<ThisType>(This), Forward<ArgumentsType>(Arguments)...); \
-		} \
+		static inline MemberType Pointer; \
 	}; \
 	\
 	template struct FuPrivateMemberAccessor::TPointerInitializer<AccessorName, &Class::Member>;
