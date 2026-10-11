@@ -95,7 +95,8 @@ UUserWidget* UFuCommonUIUtility::FindAncestorUserWidgetByClass(const UWidget* Wi
 	return nullptr;
 }
 
-void UFuCommonUIUtility::SetSelectedForce(UCommonButtonBase* Button, bool bSelected, bool bAllowSound, bool bBroadcastEvents)
+void UFuCommonUIUtility::SetSelectedForce(UCommonButtonBase* Button, const bool bSelected,
+                                          const bool bAllowSound, const bool bBroadcastEvents)
 {
 	if (FU_ENSURE(IsValid(Button)))
 	{
